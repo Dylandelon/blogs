@@ -183,10 +183,17 @@ Content Cell  | Content Cell
 ```
 
 ##练习
+
 1. 直接在配置好的sublime里新建一个readme.md，把上面的markdown语法拷贝进去练习一下。
 2. 推荐一个做得相当不错的markdown在线编辑器[马克飞象](http://maxiang.info/)。
 3. 本文就是用markdown编写的。右键点击[这里][3]，另存到本地即可。
 
+##最佳实践
+
+Windows下可以使用sublime对markdown进行编辑预览。但Linux下要让sublime支持中文输入还需要折腾一番。个人认为最佳实践是这样的。
+
+1. Windows下，使用sublime对markdown进行编辑，预览。
+2. Linux下，直接使用gedit对markdown进行编辑。gedit的markdown语法高亮看起来非常舒服。编辑完成后，用sublime打开预览效果。
 
 [1]: https://pythonhosted.org/Markdown/extensions/index.html
 [2]: https://sublime.wbond.net/
