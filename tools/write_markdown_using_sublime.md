@@ -17,6 +17,7 @@
 ##安装Markdown Preview插件
 
 推荐的安装方法是通过[Package Control][2]来安装：
+
 1. 如果你的sublime还没有安装[Package Control][2]，需要先点击[这里][2]查看安装方法
 2. 使用 `ctrl + shift + P` 来打开命令窗口，输入并选择 `Package Control: Install Package`
 3. 在弹出的窗口里，输入 `Markdown Preview`并按回车来完成安装
