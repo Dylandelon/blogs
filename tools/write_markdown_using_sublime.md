@@ -6,6 +6,7 @@
 ##摘要
 
 本文包含两部分内容：
+
 1. 在sublime里安装Markdown Preview插件来实现markdown文件的预览
 2. 介绍markdown常用的语法，让初次接触markdown的人可以在短时间内掌握常用的语法和句法
 
