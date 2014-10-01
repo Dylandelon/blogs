@@ -32,11 +32,43 @@
 ```
 配置完成后，按下`alt + m`即可直接在浏览器里预览markdown的写作效果。
 
+###代码高亮
+
+markdown里嵌入的代码在生成html文档时，支持根据语言高亮显示。通过 `Preferences -> Package Settings -> Markdown Preview -> Settings-User` 来打开用户设置文件，加入如下内容即可打开代码高亮功能。
+
+```json
+{
+    "enable_highlight": true
+}
+```
+
+如果需要更高级的高亮显示，比如指定代码高亮的风格(emacs, vim etc.)，则可以自定义 `codehilite` 扩展来实现。在Markdown Preview用户设置文件里加入如下内容即可。本文就是使用 `emacs` 高亮风格来显示代码的。
+
+```json
+{
+    "enabled_extensions": [
+            "extra", 
+            "github", 
+            "toc", 
+            "headerid", 
+            "meta", 
+            "sane_lists", 
+            "smarty", 
+            "wikilinks",
+            "admonition",
+            "codehilite(guess_lang=False,pygments_style=emacs)"
+        ]
+}
+```
+
+!!! Note "关于pygments"
+    pygments_style可以用来指定代码高亮的风格。Markdown Preview使用pygments来完成代码高亮。关于pygments以及更多可用的内置代码高亮风格，可访问[pygments官网][4]查阅相关文档。
+
 ###配置css文件
 
 Markdown Preview生成的HTML文件，在浏览器里查看时其默认的宽度为45em，如果你觉得生成的网页太窄，可以修改一下css文件。
 打开Markdown Preview的安装目录，找到markdown.css和github.css文件，查找下面的内容：
-```json
+```css
     body {
       width: 45em;
       border: 1px solid #ddd;
@@ -45,13 +77,15 @@ Markdown Preview生成的HTML文件，在浏览器里查看时其默认的宽度
     }
 ```
 
-把里面的 __45em__ 修改为 __80%__ 或者你认为合适的尺寸即可。
+把里面的**45em**修改为**80%**或者你认为合适的尺寸即可。
 
-!!! Note
-    * Linux环境：通过 `Package Control: List Packages` ，在己安装的Packages里选择 `Markdown Preview` 会直接打开Markdown Preview的安装目录，在打开的目录中直接可以找到markdown.css和github.css。
-    * Windows环境：在sublime安装目录下，找到 `Data\Installed Packages` 目录，这个目录就是安装包的目录。如果已经安装好Markdown Preview，可以看到文件 `Markdown Preview.sublime-package` 。这个其实是一个zip包。直接用系统里的压缩工具打开，然后在压缩包的根目录下查找markdown.css和github.css，按照上述方法修改即可。**修改完成需要保存回压缩包**。在打开压缩包修改的时候，必须关闭sublime，否则无法修改成功。
+!!! Hint "sublime安装包目录与格式"
+    * **Linux环境**
+    通过 `Package Control: List Packages` ，在己安装的Packages里选择 `Markdown Preview` 会直接打开Markdown Preview的安装目录，在打开的目录中直接可以找到markdown.css和github.css。
+    * **Windows环境**
+    在sublime安装目录下，找到 `Data\Installed Packages` 目录，这个目录就是安装包的目录。如果已经安装好Markdown Preview，可以看到文件 `Markdown Preview.sublime-package` 。这个其实是一个zip包。直接用系统里的压缩工具打开，然后在压缩包的根目录下查找markdown.css和github.css，按照上述方法修改即可。**修改完成需要保存回压缩包**。在打开压缩包修改的时候，必须关闭sublime，否则无法修改成功。
 
-##几个常用的markdown语法
+##几个常用的markdown语法示例
 
 ###标题
 
@@ -69,17 +103,23 @@ Markdown Preview生成的HTML文件，在浏览器里查看时其默认的宽度
 ###列表
 
 ```markdown
+###无序列表1
+
 * 列表1
 * 列表2
 * 列表3
+
+###无序列表2
 
 - 列表1
 - **列表2**
 - 列表3
 
-1 列表1
-2 列表2
-3 列表3
+###有序列表
+
+1. 列表1
+2. 列表2
+3. 列表3
 ```
 
 ###弹出式注释
@@ -141,11 +181,16 @@ Content Cell  | Content Cell
 ###警告
 
 ```markdown
-!!! type "optional explicit title within double quotes"
+####hint类型的警告
+!!! hint "subject of hint"
     Any number of other indented markdown elements.
 
-    This is the second paragraph.
+####note类型的警告
+!!! note "subject of note"
+    Any number of other indented markdown elements.
 ```
+
+警告有多种类型，类型不同生成的html文档样式也不一样，可用的样式有 `hint, attention, caution, danger, question, note`。
 
 ###强调
 
@@ -173,7 +218,7 @@ Content Cell  | Content Cell
 ###图片
 
 ```markdown
-![图片描述](https://raw.githubusercontent.com/karan/Hook/master/logo.png)
+![图片描述](https://raw.githubusercontent.com/kamidox/blogs/master/kamidox_icon.png)
 ```
 
 ###目录
@@ -198,3 +243,4 @@ Windows下可以使用sublime对markdown进行编辑预览。但Linux下要让su
 [1]: https://pythonhosted.org/Markdown/extensions/index.html
 [2]: https://sublime.wbond.net/
 [3]: https://raw.githubusercontent.com/kamidox/blogs/master/tools/write_markdown_using_sublime.md
+[4]: http://pygments.org/docs/styles/
