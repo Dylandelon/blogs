@@ -6,8 +6,6 @@ Slug: python-stdlib-socketserver
 Authors: Joey Huang
 Summary: 本文介绍Python标准库SocketServer
 
-Python SocketServer
-===================
 
 ## 摘要
 

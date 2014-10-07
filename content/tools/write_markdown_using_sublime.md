@@ -6,8 +6,6 @@ Slug: write-markdown-using-sublime
 Authors: Joey Huang
 Summary: 用sublime来撰写markdown文档
 
-用sublime来撰写markdown文档
-============================
 
 ##摘要
 
