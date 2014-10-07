@@ -1,3 +1,11 @@
+Title: Python特性汇总
+Date: 2014-10-04 20:20
+Modified: 2014-10-04 20:20
+Tags: python
+Slug: python-features
+Authors: Joey Huang
+Summary: 本文汇总了Python一些重要的特性，并收集了网络上介绍这些特性的优秀的文章
+
 Python特性汇总
 ==============
 

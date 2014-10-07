@@ -1,7 +1,13 @@
+Title: 用sublime来撰写markdown文档
+Date: 2014-09-22 20:20
+Modified: 2014-09-22 20:20
+Tags: sublime, markdown
+Slug: write-markdown-using-sublime
+Authors: Joey Huang
+Summary: 用sublime来撰写markdown文档
+
 用sublime来撰写markdown文档
 ============================
-
-[TOC]
 
 ##摘要
 
@@ -44,22 +50,21 @@ markdown里嵌入的代码在生成html文档时，支持根据语言高亮显�
 
 如果需要更高级的高亮显示，比如指定代码高亮的风格(emacs, vim etc.)，则可以自定义 `codehilite` 扩展来实现。在Markdown Preview用户设置文件里加入如下内容即可。本文就是使用 `emacs` 高亮风格来显示代码的。
 
-```json
-{
-    "enabled_extensions": [
-            "extra", 
-            "github", 
-            "toc", 
-            "headerid", 
-            "meta", 
-            "sane_lists", 
-            "smarty", 
-            "wikilinks",
-            "admonition",
-            "codehilite(guess_lang=False,pygments_style=emacs)"
-        ]
-}
-```
+    :::json
+    {
+        "enabled_extensions": [
+                "extra",
+                "github",
+                "toc",
+                "headerid",
+                "meta",
+                "sane_lists",
+                "smarty",
+                "wikilinks",
+                "admonition",
+                "codehilite(guess_lang=False,pygments_style=emacs)"
+            ]
+    }
 
 !!! Note "关于pygments"
     pygments_style可以用来指定代码高亮的风格。Markdown Preview使用pygments来完成代码高亮。关于pygments以及更多可用的内置代码高亮风格，可访问[pygments官网][4]查阅相关文档。

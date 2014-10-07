@@ -1,3 +1,11 @@
+Title: Python装饰器实例
+Date: 2014-10-03 20:20
+Modified: 2014-10-03 20:20
+Tags: python, decorator
+Slug: python-decorator-example
+Authors: Joey Huang
+Summary: 本文介绍Flask和werkzeug里用到的一些Python装饰器实例
+
 Python装饰器实例
 ================
 
