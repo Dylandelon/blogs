@@ -1,3 +1,11 @@
+Title: Python SocketServer
+Date: 2014-10-05 20:20
+Modified: 2014-10-05 20:20
+Tags: python, SocketServer
+Slug: python-stdlib-socketserver
+Authors: Joey Huang
+Summary: 本文介绍Python标准库SocketServer
+
 Python SocketServer
 ===================
 
@@ -84,52 +92,50 @@ class ThreadingUDPServer(ThreadingMixIn, UDPServer): pass
 
 下面是服务端代码。保存为EchoTCPServer.py。
 
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+    #!/usr/bin/env python
+    # -*- coding: utf-8 -*-
 
-import SocketServer
+    import SocketServer
 
-class EchoRequestHandler(SocketServer.StreamRequestHandler):
-    """ demo request handler """
+    class EchoRequestHandler(SocketServer.StreamRequestHandler):
+        """ demo request handler """
 
-    def handle(self):
-        self.data = self.rfile.readline().strip()
-        print("%s write: %s" % (self.client_address, self.data))
-        self.wfile.write(self.data.upper())
+        def handle(self):
+            self.data = self.rfile.readline().strip()
+            print("%s write: %s" % (self.client_address, self.data))
+            self.wfile.write(self.data.upper())
 
-if __name__ == "__main__":
-    HOST, PORT = 'localhost', 5639
+    if __name__ == "__main__":
+        HOST, PORT = 'localhost', 5639
 
-    server = SocketServer.TCPServer((HOST, PORT), EchoRequestHandler)
-    print("ECHO TCP server is running ...")
-    server.serve_forever()
-```
+        server = SocketServer.TCPServer((HOST, PORT), EchoRequestHandler)
+        print("ECHO TCP server is running ...")
+        server.serve_forever()
+
 
 客户端代码。保存为EchoTCPClient.py
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-import socket
-import sys
+    #!/usr/bin/env python
+    # -*- coding: utf-8 -*-
 
-HOST, PORT = 'localhost', 5639
-data = " ".join(sys.argv[1:])
+    import socket
+    import sys
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    HOST, PORT = 'localhost', 5639
+    data = " ".join(sys.argv[1:])
 
-try:
-    sock.connect((HOST, PORT))
-    sock.sendall(data + '\n')
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    received = sock.recv(1024)
-finally:
-    sock.close()
+    try:
+        sock.connect((HOST, PORT))
+        sock.sendall(data + '\n')
 
-print("Send:     %s" % (data))
-print("received: %s" % (received))
-```
+        received = sock.recv(1024)
+    finally:
+        sock.close()
+
+    print("Send:     %s" % (data))
+    print("received: %s" % (received))
 
 先执行服务端`python EchoTCPServer.py`，再执行客户端`python EchoTCPClient.py hello SocketServer`。
 
