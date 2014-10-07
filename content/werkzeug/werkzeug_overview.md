@@ -4,7 +4,7 @@ Modified: 2014-10-02 20:20
 Tags: python, wekzeug
 Slug: werkzeug-overview
 Authors: Joey Huang
-Summary: Werkzeug简介
+Summary: 本文简单介绍了Werkzeug开源项目，然后挖了一个大坑。准备慢慢把这个坑填上。
 
 
 ## 什么是Werkzeug

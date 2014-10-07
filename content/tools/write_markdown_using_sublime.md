@@ -4,7 +4,7 @@ Modified: 2014-09-22 20:20
 Tags: sublime, markdown
 Slug: write-markdown-using-sublime
 Authors: Joey Huang
-Summary: 用sublime来撰写markdown文档
+Summary: 本文介绍配置sublime来撰写markdown的插件以及markdown的一些常用语法。阅读完本文，即可用sublime写出结构和排版优美的博客了。
 
 
 ##摘要
@@ -147,21 +147,42 @@ Orange
 
 ###代码片段
 
-```markdown
+GitHub格式的代码片段：
+
+    :::markdown
     ```python
+    #!python
+    # -*- coding: utf-8 -*-
+    from flask import Flask, render_template
+
+    app = Flask(__name__)
+    app.debug = APP_DEBUG
+
+    #homepage just for fun
+    @app.route('/')
+    def home():
+        return render_template('index.html')
+    ```
+
+Markdown官方推荐的代码片段格式是直接缩进4个空格：
+
+    :::markdown
         #!python
         # -*- coding: utf-8 -*-
-        from flask import Flask, render_template
 
-        app = Flask(__name__)
-        app.debug = APP_DEBUG
+        if __name__ == '__main__':
+            print('Hello World')
 
-        #homepage just for fun
-        @app.route('/')
-        def home():
-            return render_template('index.html')
-    ```
-```
+如果不显示代码行号，则可使用下面的格式：
+
+    :::markdown
+        :::python
+        # -*- coding: utf-8 -*-
+
+        if __name__ == '__main__':
+            print('Hello World')
+
+关于代码片段及高亮以及行号显示，可参阅[codehilite][5]扩展的官方文档。
 
 ###角注
 
@@ -247,3 +268,5 @@ Windows下可以使用sublime对markdown进行编辑预览。但Linux下要让su
 [2]: https://sublime.wbond.net/
 [3]: https://raw.githubusercontent.com/kamidox/blogs/master/tools/write_markdown_using_sublime.md
 [4]: http://pygments.org/docs/styles/
+[5]: https://pythonhosted.org/Markdown/extensions/code_hilite.html
+

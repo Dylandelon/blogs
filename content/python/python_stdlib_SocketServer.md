@@ -4,7 +4,7 @@ Modified: 2014-10-05 20:20
 Tags: python, SocketServer
 Slug: python-stdlib-socketserver
 Authors: Joey Huang
-Summary: 本文介绍Python标准库SocketServer
+Summary: 本文介绍Python标准库SocketServer。大部分内容来自Python官方文档的翻译，并加入了我自己的理解。
 
 
 ## 摘要

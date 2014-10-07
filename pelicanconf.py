@@ -3,14 +3,15 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Joey Huang'
-SITENAME = u"Joey Huang's Blog"
+SITENAME = u"kamidox.com"
 SITEURL = ''
 
 PATH = 'content'
 
-TIMEZONE = 'Europe/Paris'
+TIMEZONE = 'Asia/Shanghai'
 
-DEFAULT_LANG = u'cn'
+DEFAULT_LANG = u'zh_CN'
+DEFAULT_DATE_FORMAT = ('%Y-%m-%d(%A) %H:%M')
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -40,7 +41,8 @@ MD_EXTENSIONS = [
         "admonition",
         "codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)"]
 
-THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
+#THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
+THEME = "/home/kamidox/pelican/pelican-themes/tuxlite_tbs"
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
