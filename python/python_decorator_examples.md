@@ -104,7 +104,7 @@ name = locked_cached_property(name)
 
 这样就实现了`app.name`属性只计算一次，且并发访问安全的需求。当然，实现这一需求的方案有很多种，Flask里使用的这种实现方法优雅且pythonic。更重要的是，它使用了AOP(Aspect-Orient Program)编程思想，提高了代码的可复用性。
 
-!!! Note
+!!! Note "专业术语"
     如果你对本文使用的很多专业术语感到困惑，可阅读另外一篇[介绍Python特性][5]的文章。它是一个网络上一些优秀文章的资源集合。
 
 [1]: http://www.cnblogs.com/huxi/archive/2011/03/01/1967600.html
