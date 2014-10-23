@@ -10,13 +10,49 @@ import sys
 sys.path.append(os.curdir)
 from pelicanconf import *
 
-SITEURL = ''
+AUTHOR = u'Joey Huang'
+SITENAME = u"kamidox.com"
+SITEURL = 'http://kamidox.com'
+
+PATH = 'content'
+
+TIMEZONE = 'Asia/Shanghai'
+
+DEFAULT_LANG = u'zh_CN'
+DEFAULT_DATE_FORMAT = ('%Y-%m-%d(%A) %H:%M')
+
 RELATIVE_URLS = False
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
+# Feed generation is usually not desired when developing
+FEED_ATOM = 'feeds/atom.xml'
+FEED_RSS = 'feeds/rss.xml'
+FEED_ALL_ATOM = None
+FEED_ALL_RSS = None
+CATEGORY_FEED_ATOM = None
 
 DELETE_OUTPUT_DIRECTORY = True
+
+# Blogroll
+LINKS = (('GitHub', 'https://github.com/kamidox'),)
+
+# Social widget
+SOCIAL = (('微博', 'http://weibo.com/kamidox'),)
+
+DEFAULT_PAGINATION = 10
+
+MD_EXTENSIONS = [
+        "extra",
+        "toc",
+        "headerid",
+        "meta",
+        "sane_lists",
+        "smarty",
+        "wikilinks",
+        "admonition",
+        "codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)"]
+
+#THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
+THEME = "/home/kamidox/pelican/pelican-themes/tuxlite_tbs"
 
 # Following items are often useful when publishing
 
