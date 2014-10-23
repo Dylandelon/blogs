@@ -25,23 +25,24 @@ Flask定义了`setupmethod`装饰器来确保所有的初始化函数必须在we
 #### 源码分析
 
 `setupmethod`装饰器源码定义在[app.py][3]里：
-```python
-def setupmethod(f):
-    """Wraps a method so that it performs a check in debug mode if the
-    first request was already handled.
-    """
-    def wrapper_func(self, *args, **kwargs):
-        if self.debug and self._got_first_request:
-            raise AssertionError('A setup function was called after the '
-                'first request was handled.  This usually indicates a bug '
-                'in the application where a module was not imported '
-                'and decorators or other functionality was called too late.\n'
-                'To fix this make sure to import all your view modules, '
-                'database models and everything related at a central place '
-                'before the application starts serving requests.')
-        return f(self, *args, **kwargs)
-    return update_wrapper(wrapper_func, f)
-```
+
+    #!python
+    def setupmethod(f):
+        """Wraps a method so that it performs a check in debug mode if the
+        first request was already handled.
+        """
+        def wrapper_func(self, *args, **kwargs):
+            if self.debug and self._got_first_request:
+                raise AssertionError('A setup function was called after the '
+                    'first request was handled.  This usually indicates a bug '
+                    'in the application where a module was not imported '
+                    'and decorators or other functionality was called too late.\n'
+                    'To fix this make sure to import all your view modules, '
+                    'database models and everything related at a central place '
+                    'before the application starts serving requests.')
+            return f(self, *args, **kwargs)
+        return update_wrapper(wrapper_func, f)
+
 
 * Line 6：这里确保用`setupmethod`装饰的函数在被实际调用之前，都会去检查`self._got_first_request`
 * Line 14：这里的`f(self, *args, **kwargs)`确保`setupmethod`装饰器可以装饰任何参数形式的函数
@@ -60,50 +61,51 @@ Flask定义了`locked_cached_property`装饰器来实现上述的需求。同时
 #### 源码分析
 
 `locked_cached_property`装饰器源码定义在[helpers.py][4]里：
-```python
-class locked_cached_property(object):
-    """A decorator that converts a function into a lazy property.  The
-    function wrapped is called the first time to retrieve the result
-    and then that calculated result is used the next time you access
-    the value.  Works like the one in Werkzeug but has a lock for
-    thread safety.
-    """
 
-    def __init__(self, func, name=None, doc=None):
-        self.__name__ = name or func.__name__
-        self.__module__ = func.__module__
-        self.__doc__ = doc or func.__doc__
-        self.func = func
-        self.lock = RLock()
+    #!python
+    class locked_cached_property(object):
+        """A decorator that converts a function into a lazy property.  The
+        function wrapped is called the first time to retrieve the result
+        and then that calculated result is used the next time you access
+        the value.  Works like the one in Werkzeug but has a lock for
+        thread safety.
+        """
 
-    def __get__(self, obj, type=None):
-        if obj is None:
-            return self
-        with self.lock:
-            value = obj.__dict__.get(self.__name__, _missing)
-            if value is _missing:
-                value = self.func(obj)
-                obj.__dict__[self.__name__] = value
-            return value
-```
+        def __init__(self, func, name=None, doc=None):
+            self.__name__ = name or func.__name__
+            self.__module__ = func.__module__
+            self.__doc__ = doc or func.__doc__
+            self.func = func
+            self.lock = RLock()
+
+        def __get__(self, obj, type=None):
+            if obj is None:
+                return self
+            with self.lock:
+                value = obj.__dict__.get(self.__name__, _missing)
+                if value is _missing:
+                    value = self.func(obj)
+                    obj.__dict__[self.__name__] = value
+                return value
 
 Line 1: 注意这里使用类来实现装饰器，而不是我们常见的函数。
 Line 14: 这里用RLock来实现并发线程访问安全性。
 Line 16: 这里实现了`__get__`，即`locked_cached_property`是一个non-data descriptor类。
 
 我们看一下[app.py][3]里的`name`方法对这个装饰器是怎么使用的：
-```python
-@locked_cached_property
-def name(self):
-    ...
-```
+
+    :::python
+    @locked_cached_property
+    def name(self):
+        ...
 
 根据python decorator原理，上述代码实际上相当于下面的python代码：
-```python
-def name(self):
-    ...
-name = locked_cached_property(name)
-```
+
+    #!python
+    def name(self):
+        ...
+    name = locked_cached_property(name)
+
 
 根据python descriptor协议，Line 3的代码实际上就是定义了一个类的只读属性。即访问`app.name`时，实际上执行的是`locked_cached_property.__get__`方法。
 
