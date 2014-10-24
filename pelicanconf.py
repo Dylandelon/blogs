@@ -13,6 +13,9 @@ TIMEZONE = 'Asia/Shanghai'
 DEFAULT_LANG = u'zh_CN'
 DEFAULT_DATE_FORMAT = ('%Y-%m-%d(%A) %H:%M')
 
+USE_FOLDER_AS_CATEGORY = True
+DEFAULT_CATEGORY = 'hide'
+
 # Feed generation is usually not desired when developing
 FEED_ATOM = 'feeds/atom.xml'
 FEED_RSS = 'feeds/rss.xml'
@@ -45,8 +48,10 @@ MD_EXTENSIONS = [
         "admonition",
         "codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)"]
 
-#THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
-THEME = "themes/tuxlite_tbs"
+MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%m}/index.html'
+THEME = "themes/foundation-default-colours"
+
+#THEME = "themes/tuxlite_tbs"
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
