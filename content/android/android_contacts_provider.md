@@ -6,7 +6,6 @@ Slug: android-contacts-provider
 Authors: Joey Huang
 Summary: 本文描述Contacts Provider的数据库表结构；同步适配器的原理及实现；电话本数据的访问和修改以及电话本数据的元数据架构。阅读本文可对电话本数据结构有全貌的了解。如果你正在开发维护Contacts模块，本文是必读资料。它将帮助你理解Contacts模块的所有的数据相关的操作。
 
-
 ## 简介
 
 Contact Provider是Android系统提供的一个功能强大且灵活的系统组件，用来管理系统里的所有联系人数据。我们在Android手机是看到的联系人信息的数据来源就是由Contact Provider提供的，我们也可以自己写程序来访问这些联系人数据，也可以把这些数据和我们自己的网络服务进行同步和备份。由于Contact Provider管理了相当多类型的数据源，对一个联系人又同时管理着非常多的信息，结果就导致Contact Provider组织结构异常复杂。本文包含以下内容来介绍Contact Provider：
@@ -204,3 +203,93 @@ ContactsContract.RawContacts | SOURCE_ID    | 字符串，用来唯一标识这�
 ContactsContract.Groups      | GROUP_VISIBLE | 0: 属于这个值的记录在应用程序里不可见；1: 这个组的联系人可见 | 这个字段可以让服务端设置组的可见性。
 ContactsContract.Settings    | UNGROUPED_VISIBLE | 0: 未分组的联系人不可见；1: 未分组的联系人可见 | 默认情况下，未分组的联系人是不可见的。通过修改`ContactsContract.Settings`表里的这个字段，可以设置应用程序显示未分组的联系人。
 ContactsContract.SyncState   | 所有字段     | 使用这个表来保存同步适配器的元数据 | 用这个表格来保存同步后的状态信息以及所有和同步相关的数据，比如时间戳等。
+
+## 读写Contacts Provider
+
+本节内容描述如何访问Contacts Provider的数据，主要集中在下面几个话题：
+
+* 联系人记录查询
+* 分批修改数据
+* 通过Intent来获取或修改记录
+* 数据完整性检查
+
+通过同步适配器修改联系人数据将在下面的章节中单独描述。
+
+### 查询记录
+
+因为Contacts Provider数据是按照三个核心表(Contacts, RawContacts, Data)按照层次结构组织起来的，应用程序经常需要获取一个联系人的所有信息，这就需要从这三个表里里去联合查询。比如从Contacts表里找到一个记录，然后根据Contacts._ID从RawContacts表里关联RawContacts.CONTACT_ID去查询与这个Contacts记录关联的RawContacts记录。接着，再根据找到的关联的RawContacts记录的RawContacts._ID的值从Data表里，根据Data.RAW_CONTACTS_ID去查询所有的关联记录。再把这些记录组合起来，最后得到了一个完整的联系人信息。为了达成这个目的，Contact Provider提供了*ContactsContract.Contacts.Entity*类来实现这个功能，自动实现了这些表的联合查询。
+
+一个entity表是从Contacts, RawContacts, Data三个表里把关联的记录合并起来，从中选择一些列来组合起来的。当从entity表里查询数据时，需要提供一个感兴趣的字段列表(projection)，查询结果是一个游标(cursor)，里面包含一个个联系人的所有信息数据。例如，指定一个联系人的名字，查询出这个联系人的所有电子邮件，那么你将得到包含一行数据的游标，这行数据里有名字以及多个电子邮件的数据。
+
+entity表让查询操作更简单。你可以一次从不同的表里获取出联系人的所有信息。而不需要先从父表里查询数据，得到ID，再根据ID去子表里查询。而且，Contacts Provider把这些联合查询操作在一个事务里完成，这样保证了查询到的数据的一致性。
+
+!!! Note "注意"
+    一个entity一般没有包含Contacts表及其子表的所有字段，如果试图访问这些不在entity表里的字段，会有异常抛出。
+
+下面的代码演示了如何从entity里获取记录数据。一个联系人应用程序一般有个列表显示联系人，点击后显示这个记录的详细信息，下面的代码是显示详细信息的一部分代码。即根据联系人的ID去获取所有的联系人。
+
+    :::java
+        /*
+         * Appends the entity path to the URI. In the case of the Contacts Provider, the
+         * expected URI is content://com.google.contacts/#/entity (# is the ID value).
+         */
+        mContactUri = Uri.withAppendedPath(
+                mContactUri,
+                ContactsContract.Contacts.Entity.CONTENT_DIRECTORY);
+
+        // Initializes the loader identified by LOADER_ID.
+        getLoaderManager().initLoader(
+                LOADER_ID,  // The identifier of the loader to initialize
+                null,       // Arguments for the loader (in this case, none)
+                this);      // The context of the activity
+
+        // Creates a new cursor adapter to attach to the list view
+        mCursorAdapter = new SimpleCursorAdapter(
+                this,                        // the context of the activity
+                R.layout.detail_list_item,   // the view item containing the detail widgets
+                mCursor,                     // the backing cursor
+                mFromColumns,                // the columns in the cursor that provide the data
+                mToViews,                    // the views in the view item that display the data
+                0);                          // flags
+
+        // Sets the ListView's backing adapter.
+        mRawContactList.setAdapter(mCursorAdapter);
+        ...
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        /*
+         * Sets the columns to retrieve.
+         * RAW_CONTACT_ID is included to identify the raw contact associated with the data row.
+         * DATA1 contains the first column in the data row (usually the most important one).
+         * MIMETYPE indicates the type of data in the data row.
+         */
+        String[] projection =
+            {
+                ContactsContract.Contacts.Entity.RAW_CONTACT_ID,
+                ContactsContract.Contacts.Entity.DATA1,
+                ContactsContract.Contacts.Entity.MIMETYPE
+            };
+
+        /*
+         * Sorts the retrieved cursor by raw contact id, to keep all data rows for a single raw
+         * contact collated together.
+         */
+        String sortOrder =
+                ContactsContract.Contacts.Entity.RAW_CONTACT_ID +
+                " ASC";
+
+        /*
+         * Returns a new CursorLoader. The arguments are similar to
+         * ContentResolver.query(), except for the Context argument, which supplies the location of
+         * the ContentResolver to use.
+         */
+        return new CursorLoader(
+                getApplicationContext(),  // The activity's context
+                mContactUri,              // The entity content URI for a single contact
+                projection,               // The columns to retrieve
+                null,                     // Retrieve all the raw contacts and their data rows.
+                null,                     //
+                sortOrder);               // Sort by the raw contact ID.
+    }
+
