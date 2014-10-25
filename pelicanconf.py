@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = u'Joey Huang'
 SITENAME = u"kamidox.com"
 SITEURL = 'http://localhost'
+DISQUS_SITENAME = 'kamidox'
 
 PATH = 'content'
 
@@ -21,7 +22,6 @@ FEED_ATOM = 'feeds/atom.xml'
 FEED_RSS = 'feeds/rss.xml'
 FEED_ALL_ATOM = None
 FEED_ALL_RSS = None
-
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
@@ -30,10 +30,10 @@ MENUITEMS = [('Home', SITEURL),
             ('About', 'about.html'),]
 
 # Blogroll
-LINKS = (('GitHub', 'https://github.com/kamidox'),)
+# LINKS = (('GitHub', 'https://github.com/kamidox'),)
 
 # Social widget
-SOCIAL = (('微博', 'http://weibo.com/kamidox'),)
+# SOCIAL = (('微博', 'http://weibo.com/kamidox'),)
 
 DEFAULT_PAGINATION = 10
 
@@ -48,10 +48,11 @@ MD_EXTENSIONS = [
         "admonition",
         "codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)"]
 
-MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%m}/index.html'
-THEME = "themes/foundation-default-colours"
+CNZZ_ANALYTICS = True
 
+MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%m}/index.html'
+
+THEME = "themes/foundation-default-colours"
+#THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
 #THEME = "themes/tuxlite_tbs"
 
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True

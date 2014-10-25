@@ -6,11 +6,11 @@ Authors: Joey Huang
 
 ![ABOUT ME](https://raw.githubusercontent.com/kamidox/blogs/master/kamidox_icon_mini.png)
 
-## 关于我
-
 **兰生幽谷，不以无人而不芳**
 
-我是一名程序员，这是我的后花园。得闲来此浇浇花锄锄草。忙时草长茑飞也别有画意。
+A programmer mainly on C|Android|Python
+
+这是我的后花园。得闲来此浇浇花锄锄草。忙时草长茑飞也别有洞天。
 
 ## 联系我
 

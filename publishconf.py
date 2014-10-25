@@ -13,6 +13,7 @@ from pelicanconf import *
 AUTHOR = u'Joey Huang'
 SITENAME = u"kamidox.com"
 SITEURL = 'http://kamidox.com'
+DISQUS_SITENAME = 'kamidox'
 
 PATH = 'content'
 
@@ -21,7 +22,8 @@ TIMEZONE = 'Asia/Shanghai'
 DEFAULT_LANG = u'zh_CN'
 DEFAULT_DATE_FORMAT = ('%Y-%m-%d(%A) %H:%M')
 
-RELATIVE_URLS = False
+USE_FOLDER_AS_CATEGORY = True
+DEFAULT_CATEGORY = 'hide'
 
 # Feed generation is usually not desired when developing
 FEED_ATOM = 'feeds/atom.xml'
@@ -29,14 +31,17 @@ FEED_RSS = 'feeds/rss.xml'
 FEED_ALL_ATOM = None
 FEED_ALL_RSS = None
 CATEGORY_FEED_ATOM = None
+TRANSLATION_FEED_ATOM = None
 
-DELETE_OUTPUT_DIRECTORY = True
+# menu items
+MENUITEMS = [('Home', SITEURL),
+            ('About', 'about.html'),]
 
 # Blogroll
-LINKS = (('GitHub', 'https://github.com/kamidox'),)
+# LINKS = (('GitHub', 'https://github.com/kamidox'),)
 
 # Social widget
-SOCIAL = (('微博', 'http://weibo.com/kamidox'),)
+# SOCIAL = (('微博', 'http://weibo.com/kamidox'),)
 
 DEFAULT_PAGINATION = 10
 
@@ -51,10 +56,16 @@ MD_EXTENSIONS = [
         "admonition",
         "codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)"]
 
+CNZZ_ANALYTICS = True
+
+MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%m}/index.html'
+
+THEME = "themes/foundation-default-colours"
 #THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
-THEME = "/home/kamidox/pelican/pelican-themes/tuxlite_tbs"
+#THEME = "themes/tuxlite_tbs"
 
-# Following items are often useful when publishing
+# usful setting for publish
+RELATIVE_URLS = False
+DELETE_OUTPUT_DIRECTORY = True
 
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
+
