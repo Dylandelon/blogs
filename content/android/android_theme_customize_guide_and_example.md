@@ -5,7 +5,7 @@ Tags: android, theme
 Slug: android-theme-customize-guide-and-example
 Authors: Joey Huang
 Summary: 本文记录android源码平台通过theme来定制UI的典型案例，进而梳理出theme的整体结构
-
+Status: draft
 
 本文记录android源码平台通过theme来定制UI的典型案例，进而梳理出theme的整体结构。
 

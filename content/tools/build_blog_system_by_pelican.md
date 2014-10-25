@@ -5,6 +5,7 @@ Tags: python, pelican
 Slug: build-blog-system-by-pelican
 Authors: Joey Huang
 Summary: 本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出个人的一个最佳实践流程。
+Status: draft
 
 ### 什么是Pelican
 
