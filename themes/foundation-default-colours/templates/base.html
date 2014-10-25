@@ -77,15 +77,19 @@
 						{% endif %}
 						{% endfor %}
 
+						{% if LINKS %}
 						<li><label>Places</label></li>
 							{% for name, link in LINKS %}
 							<li><a href="{{ link }}">{{ name }}</a></li>
 							{% endfor %}
+						{% endif %}
 
+						{% if SOCIAL %}
 						<li><label>Links</label></li>
 							{% for name, link in SOCIAL|sort %}
 							<li><a href="{{ link }}">{{ name }}</a></li>
 							{% endfor %}
+						{% endif %}
 
 						{% if FOUNDATION_TAGS_IN_MOBILE_SIDEBAR %}
 						<li><label>Tags</label></li>
@@ -150,12 +154,17 @@
 							<div class="panel">
 								<h5>Places</h5>
 								<ul class="side-nav">
+									{% if FEED_RSS %}
+										<li><a href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" rel="alternate">RSS Feed</a></li>
+									{% endif %}
+
 									{% for name, link in LINKS %}
 									<li><a href="{{ link }}">{{ name }}</a></li>
 									{% endfor %}
 								</ul>
 							</div>
 
+							{% if SOCIAL %}
 							<div class="panel">
 								<h5>Links</h5>
 								<ul class="side-nav">
@@ -164,6 +173,7 @@
 									{% endfor %}
 								</ul>
 							</div>
+							{% endif %}
 
 							<div class="panel">
 								<h5>Categories</h5>
@@ -209,7 +219,9 @@
 							{% if not FOUNDATION_FOOTER_TEXT %}
 							{% set FOUNDATION_FOOTER_TEXT = 'Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.' %}
 							{% endif %}
-							<p class="text-center">{{ FOUNDATION_FOOTER_TEXT }}</p>
+							<p class="text-center">{{ FOUNDATION_FOOTER_TEXT }}
+								{% include "analytics_cnzz.html" %}
+							</p>
 						</div>
 					</footer>
 					<!-- End Footer -->

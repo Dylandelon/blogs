@@ -286,12 +286,6 @@ table.highlighttable {
   text-decoration: none;
 }
 
- a:hover,
- a:focus,
- a:active {
-  text-decoration: underline;
-}
-
  hr {
   height: 0;
   margin: 15px 0;
