@@ -7,6 +7,8 @@ Authors: Joey Huang
 Summary: 本文介绍配置sublime来撰写markdown的插件以及markdown的一些常用语法。阅读完本文，即可用sublime写出结构和排版优美的博客了。
 
 
+[TOC]
+
 ##摘要
 
 本文包含两部分内容：

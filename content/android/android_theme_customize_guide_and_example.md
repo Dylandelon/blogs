@@ -7,6 +7,9 @@ Authors: Joey Huang
 Summary: 本文记录android源码平台通过theme来定制UI的典型案例，进而梳理出theme的整体结构
 Status: draft
 
+
+[TOC]
+
 本文记录android源码平台通过theme来定制UI的典型案例，进而梳理出theme的整体结构。
 
 ##ActionBar外观样式结构

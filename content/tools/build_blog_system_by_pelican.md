@@ -7,6 +7,8 @@ Authors: Joey Huang
 Summary: 本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出个人的一个最佳实践流程。
 Status: draft
 
+[TOC]
+
 ### 什么是Pelican
 
 [Perlican][3]是用Python实现的一个静态网站生成器，支持[reStructuredText][1]或[Markdown][2]。它支持以下功能：

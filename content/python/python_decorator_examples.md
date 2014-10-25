@@ -6,6 +6,8 @@ Slug: python-decorator-example
 Authors: Joey Huang
 Summary: 本文介绍Flask里用到的一些Python装饰器实例，进而了解装饰器在产品级代码里的使用。
 
+[TOC]
+
 ## Python装饰器入门
 
 如果还不知道Python装饰器是什么东西，可以阅读[这篇文章][1]。它深入浅出地用实例介绍了装饰器，并且还介绍内置装饰器和functools包。另外，[这篇文章][2]对装饰器支持参数传递有一些简单的示例。也可以作为一个入门的参考。

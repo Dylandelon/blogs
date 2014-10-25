@@ -6,6 +6,8 @@ Slug: python-features
 Authors: Joey Huang
 Summary: 本文汇总了Python一些重要的特性，并收集了网络上介绍这些特性的优秀的文章。
 
+[TOC]
+
 ## 摘要
 
 本文汇总了Python一些重要的特性，并收集了网络上介绍这些特性的优秀的文章。本文将持续更新。

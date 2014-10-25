@@ -7,6 +7,8 @@ Authors: Joey Huang
 Summary: 本文描述Contacts Provider的数据库表结构；同步适配器的原理及实现；电话本数据的访问和修改以及电话本数据的元数据架构。阅读本文可对电话本数据结构有全貌的了解。如果你正在开发维护Contacts模块，本文是必读资料。它将帮助你理解Contacts模块的所有的数据相关的操作。
 Status: draft
 
+[TOC]
+
 ## 简介
 
 Contact Provider是Android系统提供的一个功能强大且灵活的系统组件，用来管理系统里的所有联系人数据。我们在Android手机是看到的联系人信息的数据来源就是由Contact Provider提供的，我们也可以自己写程序来访问这些联系人数据，也可以把这些数据和我们自己的网络服务进行同步和备份。由于Contact Provider管理了相当多类型的数据源，对一个联系人又同时管理着非常多的信息，结果就导致Contact Provider组织结构异常复杂。本文包含以下内容来介绍Contact Provider：
