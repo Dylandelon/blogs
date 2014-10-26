@@ -48,17 +48,6 @@
   padding-bottom: 1em;
 }
 
-.highlighttable {
-  background: #272822;
-  border: 1px solid #8f908a;
-  width: 100%;
-}
-
-.linenos {
-  color: #8f908a;
-  border-right: 1px dotted #464741;
-}
-
 .panel h5 {
   border-bottom: 2px solid;
   padding: 0;
@@ -95,31 +84,6 @@
 
 .archive-entry {
   border-top: 1px dotted;
-}
-
-table.highlighttable {
-  table-layout: fixed;
-  white-space: nowrap;
-  width:100%;
-}
-
-.linenos {
-  width: 2.25rem;
-  text-align: right;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-}
-
-.highlight{
-  width: 100%;
-  height: auto;
-  overflow: auto;
-}
-
-.linenodiv {
-  margin: 0.55rem 0.5rem 0 0;
-  padding: 0;
 }
 
  a {
@@ -255,6 +219,8 @@ table.highlighttable {
   -moz-border-radius-bottomleft: 3px;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
  .code div pre,
@@ -631,7 +597,7 @@ table.highlighttable {
  pre {
   padding: 16px;
   overflow: auto;
-  font-size: 85%;
+  font-size: 14px;
   line-height: 1.45;
   background-color: #f7f7f7;
   border-radius: 3px;
