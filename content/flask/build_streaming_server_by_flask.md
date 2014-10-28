@@ -1,11 +1,10 @@
 Title: 使用Flask搭建一个流媒体服务器
-Date: 2014-10-28 01:00
-Modified: 2014-10-28 01:00
+Date: 2014-10-28 23:25
+Modified: 2014-10-28 23:25
 Tags: python, flask
 Slug: build-streaming-server-by-flask
 Authors: Joey Huang
-Summary: 本文介绍了使用Flask来搭建一个流媒体服务器的方法
-Status: draft
+Summary: 本文翻译自PythonWeekly上的一篇文章，介绍了使用Flask来搭建一个流媒体服务器的方法。
 
 [TOC]
 
@@ -84,7 +83,7 @@ Multipart有多种不同的类型，针对流媒体，我们使用`multipart/x-m
 
     def gen(camera):
         while True:
-            frame = camera.get_next_frame()
+            frame = camera.get_frame()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -96,12 +95,72 @@ Multipart有多种不同的类型，针对流媒体，我们使用`multipart/x-m
     if __name__ == '__main__':
         app.run(host='0.0.0.0', debug=True)
 
-    
+这个Flask应用程序导入了一个`Camera`类，这个类是为了持续不断地提供视频的帧数据的类。这个程序提供了两个服务路径，`/`路径由`index.html`模板提供服务，下面是它的内容：
+
+    :::html
+    <html>
+      <head>
+        <title>Video Streaming Demonstration</title>
+      </head>
+      <body>
+        <h1>Video Streaming Demonstration</h1>
+        <img src="{{ url_for('video_feed') }}">
+      </body>
+    </html>
+
+这是一个非常简单的HTML网页。其中关键的是`img`这个标签，它定义了一张图片元素，其URL是`/video_feed`。从Flask应用程序代码的Line17-20可以知道，`/video_feed`是由一个`video_feed()`方法提供服务的，它返回的是一个multipart应答。这个应答的内容是由生成器函数`gen()`提供的。而`gen()`函数就是不停地从camera里获取一帧一帧的图片，并通过生成器返回给客户端。客户端浏览器在收到这个流媒体时，会在`img`标签定义的图片里，逐帧地显示图片，这样一个视频就播放出来的。目前市面上绝大部分浏览器都支持这个功能。
+
+## 模拟视频帧数据
+
+现在只要实现`Camera`类，并提供源源不断的视频帧数据即可运行上面的程序了。由于连接摄像头涉及到硬件，我们使用一个简单的模拟器来源源不断地返回数据：
+
+    #!/usr/bin/env python
+    from time import time
+
+    class Camera(object):
+        def __init__(self):
+            self.frames = [open(f + '.jpg', 'rb').read() for f in ['1', '2', '3']]
+
+        def get_frame(self):
+            return self.frames[int(time()) % 3]
+
+这个代码很简单，它从本地读取三个图片，并根据当前时间，每秒返回不同的图片来模拟提供源源不断的视频帧数据。
+
+大家可以从原作者的GitHub上下载程序的代码来运行。
+
+    :::shell
+    $ git clone https://github.com/miguelgrinberg/flask-video-streaming.git
+
+或者直接下载[ZIP][6]包来运行。
+
+下载完代码，进入代码根目录，执行`python app.py`。然后在浏览器里打开`http://localhost:5000`即可以看到模拟的视频了。
+
+!!! Note "安装Flask"
+    要运行上述代码，需要先安装Flask。[官网][9]上有教程，简单易懂。
+
+## 连接硬件摄像头
+
+下载代码的同学应该可以看到代码里还有一个`camera_pi.py`的文件，这个是用来实现真正的连接硬件摄像头的代码。原文作者使用的摄像头是[Raspberry Pi][7]，这是个类似Arduino的开源的硬件项目。
+
+## 一些限制
+
+当客户端浏览器打开上述流媒体服务的网址时，它就独占了这个线程。在把Flask应用Deploy到Nginx+uwsgi服务器上时，它能服务的最大客户端数目为应用程序的线程数，一般就是几个到几十个。而如果是在本机使用`python app.py`运行的测试服务器，则只能服务一个客户端。
+
+针对这个问题，原文作者提供了一个解决方案。使用[gevent][8]来解决。
+
+> gevent is a coroutine-based Python networking library that uses greenlet to provide a high-level synchronous API on top of the libev event loop.
+
+有兴趣的同学可以在原代码的基础上，引入gevent来支持多客户端。
+
 
 [1]: http://www.pythonweekly.com/
 [2]: http://blog.miguelgrinberg.com/
 [3]: http://blog.miguelgrinberg.com/post/video-streaming-with-flask
 [4]: http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html
 [5]: http://baike.baidu.com/view/4875263.htm
+[6]: https://github.com/miguelgrinberg/flask-video-streaming/archive/master.zip
+[7]: http://baike.baidu.com/view/5730914.htm
+[8]: http://www.gevent.org/
+[9]: http://flask.pocoo.org/
 
 
