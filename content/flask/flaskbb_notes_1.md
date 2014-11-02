@@ -14,28 +14,28 @@ Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系�
 
     #!python
     def create_app(config=None):
-    """
-    Creates the app.
-    """
-    # Initialize the app
-    app = Flask("flaskbb")
+        """
+        Creates the app.
+        """
+        # Initialize the app
+        app = Flask("flaskbb")
 
-    # Use the default config and override it afterwards
-    app.config.from_object('flaskbb.configs.default.DefaultConfig')
-    # Update the config
-    app.config.from_object(config)
-    # try to update the config via the environment variable
-    app.config.from_envvar("FLASKBB_SETTINGS", silent=True)
+        # Use the default config and override it afterwards
+        app.config.from_object('flaskbb.configs.default.DefaultConfig')
+        # Update the config
+        app.config.from_object(config)
+        # try to update the config via the environment variable
+        app.config.from_envvar("FLASKBB_SETTINGS", silent=True)
 
-    configure_blueprints(app)
-    configure_extensions(app)
-    configure_template_filters(app)
-    configure_context_processors(app)
-    configure_before_handlers(app)
-    configure_errorhandlers(app)
-    configure_logging(app)
+        configure_blueprints(app)
+        configure_extensions(app)
+        configure_template_filters(app)
+        configure_context_processors(app)
+        configure_before_handlers(app)
+        configure_errorhandlers(app)
+        configure_logging(app)
 
-    return app
+        return app
     
 ## 配置
 
