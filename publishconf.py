@@ -54,6 +54,7 @@ MD_EXTENSIONS = [
         "smarty",
         "wikilinks",
         "admonition",
+        "nl2br",
         "codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)"]
 
 CNZZ_ANALYTICS = True
