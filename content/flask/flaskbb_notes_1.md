@@ -2,9 +2,13 @@ Title: FlaskBB阅读笔记（一）
 Date: 2014-11-28 23:25
 Modified: 2014-11-02 23:25
 Tags: python, flask
-Slug: flaskbb-notes
+Slug: flaskbb-notes-1
 Authors: Joey Huang
-Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。通过阅读FlaskBB源码来学习Flask构架，本系列文章主要记录阅读源码过程中的一些笔记。
+Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。
+
+## 开篇
+
+[FlaskBB][19]是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在[GitHub][19]上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。本文是这系列文章的第一遍。
 
 本文分析FlaskBB的主程序`app.py`的源码。我们从`create_app()`函数入手，分析FlaskBB的软件结构。
 
@@ -265,6 +269,6 @@ FlaskBB通过`configure_before_handlers()`函数来注册每个请求之前的�
 [16]: http://github.com/techniq/flask-script/
 [17]: http://jinja.pocoo.org/docs/dev/api/#custom-filters
 [18]: http://flask.pocoo.org/docs/0.10/templating/#context-processors
-
+[19]: https://github.com/sh4nks/flaskbb
 
 
