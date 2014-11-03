@@ -1,16 +1,16 @@
 Title: FlaskBB阅读笔记（一）
-Date: 2014-11-28 23:25
+Date: 2014-11-02 23:25
 Modified: 2014-11-02 23:25
 Tags: python, flask
 Slug: flaskbb-notes-1
 Authors: Joey Huang
-Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。
+Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。本文分析Flask程序主文件app.py的源码。进而了解一个产品级Flask应用的主体结构。
 
 ## 开篇
 
-[FlaskBB][19]是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在[GitHub][19]上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。本文是这系列文章的第一遍。
+[FlaskBB][19]是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。
 
-本文分析FlaskBB的主程序`app.py`的源码。我们从`create_app()`函数入手，分析FlaskBB的软件结构。
+本文是这系列文章的第一遍。本文分析FlaskBB的主程序`app.py`的源码。我们从`create_app()`函数入手，分析FlaskBB的软件结构。
 
     #!python
     def create_app(config=None):
