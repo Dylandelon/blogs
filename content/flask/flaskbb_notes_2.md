@@ -5,7 +5,6 @@ Tags: python, flask
 Slug: flaskbb-notes-2
 Authors: Joey Huang
 Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。本文分析了管理模块manage.py的实现，通过它学习Flask-Script扩展模块的用法。
-Status: draft
 
 ## 开篇
 
@@ -208,6 +207,67 @@ Flask-Script还提供了`prompt_pass()`，`prompt_choices()`等不同形态的�
 
 有了上面的背景知识，阅读`manage.py`就很轻松了。
 
+    #!python
+    @manager.option('-u', '--username', dest='username')
+    @manager.option('-p', '--password', dest='password')
+    @manager.option('-e', '--email', dest='email')
+    def initflaskbb(username=None, password=None, email=None):
+        """Initializes FlaskBB with all necessary data"""
+
+        app.logger.info("Creating default data...")
+        try:
+            create_default_groups()
+            create_default_settings()
+        except IntegrityError:
+            app.logger.error("Couldn't create the default data because it already "
+                             "exist!")
+            if prompt_bool("Do you want to recreate the database? (y/n)"):
+                db.session.rollback()
+                db.drop_all()
+                db.create_all()
+                create_default_groups()
+                create_default_settings()
+            else:
+                sys.exit(0)
+        except OperationalError:
+            app.logger.error("No database found.")
+            if prompt_bool("Do you want to create the database now? (y/n)"):
+                db.session.rollback()
+                db.create_all()
+                create_default_groups()
+                create_default_settings()
+            else:
+                sys.exit(0)
+
+        app.logger.info("Creating admin user...")
+        if username and password and email:
+            create_admin_user(username=username, password=password, email=email)
+        else:
+            create_admin()
+
+        app.logger.info("Creating welcome forum...")
+        create_welcome_forum()
+
+        app.logger.info("Congratulations! FlaskBB has been successfully installed")
+
+
+上面是`manage.py`里`initflaskbb`命令的代码。
+
+* Line 1-4: 声明了`initflaskbb`命令，并且带三个参数，分别是`username`，`password`，`email`用来创建管理员用户
+* Line 9-10: 创建论坛默认组和设置信息。具体后面分析应用程序的数据模型时再来深入分析。
+* Line 11-14: 如果捕获到`IntegrityError`异常，说明数据库中的相应数据已经存在，则用`prompt_bool`来提示用户是否覆盖原有数据
+* Line 22-24: 如何捕获到`OperationalError`异常，说明数据库不存在，用`prompt_bool`提示用户是否创建数据库
+* Line 33-36: 创建管理员帐户
+* Line 39: 创建默认的论坛板块
+
+我们可以通过运行下面的命令来初始化论坛数据：
+
+    :::shell
+    python manage.py initflaskbb -u admin -p admin -e admin@kamidox.com
+    
+## 结束语
+
+`manage.py`主要通过Flask-Script扩展来实现开发，调试及部署过程中的数据库初始化以及一些交互调试功能，是程序必不可少的组成部分。
 
 
 [1]: https://github.com/sh4nks/flaskbb
