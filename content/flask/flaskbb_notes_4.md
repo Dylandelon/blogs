@@ -5,6 +5,7 @@ Tags: python, flask
 Slug: flaskbb-notes-4
 Authors: Joey Huang
 Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。本文通过分析FlaskBB的自动测试代码，进而介绍Python下的自动化测试工具pytest。
+Status: draft
 
 ## 开篇
 
