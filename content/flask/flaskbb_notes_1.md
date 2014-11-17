@@ -6,6 +6,8 @@ Slug: flaskbb-notes-1
 Authors: Joey Huang
 Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。本文分析Flask程序主文件app.py的源码。进而了解一个产品级Flask应用的主体结构。
 
+[TOC]
+
 ## 开篇
 
 [FlaskBB][19]是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。

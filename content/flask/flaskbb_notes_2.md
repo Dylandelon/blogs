@@ -6,6 +6,8 @@ Slug: flaskbb-notes-2
 Authors: Joey Huang
 Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。本文分析了管理模块manage.py的实现，通过它学习Flask-Script扩展模块的用法。
 
+[TOC]
+
 ## 开篇
 
 [FlaskBB][1]是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。
@@ -31,7 +33,7 @@ Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系�
     :::shell
     cd ~
     git clone https://github.com/sh4nks/flaskbb.git
-    
+
 然后创建virtualenv：
 
     :::shell
@@ -39,12 +41,12 @@ Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系�
     virtualenv .venv
     source .venv/bin/activate
     pip install -r requirements.txt
-    
+
 拷贝配置文件：
 
     :::shell
     cp flaskbb/configs/development.py.example flaskbb/configs/development.py
-    
+
 创建数据库，并运行开发服务器：
 
     :::shell
@@ -75,7 +77,7 @@ Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系�
     def hello():
         "Just say hello"
         print "hello"
-    
+
     if __name__ == "__main__":
         manager.run()
 
@@ -84,7 +86,7 @@ Summary: FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系�
     :::shell
     $ python manage.py hello
     > hello world
-    
+
 用`@option`装饰器创建带参数的命令：
 
     :::python
@@ -264,7 +266,7 @@ Flask-Script还提供了`prompt_pass()`，`prompt_choices()`等不同形态的�
 
     :::shell
     python manage.py initflaskbb -u admin -p admin -e admin@kamidox.com
-    
+
 ## 结束语
 
 `manage.py`主要通过Flask-Script扩展来实现开发，调试及部署过程中的数据库初始化以及一些交互调试功能，是程序必不可少的组成部分。
