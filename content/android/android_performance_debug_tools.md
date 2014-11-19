@@ -1,4 +1,4 @@
-Title: Android应用程序性能优化工具介绍及调试实例
+Title: Android应用性能调试
 Date: 2014-11-18 23:30
 Modified: 2014-11-18 23:30
 Tags: android
@@ -114,12 +114,12 @@ GPU呈现模式分析让我们了解GPU刷新，并且能知道帧率能不能�
 
 我们可以打开录音机模块，看一下录音机这个模块在优化之前的GPU过度绘制显示图片：
 
-![IMAGE](http://kamidox-blogs.qiniudn.com/profile_recorder_1.png) ![IMAGE](http://kamidox-blogs.qiniudn.com/profile_recorder_list_1.png)
+![IMAGE](http://kamidox-blogs.qiniudn.com/recorder_1.png) ![IMAGE](http://kamidox-blogs.qiniudn.com/recorder_list_1.png)
 
 录音主界面可以看出两个明显的问题：
 
-1. 整个背景都蓝色的。这个应该可以优化，去掉一层。
-2. 底部区域是绿色的，需要分析一下是否可以优化。
+1. 整个背景都是蓝色的。这个应该可以优化，去掉一层。
+2. 底部区域是绿色的，被重绘了2次，需要分析一下是否可以优化。
 
 录音列表界面也可以看出一个问题：底部区域是蓝色的，重绘了2次，可以想办法优化。
 
@@ -277,11 +277,11 @@ LINE 35：底部区域有个背景图片`android:background="@drawable/op_bar_bg
 
 优化之后，我们再看一下这两个窗口在优化前后的样子：
 
-![IMAGE](http://kamidox-blogs.qiniudn.com/profile_recorder_1.png) ![IMAGE](http://kamidox-blogs.qiniudn.com/profile_recorder_2.png) 
+![IMAGE](http://kamidox-blogs.qiniudn.com/recorder_1.png) ![IMAGE](http://kamidox-blogs.qiniudn.com/recorder_2.png) 
 
 对比可以看得出来，录音主界面从原来是全屏蓝色，底部绿色变成背景全部无色。这样我们就省去了一层背景图片。
 
-![IMAGE](http://kamidox-blogs.qiniudn.com/profile_recorder_list_1.png) ![IMAGE](http://kamidox-blogs.qiniudn.com/profile_recorder_list_2.png)
+![IMAGE](http://kamidox-blogs.qiniudn.com/recorder_list_1.png) ![IMAGE](http://kamidox-blogs.qiniudn.com/recorder_list_2.png)
 
 而录音列表界面背景也变成无色的，即背景只画一次。
 
@@ -306,8 +306,8 @@ LINE 35：底部区域有个背景图片`android:background="@drawable/op_bar_bg
 
 一些关键数据的含义如下：
 
-字段名称                    | 含义
-----------------------------|---------------
+名称                        | 含义
+----------------------------|------------------------------------------------------
 Incl Cpu Time %             | 函数自己及其调用的函数总共所占用CPU的时间占总时间的百分比
 Incl Cpu Time               | 函数自己及其调用的函数总共所占用CPU的时间，单位为ms
 Excl CPU Time %             | 函数自己(不包含其调用的函数)运行时占用的CPU时间的百分比
