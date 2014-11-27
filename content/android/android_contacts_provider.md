@@ -1,11 +1,10 @@
-Title: Android Contacts Provider
-Date: 2014-10-18 22:00
-Modified: 2014-10-20 23:20
+Title: Android电话本核心数据结构
+Date: 2014-11-27 22:00
+Modified: 2014-11-27 23:20
 Tags: android, contacts, contacts provider
 Slug: android-contacts-provider
 Authors: Joey Huang
-Summary: 本文描述Contacts Provider的数据库表结构；同步适配器的原理及实现；电话本数据的访问和修改以及电话本数据的元数据架构。阅读本文可对电话本数据结构有全貌的了解。如果你正在开发维护Contacts模块，本文是必读资料。它将帮助你理解Contacts模块的所有的数据相关的操作。
-Status: draft
+Summary: 本文描述Contacts Provider的数据库结构；电话本数据的访问和修改以及电话本数据的元数据架构。阅读本文可对电话本数据结构有全貌的了解。如果你正在开发维护Contacts模块，本文是必读资料。它将帮助你理解Contacts模块的所有的数据相关的操作。
 
 [TOC]
 
@@ -18,7 +17,7 @@ Contact Provider是Android系统提供的一个功能强大且灵活的系统组
 * 怎么样修改Contact Provider里的联系人数据
 * 怎么样写一个同步适配器(sync adapter)来实现联系人数据的同步
 
-本文介绍你已经了解了Android的content provider机制。Android自带的一个示例程序SampleSyncAdapter很好地演示了如何写一个同步适配器，来把联系人数据同步到部署在Google Web Service上网络服务上。
+本文假设你已经了解了Android的content provider机制。Android自带的一个示例程序SampleSyncAdapter很好地演示了如何写一个同步适配器，来把联系人数据同步到部署在Google Web Service上网络服务上。
 
 ## Contact Provider结构
 
@@ -229,7 +228,7 @@ entity表让查询操作更简单。你可以一次从不同的表里获取出�
 !!! Note "注意"
     一个entity一般没有包含Contacts表及其子表的所有字段，如果试图访问这些不在entity表里的字段，会有异常抛出。
 
-下面的代码演示了如何从entity里获取记录数据。一个联系人应用程序一般有个列表显示联系人，点击后显示这个记录的详细信息，下面的代码是显示详细信息的一部分代码。即根据联系人的ID去获取所有的联系人。
+下面的代码演示了如何从entity里获取记录数据。一个联系人应用程序一般有个列表显示联系人，点击后显示这个记录的详细信息，下面的代码是显示详细信息的一部分代码。即根据联系人的ID去获取所有的联系人信息。
 
     :::java
         /*
@@ -295,4 +294,169 @@ entity表让查询操作更简单。你可以一次从不同的表里获取出�
                 null,                     //
                 sortOrder);               // Sort by the raw contact ID.
     }
+
+当数据加载结束，LoaderManager 会调用 Activity 的 onLoadFinish() 回调函数。这个回调函数的参数之一是 Cursor 对象，它包含了查询的结果集。应用程序可以从 Cursor 对象里获取数据并显示出来。
+
+### 批量操作
+
+在操作电话数据的增加，删除，修改时，尽量使用批量操作，通过创建一个 ArrayList 列表，列表里放 ContactProviderOperation 类的实例，最后再调用 ContentResolver.applyPatch() 方法来执行批量操作。Contact Provider 将把一次 applyPatch() 里的所有操作当成一个事务来执行，这样你的修改就不会造成数据不一致性。新建一个电话本记录时，批量操作也会把插入 RawContact 表里的数据和插入 Data 表里的数据放在一个事务里执行，确保数据的一致性。
+
+#### 释放点
+
+当指操作包含大量的操作时，执行起来虽然不会阻塞 UI 纯种，但系统整体很繁忙，会阻塞其它的进程。这样就会导致用户体验下降。一个解决方法是把所有操作通过合理的安排，放进几个独立的 ArrayList 对象里，同时为了不阻塞其他进程，可以在操作之间放一个**释放点**，释放点也是一个 ContentProviderOperation 实例，它的 isyieldAllowed() 会返回 true 。当 Contact Provider 执行这些操作时，遇到释放点后，它会停止事务，暂停操作，以便让其他程序运行。等到 Contact Provider 再次运行时，它将创建新的事务从上次暂停的地方继续执行操作。
+
+释放点会导致在一批操作被分隔成多个事务。正因为如此，你需要把释放点放在一批相关数据操作的结尾处。比如，你需要把释放点放在添加 RawContact 记录和添加相应的 Data 记录之后。以确保释放点之间的操作的数据一致性。
+
+释放点之间也是一个原子操作单元。所有在释放点之间的操作要么全部成功要么全部失败。如果没有设置释放点，那么整个批量操作都将作为一个原子操作，要么全部成功要么全部失败。使用释放点可以避免让系统性能受到挑战，同时又兼顾了数据操作的原子性。
+
+#### 反向引用
+
+当你把向 RawContact 里插入一条记录，以及把其相应的数据插入到 Data 表里作为一个批量操作时，你需要把 Data 表里的 RAW_CONTACT_ID 的值填成 RawContact 表里新插入的记录的 ID 值。而由于你还没有让 Contact Provider 去执行这个批量操作，即记录还没有在 RawContact 里生成，它的 ID 值是不可用的。为了解决这个问题， ContentProviderOperation.Builder 类提供了 withValueBackReference() 方法，用来让前一个操作的返回值作为当前操作的某个字段的值。
+
+withValueBackReference() 方法有两个参数：
+
+* key
+  键值对里的键值，它的值必须是要引用前一个操作返回值作为当前字段值的字段名称
+* previousResult
+  applyPatch() 函数返回的 ContentProviderResult 实例数组的索引值，这个索引值从0开始计数。当一个批量操作被 applyPatch() 执行时，每个操作都会有个返回值，其值是一个 ContentProviderResult 实例，通过数组组织起来返回。previousResult 是这个返回数组的索引值，用这个索引值获取到 ContentProviderResult，并把结果保存在由 key 指定的当前操作的字段上。这样就允许我们在插入 Data 表时，把其 RAW_CONTACT_ID 的值作为反向引用，引用之前的插入 RawContact 操作的返回值上。appyPatch() 调用时，其结果数组一次性被创建，数组的大小就是操作的个数。结果数组的值全部被设置为 null。所以，当反向引用一个还未执行的操作的结果上时， withValueBackReference() 会抛出一个异常。
+
+下面的代码演示如何向 raw contact 和 data 表里利用反向引用批量地插入数据。这个代码在 ContactManager 例子里。
+
+    #!java
+    /**
+     * Creates a contact entry from the current UI values in the account named by mSelectedAccount.
+     */
+    protected void createContactEntry() {
+        // Get values from UI
+        String name = mContactNameEditText.getText().toString();
+        String phone = mContactPhoneEditText.getText().toString();
+        String email = mContactEmailEditText.getText().toString();
+        int phoneType = mContactPhoneTypes.get(
+                mContactPhoneTypeSpinner.getSelectedItemPosition());
+        int emailType = mContactEmailTypes.get(
+                mContactEmailTypeSpinner.getSelectedItemPosition());;
+
+        // Prepare contact creation request
+        //
+        // Note: We use RawContacts because this data must be associated with a particular account.
+        //       The system will aggregate this with any other data for this contact and create a
+        //       coresponding entry in the ContactsContract.Contacts provider for us.
+        ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, mSelectedAccount.getType())
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, mSelectedAccount.getName())
+                .build());
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name)
+                .build());
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, phoneType)
+                .build());
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Email.DATA, email)
+                .withValue(ContactsContract.CommonDataKinds.Email.TYPE, emailType)
+                .build());
+
+        /*
+         * Demonstrates a yield point. At the end of this insert, the batch operation's thread
+         * will yield priority to other threads. Use after every set of operations that affect a
+         * single contact, to avoid degrading performance.
+         */
+        op.withYieldAllowed(true);
+
+        // Ask the Contact provider to create a new contact
+        Log.i(TAG,"Selected account: " + mSelectedAccount.getName() + " (" +
+                mSelectedAccount.getType() + ")");
+        Log.i(TAG,"Creating contact: " + name);
+        try {
+            getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (Exception e) {
+            // Display warning
+            Context ctx = getApplicationContext();
+            CharSequence txt = getString(R.string.contactCreationFailure);
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(ctx, txt, duration);
+            toast.show();
+
+            // Log exception
+            Log.e(TAG, "Exceptoin encoutered while inserting contact: " + e);
+        }
+    }
+
+* LINE 6 - 12 从编辑框里获取名字，电话，邮件以及电话类型和邮件类型。
+* LINE 19 - 23 构建一个操作，这个操作向 RawContact 插入一条记录。然后将这个操作放在批量操作列表里。记住，这个操作的索引值是 0 。
+* LINE 24 - 43 构建三个操作，分别向 Data 表里插入名字，电话和邮件。在这三个操作时，每个操作对 RAW_CONTACT_ID 的处理都使用了反向引用的原理，引用索引值为 0，即插入 RawContact 这个操作的返回值作为 Data 表里 RAW_CONTACT_ID 的值。
+* LINE 50 插入一个释放点。当 Contact Provider 执行到这里时可以把CPU释放出来给别的进程执行。
+* LINE 57 把这个批量操作列表提交给 Contact Provider 作为一个事务来执行。
+
+批量操作也可以用来**优化并发控制**，它让一个事务执行时不用对数据库加锁。要使用这个方法，你可以执行这个事务，然后检查其它的修改是否同时发生了。如果发现数据不一致，则回滚整个事务，然后重试。
+
+优化并发控制对手机设备特别有用，因为手机设备大部分情况下只有一个用户在使用，同时并发操作数据库的情景比较少。因为没有用锁来控制数据操作，所以不需要花时间来请求锁和释放锁，这样整个系统性能会比较好。要使用**优化并发控制**来修改一行 RawContact 的数据，可以用下面的步骤来进行：
+
+1. 获取 RawContact 的数据时，把 VERSION 字段也一并获取出来
+2. 使用 newAssertQuery(Uri) 静态方法来创建 ContentProviderOperation.Builder 实例，其 Uri 参数使用 RawContacts.CONTENT_URI 加 RawContact._ID组合起来。
+3. 对创建出来的 ContentProviderOperation.Builder 实例，使用 withValue() 来和步骤 1 获取出来的 VERSION 字段值进行比较。
+4. 对同一个 ContentProviderOperation.Builder 实例，使用 withExpectedCount() 来保证获得出来的记录有且只有一条。
+5. 调用 build() 方法来创建 ContentProviderOperation 实例，并把它添加到批量操作列表的第一项。
+6. 调用 applyPatch() 来执行这个事务。
+
+如果一个潜在的修改在你获取数据和修改数据之间发生，那么 VERSION 值将会自动递增，这样步骤 4 的断言动作就会失败，从而整个事务都会回退。这样你可以选择重试或其它操作，总之数据会保持一致。下面的代码演示如何使用 CursorLoader 来创建包含**断言**的 ContentProviderOperation 实例。
+
+    #!java
+    /*
+     * The application uses CursorLoader to query the raw contacts table. The system calls this method
+     * when the load is finished.
+     */
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+        // Gets the raw contact's _ID and VERSION values
+        mRawContactID = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
+        mVersion = cursor.getInt(cursor.getColumnIndex(SyncColumns.VERSION));
+    }
+
+    ...
+
+        // Sets up a Uri for the assert operation
+        Uri rawContactUri = ContentUris.withAppendedId(RawContacts.CONTENT_URI, mRawContactID);
+
+        // Creates a builder for the assert operation
+        ContentProviderOperation.Builder assertOp = ContentProviderOperation.netAssertQuery(rawContactUri);
+
+        // Adds the assertions to the assert operation: checks the version and count of rows tested
+        assertOp.withValue(SyncColumns.VERSION, mVersion);
+        assertOp.withExpectedCount(1);
+
+        // Creates an ArrayList to hold the ContentProviderOperation objects
+        ArrayList ops = new ArrayList<ContentProviderOperationg>;
+
+        ops.add(assertOp.build());
+
+        // You would add the rest of your batch operations to "ops" here
+
+        ...
+
+        // Applies the batch. If the assert fails, an Exception is thrown
+        try
+            {
+                ContentProviderResult[] results =
+                        getContentResolver().applyBatch(AUTHORITY, ops);
+
+            } catch (OperationApplicationException e) {
+
+                // Actions you want to take if the assert operation fails go here
+            }
+
+## 结语
+
+联系人的数据结构特别复杂。把握住了本文介绍的这几个核心数据结构及操作。基本上原电话本就会有一个全面的了解。下一篇关于电话本的文章，我们将结合 Android 的示例程序 SampleSyncAdapter 来介绍如何做一个电话本同步服务器以及如何在手机端添加一个同步适配器来同步自己的电话本数据。
 
