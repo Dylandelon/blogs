@@ -1,6 +1,11 @@
 Title: Android电话本核心数据结构
+<<<<<<< HEAD
 Date: 2014-11-27 22:00
 Modified: 2014-11-27 23:20
+=======
+Date: 2014-10-18 22:00
+Modified: 2014-10-20 23:20
+>>>>>>> 6c4db38bb53a64e4f9f5fb16fc5066fbff145cbb
 Tags: android, contacts, contacts provider
 Slug: android-contacts-provider
 Authors: Joey Huang
