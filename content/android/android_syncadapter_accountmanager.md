@@ -1,4 +1,4 @@
-Title: Android数据同步和帐户管理
+Title: Android　联系人数据同步
 Date: 2014-11-28 22:00
 Modified: 2014-11-28 23:20
 Tags: android, SyncAdapter, AccountManager
@@ -94,6 +94,41 @@ PHOTO_URI           | 直接指向照片文件的 Uri，可以直接调用 `open
 ### 查看联系人事件及社交信息流查看
 
 为了当用户打开一个联系人查看时同步适配器能收到通知，需要通过下面的步骤来完成一些配置：
+
+1. 在项目的 res/xml/ 目录下创建一个名为 contacts.xml 的文件。如果这个文件已经有了，这一步可以跳过。
+2. 在这个文件里，添加 `<ContactsAccountType xmlns:android="http://schemas.android.com/apk/res/android">`，如果这个标签已经存在，则跳过这个步骤。
+3. 向这个 xml 元素添加 `viewContactNotifyService="serviceclass"` 属性，这样就向设备的联系人应用程序注册了一个服务，当用户打开联系人的详情页面时，这个服务会收到通知。其中 serviceclass 是要接收这个通知的 intent 的类名。在实现时，可以通过继承 `IntentService` 类来让 service 可以接受 intent 。用户查看的联系人的 RawConctact 的 URI 在 intent 的 data 里。在这个 service 里，我们可以根据这个 URI 来让同步适配器更新针对这个联系人的相关数据。
+
+为了当用户点击社交信息流或照片时，能打开自定义的 activity。需要做如下配置。
+
+1. 在项目的 res/xml/ 目录下创建一个名为 contacts.xml 的文件。如果这个文件已经有了，这一步可以跳过。
+2. 在这个文件里，添加 `<ContactsAccountType xmlns:android="http://schemas.android.com/apk/res/android">`，如果这个标签已经存在，则跳过这个步骤。
+3. 向这个 xml 元素添加 `viewStreamItemActivity="activityclass"` 属性，这样当用户通过设备的联系人应用程序点击社交流信息时，这个 activity 就会收到一个 intent 通知。向 xml 元素添加 `viewStreamItemPhotoActivity="activityclass"` 属性，这样当用户通过设备的联系人应用程序点击社交流照片时，这个 activity 就会收到一个 intent 通知。系统传进来的 intent 里包含有社交流信息或照片的 content URI。
+
+### 与社交网络服务交互
+
+用户不必离开设备的联系人应用就能邀请联系人加入你的社交网络服务。你可以让设备的联系人应用通过你的一个 activity 来邀请联系人加入你的社交网络。
+
+1. 在项目的 res/xml/ 目录下创建一个名为 contacts.xml 的文件。如果这个文件已经有了，这一步可以跳过。
+2. 在这个文件里，添加 `<ContactsAccountType xmlns:android="http://schemas.android.com/apk/res/android">`，如果这个标签已经存在，则跳过这个步骤。
+3. 向这个 xml 元素添加 `inviteContactActivity="activityclass"`　和 `inviteContactActionLabel="@string/invite_action_label"` 属性， activityclass 是接收 intent 的类，invite_action_label 是一个文本，它将会出现在设备的联系人应用的添加连接菜单里。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
