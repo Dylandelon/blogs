@@ -5,7 +5,6 @@ Tags: python, flask
 Slug: flaskbb-notes-3
 Authors: Joey Huang
 Summary: FlaskBB 是用 Flask 实现的一个轻量级论坛社区软件。本系列文章通过阅读 FlaskBB 的源代码来深入学习 Flask 框架以及在一个产品级的 Flask 应用里的一些最佳实践规则。本文介绍 ORM 基础知识，分析 Flask-SQLAlchemy 及 sqlalchemy ORM 引擎的一些常用方法，进而介绍 FlaskBB MVC 代码结构。
-Status: draft
 
 [TOC]
 
@@ -201,7 +200,7 @@ LINE 9 - 10 是用来从 users 表里删除一条记录。LINE 5-7 是用来在�
         return Topic.query.filter(Topic.user_id == self.id).count()
 
 再如 `User.delete()` 的代码里删除用户相关的数据的代码：
-    
+
     #!python
     PrivateMessage.query.filter_by(user_id=self.id).delete()
     ForumsRead.query.filter_by(user_id=self.id).delete()
@@ -216,10 +215,10 @@ LINE 9 - 10 是用来从 users 表里删除一条记录。LINE 5-7 是用来在�
     db.session.commit()
 
 通过 `self.secondary_groups.all()` 获取所有的群组，然后在这些群组里把用户移除。
-        
+
 !!! Note "filter() vs filter_by()"
     `filter(*criterion)` 使用 SQL 表达式，而 `filter_by(**kwargs)` 使用关键字表达式。从函数声明可以看出来 `filter()` 接受的参数是一个元组表达式，而 `filter_by()` 接受的是一个 dict 表达式。所以，`Topic.query.filter(Topic.user_id == self.id).count()` 等价于 `Topic.query.filter_by(user_id = self.id).count()`。关于这个区别，还可以进一步查阅 [StackOverFlow][3] 及 [SegmentFault][4] 上的文章，还有[官方的文档][5]。顺便吐槽一下，从这个对比可以看出来 StackOverFlow 和国内 SegmentFault 质量差异，顺便再感慨一下，学 IT 的人英文不好你就等着受苦吧，永远接触不到第一手的权威资料。
-    
+
 关于查询还需要说明的一点，Flask-SQLAlchemy 提供了便利的函数 `get_or_404()` 及 `first_or_404()` 来替代 `get()` 和 `first()` 方法。这两个方法在 view 里特别有用，如找不到这个用户时，直接抛出 404 异常。而不是返回一个 None。
 
     #!python
