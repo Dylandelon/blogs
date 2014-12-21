@@ -1,11 +1,10 @@
 Title: FlaskBB阅读笔记（四）
-Date: 2014-11-17 23:00
-Modified: 2014-11-17 23:00
+Date: 2014-12-21 23:00
+Modified: 2014-12-21 23:00
 Tags: python, flask
 Slug: flaskbb-notes-4
 Authors: Joey Huang
 Summary: FlaskBB 是用 Flask 实现的一个轻量级论坛社区软件。本系列文章通过阅读 FlaskBB 的源代码来深入学习 Flask 框架以及在一个产品级的 Flask 应用里的一些最佳实践规则。本文通过分析 FlaskBB 的自动测试代码，进而介绍 Python 下的自动化测试工具 pytest。
-Status: draft
 
 [TOC]
 
@@ -43,7 +42,7 @@ FlaskBB的测试代码在tests目录下：
 在FlaskBB项目目录下执行`py.test tests`输出以下测试结果：
 
     :::shell
-    (.venv)kamidox@kamidox-laptop:~/code/flaskbb$ py.test tests 
+    (.venv)kamidox@kamidox-laptop:~/code/flaskbb$ py.test tests
     ============================= test session starts ==============================
     platform linux2 -- Python 2.7.6 -- py-1.4.25 -- pytest-2.6.3 -- /home/kamidox/co
     de/flaskbb/.venv/bin/python
