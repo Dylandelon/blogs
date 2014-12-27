@@ -69,4 +69,7 @@ THEME = "themes/foundation-default-colours"
 RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
+# weibo auth
+TEMPLATE_PAGES = {'wb_305ecb5714d4db06.txt': 'wb_305ecb5714d4db06.txt'}
+
 

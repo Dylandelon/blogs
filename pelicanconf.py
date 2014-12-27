@@ -57,3 +57,5 @@ THEME = "themes/foundation-default-colours"
 #THEME = "/home/kamidox/pelican/pelican-themes/foundation-default-colours"
 #THEME = "themes/tuxlite_tbs"
 
+# weibo auth
+TEMPLATE_PAGES = {'wb_305ecb5714d4db06.txt': 'wb_305ecb5714d4db06.txt'}
