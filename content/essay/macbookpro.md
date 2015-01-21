@@ -5,7 +5,6 @@ Tags: thought
 Slug: macbookpro
 Authors: Joey Huang
 Summary: 长这么大，终于奢侈了一把，入手了 Macbook Pro。虽然我远不是果粉，对 IPhone 和 IPad 也不感冒，但还是被 Macbook Pro 震撼到了。是的，我确认用震撼这个词。
-Status: draft
 
 长这么大，终于奢侈了一把，入手了 Macbook Pro。虽然我远不是果粉，对 IPhone 和 IPad 也不感冒，但还是被 Macbook Pro 震撼到了。是的，我确认用**震撼**这个词
 

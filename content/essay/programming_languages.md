@@ -2,7 +2,7 @@ Title: 学习一种新编程语言时，我们到底是要学什么
 Date: 2015-01-08 23:20
 Modified: 2015-01-08 23:20
 Tags: thought
-Slug: career-relationship
+Slug: programe-languages
 Authors: Joey Huang
 Summary: 编程语言不下千种，即使是最主流的编程语言也有很多种，我们学习一种编程语言时，到底是要学习什么？只是语法的不同吗？
 Status: draft
