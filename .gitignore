@@ -50,3 +50,4 @@ pelican.pid
 srv.pid
 
 *.rdb
+Makefile
