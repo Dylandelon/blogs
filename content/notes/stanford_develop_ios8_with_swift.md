@@ -1,3 +1,11 @@
+Title: 使用Swift开发iOS8应用程序
+Date: 2015-02-18 20:20
+Modified: 2015-02-18 20:20
+Slug: swift
+Authors: Joey Huang
+Summary: 本文是读书笔记
+Status: draft
+
 ## 使用Swift开发iOS8应用程序
 
 Stanford公开课：[iTunes Stanford CS193p][1]
@@ -179,4 +187,4 @@ switch Optional<T> {
 ```
 类似这种伪代码的解释，非常清晰地解释了一些复杂的概念。
 
-[1]: https://itunesu.itunes.apple.com/WebObjects/LZDirectory.woa/ra/directory/courses/961180099/feed
+[1]: https://itunesu.itunes.apple.com/WebObjects/LZDirectory.woa/ra/directory/courses/961180099/feed
