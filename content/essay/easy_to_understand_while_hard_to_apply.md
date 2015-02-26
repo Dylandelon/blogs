@@ -4,7 +4,7 @@ Modified: 2015-01-08 23:24
 Tags: thought
 Slug: easy-to-understand-while-hard-to-apply
 Authors: Joey Huang
-Summary: 我们明白人生的所有道理，却依然可能过不好这一生。
+Summary: 明白了人生的所有道理，却依然过不好这一生。
 
 ## 知易行难
 
