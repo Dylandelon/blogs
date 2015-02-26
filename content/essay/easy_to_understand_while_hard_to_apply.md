@@ -6,8 +6,6 @@ Slug: easy-to-understand-while-hard-to-apply
 Authors: Joey Huang
 Summary: 明白了人生的所有道理，却依然过不好这一生。
 
-## 知易行难
-
 网上流传一句话：
 > 明白了人生的所有道理，却依然过不好这一生。
 
