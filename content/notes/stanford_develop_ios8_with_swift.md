@@ -6,6 +6,8 @@ Authors: Joey Huang
 Summary: 本文是读书笔记
 Status: draft
 
+[TOC]
+
 ## 使用Swift开发iOS8应用程序
 
 Stanford公开课：[iTunes Stanford CS193p][1]
@@ -24,8 +26,8 @@ Stanford公开课：[iTunes Stanford CS193p][1]
 * 访问文档: 按住 ALT 键，鼠标点击相应的类或变量
 * Optionals: 这个是 Swift 引入的一个非常重要的概念
 
-!!! Notes
-关于 Optionals 可以参阅 The Swift Programming Language 里的 `Optional Chaining` 一节的内容。里面有一个详细的示例程序。
+!!! note "Optional"
+    关于 Optionals 可以参阅 The Swift Programming Language 里的 `Optional Chaining` 一节的内容。里面有一个详细的示例程序。
 
 ### 第二课
 
@@ -36,8 +38,7 @@ Stanford公开课：[iTunes Stanford CS193p][1]
 * Closure: 闭包，特别是闭包的简化写法，包括省略参数使用 $0, $1 代替；省略 return 关键字；把最后一个参数放在最后函数拨号之后等。
 * MVC: Controller 可以直接和 Model 和 View 通信。View 可以发送 Action 到 Controller 里的某个 Target，View 可以通过 delegate 在 Controller 里设置代理。Model 不能直接和 Controller 通信，他们之间使用 subscriber 模式进行通信，Model 设置一个通知中心，Controller 通过向通知中心注册事件通知的方式来获取 Model 的变化信息。
 
-!!! Notes
-关于 Closure，视频教程里最终把一段复杂的代码简化为如下简单的代码：
+*关于 Closure，视频教程里最终把一段复杂的代码简化为如下简单的代码*
 
 ```swift
 	performOperatoer() { $0 * $1 }
@@ -67,11 +68,11 @@ Stanford公开课：[iTunes Stanford CS193p][1]
 *  `NSData`: 字节流类
 *  Class v.s Struct: 大部分时候，我们使用 class 而不使用 struct。struct 是给 Foundation 使用的。
 
-**函数参数**
+####函数参数
 
 在 Swift 里的函数参数全部是命名参数。默认情况下，第一个参数调用者可以不用指定名字，而第二个起，需要指定参数名字。
 
-**Properties Observer**
+####Properties Observer
 
 可以通过 `willSet`, `didSet` 来监控参数的改变。
 
@@ -95,7 +96,7 @@ override var prop {
 // 问题: 给继承的属性添加监听器后，父亲类的 willSet, didSet 会自动被调用吗？
 ```
 
-**Lazy init**
+####Lazy init
 
 Lazy init的属性只有在第一次被访问时才会被初始化，对那些开销比较大的属性这是个非常好的机制，可以让类快速创建。
 
@@ -111,11 +112,11 @@ lazy var prop: Type = {
 lazy var prop = self.initSomeExpensiveProp()
 ```
 
-**构造函数**
+####构造函数
 
 阅读构造函数的几个规则，用代码来演示。
 
-**AnyObject**
+####AnyObject
 
 AnyObject 可以指向任意的类。使用时可以使用 as 或 as? 来转化，也可以使用 is 关键字来判断是不是属于一个特定的类。
 
@@ -135,7 +136,7 @@ if item is UIBarButtonItem {
 
 ```
 
-**Array<T>**
+####Array<T>
 
 数组提供了一些很有意思的方法。`sort`，`replace`, `insert`等。另外还有一些可以批量处理数组里的元素的方法。
 
@@ -154,7 +155,7 @@ reduce(initial: U, combine: (U, T) -> U) -> U
 let sum: Int = [1, 2, 3].reduce(0) { $0 + $1 }
 ```
 
-**关于教学方式**
+####关于教学方式
 
 这一节里讲解了大量比较枯燥的语法和基础知识。从这里也可以看到教学的脉络：先用一个合适的 demo 来给学生建立成就感和兴趣。然后再回到基础性的和原理性的内容上。
 
@@ -186,5 +187,112 @@ switch Optional<T> {
 }
 ```
 类似这种伪代码的解释，非常清晰地解释了一些复杂的概念。
+
+### 第五课
+
+### 第六课
+
+####Protocols
+
+前面主要介绍了 protocol，其概念类似 Java 里面的 interface。其和 Java 的 interface 有一个区别就是，swift 的 protocol 支持 optional metnod。
+
+```swift
+@objc protocol Car {
+	optional func fillGas()
+	optional func fillWater() -> Bool
+}
+```
+
+有几个关键点：
+
+* optional 协议必须添加 `@objc` 前缀
+* 添加了 `@objc` 前缀的 protocol 有以下几个特性：
+	* 只能由类来实现，不能由结构体和枚举实现
+	* 可以使用 `is`, `as`, `as?` 来判断是否实现特定协议
+	* 只能使用和 Object-C 兼容的数据类型，比如不能使用 swfit 特有的 optional
+
+####Delegate
+
+由 `protocol` 引入了一个 MVC 的设计理念。View 和 Controller 通信时，View 不能直接引用 Controller，view 通过 protocol 来设置一个 Controller 的委托代理来实现通信。主要步骤如下：
+
+* 创建一个代理协议 (delegation protocol)，描述用到这个 View 的 Controller 需要具备哪些特性，需要实现哪些协议
+* 在 View 里创建一个委托代理属性 (delegate property)，其数据类型就是这个 protocol
+* 在 View 里使用这个 protocol 实例来和使用这个 View 的 Controller 通信
+* Controller 声明它支持这个协议
+* Controller 把自己设置成 View 的委托代理属性 (步骤 2 里创建的)
+* Controller 实现这个协议
+
+```swift
+/**
+ * MARK: code in View 
+ */
+
+// define delegation protocol, it can only implement by class
+protocol HappinessDataSource: class {
+	func smilinessForFaceView(sender: UIView) -> Double?
+}
+
+// define delegate property as weak reference
+weak var dataSource: HappinessDataSource? = nil
+
+// use delegate property to do/get things not belong to View
+let smiliness = dataSource?.smilinessForFaceView(self) ?? 0.5
+
+/**
+ * MARK: code in Controller 
+ */
+
+// declare that this will implement HappinessDataSource protocol
+HappinessViewController: UIViewController, HappinessDataSource {
+
+    @IBOutlet weak var faceView: FaceView! {
+        didSet {
+        	// set myself as View's delegate property
+            faceView.dataSource = self
+        }
+    }
+
+	// implement delegation protocol
+    func smilinessForFaceView(sender: FaceView) -> Double? {
+        return ((Double)(happiness - 50)) / 50
+    }
+}
+```
+
+!!! note "week reference"
+    `dataSource` 定义为 `weak var` 这个涉及到内存管理，它不会阻止 dataSource 指向的实例被回收。另外由于 swift 里只有类才涉及到引用传递，所以这里的 dataSource 必须指向一个类，而不能是 struct 或 enum。所以，这里的 protocol 定义为 class，即只有类才能实现这个协议。
+
+####TIPS
+
+* `??` 运算符：`let v = dataSource?.getData(i, self) ?? "empty"`
+* Command + Shift + o: 快速打开文件或变量
+
+####Gesture
+
+使用 iOS 内置的手势识别类来处理用户操作事件。关键有两个动作。
+
+* 给 View 添加动作识别
+* 提供一个函数来处理这个动作
+
+```swift
+@IBOutlet weak var pannableView: UIView {
+    didSet {
+        let recognizer = UIPanGestureRecognizer(target: self, action: “pan:”)
+        pannableView.addGestureRecognizer(recognizer)
+    }
+}
+
+func pan(gesture: UIPanGestureRecognizer) {
+	switch gesture.state {
+	case .Changed: fallthrough
+	case .Ended:
+		let translation = gesture.translationInView(pannableView)
+		// update anything that depends on the pan gesture using translation.x and .y
+		gesture.setTranslation(CGPointZero, inView: pannableView)
+	default: break
+	} 
+}
+
+```
 
 [1]: https://itunesu.itunes.apple.com/WebObjects/LZDirectory.woa/ra/directory/courses/961180099/feed
