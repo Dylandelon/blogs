@@ -51,4 +51,5 @@ println("\(array)")
 
 > LICEcap can capture an area of your desktop and save it directly to .GIF or .LCF
 
+[1]: http://www.cockos.com/licecap/
 
