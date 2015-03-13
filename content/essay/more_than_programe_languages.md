@@ -1,6 +1,6 @@
 Title: 除了编程语言，程序员还需要知道哪些东西
-Date: 2015-01-08 23:20
-Modified: 2015-01-08 23:20
+Date: 2015-03-13 23:34
+Modified: 2015-03-13 23:34
 Tags: thought
 Slug: more-than-programe-languages
 Authors: Joey Huang
