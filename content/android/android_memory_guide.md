@@ -5,6 +5,7 @@ Tags: android
 Slug: android-memory-guide
 Authors: Joey Huang
 Summary: 本文介绍了android平台上内存管理机制以及开发过程中关于内存使用的注意事项以及内存相关问题的调试方法和调试工具。
+Status: draft
 
 ### 内存和性能
 
