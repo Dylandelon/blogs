@@ -1,4 +1,4 @@
-Title: 欲望之源读书笔记
+Title: 《欲望之源》读书笔记
 Date: 2015-03-27 23:30
 Modified: 2015-03-27 23:30
 Tags: thought
