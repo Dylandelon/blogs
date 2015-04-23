@@ -133,13 +133,13 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 
 * 在 DDMS 里导出 HPROF 文件前，最好手动执行一下 GC。目的是让导出的内存全部是被引用的。否则在做内存占用对比时，会有很多不必要的内存占用被标识出来，干扰我们进行分析。
 * 进行对比时，最好是选择操作较多的和操作较少的对比，这样得出的 delta 是正数
-* 通过对比，发现内存泄漏时，可以用 QQL 来查询，并通过 Root to GC 功能来找到发生泄漏的源代码
+* 通过对比，发现内存泄漏时，可以用 OQL 来查询，并通过 Root to GC 功能来找到发生泄漏的源代码
 
 在我们的示例程序里面，每次点击 Settings 菜单，都会导致一次100KB的内存泄漏。下面是我们利用上面介绍的流程来查找内存泄漏问题。我们先点击 5 次 Settings 菜单，然后手动触发一次 GC，再导出 HPROF 文件。接着，我们再点击 6 次 Settings 菜单，然后手动触发一次 GC，再导出第二份 HPROF 文件。我们拿这两份 HPROF 就可以做一些对比。
 
 ![mat_diff.png](https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_diff.png)
 
-通过上图可以看到，两次操作确实导致了某些类的实例增加了。图中可以清楚地看到 byte[] 和 java.util.HashMap$HashMapEntry 两个类增加得比较明显。这样，我们随便选择一个，通过 QQL 来查询系统中的这个内存。
+通过上图可以看到，两次操作确实导致了某些类的实例增加了。图中可以清楚地看到 byte[] 和 java.util.HashMap$HashMapEntry 两个类增加得比较明显。这样，我们随便选择一个，通过 OQL 来查询系统中的这个内存。
 
 ![mat_qql.png](https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_qql.png)
 
