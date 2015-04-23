@@ -162,7 +162,7 @@ Google 视频介绍的内容是硬知识，了解这些知识可以帮助我们�
 
 **冷知识**
 
-GC 是在 1959 年由 John McCarthy 发明的，此发明是为了解决 Lisp 编程语言里的内存问题的。《黑客和画家》作者，硅谷最有影响力的孵化器公司 YC 创立者 Paul Graham 高度评价 Lisp 语言，认为编程语言发展到现在，还是没有跳出 Lisp 语言在上世纪 60 年代所倡导的那些理念。并且，他还把自己当初创业，实现财务自由的项目 Viaweb 的成功归功于 Lisp 语言。详细可阅读 Paul Graham 的[这篇博客][1]和[这篇博客][2]。
+GC 是在 1959 年由 John McCarthy 发明的，此发明是为了解决 Lisp 编程语言里的内存问题的。[《黑客和画家》][13]作者，硅谷最有影响力的孵化器公司 YC 创立者 Paul Graham 高度评价 Lisp 语言，认为编程语言发展到现在，还是没有跳出 Lisp 语言在上世纪 60 年代所倡导的那些理念。并且，他还把自己当初创业，实现财务自由的项目 Viaweb 的成功归功于 Lisp 语言。详细可阅读 Paul Graham 的[这篇博客][1]和[这篇博客][2]。
 
 
 [1]: http://www.paulgraham.com/hundred.html
@@ -177,3 +177,4 @@ GC 是在 1959 年由 John McCarthy 发明的，此发明是为了解决 Lisp �
 [10]: http://android-developers.blogspot.hk/2011/03/memory-analysis-for-android.html
 [11]: http://pan.baidu.com/s/1sj3Exsx
 [12]: http://docs.oracle.com/javase/7/docs/technotes/samples/hprof.html
+[13]: http://book.douban.com/subject/6021440/
