@@ -113,6 +113,50 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 
 示例代码使用 Android Studio 开发环境，可以从[这里][11]下载。
 
+### 利用 MAT 分析内存问题
+
+介绍两个典型的情景
+
+**内存泄漏**
+
+一个典型的问题是 Android 系统越用越慢。这种典型地是由内存泄漏引起的。一个很有用的解决这种问题的办法是：比较前后两个阶段的内存的使用情况。一般流程如下：
+
+1. 利用 ddms 工具 dump HPROF file
+2. 利用 hprof-conv 把 dalvik 格式的转换为普通 jvm 格式
+3. 重复步骤 1 和 2 抓出两份 LOG。
+4. 利用 MAT 对两份 HRPOF 文件进行分析，结合代码找出可能存在的内存泄漏
+
+比如针对拨号盘越来越慢的问题，我们可以开机后启动拨号盘，打进打出10个电话。然后抓个 HPROF 文件。接着，再打进打出10个电话，再抓一个 HPROF 文件。接着拿这两个文件对比分析，看是不是会造成电话打进打出越多，内存占用越多的情况发生。
+
+!!! notes "HPROF文件"
+    HPROF 简单地理解，就是从 jvm 里 dump 出来的内存和 CPU 使用情况的一个二进制文件。它的英文全名叫 A Heap/CPU Profiling Tool。[这里][12]有它完整的官方文档和它的历史介绍。
+
+
+打开 MAT 后，会有一个 Tutorials 来教大家怎么用。这里列出几个操作步骤及其注意事项。
+
+* 在 DDMS 里导出 HPROF 文件前，最好手动执行一下 GC。目的是让导出的内存全部是被引用的。否则在做内存占用对比时，会有很多不必要的内存占用被标识出来，干扰我们进行分析。
+* 进行对比时，最好是选择操作较多的和操作较少的对比，这样得出的 delta 是正数
+* 通过对比，发现内存泄漏时，可以用 QQL 来查询，并通过 Root to GC 功能来找到发生泄漏的源代码
+
+下面是我们查找内存泄漏的例子：
+
+![mat_diff.png](https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_diff.png)
+
+通过上图可以看到，两次操作确实导致了某些类的实例增加了。图中可以清楚地看到 byte[] 和 java.util.HashMap$HashMapEntry 两个类增加得比较明显。这样，我们随便选择一个，通过 QQL 来查询系统中的这个内存。
+
+![mat_qql.png](https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_qql.png)
+
+从上图可以找到，本次 dump 出来的内存里，确实有很多个这个类的实例。在图上右击任何一个实例，右击，选择 `Paths to GC roots`，可以找到这个实例是被谁引用的。
+
+![mat_gc_root.png](https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_gc_root.png)
+
+从上图可以看出来，这个内存是被 MainActivity 里的 sCache 引用的。通过阅读代码，我们就可以找到这个漏洞了。即每次都往 sCache 里保存一个引用。
+
+### 总结
+
+Google 视频介绍的内容是硬知识，了解这些知识可以帮助我们写出高质量，高性能的代码。而 MAT, HPROF, Memory Monitor, Allocation Tracker 提供了一个“破案”的工具给我们。我们利用这些工具，倒回来去发现代码里的问题。
+
+
 ### 延伸阅读
 
 关于 Android 性能优化，网络上有几篇比较好的文章，基本按照 GOOGLE 的官方教程翻译过来的，质量比较高。可以参考一下。
@@ -136,3 +180,4 @@ GC 是在 1959 年由 John McCarthy 发明的，此发明是为了解决 Lisp �
 [9]: http://www.eclipse.org/mat/downloads.php
 [10]: http://android-developers.blogspot.hk/2011/03/memory-analysis-for-android.html
 [11]: http://pan.baidu.com/s/1sj3Exsx
+[12]: http://docs.oracle.com/javase/7/docs/technotes/samples/hprof.html
