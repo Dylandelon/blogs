@@ -5,7 +5,6 @@ Tags: android
 Slug: android-memory-guide
 Authors: Joey Huang
 Summary: 本文介绍了 android 平台上内存管理机制以及开发过程中关于内存使用的注意事项以及内存相关问题的调试方法和调试工具。
-Status: draft
 
 ### 官方教程
 
@@ -87,10 +86,10 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 内存抖动的特征：
 
 从 Memory Monitor 来看，有毛刺出现。即短时间内分配大量的内存并触发 GC。
-[!memory_churn](https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_churn.gif)
+![memory_churn](https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_churn.gif)
 
 从 Allocation Tracker 里看，一次操作会有大量的内存分配产生。
-[!memory_tracker](https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_tracker.png)
+![memory_tracker](https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_tracker.png)
 
 **内存泄漏**
 
@@ -108,7 +107,7 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 内存泄漏的特征：
 
 从 Memory Monitor 来看，内存占用越来越大
-[!memory_tracker](https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_leak.png)
+![memory_tracker](https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_leak.png)
 
 利用 [MAT][9] 工具进行专业分析。这是个很大的话题。几乎可以独立成几个章节来讲。可以参阅 MAT 本身自带的 Tutorials 来学习。另外，[这篇文章][10]里的分析方法是个不错的开始。
 
