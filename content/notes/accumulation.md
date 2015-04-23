@@ -6,6 +6,35 @@ Authors: Joey Huang
 Summary: 日积月累
 Status: draft
 
+[TOC]
+
+## 20150423
+
+#### 做成一件事情
+
+* 选择一个方向：Android 进阶社区
+* 持续输入价值：入门，进阶，疑难问题案例分析
+* 持续运营：把文章/视频发到热闹的社区引流
+* 想像空间：证明团队价值；与更大的世界发生交集；
+
+**注意点：**专注；持续；快乐。忌朝三暮四，左顾右盼。
+
+## 20150419
+
+#### Android Performance Training
+
+* udacity.com 上来自 google 官方的原始资料
+  https://www.udacity.com/course/viewer#!/c-ud825/l-3729268966/m-3785788694
+* ChinaGDG from youku.com
+  整理出几个专题：主要是内存专题和电池专题。同归复习渲染和运算专题。
+  http://www.youku.com/playlist_show/id_23494296.html
+* 通过示例现场演示几个工具的使用
+  Memory Monitor, Heap Viewer, Allocation Tracker
+* 可参考的文章
+  huhai.me
+  http://hukai.me/android-performance-memory
+
+
 ## 20150416
 
 #### wallsplash-android MainActivity.java
@@ -14,6 +43,8 @@ Status: draft
   definitin of MainActivity.Category
 * materialdrawer
   https://github.com/mikepenz/MaterialDrawer
+* OpenLibra-Material
+  https://github.com/saulmm/OpenLibra-Material
 * aboutlibraries
   https://github.com/mikepenz/AboutLibraries
 * iconics
