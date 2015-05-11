@@ -108,6 +108,9 @@ dependencies {
 
 #### LeakCanary 架构图
 
+![leakcanary](https://raw.githubusercontent.com/kamidox/blogs/master/images/leakcanary.png)
+
+
 ### 内存泄漏
 
 内存泄漏可能很容易发现，比如 Cursor 没关闭；比如在 `Activity.onResume()` 里 register 了某个需要监听的事件，但在 `Activity.onPause()` 里忘记 unregister 了；内存泄漏也可能很难发现，比如 [LeakCanary 示例代码][5]，隐含地引用，并且只有在旋转屏幕时才会发生。还有更难发现，甚至无能为力的内存泄漏，比如 Android SDK 本身的 BUG 导致内存泄漏。[AndroidExcludedRefs.java][6] 里就记录了一些己知的 AOSP 版本的以及其 OEM 实现版本里存在的内存泄漏。
