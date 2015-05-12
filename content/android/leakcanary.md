@@ -1,11 +1,10 @@
 Title: LeakCanary - Android 内存泄漏检查
-Date: 2015-05-10 23:57
-Modified: 2015-05-10 23:57
+Date: 2015-05-12 22:57
+Modified: 2015-05-12 22:57
 Tags: android
 Slug: leakcanary
 Authors: Joey Huang
 Summary: 你被概率性的 OOM 困扰么？有时候，OOM 像幽灵一样，挥之不去，可真想把它揪出来时，又捉之不着。或许，是时候用 LeakCanary 来诊断一下了。LeakCanary 是一个用来检查 Android 下内存泄漏的开源库。这篇文章主要介绍 LeakCanary 的用法及其架构和其背后的实现原理。
-Status: draft
 
 ### 前言
 
@@ -23,7 +22,7 @@ Square [有篇文章][2]介绍了开发这个库的原因。他们的一个付�
 * 发生 OOM 或做一些可能存在内存泄漏的操作后，导出 HPROF 文件
 * 利用 MAT 结合代码分析，来发现一些引用异常，比如哪些对象本来应该被回收的，却还在系统堆中，那么它就是内存泄漏
 
-如果有一个工具能自动完成这些事情，甚至在发生 OOM 之前，就把内存泄漏报告给你，那是多么美好的一件事情啊。LeakCanary 就是用来干这个事情的。
+**如果有一个工具能自动完成这些事情，甚至在发生 OOM 之前，就把内存泄漏报告给你，那是多么美好的一件事情啊。**LeakCanary 就是用来干这个事情的。在测试你的 App 时，如果发生了内存泄漏，状态栏上会有通知告诉你。logcat 上也会有相应的 log 通知你。
 
 !!! notes "启发"
     LeakCanary 产生的背后有几个有意思的启发。一是像 Square 这样公司一样会被 OOM 这种问题困扰；二是他们也会犯错，试了几种方法都不起作用；三是他们最终用一个优雅的方式解决了这个问题，并且通过开源库的方式让所有人共享他们的工作成果。
@@ -132,23 +131,23 @@ Debug.dumpHprofData(heapDumpFile.getAbsolutePath());
 
 **如何分析 hprof 文件**
 
-这是个比较大的话题，感兴趣的可以称步另外一个开源库 [HAHA][7]，它的祖先是 [MAT][4]。
+这是个比较大的话题，感兴趣的可以移步另外一个开源库 [HAHA][7]，它的祖先是 [MAT][4]。
 
-**如何使用 HandlerThread 实现后台处理**
+**如何使用 HandlerThread**
 
-可以参阅 [AndroidWatchExecutor.java][9]的代码，特别是关于 Handler, Loop 的使用，虽然是老话题。
+可以参阅 [AndroidWatchExecutor.java][9]的代码，特别是关于 Handler, Loop 的使用。
 
-**怎么样知道某个变量已经被 GC 回收**
+**怎么知道某个变量已经被 GC 回收**
 
-可以参阅 [RefWatcher.java][10]的 `ensureGone()` 函数。最主要是利用 `WeakReference` 和 `ReferenceQueue` 机制。简单地讲，就是当弱引用 `WeakReference` 所引用的对象被回收后，这个 `WeakReference` 对象就会被添加到 `ReferenceQueue` 队列里，我们可以通过其 `poll()` 方法获取到这个被回收的对象的 `WeakReference`实例，进而知道需要监控的对象是否被回收了。
+可以参阅 [RefWatcher.java][10] 的 `ensureGone()` 函数。最主要是利用 `WeakReference` 和 `ReferenceQueue` 机制。简单地讲，就是当弱引用 `WeakReference` 所引用的对象被回收后，这个 `WeakReference` 对象就会被添加到 `ReferenceQueue` 队列里，我们可以通过其 `poll()` 方法获取到这个被回收的对象的 `WeakReference` 实例，进而知道需要监控的对象是否被回收了。
 
 ### 关于内存泄漏
 
 内存泄漏可能很容易发现，比如 Cursor 没关闭；比如在 `Activity.onResume()` 里 register 了某个需要监听的事件，但在 `Activity.onPause()` 里忘记 unregister 了；内存泄漏也可能很难发现，比如 [LeakCanary 示例代码][5]，隐含地引用，并且只有在旋转屏幕时才会发生。还有更难发现，甚至无能为力的内存泄漏，比如 Android SDK 本身的 BUG 导致内存泄漏。[AndroidExcludedRefs.java][6] 里就记录了一些己知的 AOSP 版本的以及其 OEM 实现版本里存在的内存泄漏。
 
-### 今日推荐
+### 本期推荐
 
-推荐一个画图工具 planUML，其最大的特色是使用脚本来画图。
+推荐一个画图工具 [planUML][10]，其最大的特色是使用脚本来画图。它和 [starUML][11] 的最大区别是，前者是画图工具，类似于微软的 visio，而且支持脚本画图，后者是建模工具。[这里][12]是 planUML 的官方文档。它还支持一堆[扩展][13]，比如 [Sublime Text][14]等。本文的[流程图][15]就是用 planUML 画的。
 
 
 [1]: https://github.com/square/leakcanary
@@ -160,3 +159,9 @@ Debug.dumpHprofData(heapDumpFile.getAbsolutePath());
 [7]: https://github.com/square/haha
 [8]: https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidHeapDumper.java
 [9]: https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidWatchExecutor.java
+[10]: http://www.plantuml.com
+[11]: http://staruml.io
+[12]: http://www.plantuml.com/PlantUML_Language_Reference_Guide.pdf
+[13]: http://www.plantuml.com/running.html
+[14]: https://github.com/jvantuyl/sublime_diagram_plugin
+[15]: https://raw.githubusercontent.com/kamidox/blogs/master/images/leakcanary.wsd
