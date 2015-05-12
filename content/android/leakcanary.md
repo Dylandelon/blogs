@@ -106,12 +106,43 @@ dependencies {
 
 ### 原理
 
-#### LeakCanary 架构图
+#### LeakCanary 流程图
 
 ![leakcanary](https://raw.githubusercontent.com/kamidox/blogs/master/images/leakcanary.png)
 
+LeakCanary 的机制如下：
 
-### 内存泄漏
+1. `RefWatcher.watch()` 会以监控对象来创建一个 `KeyedWeakReference` 弱引用对象
+2. 在 `AndroidWatchExecutor` 的后台线程里，来检查弱引用已经被清除了，如果没被清除，则执行一次 GC
+3. 如果弱引用对象仍然没有被清除，说明内存泄漏了，系统就导出 hprof 文件，保存在 app 的文件系统目录下
+4. `HeapAnalyzerService` 启动一个单独的进程，使用 `HeapAnalyzer` 来分析 hprof 文件。它使用另外一个开源库 [HAHA][7]。
+5. `HeapAnalyzer` 通过查找 `KeyedWeakReference` 弱引用对象来查找内在泄漏
+6. `HeapAnalyzer` 计算 `KeyedWeakReference` 所引用对象的最短强引用路径，来分析内存泄漏，并且构建出对象引用链出来。
+7. 内存泄漏信息送回给 `DisplayLeakService`，它是运行在 app 进程里的一个服务。然后在设备通知栏显示内存泄漏信息。
+
+#### 几个有意思的代码
+
+**如何导出 hprof 文件**
+
+```java
+File heapDumpFile = new File("heapdump.hprof");
+Debug.dumpHprofData(heapDumpFile.getAbsolutePath());
+```
+可以参阅 [AndroidHeapDumper.java][8] 的代码。
+
+**如何分析 hprof 文件**
+
+这是个比较大的话题，感兴趣的可以称步另外一个开源库 [HAHA][7]，它的祖先是 [MAT][4]。
+
+**如何使用 HandlerThread 实现后台处理**
+
+可以参阅 [AndroidWatchExecutor.java][9]的代码，特别是关于 Handler, Loop 的使用，虽然是老话题。
+
+**怎么样知道某个变量已经被 GC 回收**
+
+可以参阅 [RefWatcher.java][10]的 `ensureGone()` 函数。最主要是利用 `WeakReference` 和 `ReferenceQueue` 机制。简单地讲，就是当弱引用 `WeakReference` 所引用的对象被回收后，这个 `WeakReference` 对象就会被添加到 `ReferenceQueue` 队列里，我们可以通过其 `poll()` 方法获取到这个被回收的对象的 `WeakReference`实例，进而知道需要监控的对象是否被回收了。
+
+### 关于内存泄漏
 
 内存泄漏可能很容易发现，比如 Cursor 没关闭；比如在 `Activity.onResume()` 里 register 了某个需要监听的事件，但在 `Activity.onPause()` 里忘记 unregister 了；内存泄漏也可能很难发现，比如 [LeakCanary 示例代码][5]，隐含地引用，并且只有在旋转屏幕时才会发生。还有更难发现，甚至无能为力的内存泄漏，比如 Android SDK 本身的 BUG 导致内存泄漏。[AndroidExcludedRefs.java][6] 里就记录了一些己知的 AOSP 版本的以及其 OEM 实现版本里存在的内存泄漏。
 
@@ -126,4 +157,6 @@ dependencies {
 [4]: http://www.eclipse.org/mat/downloads.php
 [5]: https://github.com/square/leakcanary/blob/master/library/leakcanary-sample/src/main/java/com/example/leakcanary/MainActivity.java
 [6]: https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidExcludedRefs.java
-
+[7]: https://github.com/square/haha
+[8]: https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidHeapDumper.java
+[9]: https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidWatchExecutor.java
