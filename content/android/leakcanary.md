@@ -1,4 +1,4 @@
-Title: LeakCanary - Android 内存泄漏检查
+Title: 利用 LeakCanary 来检查 Android 内存泄漏
 Date: 2015-05-12 22:57
 Modified: 2015-05-12 22:57
 Tags: android
