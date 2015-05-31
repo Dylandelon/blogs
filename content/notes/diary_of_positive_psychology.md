@@ -1,7 +1,7 @@
 Title: 日积月累
 Date: 2015-04-13 00:19
 Modified: 2015-04-13 00:19
-Slug: accumulation
+Slug: diary-of-positive-pyschology
 Authors: Joey Huang
 Summary: 日积月累
 Status: draft
