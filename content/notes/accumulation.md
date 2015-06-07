@@ -78,7 +78,7 @@ Status: draft
 * 通过示例现场演示几个工具的使用
   Memory Monitor, Heap Viewer, Allocation Tracker
 * 可参考的文章
-  huhai.me
+  hukai.me
   http://hukai.me/android-performance-memory
 
 
