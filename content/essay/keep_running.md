@@ -65,32 +65,32 @@ Status: draft
 
 有图有真相：
 
-[!8km@ydh](https://raw.githubusercontent.com/kamidox/blogs/master/images/8km_ydh.jpg)
 8 公里，筼筜湖。
+[!8km@ydh](https://raw.githubusercontent.com/kamidox/blogs/master/images/8km_ydh.jpg)
 
-[!10km@ydh](https://raw.githubusercontent.com/kamidox/blogs/master/images/10km_ydh.jpg)
 第一次挑战 10 公里，筼筜湖。沿途风景极赞，特别是日落时分。
+[!10km@ydh](https://raw.githubusercontent.com/kamidox/blogs/master/images/10km_ydh.jpg)
 
-[!15km@hdl](https://raw.githubusercontent.com/kamidox/blogs/master/images/15km_hdl.jpg)
 15 公里。环岛路。这里没有想象的好，主要是人太多，有时会被游客堵在路上。
+[!15km@hdl](https://raw.githubusercontent.com/kamidox/blogs/master/images/15km_hdl.jpg)
 
-[!12km@wyw](https://raw.githubusercontent.com/kamidox/blogs/master/images/12km_wyw.jpg)
 12 公里，五缘湾。这里的木质跑道跑起来非常舒服。沿途风景简直不能再赞。
+[!12km@wyw](https://raw.githubusercontent.com/kamidox/blogs/master/images/12km_wyw.jpg)
 
-[!15km@wyw](https://raw.githubusercontent.com/kamidox/blogs/master/images/12km_wyw.jpg)
 15 公里，还是五缘湾。这次换了个跑道，跑到外面的环岛路上去了，海风习习，找不到比这里更惬意的跑道了。
+[!15km@wyw](https://raw.githubusercontent.com/kamidox/blogs/master/images/12km_wyw.jpg)
 
-[!12km@ddl](https://raw.githubusercontent.com/kamidox/blogs/master/images/12km_ddl.jpg)
 12 公里。脚步丈量城市之：厦门岛西北角
+[!12km@ddl](https://raw.githubusercontent.com/kamidox/blogs/master/images/12km_ddl.jpg)
 
-[!summary@2014](https://raw.githubusercontent.com/kamidox/blogs/master/images/summry_2014.jpg)
 2014年的跑量。11 月份达到最高值，此后开始下降。体重也在这个阶段开始比较明显的下降。
+[!summary@2014](https://raw.githubusercontent.com/kamidox/blogs/master/images/summry_2014.jpg)
 
-[!summary@2015](https://raw.githubusercontent.com/kamidox/blogs/master/images/summary_2015.jpg)
 2015年的跑量。最近三个月跑量非常稳定。
+[!summary@2015](https://raw.githubusercontent.com/kamidox/blogs/master/images/summary_2015.jpg)
 
-[!recent](https://raw.githubusercontent.com/kamidox/blogs/master/images/detail_recent.jpg)
 最近几天的记录，见识一下处女座的执行力。哈哈。
+[!recent](https://raw.githubusercontent.com/kamidox/blogs/master/images/detail_recent.jpg)
 
 **总结**
 
@@ -104,6 +104,9 @@ Status: draft
 我自己瞎总结的，欢迎专业人士，如 @动机在杭州 老师前来科普一下。
 
 **现在的状态**
+基本恢复到创业前的情绪水平。对生活中的美的感知能力也基本恢复了。散步，爬山，电影，读书这些事情开始充实着我的生活，并且能从这些事情中体会到非常好的积极情绪。每天晚上的保留节目是给女儿讲故事。规划着趁父母身体还比较好，带父母旅游。对未来的生活也充满新的期待。
+
+> 世界上只有一种英雄主义，就是看清生活的真相之后依然热爱生活。
 
 其实现在我也没有完完全全摆脱负面情绪。**我的小黑狗偶然还是会过来看我，但她已经不咬我了，只是站在门口看着我。我也已经不再驱赶她了，我会走过去摸摸她的头，给她泡壶好茶，给自己点根烟，我们就这样安静地在阳台上坐一会儿。**
 
