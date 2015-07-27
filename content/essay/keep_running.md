@@ -2,7 +2,7 @@ Title: 坚持跑步
 Date: 2015-01-08 23:20
 Modified: 2015-01-08 23:20
 Tags: thought
-Slug: be-Seriously
+Slug: keep-running
 Authors: Joey Huang
 Summary: 这是知乎是一个问题的回答，讲述一个关于跑步的故事
 Status: draft
