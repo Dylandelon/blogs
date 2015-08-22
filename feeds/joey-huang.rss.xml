@@ -14,7 +14,18 @@
 &lt;li&gt;带 &lt;code&gt;-p&lt;/code&gt; 选项会把 &lt;code&gt;gh-pages&lt;/code&gt; 分支上的内容 push 到 Github 上&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;打开 &lt;code&gt;YourUserName.github.io/YourRepoName&lt;/code&gt; 就可以看到最新的博客内容了。比如 &lt;a href="http://kamidox.github.io/blogs"&gt;kamidox.github.io/blogs&lt;/a&gt; 就是我使用 Github Pages 的托管的博客了。&lt;/p&gt;
-&lt;p&gt;关于如何使用 Pelican 来写博客，可以参阅&lt;a href="http://kamidox.com/build-blog-system-by-pelican.html"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sat, 22 Aug 2015 23:52:00 +0800</pubDate><guid>tag:kamidox.github.io,2015-08-22:blogs/serve-pelican-on-github-pages.html</guid><category>github</category><category>pelican</category></item><item><title>如何保持工作的激情</title><link>http://kamidox.github.io/blogs/be-passion.html</link><description>&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
+&lt;p&gt;关于如何使用 Pelican 来写博客，可以参阅&lt;a href="http://kamidox.com/build-blog-system-by-pelican.html"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id="_1"&gt;定制域名&lt;/h2&gt;
+&lt;p&gt;关于 Github Pages 定制域名可以参阅&lt;a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/"&gt;官方教程&lt;/a&gt;。简单地说，就是在 &lt;code&gt;gh-pages&lt;/code&gt; 分支根目录提交一个 &lt;code&gt;CNAME&lt;/code&gt; 文件，而 ghp-import 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 &lt;a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips"&gt;Pelican 的 Tips&lt;/a&gt;。归纳起来，就是先在 &lt;code&gt;content/extra&lt;/code&gt; 目录下新建一个叫 &lt;code&gt;CNAME&lt;/code&gt; 的文件，其内容就是自定义域名的内容，如 &lt;code&gt;blog.kamidox.com&lt;/code&gt;。然后在 Pelican 的配置文件 &lt;code&gt;publishconf.py&lt;/code&gt; 下添加如下内容：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;STATIC_PATHS &lt;span style="color: #666666"&gt;=&lt;/span&gt; [&lt;span style="color: #BB4444"&gt;&amp;#39;extra&amp;#39;&lt;/span&gt;]
+EXTRA_PATH_METADATA &lt;span style="color: #666666"&gt;=&lt;/span&gt; {
+    &lt;span style="color: #BB4444"&gt;&amp;#39;extra/CNAME&amp;#39;&lt;/span&gt;: {&lt;span style="color: #BB4444"&gt;&amp;#39;path&amp;#39;&lt;/span&gt;: &lt;span style="color: #BB4444"&gt;&amp;#39;CNAME&amp;#39;&lt;/span&gt;},   &lt;span style="color: #008800; font-style: italic"&gt;# 这是个路径映射，即会把 `content/extra/CNAME` 文件拷贝到 `output/CNAME`&lt;/span&gt;
+    }
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;特别注意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 &lt;code&gt;content/extra&lt;/code&gt; 目录下的内容原封不动的拷贝到 &lt;code&gt;output/extra&lt;/code&gt; 目录下。&lt;/p&gt;
+&lt;p&gt;最后，我们添加一条域名解析即可。以我们使用的 &lt;code&gt;blog.kamidox.com&lt;/code&gt; 的子域名为例，我们需要添加一个 CNAME 解析，把 &lt;code&gt;blog.kamidox.com&lt;/code&gt; 解析到 Github Pages 所在的 &lt;code&gt;kamidox.github.io/blogs&lt;/code&gt; 即可。这样我们就完成了迁移工作。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sat, 22 Aug 2015 23:52:00 +0800</pubDate><guid>tag:kamidox.github.io,2015-08-22:blogs/serve-pelican-on-github-pages.html</guid><category>github</category><category>pelican</category></item><item><title>如何保持工作的激情</title><link>http://kamidox.github.io/blogs/be-passion.html</link><description>&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
 &lt;h2 id="_1"&gt;建立一个内化的目标&lt;/h2&gt;
 &lt;p&gt;为什么要加上&lt;strong&gt;内化&lt;/strong&gt;这两个字呢？&lt;strong&gt;内化的目标，是我们的信仰，它确保我们在迷雾中航行时不失去方向；确保在迷茫，困难面前能坚定地前行，这是内在驱动力的主要来源。&lt;/strong&gt;创业团队的 CEO 的一个最重要的工作，就是确保把公司的目标内化到团队所有成员身上。让所有人知道我们的目标是什么，并建立起实现目标的信心。&lt;/p&gt;
 &lt;h2 id="_2"&gt;建立即时反馈系统&lt;/h2&gt;
