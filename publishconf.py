@@ -71,7 +71,12 @@ THEME = "themes/foundation-default-colours"
 RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
-# weibo auth
-TEMPLATE_PAGES = {'wb_305ecb5714d4db06.txt': 'wb_305ecb5714d4db06.txt'}
+# static files and paths
+STATIC_PATHS = ['extra']
+EXTRA_PATH_METADATA = {
+        'extra/CNAME': {'path': 'CNAME'},
+        'extra/wb_305ecb5714d4db06.txt': {'path': 'wb_305ecb5714d4db06.txt'},
+        }
+
 
 
