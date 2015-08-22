@@ -1,0 +1,427 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>使用 patchrom 移植 MIUI</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">开篇</a></li>
+<li><a href="#_2">移植过程</a><ul>
+<li><a href="#miui-patchrom">下载 MIUI patchrom</a></li>
+<li><a href="#_3">准备移植目录</a></li>
+<li><a href="#ota">准备一个 OTA 升级包</a></li>
+<li><a href="#makefile">准备一个 makefile</a></li>
+<li><a href="#make-workspace">make workspace</a></li>
+<li><a href="#make-firstpatch">make firstpatch</a></li>
+<li><a href="#reject">手动合并 reject 目录</a></li>
+<li><a href="#make-fullota">make fullota</a></li>
+</ul>
+</li>
+<li><a href="#_4">结语</a></li>
+</ul>
+</div>
+<h2 id="_1">开篇</h2>
+<p>MIUI 使用代码插桩的方式来移植。即 MIUI 把他们基于 AOSP 的修改的代码全部用 smali 开放出来。这样我们通过对比 MIUI 的 smali 代码和 AOSP 的 smali　代码就可以知道 MIUI 修改了哪些内容，把这些内容移植过去即可完成 MIUI的移植。本文以 jellybean42-mtk 为例，描述使用 patchrom 移植 MIUI的方法以及在过程中遇到的问题及其调试方法。</p>
+<h2 id="_2">移植过程</h2>
+<p>可以查阅 <a href="http://pan.baidu.com/s/1o6yq4I2">MIUI 移植的文档</a>了解一些背景知识。这里将主体步骤描述如下：</p>
+<h3 id="miui-patchrom">下载 MIUI patchrom</h3>
+<p>下载 repo 工具</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/bin
+curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
+chmod a+x ~/bin/repo
+</pre></div>
+
+
+<p>下载 MIUI patchrom 代码</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/work/patchrom
+<span style="color: #AA22FF">cd</span> ~/work/patchrom
+repo init -u git://github.com/MiCode/patchrom.git -b jellybean42-mtk
+repo sync
+</pre></div>
+
+
+<p><code>repo sync</code> 命令需要很长的时间才能把代码下载完，代码总量大于10G。所以，基本上可以玩儿去了，不要傻傻地等了。</p>
+<p>代码下载完成后，我们就可以开始移植工作了。实际的代码目录树结构和内容和文档里描述的会有出入，我们可以忽略文档里的，以实际代码为准。本文使用2014-12-04下载的代码为准。</p>
+<h3 id="_3">准备移植目录</h3>
+<p>在 patchrom 根目录下创建一个产品的工作目录用来移植时使用。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">cd</span> ~/work/patchrom
+<span style="color: #AA22FF">source </span>build/envsetup.sh
+mkdir ~/work/patchrom/mtk6582
+<span style="color: #AA22FF">cd </span>mtk6582
+</pre></div>
+
+
+<h3 id="ota">准备一个 OTA 升级包</h3>
+<p>我们直接拿一个要当作底包的 OTA 升级包来作为 stockrom.zip。对这个底包有以下的要求：</p>
+<ol>
+<li>这个底包必须是 user 版本且足够稳定。因为根据底包移植完的软件是直接拿来当产品使用的。</li>
+<li>这个底包可以直接在手机里通过 recovery 模式升级。这个对后面移植完手的 miui-ota 包的烧录有帮助。</li>
+</ol>
+<p>这样，我们直接把这个 OTA 升级包 stockrom.zip 放在刚刚我们创建的 mtk6582 目录下。除此之外，我们还需要一台内核 root 过的手机，以便配合整个移植过程。</p>
+<div class="admonition note">
+<p class="admonition-title">关于stockrom.zip</p>
+<p>patchrom 官方移植教程是使用 <code>../tools/ota_target_from_phone -r</code> 来直接从移植手机里生成 stockrom.zip 。这个命令要求手机先运行在 recovery 模式下。我自己验证过无法运行，没去深究。所以，直接拿一个 OTA 升级包来作为移植的底包。</p>
+</div>
+<p>user 版本的 OTA 升级包里，apk 文件都是经过 odex 优化的。而 smali 反汇编又需要优化前的 apk　文件。怎么样解决这个问题呢？</p>
+<ol>
+<li>打开 stockrom.zip 文件，把 system/framework 下的 pacheCoder.jar, gcm.jar, hpe.jar 从 zip 包里删除。这是因为这三个 jar 包没有经过 odex 优化。即找不到相应的 odex 包。这样的情况在下面的步骤处理时会出错。</li>
+<li>在 patchrom/mtk6582 目录下，执行如下命令　<code>../tools/deodex.sh stockrom.zip</code> ，执行结束后，原 OTA 包会被覆盖掉，而且里面的 odex 文件将全部被打包回 apk 文件里。</li>
+<li>把步骤 1 删除掉的 3 个 jar 包放回 zip 包里。然后运行下面命令对zip包进行重新签名 <code>java -Xmx2048m -jar signapk.jar -w testkey.x509.pem testkey.pk8 stockrom.zip stockrom-signed.zip</code>。</li>
+<li>把新生成的 ota zip 包放在手机 SD 卡里，进 recovery 模式进行升级。确保制作出来的包没有问题。</li>
+</ol>
+<h3 id="makefile">准备一个 makefile</h3>
+<p>下面的 makefile 可以作为模板，里面有详细的注释说明每个字段的含义。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#</span>
+<span style="color: #008800; font-style: italic"># Makefile for mtk6582</span>
+<span style="color: #008800; font-style: italic">#</span>
+
+<span style="color: #008800; font-style: italic"># 指定我们要移植的手机的底包，就是上一步骤里准备的 stockrom.zip</span>
+<span style="color: #B8860B">local-zip-file</span>     <span style="color: #666666">:=</span> stockrom.zip
+
+<span style="color: #008800; font-style: italic"># 编译我们移植好的 MIUI ROM 时的输出文件名</span>
+<span style="color: #B8860B">local-out-zip-file</span> <span style="color: #666666">:=</span> MIUI_MTK6582.zip
+
+<span style="color: #008800; font-style: italic"># 制作升级差异包时所需要的上一个版本的 ota 包目录，我们暂时还用不着</span>
+<span style="color: #B8860B">local-previous-target-dir</span> <span style="color: #666666">:=</span> ~/work/ota_base/mtk6582
+
+<span style="color: #008800; font-style: italic"># All apps from original ZIP, but has smali files chanded</span>
+<span style="color: #B8860B">local-modified-apps</span> <span style="color: #666666">:=</span>
+
+<span style="color: #B8860B">local-modified-jars</span> <span style="color: #666666">:=</span>
+
+<span style="color: #008800; font-style: italic"># 哪些 MIUI 模块不包含在最终生成的 MIUI ROM 里。这里我们默认包含所有的 MIUI 模块。</span>
+<span style="color: #B8860B">local-miui-removed-apps</span> <span style="color: #666666">:=</span>
+
+<span style="color: #008800; font-style: italic"># 我们在移植过程中，使用了 MIUI 的 Phone 模块，但对 MIUI 的这个模块进行反编译并修改了部分 smali 代码使其功能正常。</span>
+<span style="color: #008800; font-style: italic"># 针对 jellybean42-mtk 这个分支，所有的 MIUI 模块定义在 patchrom/build/jellybean42-mtk.mk 文件里。</span>
+<span style="color: #B8860B">local-miui-modified-apps</span> <span style="color: #666666">:=</span> Phone
+
+<span style="color: #008800; font-style: italic"># density define</span>
+<span style="color: #B8860B">local-density</span> <span style="color: #666666">:=</span> XHDPI
+
+<span style="color: #008800">include phoneapps.mk</span>
+
+<span style="color: #008800; font-style: italic"># To include the local targets before and after zip the final ZIP file,</span>
+<span style="color: #008800; font-style: italic"># and the local-targets should:</span>
+<span style="color: #008800; font-style: italic"># (1) be defined after including porting.mk if using any global variable(see porting.mk)</span>
+<span style="color: #008800; font-style: italic"># (2) the name should be leaded with local- to prevent any conflict with global targets</span>
+<span style="color: #B8860B">local-pre-zip</span> <span style="color: #666666">:=</span> <span style="color: #AA22FF">local</span>-pre-zip-misc
+<span style="color: #B8860B">local-after-zip</span><span style="color: #666666">:=</span> <span style="color: #AA22FF">local</span>-put-to-phone
+
+<span style="color: #008800; font-style: italic"># The local targets after the zip file is generated, could include &#39;zip2sd&#39; to</span>
+<span style="color: #008800; font-style: italic"># deliver the zip file to phone, or to customize other actions</span>
+
+<span style="color: #008800">include $(PORT_BUILD)/porting.mk</span>
+
+<span style="color: #008800; font-style: italic"># To define any local-target</span>
+<span style="color: #B8860B">updater</span> <span style="color: #666666">:=</span> <span style="color: #AA22FF; font-weight: bold">$(</span>ZIP_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/META-INF/com/google/android/updater-script
+<span style="color: #B8860B">pre_install_data_packages</span> <span style="color: #666666">:=</span> <span style="color: #AA22FF; font-weight: bold">$(</span>TMP_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/pre_install_apk_pkgname.txt
+<span style="color: #00A000">local-pre-zip-misc</span><span style="color: #666666">:</span>
+    rm -rf <span style="color: #AA22FF; font-weight: bold">$(</span>pre_install_data_packages<span style="color: #AA22FF; font-weight: bold">)</span>
+    <span style="color: #AA22FF; font-weight: bold">for</span> apk in <span style="color: #AA22FF; font-weight: bold">$(</span>ZIP_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/data/media/preinstall_apps/*.apk; <span style="color: #AA22FF; font-weight: bold">do</span><span style="color: #BB6622; font-weight: bold">\</span>
+        <span style="color: #AA22FF; font-weight: bold">$(</span>AAPT<span style="color: #AA22FF; font-weight: bold">)</span> d --values resources <span style="color: #B8860B">$$</span>apk | grep <span style="color: #BB4444">&#39;id=127 packageCount&#39;</span> | sed -e <span style="color: #BB4444">&quot;s/^.*name=//&quot;</span> &gt;&gt; <span style="color: #AA22FF; font-weight: bold">$(</span>pre_install_data_packages<span style="color: #AA22FF; font-weight: bold">)</span>;<span style="color: #BB6622; font-weight: bold">\</span>
+    <span style="color: #AA22FF; font-weight: bold">done</span>
+    more <span style="color: #AA22FF; font-weight: bold">$(</span>pre_install_data_packages<span style="color: #AA22FF; font-weight: bold">)</span> | wc -l &gt; <span style="color: #AA22FF; font-weight: bold">$(</span>ZIP_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/system/etc/enforcecopyinglibpackages.txt
+    more <span style="color: #AA22FF; font-weight: bold">$(</span>pre_install_data_packages<span style="color: #AA22FF; font-weight: bold">)</span> &gt;&gt; <span style="color: #AA22FF; font-weight: bold">$(</span>ZIP_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/system/etc/enforcecopyinglibpackages.txt
+
+<span style="color: #00A000">out/framework2.jar </span><span style="color: #666666">:</span> out/framework.jar
+
+<span style="color: #00A000">%.phone </span><span style="color: #666666">:</span> out/%.jar
+    @echo push -- to --- phone
+    adb remount
+    adb push <span style="color: #B8860B">$&lt;</span> /system/framework
+    adb shell chmod <span style="color: #666666">644</span> /system/framework/<span style="color: #B8860B">$*</span>.jar
+
+<span style="color: #00A000">%.sign-plat </span><span style="color: #666666">:</span> out/%
+    java -jar <span style="color: #AA22FF; font-weight: bold">$(</span>TOOL_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/signapk.jar <span style="color: #AA22FF; font-weight: bold">$(</span>PORT_ROOT<span style="color: #AA22FF; font-weight: bold">)</span>/build/security/platform.x509.pem <span style="color: #AA22FF; font-weight: bold">$(</span>PORT_ROOT<span style="color: #AA22FF; font-weight: bold">)</span>/build/security/platform.pk8  <span style="color: #B8860B">$&lt;</span> <span style="color: #B8860B">$&lt;</span>.signed
+    @echo push -- to --- phone
+    adb remount
+    adb push <span style="color: #B8860B">$&lt;</span>.signed /system/app/<span style="color: #B8860B">$*</span>
+    adb shell chmod <span style="color: #666666">644</span> /system/app/<span style="color: #B8860B">$*</span>
+</pre></div>
+
+
+<h3 id="make-workspace">make workspace</h3>
+<p>在 patchrom/mtk6582 目录下运行 <code>make workspace</code> 命令。这个命令会把 stockrom.zip 文件解压，并且反编译里面的 jar/apk 来作为移植的基础。在上述 makefile 内容下，会生成下面几个文件夹：</p>
+<ol>
+<li>android.policy.jar.out</li>
+<li>framework.jar.out</li>
+<li>framework-res</li>
+<li>mediatek-framework.jar.out</li>
+<li>secondary-framework.jar.out</li>
+<li>services.jar.out</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">深入理解make workspace</p>
+<p>可以阅读 patchrom/build　目录下的 makefile 文件来深入理解 patchrom　的编译系统。对 <code>make workspace</code> 命令，实际上是根据 jellybean42-mtk.mk 里的 private-miui-jars，以及 framework-res.apk　和 makefile　里定义的 local-modified-apps 来决定反编译哪些内容的。</p>
+</div>
+<h3 id="make-firstpatch">make firstpatch</h3>
+<p>在 patchrom/mtk6582 目录下运行 <code>make firstpatch</code> 命令。这个命令偿试自动合并 smali 文件。如果无法合并，会在 reject 目录下生成有冲突的文件。所以，运行这个命令后，我们只需要合并 reject 目录下的有冲突的文件即可完成 MIUI ROM 的移植工作。</p>
+<p>这个命令在 patchrom/mtk6582/temp 目录下生成的文件树如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">├── dst_smali_orig <span style="color: #008800; font-style: italic"># 这个是底包 stockrom.zip 里反编译出来的系统 smali 文件</span>
+│   ├── android.policy.jar.out
+│   ├── framework.jar.out
+│   ├── mediatek-framework.jar.out
+│   ├── secondary-framework.jar.out
+│   └── services.jar.out
+├── dst_smali_patched　# 这个是程序自动合并的目标 smali 文件
+│   ├── android.policy.jar.out
+│   ├── framework.jar.out
+│   ├── mediatek-framework.jar.out
+│   ├── secondary-framework.jar.out
+│   └── services.jar.out
+├── new_smali <span style="color: #008800; font-style: italic"># 这个是 MIUI ROM 里反编译出来的系统 smali 文件</span>
+│   ├── android.policy.jar.out
+│   ├── framework.jar.out
+│   ├── mediatek-framework.jar.out
+│   ├── secondary-framework.jar.out
+│   └── services.jar.out
+├── old_smali　# 这个是 AOSP 里反编译出来的系统 smali 文件
+│   ├── android.policy.jar.out
+│   ├── framework.jar.out
+│   ├── mediatek-framework.jar.out
+│   ├── secondary-framework.jar.out
+│   └── services.jar.out
+└── reject　# 这个是由于冲突程序无法自动合并，需要手动合并的 smali 文件
+    ├── android.policy.jar.out
+    ├── framework.jar.out
+    ├── secondary-framework.jar.out
+    └── services.jar.out
+</pre></div>
+
+
+<p>可以阅读 patchrom/build 和 patchrom/tools 两个目录下的 makefile 和 shell 源码来理解 make firstpatch 过程到底做了什么事情。</p>
+<div class="admonition note">
+<p class="admonition-title">关于自动合并</p>
+<p>自动合并会把一些差异自动合并进 dst_smali_patched 目录。这个合并过程是怎么样的呢？可以阅读 patchrom/tools/patch_miui_framework.sh 文件来获取详细信息。这里总结自动合并的过程如下：1) 用 diff 命令计算 old_smali 和 new_smali 两个文件夹下的每个文件的补丁 .diff 文件。2) 用 patch 命令把计算出来的 .diff 文件逐个给 dst_smali_orig 目录下的对应文件打补丁，自动合并成功的文件最终生成成 dst_smali_patched 目录下。</p>
+</div>
+<h3 id="reject">手动合并 reject 目录</h3>
+<p>看起来好简单，其实挑战刚刚开始，要手动合并 reject 目录下的内容不是件容易的事情。即使合并完，后面的调试过程也是痛苦异常。不过也别灰心。办法总比困难多。掌握了基本原理，那么合并过程和调试过程其实还是有规律可以遵循的。在开始这个痛苦过程前，需要先掌握 smali 语法以及 Dalvik　虚拟机的字节码的函义。关于 Dalvik 虚拟机字节码，这个<a href="http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html">文档</a>可以查阅。</p>
+<p>手动合并 smali 代码的流程是这样的：</p>
+<ol>
+<li>用文本编辑器逐个打开 <code>reject</code> 目录下的所有文件，找出冲突的代码块</li>
+<li>用 BeyondCompare/Meld 工具去比较 old_smali 和 new_smali，找出冲突代码块的位置</li>
+<li>通过比较阅读 smali 文件理解 MIUI 在 AOSP 的基础修改了什么逻辑</li>
+<li>用 BeyondCompare/Meld 工具去比较 dst_smali_orig 和 dst_smali_patched，找出冲突代码块的位置</li>
+<li>根据步骤 3 的逻辑修改，把这个修改合并进 dst_smali_patched 目录</li>
+</ol>
+<p>这个过程刚做很痛苦，但有做几次积累一定经验后，就轻松了。过程中可能还要结合 AOSP 的 JAVA 源码阅读来理解逻辑。</p>
+<p>目标 smali 代码合并进 dst_smali_patched 之后，还需要把这个结果合并回 patchrom/mtk6582 目录下的相应 smali 文件里。比如，需要把 patchrom/mtk6582/android.policy.jar.out 目录和 patchrom/mtk6582/temp/dst_smali_patched/android.policy.jar.out 目录相比较，把最终结果合并进 patchrom/mtk6582/android.policy.jar.out　里。因为 patchrom 编译工具在生成这些需要合并的文件时，把 smali 文件里的行号删除了。这样有利于自动合并和手动合并，而不会被行号干扰。而我们合并完真正进行编译时，实际上参加编译的是 patchrom/mtk6582/android.policy.jar.out 下的 smali 文件。所以必须合并回去才能真正把 MIUI 合并过去。</p>
+<h3 id="make-fullota">make fullota</h3>
+<p>合并完成后，可以在 patchrom/mtk6582 目录下运行 <code>make fullota</code> 来生成目标文件 MIUI_MTK6582.zip。如果你人品足够好，那么可能一步就生成了。但基本上没有这么好的运气。过程中会有 smali 错误。需要根据提示去做适当的修改。编译通过后，就可以把 MIUI_MTK6582.zip 文件通过 recovery 方式升级到手机看移植后的效果。</p>
+<h2 id="_4">结语</h2>
+<p>本文分析了使用 patchrom 移植 MIUI 的全过程，详细解释了 patchrom 编译系统及步骤。这个对理解 patchrom 移植的原理有比较大的帮助。移植过程中可能会碰到各种各样的问题。这些问题都需要一些丰富的知识去识别和解决。下一篇准备介绍一下移植过程中遇到的一些问题，解决方法以及找到解决方法的分析过程。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2014-12-06(Saturday) 23:00. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, <a href="http://kamidox.com/tag/patchrom.html">patchrom</a>, <a href="http://kamidox.com/tag/miui.html">miui</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

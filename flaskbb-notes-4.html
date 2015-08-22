@@ -1,0 +1,427 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li class="active"><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>FlaskBB阅读笔记（四）</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">开篇</a></li>
+<li><a href="#flaskbb">FlaskBB的测试代码</a></li>
+<li><a href="#pytest">通过实例来看pytest的运行机制</a></li>
+<li><a href="#fixtures">什么是fixtures</a></li>
+<li><a href="#pytest_1">pytest标准的测试例收集流程</a></li>
+<li><a href="#conftestpy">conftest.py</a></li>
+<li><a href="#pytestini">pytest.ini</a></li>
+<li><a href="#_2">结束语</a></li>
+</ul>
+</div>
+<h2 id="_1">开篇</h2>
+<p><a href="http://pytest.org/latest/contents.html#toc">FlaskBB</a>是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。</p>
+<p>本文是本系列文章的第四篇，通过分析FlaskBB的自动测试代码，进而介绍Python下的自动化测试工具pytest。自动化测试在开发和重构过程中有着非常重要的地位。甚至还流行一种测试优先的编程方法，即针对一个功能模块，先写测试例，再去实现功能模块。</p>
+<h2 id="flaskbb">FlaskBB的测试代码</h2>
+<p>FlaskBB的测试代码在tests目录下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">tests/
+├── conftest.py
+├── fixtures
+│   ├── app.py
+│   ├── forum.py
+│   ├── __init__.py
+│   └── user.py
+├── __init__.py
+└── unit
+    ├── __init__.py
+    ├── __pycache__
+    ├── test_forum_models.py
+    └── utils
+        ├── __init__.py
+        ├── __pycache__
+        ├── test_helpers.py
+        ├── test_permissions.py
+        ├── test_populate.py
+        └── test_widgets.py
+</pre></div>
+
+
+<p>在FlaskBB项目目录下执行<code>py.test tests</code>输出以下测试结果：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb<span style="color: #B8860B">$ </span>py.test <span style="color: #B8860B">tests</span>
+<span style="color: #666666">=============================</span> <span style="color: #AA22FF">test </span>session <span style="color: #B8860B">starts</span> <span style="color: #666666">==============================</span>
+platform linux2 -- Python 2.7.6 -- py-1.4.25 -- pytest-2.6.3 -- /home/kamidox/co
+de/flaskbb/.venv/bin/python
+Tests are shuffled using seed number 362536085265.
+plugins: cov, random
+collecting ... collected <span style="color: #666666">42</span> items
+
+tests/unit/test_forum_models.py::test_topic_save PASSED
+tests/unit/test_forum_models.py::test_topic_move PASSED
+tests/unit/utils/test_permissions.py::test_super_moderator_permissions PASSED
+tests/unit/test_forum_models.py::test_topic_url PASSED
+tests/unit/utils/test_permissions.py::test_can_moderate_without_permission PASSED
+tests/unit/test_forum_models.py::test_topic_merge PASSED
+tests/unit/test_forum_models.py::test_forum_update_read PASSED
+tests/unit/test_forum_models.py::test_forum_url PASSED
+tests/unit/utils/test_helpers.py::test_slugify PASSED
+tests/unit/test_forum_models.py::test_forum_save PASSED
+tests/unit/test_forum_models.py::test_forum_get_topics PASSED
+tests/unit/test_forum_models.py::test_forum_slugify PASSED
+tests/unit/test_forum_models.py::test_forum_delete PASSED
+tests/unit/utils/test_helpers.py::test_forum_is_unread PASSED
+tests/unit/utils/test_permissions.py::test_moderator_permissions_without_forum PASSED
+tests/unit/test_forum_models.py::test_category_delete_with_forum PASSED
+tests/unit/test_forum_models.py::test_topic_merge_other_forum PASSED
+tests/unit/test_forum_models.py::test_category_get_forums PASSED
+tests/unit/test_forum_models.py::test_topic_slug PASSED
+tests/unit/utils/test_permissions.py::test_normal_permissions PASSED
+tests/unit/utils/test_widgets.py::test_select_date_widget PASSED
+tests/unit/test_forum_models.py::test_forumsread PASSED
+tests/unit/test_forum_models.py::test_topic_tracker_needs_update_cleared PASSED
+tests/unit/test_forum_models.py::test_category_save PASSED
+tests/unit/test_forum_models.py::test_category_get_all PASSED
+tests/unit/utils/test_permissions.py::test_moderator_permissions_in_forum PASSED
+tests/unit/test_forum_models.py::test_forum_update_read_two_topics PASSED
+tests/unit/test_forum_models.py::test_category_delete PASSED
+tests/unit/utils/test_permissions.py::test_admin_permissions PASSED
+tests/unit/test_forum_models.py::test_topicsread PASSED
+tests/unit/test_forum_models.py::test_forum_delete_with_user_and_topic PASSED
+tests/unit/test_forum_models.py::test_post_save PASSED
+tests/unit/test_forum_models.py::test_category_delete_with_user PASSED
+tests/unit/test_forum_models.py::test_topic_delete PASSED
+tests/unit/test_forum_models.py::test_post_delete PASSED
+tests/unit/test_forum_models.py::test_topic_update_read PASSED
+tests/unit/test_forum_models.py::test_topic_move_same_forum PASSED
+tests/unit/utils/test_populate.py::test_create_default_groups PASSED
+tests/unit/test_forum_models.py::test_forum_get_forum PASSED
+tests/unit/test_forum_models.py::test_topic_tracker_needs_update PASSED
+tests/unit/test_forum_models.py::test_report PASSED
+tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color: #B8860B">PASSED</span>
+
+<span style="color: #666666">==========================</span> <span style="color: #666666">42</span> passed in 20.21 <span style="color: #B8860B">seconds</span> <span style="color: #666666">==========================</span>
+</pre></div>
+
+
+<p>我们可以看到总共有42个测试例，全部测试通过了。</p>
+<h2 id="pytest">通过实例来看pytest的运行机制</h2>
+<p><code>tests/unit/test_forum_modules.py</code>里有个删除讨论区版块的单元测试函数：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">test_forum_delete</span>(forum):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Test the delete forum method.&quot;&quot;&quot;</span>
+    forum<span style="color: #666666">.</span>delete()
+
+    forum <span style="color: #666666">=</span> Forum<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(<span style="color: #AA22FF">id</span><span style="color: #666666">=</span>forum<span style="color: #666666">.</span>id)<span style="color: #666666">.</span>first()
+
+    <span style="color: #AA22FF; font-weight: bold">assert</span> forum <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF">None</span>
+</pre></div>
+</td></tr></table>
+
+<p>代码很简单，先调用<code>forum.delete()</code>来删除一个讨论区版块，接着从<code>Forum</code>里查询这个讨论区版块，应该是查询不到的，因为这个版块已经被删除了。</p>
+<p>问题来了：</p>
+<ol>
+<li>单元测试函数<code>test_forum_delete(forum)</code>运行时的上下文环境是什么？</li>
+<li>单元测试函数的参数<code>forum</code>是哪里来的？</li>
+<li>pytest怎么发现<code>test_forum_delete(forum)</code>单元测试函数并执行它的？</li>
+</ol>
+<p>要回答这些问题，必须介绍pytest的fixtures的概念。</p>
+<h2 id="fixtures">什么是fixtures</h2>
+<p>fixtures是指测试的上下文，单元测试函数在运行之前，必须为其创建有效的运行时上下文信息。在xUnit测试框架里，每个测试例运行时都有setup/teardown方法与之匹配，pytest不但支持经典的setup/teardown方法，借助python强大的自省功能，它支持通过测试函数的参数为单元测试函数创建运行时的上下文信息。在上例中，函数参数<code>forum</code>就是一个fixtures，它定义在<code>tests/fixtures/forum.py</code>里：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@pytest.fixture</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">forum</span>(category, default_settings):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;A single forum in a category.&quot;&quot;&quot;</span>
+    forum <span style="color: #666666">=</span> Forum(title<span style="color: #666666">=</span><span style="color: #BB4444">&quot;Test Forum&quot;</span>, category_id<span style="color: #666666">=</span>category<span style="color: #666666">.</span>id)
+    forum<span style="color: #666666">.</span>save()
+    <span style="color: #AA22FF; font-weight: bold">return</span> forum
+</pre></div>
+</td></tr></table>
+
+<p><code>@pytest.fixture</code>装饰器告诉pytest，这是一个fixture。函数体很简单，就是创建一个forum，并保存在数据库里，最后返回这个forum实例。我们可以简单地理解成，在执行<code>test_forum_delete(forum)</code>之前，单元测试例的函数参数<code>forum</code>就是通过调用定义在<code>tests/fixtures/forum.py</code>里的fixture函数<code>forum()</code>创建出来并返回的。而作为fixture函数的<code>forum()</code>本身也引用了名字叫<code>category</code>和<code>default_settings</code>的fixtures。</p>
+<p>到此我们可以总结一下fixtures的特点：</p>
+<ol>
+<li>fixtures有明确的名字，并且通过在单元测试函数，测试类等的声明来调用。</li>
+<li>fixtures使用模块化来实现，一个fixture函数可以引用别的fixture。</li>
+<li>fixtures可以支持简单的单元测试以及复杂的功能测试，还可以配置在不同的测试例之间共用fixture。</li>
+</ol>
+<p>FlaskBB的自动测试程序里，其所有的fixtures都定义在<code>tests/fixtures</code>目录下的三个文件里<code>app.py</code>，<code>forum.py</code>和<code>user.py</code>，其他的fixture都很好理解，定义在<code>app.py</code>里的<code>application</code>代码有点特殊：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@pytest.yield_fixture</span>(autouse<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">application</span>():
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;application with context.&quot;&quot;&quot;</span>
+    app <span style="color: #666666">=</span> create_app(Config)
+
+    ctx <span style="color: #666666">=</span> app<span style="color: #666666">.</span>app_context()
+    ctx<span style="color: #666666">.</span>push()
+
+    <span style="color: #AA22FF; font-weight: bold">yield</span> app
+
+    ctx<span style="color: #666666">.</span>pop()
+</pre></div>
+</td></tr></table>
+
+<p>这里使用<code>@pytest.yield_fixture</code>来定义一个生成器fixture。其次注意到使用了<code>autouse=True</code>的参数，这个参数表示这个fixture在运行任何一个单元测试函数之前都必须先调用。即所有的单元测试函数都信赖这个fixture。从函数内容来看，它创建一个Flask APP的实例，以这个实例作为单元测试的上下文。</p>
+<h2 id="pytest_1">pytest标准的测试例收集流程</h2>
+<p>pytest在运行测试例前，必须通过一套规则来收集所有的测试例。默认情况下，pytest的测试例收集流程如下：</p>
+<ol>
+<li>在运行<code>py.test</code>命令的当前目录或其后第一个参数（可以上目录，或模块名）所指定的位置开始收集测试例</li>
+<li>从起始目录递归查找所有的文件及子文件夹（包含在<code>norecursedirs</code>配置参数里的文件夹不会被搜索）</li>
+<li><code>test_*.py</code>或<code>*_test.py</code>将会按照python包结构被import进测试的上下文</li>
+<li>以<code>Test</code>开头的类将作为测试类被收集起来</li>
+<li>以<code>test_</code>开头的函数将作为单元测试函数被收集起来</li>
+</ol>
+<p>当然，这个测试例收集规则是可以定制的，具体可参阅pytest的<a href="http://pytest.org/latest/contents.html#toc">官方文档</a>。</p>
+<p>FlaskBB的单元测试代码都放在<code>tests/unit</code>目录下。所有以<code>test_</code>打头的文件都会被import进测试的上下文。同时所有python文件里以<code>test_</code>打头的函数都被作为单元测试函数被收集起来测试。这样我们前文提到的<code>test_forum_delete(forum)</code>函数就被作为一个单元测试函数收集起来了。</p>
+<h2 id="conftestpy">conftest.py</h2>
+<p>pytest在执行任何一个单元测试的时候，最靠近执行目录下的那个<code>conftest.py</code>将被自动执行。针对FlaskBB，其内容为：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.app</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.forum</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.user</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
+</pre></div>
+</td></tr></table>
+
+<p>从代码来看，它import了我们定义的所有的fixtures。除了自定义的fixtures之外，系统也有一些内置的fixtures，可以运行<code>py.test --fixtures</code>来查阅所有的可用fixtures。</p>
+<h2 id="pytestini">pytest.ini</h2>
+<p>pytest在执行时，会读取命令运行目录下的pytest.ini文件，通过这个文件可以定制py.test命令的一些行为。FlaskBB的里pytest.ini的内容为：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">[pytest]</span>
+<span style="color: #BB4444">norecursedirs</span> <span style="color: #666666">=</span> <span style="color: #BB4444">docs flaskbb logs migrations whoosh_index</span>
+<span style="color: #BB4444">addopts</span> <span style="color: #666666">=</span> <span style="color: #BB4444">--strict --random -vvl</span>
+</pre></div>
+
+
+<p>其中<code>norecursedirs</code>表示在递归查找测试例时，忽略docs flaskbb等目录。<code>addopts</code>为py.test命令添加一些自定义的选项。</p>
+<div class="admonition note">
+<p class="admonition-title">py.test运行方式</p>
+<p>笔者在第一次运行FlaskBB测试程序时，使用<code>py.test</code>直接运行，结果发现执行花了很长的时间，而且很多失败项。经查，原来在笔者的环境里，通过virtualenv把<code>.venv</code>目录放在了项目的根目录下，所以默认情况下pytest会从<code>.venv</code>里收集其他包的测试例来测试。所以，虽然可以定义<code>norecursedirs</code>目录，但还是推荐使用<code>py.test tests</code>这种后面直接跟着测试代码目录的方式来运行测试例。</p>
+</div>
+<h2 id="_2">结束语</h2>
+<p>通过上文的分析，可以轻松理解FlaskBB里的自动测试代码。在Quara上看到过一篇介绍Quara的continuous development的文章，Quara的网站每天会更新上百次，这是怎么做到的呢？如果没有自动化测试和自动化布署的工具，这是不可想象的。如果做黑盒测试，光回归测试就要累死人。有兴趣的同学可以<a href="http://engineering.quora.com/Continuous-Deployment-at-Quora">点击这里</a>看一下高大上的互联网公司是怎么做自动化测试和布署的。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/flask.html">flask</a> on 2014-12-21(Sunday) 23:00. Tags: <a href="http://kamidox.com/tag/python.html">python</a>, <a href="http://kamidox.com/tag/flask.html">flask</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

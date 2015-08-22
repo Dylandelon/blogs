@@ -1,0 +1,844 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Android电话本核心数据结构</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">简介</a></li>
+<li><a href="#contact-provider">Contact Provider结构</a><ul>
+<li><a href="#rawcontacts">RawContacts表</a><ul>
+<li><a href="#raw-contact">raw contact的重要字段</a></li>
+<li><a href="#_2">注意事项</a></li>
+<li><a href="#_3">一个例子</a></li>
+</ul>
+</li>
+<li><a href="#data">Data表</a><ul>
+<li><a href="#_4">描述性字段</a></li>
+<li><a href="#_5">通用数据字段</a></li>
+<li><a href="#_6">类型相关的字段</a></li>
+<li><a href="#_7">类型相关的字段名类</a></li>
+</ul>
+</li>
+<li><a href="#contacts">Contacts表</a></li>
+<li><a href="#_8">从同步适配器来的数据</a></li>
+<li><a href="#_9">需要的权限</a></li>
+<li><a href="#user-profile">User Profile</a></li>
+<li><a href="#contacts-provider">Contacts Provider元数据</a></li>
+</ul>
+</li>
+<li><a href="#contacts-provider_1">读写Contacts Provider</a><ul>
+<li><a href="#_10">查询记录</a></li>
+<li><a href="#_11">批量操作</a><ul>
+<li><a href="#_12">释放点</a></li>
+<li><a href="#_13">反向引用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_14">结语</a></li>
+</ul>
+</div>
+<h2 id="_1">简介</h2>
+<p>Contact Provider是Android系统提供的一个功能强大且灵活的系统组件，用来管理系统里的所有联系人数据。我们在Android手机是看到的联系人信息的数据来源就是由Contact Provider提供的，我们也可以自己写程序来访问这些联系人数据，也可以把这些数据和我们自己的网络服务进行同步和备份。由于Contact Provider管理了相当多类型的数据源，对一个联系人又同时管理着非常多的信息，结果就导致Contact Provider组织结构异常复杂。本文包含以下内容来介绍Contact Provider：</p>
+<ul>
+<li>Contact Provider的基础数据结构</li>
+<li>怎么样从Contact Provider里获取联系人数据</li>
+<li>怎么样修改Contact Provider里的联系人数据</li>
+<li>怎么样写一个同步适配器(sync adapter)来实现联系人数据的同步</li>
+</ul>
+<p>本文假设你已经了解了Android的content provider机制。Android自带的一个示例程序SampleSyncAdapter很好地演示了如何写一个同步适配器，来把联系人数据同步到部署在Google Web Service上网络服务上。</p>
+<h2 id="contact-provider">Contact Provider结构</h2>
+<p>Contact Provider是Android里的一个content provider组件。针对一个联系人，它维护三种类型的数据，分别用三个表来维护这些数据。三个表都定义在类<code>ContactsContract</code>里，它定义了每个表的content URL，列名称等常量。</p>
+<ul>
+<li>ContactsContract.Contacts<br />
+  这个表的每一行表示一个联系人，它是由<code>RawContacts</code>表里的数据聚合而来的。</li>
+<li>ContactsContract.RawContacts<br />
+  针对不同的帐户，这个表的第一行包含了一个联系人的概要信息。</li>
+<li>ContactsContract.Data<br />
+  这个表保存真正的联系人数据，比如电子邮件，电话号码等。</li>
+</ul>
+<p>定义在<code>ContactsContract</code>里的其他表，用来辅助实现Contact Provider的其他功能。三个核心的表Contacts, RawContacts, Data的相互关系如下图所示：</p>
+<p><img alt="contacts_structure" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/contacts_structure.png" /></p>
+<h3 id="rawcontacts">RawContacts表</h3>
+<p>一个raw contacts表示一个来自特定帐户类型和名称的联系人数据。因为Contact Provider允许多个在线服务作为数据的来源，所以Contact Provider允许多个raw contacts来对应同一个联系人。用户也可以从多个帐户中合并多个raw contacts来生成一个联系人数据。</p>
+<p>raw contact的大部分数据不保存在<code>RawContacts</code>表里，而是通过一行或多行数据保存在<code>ContactsContract.Data</code>表里。<code>Data</code>表里的每行数据都有一个<code>Data.RAW_CONTACT_ID</code>，它与表<code>RawContacts</code>的<code>RawContacts._ID</code>是对应的。即表<code>Data</code>里所有满足<code>Data.RAW_CONTACT_ID == RawContacts._ID</code>的记录，都属于表<code>RawContacts</code>里由<code>RawContacts._ID</code>指定的这条记录的数据。</p>
+<h4 id="raw-contact">raw contact的重要字段</h4>
+<p>下表是raw contact的表的一些重要字段。</p>
+<table>
+<thead>
+<tr>
+<th>字段名称</th>
+<th>用途</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACCOUNT_NAME</td>
+<td>raw contact的数据来源的帐户名称。比如对Google帐户而言，这个字段的值就是用户的Gmail地址。</td>
+<td>这个字段的数据格式是由帐户类型决定的，不一定要电子邮件地址。只要服务提供方能保证帐户名的唯一性即可。</td>
+</tr>
+<tr>
+<td>ACCOUNT_TYPE</td>
+<td>raw contact的数据来源的帐户类型。比如Google帐户的帐户类型是<strong>com.google</strong>，这个值由一般由帐户提供方的域名来保证唯一性，不和别的帐户冲突。</td>
+<td>一个帐户类型一般会和一个同步适配器关联起来，来提供数据同步服务。</td>
+</tr>
+<tr>
+<td>DELETED</td>
+<td>删除标志位</td>
+<td>Contact Provider使用这个标志位来管理用户删除，但还没同步到服务器上的记录。当同步适配器开始同步，从服务器上删除了这个记录之后，这条记录才在本地删除。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2">注意事项</h4>
+<p>下面是关于<code>RawContacts</code>表的重要的注意事项：</p>
+<ul>
+<li>联系人名称并不保存在<code>ContactsContract.RawContacts</code>表里，而是保存在<code>ContactsContract.Data</code>表里。它的数据类型是<code>ContactsContract.CommonDataKinds.StructuredName</code>。而且每个联系人在Data表里只有一行表示联系人名字的数据。</li>
+<li>要在raw contact表里保存属于指定帐户数据，必须先通过<code>AccountManager</code>注册帐户。可以通过提示用户添加帐户类型和帐户名称到系统里来实现注册帐户的目的。如果你不这样做，Contact Provider会自动删除raw contact表里属于这个帐户的数据。<br />
+  例如，如果你需要你的应用程序维护来自你的网络服务<code>"com.example.dataservice"</code>的联系人数据，帐户的用户名是<code>"user@dataservice.example.com"</code>。用户必须先在手机里新建一个帐户，其帐户类型是<code>"com.example.dataservice"</code>，帐户名是<code>"user@dataservice.example.com"</code>。添加帐户成功后，你的应用程序才能添加属于这个帐户的联系人数据到raw contact表里。</li>
+</ul>
+<h4 id="_3">一个例子</h4>
+<p>为了更好的理解raw contact的机制，我们假设有个用户叫&rdquo;Emily Dickinson&rdquo;，她在设备里添加了下面三个帐户：</p>
+<ul>
+<li><code>emily.dickinson@gmail.com</code></li>
+<li><code>emilyd@gmail.com</code></li>
+<li><code>Twitter account "belle_of_amherst"</code></li>
+</ul>
+<p>并且都启用了自动同步功能。</p>
+<p>假设Emily在电脑上打开浏览器，用<code>emily.dickinson@gmail.com</code>登录Gmail，打开通讯录，添加了&rdquo;Thomas Higginson&rdquo;。过了一会儿，她又用<code>emilyd@gmail.com</code>登录Gmail，然后向&rdquo;Thomas Higginson&rdquo;发了封电子邮件，这个操作会自动把&rdquo;Thomas Higginson&rdquo;添加进联系人里。她也在Twitter上关注了&rdquo;colonel_tom&rdquo; (Thomas Higginson&rsquo;s Twitter ID) 。</p>
+<p>上面的操作，会导致Contacts Provider创建了三个raw contacts:</p>
+<ul>
+<li>第一个是和<code>emily.dickinson@gmail.com</code>帐户关联的叫&rdquo;Thomas Higginson&rdquo;的联系人。这个联系人所属的帐户类型是Google。</li>
+<li>第二个是和<code>emilyd@gmail.com</code>帐户关联的叫&rdquo;Thomas Higginson&rdquo;的raw contact。这个联系人的帐户类型也是Google。虽然第二个联系人和第一个的名字一样，但它属于另外一个帐户名下的联系人。</li>
+<li>第三个是和Twitter帐户&rdquo;belle_of_amherst&rdquo;关联的叫&rdquo;Thomas Higginson&rdquo;的联系人。它的帐户类型是Twitter.</li>
+</ul>
+<h3 id="data">Data表</h3>
+<p>前面提过，Data表是用来保存联系人数据的，通过<code>Data.RAW_CONTACT_ID</code>和raw contact里的<code>RawContacts._ID</code>关联起来。这样就允许一个raw contact可以有多个相同类型的数据保存在Data表里，比如一个联系人可以有多个电子邮件地址，多个电话号码等。例如，属于<code>emilyd@gmail.com</code>帐户的联系人&rdquo;Thomas Higginson&rdquo;有一个家庭电子邮件<code>thigg@gmail.com</code>以及一个工作电子邮件<code>thomas.higginson@gmail.com</code>，Contact Provider保存这两个电子邮件地址在Data表里，并通过<code>Data.RAW_CONTACT_ID</code>和<code>RawContacts</code>表里的数据关联。</p>
+<p>需要注意，不同类型的数据全部保存在<code>Data</code>表里。联系人名字，邮件地址，电话号码，照片，网址等等，全部是保存在<code>Data</code>表里的。为了实现这样的目的，Data表里包含一些描述性的字段来描述数据。还包含了一些真正的用来保存数据的字段。</p>
+<h4 id="_4">描述性字段</h4>
+<ul>
+<li>RAW_CONTACT_ID<br />
+  用来和<code>RawContacts._ID</code>字段进行关联，以表示行数据是属于哪个raw contact的。</li>
+<li>MIMETYPE<br />
+  数据类型，Contact Provider使用定义<code>ContactsContract.CommonDataKinds</code>里的子类来区别不同的数据类型。</li>
+<li>IS_PRIMARY<br />
+  如果一个数据类型可以出现多次，则这个字段用来标示出这种数据类型的主数据。比如一个联系人有多个电话号码，则其中一个的IS_PRIMARY可以设置为非零值，则这个号码就是主电话号码。有些应用程序可以利用这一特性地优先选择主电话号码来拨号等。</li>
+</ul>
+<h4 id="_5">通用数据字段</h4>
+<p>一个Data表里的记录，总共有15个通用数据字段，从DATA1到DATA15。同时还有4个只能给同步适配器使用的字段SYNC1到SYNC4。</p>
+<p>DATA1字段会被索引起来，Contact Provider默认问题认为这个字段保存的是最经常被访问的数据，比如对Email数据而言，这个字段保存的就是Email地址。</p>
+<p>通常情况下，DATA15被用来保存二进制数据(BLOB)，比如照片的二进制数据等。</p>
+<h4 id="_6">类型相关的字段</h4>
+<p>DATA表里的每一行保存一种类型的数据，为了方便地访问不同类型的数据，Contact Provider也提供了访问具体类型数据的字段的方法，这些类型相关的字段别名由定义在<code>ContactsContract.CommonDataKinds</code>里的子类来定义。</p>
+<p>例如，<code>ContactsContract.CommonDataKinds.Email</code>类定义了MIME Type为<code>Email.CONTENT_ITEM_TYPE</code>的数据，要访问Email地址时，可以直接访问<code>Email.ADDRESS</code>，它的值其实就是&rdquo;data1&rdquo;，就是通用数据字段的DATA1字段。</p>
+<div class="admonition caution">
+<p class="admonition-title">警告</p>
+<p>当向<code>ContactsContract.Data</code>表中添加自定义数据时，不要使用<code>ContactsContract.CommonDataKinds</code>里预定义的MIME类型。否则你可以丢失数据或引起Contact Provider不能正常工作。例如，你<strong>不能</strong>向Data表里添加一行数据，然后其MIME type定义为<code>Email.CONTENT_ITEM_TYPE</code>，其值保存在字段DATA1上，且其值是用户名而不是Email地址。</p>
+</div>
+<p>下图就是类型相关字段别名和通用数据字段的关联关系图：</p>
+<p><img alt="data_columns" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/data_columns.png" /></p>
+<h4 id="_7">类型相关的字段名类</h4>
+<p>下表列出了最常用的类型相关的别名字段类</p>
+<table>
+<thead>
+<tr>
+<th>别名类名称</th>
+<th>数据类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ContactsContract.CommonDataKinds.StructuredName</td>
+<td>名字</td>
+<td>只能有一个名字</td>
+</tr>
+<tr>
+<td>ContactsContract.CommonDataKinds.Photo</td>
+<td>照片</td>
+<td>只能有一个照片</td>
+</tr>
+<tr>
+<td>ContactsContract.CommonDataKinds.Email</td>
+<td>电子邮件</td>
+<td>可以有多个电子邮件地址</td>
+</tr>
+<tr>
+<td>ContactsContract.CommonDataKinds.GroupMembership</td>
+<td>联系人所在的组</td>
+<td>联系人的组是可选项</td>
+</tr>
+</tbody>
+</table>
+<h3 id="contacts">Contacts表</h3>
+<p>Contact Provider会从RawContacts和Data表里收集数据，组合生成一个记录放在Contacts表里。Contact Provider负责在这个表里生成记录，合并数据。应用程序和同步适配器都不能向这个表里添加记录，Contacts表里的一些字段还是只读的。</p>
+<div class="admonition hint">
+<p class="admonition-title">注意</p>
+<p>如果你试图通过ContentResolve的insert()方法向Contacts表里添加记录，会得到一个<code>UnsupportedOperationException</code>的错误。如果试图修改只读的字段，也会被忽略。</p>
+</div>
+<p>Contact Provider会根据raw contact自动向Contacts表里添加一条记录。如果raw contact数据改变，导致Contacts表里原先和raw contact关联记录不复存在了，那么Contact Provider也会自动向Contacts里自动添加一条记录。如果应用程序或同步适配器添加了一条raw contact记录，且这条记录与Contacts表里的某条记录是一样的，那么Contact Provider会负责把这条新增加的记录和原来那条记录合并。</p>
+<p>Contact Provider通过<code>Contacts._ID</code>和<code>RawContacts.CONTACT_ID</code>把Contacts表和RawContacts表的数据关联起来。即一个Contacts表里的记录可以与多个RawContacts表里的记录对应。给定<code>Contacts._ID</code>的值，所有<code>RawContacts.CONTACT_ID</code>为这个值的记录都与Contacts里的这条记录关联。</p>
+<p><code>ContactsContract.Contacts</code>表还包含了一个<code>LOOKUP_KEY</code>字段，这个字段永久地和某个特定的联系人关联起来。这个字段存在的意义在于，Contacts表是由Contacts Provider自动维护的，当发生数据合并或同步适配器修改raw contacts时，Contacts._ID的值是会发生变化的。而<code>Contacts.LOOKUP_KEY</code>在这个过程中，是不会发生变化的。<code>Contacts.CONTENT_LOOKUP_URI</code>和<code>LOOKUP_KEY</code>字段组合起来所代表的联系人依然指向了原来的联系人。所以，我们可以用<code>LOOKUP_KEY</code>来连接一个我们感兴趣的联系人。</p>
+<p>下图阐明了三个主要的表之间的关系：</p>
+<p><img alt="contacts_tables" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/contacts_tables.png" /></p>
+<h3 id="_8">从同步适配器来的数据</h3>
+<p>用户可以在设备里直接输入联系人数据，联系人数据也可以通过同步适配器自动地在设备和云端进行同步。同步适配器在系统后台运行，由系统控制，通过ContentResolver来管理数据。</p>
+<p>在Android系统上，同步适配器的云端服务是由帐户类型来区分的。一个同步适配器对应一个帐户类型。但同步适配器可以支持同一个帐户类型下的多个帐户名，就象可以在设备上登录多个Google帐户一样。下面的文字描述了帐户类型和帐户名称与同步适配器的关系。</p>
+<ul>
+<li>帐户类型<br />
+  唯一地标识了用户存储数据的云端服务。大多数时候，用户必须通过云端服务鉴权才能使用服务。例如，Google联系人就是一个值为&rdquo;com.google&rdquo;的帐户类型。这个值与AccountManager类里的帐户类型的值是一样的。</li>
+<li>帐户名称<br />
+  唯一地标识了某个帐户类型的一个特定的帐户。Google联系人帐户和Google帐户是相同的，它们都用Gmail地址作为帐户名称。其他的云端服务可能使用一个字符串或一个数字来表示帐户名称，但必须注意的是，云端服务必须保证在同一个帐户类型里，帐户名称可以唯一地区分一个帐户。</li>
+</ul>
+<p>帐户类型可以不唯一，即一个设备里可以有多个相同帐户类型的帐户。比如，设备可以登录多个Google帐户。帐户名称一般是唯一的，至少在同一个帐户类型里必须是唯一的。帐户类型和帐户名称结合起来，通过同步适配器，共同标识了一个在Contact Provider和云端服务之间的一个特定同步数据流。</p>
+<p>如果你想在你的云端服务和Contact Provider之间同步数据，你必须实现一个同步适配器。后面章节的文章会提到这个话题。</p>
+<h3 id="_9">需要的权限</h3>
+<p>需要访问Contact Provider的应用程序必须取得下面的权限：</p>
+<ul>
+<li>读权限<br />
+  需要在应用程序的AndroidManifest.xml里，添加<code>&lt;uses-permission android:name="android.permission.READ_CONTACTS"&gt;</code></li>
+<li>写权限<br />
+  需要在应用程序的AndroidManifest.xml里，添加<code>&lt;uses-permission android:name="android.permission.WRITE_CONTACTS"&gt;</code></li>
+</ul>
+<p>这两个权限不包含User Profile数据的读写。user profile使用单独的权限来控制读写。</p>
+<h3 id="user-profile">User Profile</h3>
+<p>User Profile就是在设备联系人应用程序里看到的&rdquo;我的个人资料&rdquo;，用来描述本设备所有人信息的一个数据。<code>ContactsContract.Contacts</code>表里有一行数据用来表现user profile。这个数据用来描述设备所有人本身，而不是设备所有人的联系人。</p>
+<p>读写user profile除了读写联系人数据外，还需要额外的权限，他们是&rdquo;android.permission.READ_PROFILE&rdquo;和&rdquo;android.permission.WRITE_PROFILE&rdquo;。这两个都是在API 14的时候才加进去的。</p>
+<p>要获取user profile，可以使用ContentResolver通过<code>ContactsContract.Profile.CONTENT_URI</code>来获取，下面是获取user profile的示例代码：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// Sets the columns to retrieve for the user profile</span>
+mProjection <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> String<span style="color: #666666">[]</span>
+    <span style="color: #666666">{</span>
+        Profile<span style="color: #666666">.</span><span style="color: #BB4444">_ID</span><span style="color: #666666">,</span>
+        Profile<span style="color: #666666">.</span><span style="color: #BB4444">DISPLAY_NAME_PRIMARY</span><span style="color: #666666">,</span>
+        Profile<span style="color: #666666">.</span><span style="color: #BB4444">LOOKUP_KEY</span><span style="color: #666666">,</span>
+        Profile<span style="color: #666666">.</span><span style="color: #BB4444">PHOTO_THUMBNAIL_URI</span>
+    <span style="color: #666666">};</span>
+
+<span style="color: #008800; font-style: italic">// Retrieves the profile from the Contacts Provider</span>
+mProfileCursor <span style="color: #666666">=</span> getContentResolver<span style="color: #666666">().</span><span style="color: #BB4444">query</span><span style="color: #666666">(</span>
+                Profile<span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_URI</span><span style="color: #666666">,</span>
+                mProjection <span style="color: #666666">,</span>
+                <span style="color: #AA22FF; font-weight: bold">null</span><span style="color: #666666">,</span>
+                <span style="color: #AA22FF; font-weight: bold">null</span><span style="color: #666666">,</span>
+                <span style="color: #AA22FF; font-weight: bold">null</span><span style="color: #666666">);</span>
+</pre></div>
+
+
+<h3 id="contacts-provider">Contacts Provider元数据</h3>
+<p>Contacts Provider管理了本地的所有联系人数据，追踪他们的状态。这些元数据就是为了实现这些功能所需要的。这些元数据保存在RawContacts，Contacts, Data等表格记录里，同时还保存在<code>ContactsContract.Settings</code>和<code>ContactsContract.SyncState</code>表里。下面汇总了这些元数据的位置及其作用。</p>
+<table>
+<thead>
+<tr>
+<th>表名称</th>
+<th>字段名称</th>
+<th>字段值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ContactsContract.RawContacts</td>
+<td>DIRTY</td>
+<td>0: 数据没变化；1: 上次同步以来数据变化了</td>
+<td>这个数据由Contact Provider维护。当用户修改记录时，这个值自动变为1；而当同步适配器修改记录时，在其修改数据的URI上，会带上<code>CALLER_IS_SYNCADAPTER</code>参数，以表示是同步适配器修改的，不需要标记为脏数据。</td>
+</tr>
+<tr>
+<td>ContactsContract.RawContacts</td>
+<td>VERSION</td>
+<td>数据的版本</td>
+<td>当RawContacts表里的记录数据改变时，Contacts Provider自动增加这个值。</td>
+</tr>
+<tr>
+<td>ContactsContract.Data</td>
+<td>DATA_VERSION</td>
+<td>数据的版本</td>
+<td>当Data表里的记录数据改变时，Contacts Provider自动增加这个值。</td>
+</tr>
+<tr>
+<td>ContactsContract.RawContacts</td>
+<td>SOURCE_ID</td>
+<td>字符串，用来唯一标识这个记录来自哪个帐户的。</td>
+<td>当同步适配器添加记录时，这个字段必须设置为服务器端针对这个记录的唯一标识。当设备端用户添加记录时，这个字段为空，这样就告诉同步适配器这个字段是用户新增的，必须在服务器端新建一条记录，并用这条记录的SOURCE_ID值来更新用户添加的这条记录。特别地，这个字段必须在一个帐户里保持全局唯一性，且必须在同步过程中保持不变。即同步前后，这个字段需要标识出相同的记录。</td>
+</tr>
+<tr>
+<td>ContactsContract.Groups</td>
+<td>GROUP_VISIBLE</td>
+<td>0: 属于这个值的记录在应用程序里不可见；1: 这个组的联系人可见</td>
+<td>这个字段可以让服务端设置组的可见性。</td>
+</tr>
+<tr>
+<td>ContactsContract.Settings</td>
+<td>UNGROUPED_VISIBLE</td>
+<td>0: 未分组的联系人不可见；1: 未分组的联系人可见</td>
+<td>默认情况下，未分组的联系人是不可见的。通过修改<code>ContactsContract.Settings</code>表里的这个字段，可以设置应用程序显示未分组的联系人。</td>
+</tr>
+<tr>
+<td>ContactsContract.SyncState</td>
+<td>所有字段</td>
+<td>使用这个表来保存同步适配器的元数据</td>
+<td>用这个表格来保存同步后的状态信息以及所有和同步相关的数据，比如时间戳等。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contacts-provider_1">读写Contacts Provider</h2>
+<p>本节内容描述如何访问Contacts Provider的数据，主要集中在下面几个话题：</p>
+<ul>
+<li>联系人记录查询</li>
+<li>分批修改数据</li>
+<li>通过Intent来获取或修改记录</li>
+<li>数据完整性检查</li>
+</ul>
+<p>通过同步适配器修改联系人数据将在下面的章节中单独描述。</p>
+<h3 id="_10">查询记录</h3>
+<p>因为Contacts Provider数据是按照三个核心表(Contacts, RawContacts, Data)按照层次结构组织起来的，应用程序经常需要获取一个联系人的所有信息，这就需要从这三个表里里去联合查询。比如从Contacts表里找到一个记录，然后根据Contacts._ID从RawContacts表里关联RawContacts.CONTACT_ID去查询与这个Contacts记录关联的RawContacts记录。接着，再根据找到的关联的RawContacts记录的RawContacts._ID的值从Data表里，根据Data.RAW_CONTACTS_ID去查询所有的关联记录。再把这些记录组合起来，最后得到了一个完整的联系人信息。为了达成这个目的，Contact Provider提供了<em>ContactsContract.Contacts.Entity</em>类来实现这个功能，自动实现了这些表的联合查询。</p>
+<p>一个entity表是从Contacts, RawContacts, Data三个表里把关联的记录合并起来，从中选择一些列来组合起来的。当从entity表里查询数据时，需要提供一个感兴趣的字段列表(projection)，查询结果是一个游标(cursor)，里面包含一个个联系人的所有信息数据。例如，指定一个联系人的名字，查询出这个联系人的所有电子邮件，那么你将得到包含一行数据的游标，这行数据里有名字以及多个电子邮件的数据。</p>
+<p>entity表让查询操作更简单。你可以一次从不同的表里获取出联系人的所有信息。而不需要先从父表里查询数据，得到ID，再根据ID去子表里查询。而且，Contacts Provider把这些联合查询操作在一个事务里完成，这样保证了查询到的数据的一致性。</p>
+<div class="admonition note">
+<p class="admonition-title">注意</p>
+<p>一个entity一般没有包含Contacts表及其子表的所有字段，如果试图访问这些不在entity表里的字段，会有异常抛出。</p>
+</div>
+<p>下面的代码演示了如何从entity里获取记录数据。一个联系人应用程序一般有个列表显示联系人，点击后显示这个记录的详细信息，下面的代码是显示详细信息的一部分代码。即根据联系人的ID去获取所有的联系人信息。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #008800; font-style: italic">/*</span>
+<span style="color: #008800; font-style: italic">     * Appends the entity path to the URI. In the case of the Contacts Provider, the</span>
+<span style="color: #008800; font-style: italic">     * expected URI is content://com.google.contacts/#/entity (# is the ID value).</span>
+<span style="color: #008800; font-style: italic">     */</span>
+    mContactUri <span style="color: #666666">=</span> Uri<span style="color: #666666">.</span><span style="color: #BB4444">withAppendedPath</span><span style="color: #666666">(</span>
+            mContactUri<span style="color: #666666">,</span>
+            ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Contacts</span><span style="color: #666666">.</span><span style="color: #BB4444">Entity</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_DIRECTORY</span><span style="color: #666666">);</span>
+
+    <span style="color: #008800; font-style: italic">// Initializes the loader identified by LOADER_ID.</span>
+    getLoaderManager<span style="color: #666666">().</span><span style="color: #BB4444">initLoader</span><span style="color: #666666">(</span>
+            LOADER_ID<span style="color: #666666">,</span>  <span style="color: #008800; font-style: italic">// The identifier of the loader to initialize</span>
+            <span style="color: #AA22FF; font-weight: bold">null</span><span style="color: #666666">,</span>       <span style="color: #008800; font-style: italic">// Arguments for the loader (in this case, none)</span>
+            <span style="color: #AA22FF; font-weight: bold">this</span><span style="color: #666666">);</span>      <span style="color: #008800; font-style: italic">// The context of the activity</span>
+
+    <span style="color: #008800; font-style: italic">// Creates a new cursor adapter to attach to the list view</span>
+    mCursorAdapter <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> SimpleCursorAdapter<span style="color: #666666">(</span>
+            <span style="color: #AA22FF; font-weight: bold">this</span><span style="color: #666666">,</span>                        <span style="color: #008800; font-style: italic">// the context of the activity</span>
+            R<span style="color: #666666">.</span><span style="color: #BB4444">layout</span><span style="color: #666666">.</span><span style="color: #BB4444">detail_list_item</span><span style="color: #666666">,</span>   <span style="color: #008800; font-style: italic">// the view item containing the detail widgets</span>
+            mCursor<span style="color: #666666">,</span>                     <span style="color: #008800; font-style: italic">// the backing cursor</span>
+            mFromColumns<span style="color: #666666">,</span>                <span style="color: #008800; font-style: italic">// the columns in the cursor that provide the data</span>
+            mToViews<span style="color: #666666">,</span>                    <span style="color: #008800; font-style: italic">// the views in the view item that display the data</span>
+            <span style="color: #666666">0);</span>                          <span style="color: #008800; font-style: italic">// flags</span>
+
+    <span style="color: #008800; font-style: italic">// Sets the ListView&#39;s backing adapter.</span>
+    mRawContactList<span style="color: #666666">.</span><span style="color: #BB4444">setAdapter</span><span style="color: #666666">(</span>mCursorAdapter<span style="color: #666666">);</span>
+    <span style="color: #666666">...</span>
+<span style="color: #AA22FF">@Override</span>
+<span style="color: #AA22FF; font-weight: bold">public</span> Loader<span style="color: #666666">&lt;</span>Cursor<span style="color: #666666">&gt;</span> <span style="color: #00A000">onCreateLoader</span><span style="color: #666666">(</span><span style="color: #00BB00; font-weight: bold">int</span> id<span style="color: #666666">,</span> Bundle args<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008800; font-style: italic">/*</span>
+<span style="color: #008800; font-style: italic">     * Sets the columns to retrieve.</span>
+<span style="color: #008800; font-style: italic">     * RAW_CONTACT_ID is included to identify the raw contact associated with the data row.</span>
+<span style="color: #008800; font-style: italic">     * DATA1 contains the first column in the data row (usually the most important one).</span>
+<span style="color: #008800; font-style: italic">     * MIMETYPE indicates the type of data in the data row.</span>
+<span style="color: #008800; font-style: italic">     */</span>
+    String<span style="color: #666666">[]</span> projection <span style="color: #666666">=</span>
+        <span style="color: #666666">{</span>
+            ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Contacts</span><span style="color: #666666">.</span><span style="color: #BB4444">Entity</span><span style="color: #666666">.</span><span style="color: #BB4444">RAW_CONTACT_ID</span><span style="color: #666666">,</span>
+            ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Contacts</span><span style="color: #666666">.</span><span style="color: #BB4444">Entity</span><span style="color: #666666">.</span><span style="color: #BB4444">DATA1</span><span style="color: #666666">,</span>
+            ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Contacts</span><span style="color: #666666">.</span><span style="color: #BB4444">Entity</span><span style="color: #666666">.</span><span style="color: #BB4444">MIMETYPE</span>
+        <span style="color: #666666">};</span>
+
+    <span style="color: #008800; font-style: italic">/*</span>
+<span style="color: #008800; font-style: italic">     * Sorts the retrieved cursor by raw contact id, to keep all data rows for a single raw</span>
+<span style="color: #008800; font-style: italic">     * contact collated together.</span>
+<span style="color: #008800; font-style: italic">     */</span>
+    String sortOrder <span style="color: #666666">=</span>
+            ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Contacts</span><span style="color: #666666">.</span><span style="color: #BB4444">Entity</span><span style="color: #666666">.</span><span style="color: #BB4444">RAW_CONTACT_ID</span> <span style="color: #666666">+</span>
+            <span style="color: #BB4444">&quot; ASC&quot;</span><span style="color: #666666">;</span>
+
+    <span style="color: #008800; font-style: italic">/*</span>
+<span style="color: #008800; font-style: italic">     * Returns a new CursorLoader. The arguments are similar to</span>
+<span style="color: #008800; font-style: italic">     * ContentResolver.query(), except for the Context argument, which supplies the location of</span>
+<span style="color: #008800; font-style: italic">     * the ContentResolver to use.</span>
+<span style="color: #008800; font-style: italic">     */</span>
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">new</span> CursorLoader<span style="color: #666666">(</span>
+            getApplicationContext<span style="color: #666666">(),</span>  <span style="color: #008800; font-style: italic">// The activity&#39;s context</span>
+            mContactUri<span style="color: #666666">,</span>              <span style="color: #008800; font-style: italic">// The entity content URI for a single contact</span>
+            projection<span style="color: #666666">,</span>               <span style="color: #008800; font-style: italic">// The columns to retrieve</span>
+            <span style="color: #AA22FF; font-weight: bold">null</span><span style="color: #666666">,</span>                     <span style="color: #008800; font-style: italic">// Retrieve all the raw contacts and their data rows.</span>
+            <span style="color: #AA22FF; font-weight: bold">null</span><span style="color: #666666">,</span>                     <span style="color: #008800; font-style: italic">//</span>
+            sortOrder<span style="color: #666666">);</span>               <span style="color: #008800; font-style: italic">// Sort by the raw contact ID.</span>
+<span style="color: #666666">}</span>
+</pre></div>
+
+
+<p>当数据加载结束，LoaderManager 会调用 Activity 的 onLoadFinish() 回调函数。这个回调函数的参数之一是 Cursor 对象，它包含了查询的结果集。应用程序可以从 Cursor 对象里获取数据并显示出来。</p>
+<h3 id="_11">批量操作</h3>
+<p>在操作电话数据的增加，删除，修改时，尽量使用批量操作，通过创建一个 ArrayList 列表，列表里放 ContactProviderOperation 类的实例，最后再调用 ContentResolver.applyPatch() 方法来执行批量操作。Contact Provider 将把一次 applyPatch() 里的所有操作当成一个事务来执行，这样你的修改就不会造成数据不一致性。新建一个电话本记录时，批量操作也会把插入 RawContact 表里的数据和插入 Data 表里的数据放在一个事务里执行，确保数据的一致性。</p>
+<h4 id="_12">释放点</h4>
+<p>当指操作包含大量的操作时，执行起来虽然不会阻塞 UI 纯种，但系统整体很繁忙，会阻塞其它的进程。这样就会导致用户体验下降。一个解决方法是把所有操作通过合理的安排，放进几个独立的 ArrayList 对象里，同时为了不阻塞其他进程，可以在操作之间放一个<strong>释放点</strong>，释放点也是一个 ContentProviderOperation 实例，它的 isyieldAllowed() 会返回 true 。当 Contact Provider 执行这些操作时，遇到释放点后，它会停止事务，暂停操作，以便让其他程序运行。等到 Contact Provider 再次运行时，它将创建新的事务从上次暂停的地方继续执行操作。</p>
+<p>释放点会导致在一批操作被分隔成多个事务。正因为如此，你需要把释放点放在一批相关数据操作的结尾处。比如，你需要把释放点放在添加 RawContact 记录和添加相应的 Data 记录之后。以确保释放点之间的操作的数据一致性。</p>
+<p>释放点之间也是一个原子操作单元。所有在释放点之间的操作要么全部成功要么全部失败。如果没有设置释放点，那么整个批量操作都将作为一个原子操作，要么全部成功要么全部失败。使用释放点可以避免让系统性能受到挑战，同时又兼顾了数据操作的原子性。</p>
+<h4 id="_13">反向引用</h4>
+<p>当你把向 RawContact 里插入一条记录，以及把其相应的数据插入到 Data 表里作为一个批量操作时，你需要把 Data 表里的 RAW_CONTACT_ID 的值填成 RawContact 表里新插入的记录的 ID 值。而由于你还没有让 Contact Provider 去执行这个批量操作，即记录还没有在 RawContact 里生成，它的 ID 值是不可用的。为了解决这个问题， ContentProviderOperation.Builder 类提供了 withValueBackReference() 方法，用来让前一个操作的返回值作为当前操作的某个字段的值。</p>
+<p>withValueBackReference() 方法有两个参数：</p>
+<ul>
+<li>key<br />
+  键值对里的键值，它的值必须是要引用前一个操作返回值作为当前字段值的字段名称</li>
+<li>previousResult<br />
+  applyPatch() 函数返回的 ContentProviderResult 实例数组的索引值，这个索引值从0开始计数。当一个批量操作被 applyPatch() 执行时，每个操作都会有个返回值，其值是一个 ContentProviderResult 实例，通过数组组织起来返回。previousResult 是这个返回数组的索引值，用这个索引值获取到 ContentProviderResult，并把结果保存在由 key 指定的当前操作的字段上。这样就允许我们在插入 Data 表时，把其 RAW_CONTACT_ID 的值作为反向引用，引用之前的插入 RawContact 操作的返回值上。appyPatch() 调用时，其结果数组一次性被创建，数组的大小就是操作的个数。结果数组的值全部被设置为 null。所以，当反向引用一个还未执行的操作的结果上时， withValueBackReference() 会抛出一个异常。</li>
+</ul>
+<p>下面的代码演示如何向 raw contact 和 data 表里利用反向引用批量地插入数据。这个代码在 ContactManager 例子里。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">/**</span>
+<span style="color: #008800; font-style: italic"> * Creates a contact entry from the current UI values in the account named by mSelectedAccount.</span>
+<span style="color: #008800; font-style: italic"> */</span>
+<span style="color: #AA22FF; font-weight: bold">protected</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">createContactEntry</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+    <span style="color: #008800; font-style: italic">// Get values from UI</span>
+    String name <span style="color: #666666">=</span> mContactNameEditText<span style="color: #666666">.</span><span style="color: #BB4444">getText</span><span style="color: #666666">().</span><span style="color: #BB4444">toString</span><span style="color: #666666">();</span>
+    String phone <span style="color: #666666">=</span> mContactPhoneEditText<span style="color: #666666">.</span><span style="color: #BB4444">getText</span><span style="color: #666666">().</span><span style="color: #BB4444">toString</span><span style="color: #666666">();</span>
+    String email <span style="color: #666666">=</span> mContactEmailEditText<span style="color: #666666">.</span><span style="color: #BB4444">getText</span><span style="color: #666666">().</span><span style="color: #BB4444">toString</span><span style="color: #666666">();</span>
+    <span style="color: #00BB00; font-weight: bold">int</span> phoneType <span style="color: #666666">=</span> mContactPhoneTypes<span style="color: #666666">.</span><span style="color: #BB4444">get</span><span style="color: #666666">(</span>
+            mContactPhoneTypeSpinner<span style="color: #666666">.</span><span style="color: #BB4444">getSelectedItemPosition</span><span style="color: #666666">());</span>
+    <span style="color: #00BB00; font-weight: bold">int</span> emailType <span style="color: #666666">=</span> mContactEmailTypes<span style="color: #666666">.</span><span style="color: #BB4444">get</span><span style="color: #666666">(</span>
+            mContactEmailTypeSpinner<span style="color: #666666">.</span><span style="color: #BB4444">getSelectedItemPosition</span><span style="color: #666666">());;</span>
+
+    <span style="color: #008800; font-style: italic">// Prepare contact creation request</span>
+    <span style="color: #008800; font-style: italic">//</span>
+    <span style="color: #008800; font-style: italic">// Note: We use RawContacts because this data must be associated with a particular account.</span>
+    <span style="color: #008800; font-style: italic">//       The system will aggregate this with any other data for this contact and create a</span>
+    <span style="color: #008800; font-style: italic">//       coresponding entry in the ContactsContract.Contacts provider for us.</span>
+    ArrayList<span style="color: #666666">&lt;</span>ContentProviderOperation<span style="color: #666666">&gt;</span> ops <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>ContentProviderOperation<span style="color: #666666">&gt;();</span>
+    ops<span style="color: #666666">.</span><span style="color: #BB4444">add</span><span style="color: #666666">(</span>ContentProviderOperation<span style="color: #666666">.</span><span style="color: #BB4444">newInsert</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">RawContacts</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_URI</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">RawContacts</span><span style="color: #666666">.</span><span style="color: #BB4444">ACCOUNT_TYPE</span><span style="color: #666666">,</span> mSelectedAccount<span style="color: #666666">.</span><span style="color: #BB4444">getType</span><span style="color: #666666">())</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">RawContacts</span><span style="color: #666666">.</span><span style="color: #BB4444">ACCOUNT_NAME</span><span style="color: #666666">,</span> mSelectedAccount<span style="color: #666666">.</span><span style="color: #BB4444">getName</span><span style="color: #666666">())</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">build</span><span style="color: #666666">());</span>
+    ops<span style="color: #666666">.</span><span style="color: #BB4444">add</span><span style="color: #666666">(</span>ContentProviderOperation<span style="color: #666666">.</span><span style="color: #BB4444">newInsert</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_URI</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValueBackReference</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">RAW_CONTACT_ID</span><span style="color: #666666">,</span> <span style="color: #666666">0)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">MIMETYPE</span><span style="color: #666666">,</span>
+                    ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">StructuredName</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_ITEM_TYPE</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">StructuredName</span><span style="color: #666666">.</span><span style="color: #BB4444">DISPLAY_NAME</span><span style="color: #666666">,</span> name<span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">build</span><span style="color: #666666">());</span>
+    ops<span style="color: #666666">.</span><span style="color: #BB4444">add</span><span style="color: #666666">(</span>ContentProviderOperation<span style="color: #666666">.</span><span style="color: #BB4444">newInsert</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_URI</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValueBackReference</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">RAW_CONTACT_ID</span><span style="color: #666666">,</span> <span style="color: #666666">0)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">MIMETYPE</span><span style="color: #666666">,</span>
+                    ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">Phone</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_ITEM_TYPE</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">Phone</span><span style="color: #666666">.</span><span style="color: #BB4444">NUMBER</span><span style="color: #666666">,</span> phone<span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">Phone</span><span style="color: #666666">.</span><span style="color: #BB4444">TYPE</span><span style="color: #666666">,</span> phoneType<span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">build</span><span style="color: #666666">());</span>
+    ops<span style="color: #666666">.</span><span style="color: #BB4444">add</span><span style="color: #666666">(</span>ContentProviderOperation<span style="color: #666666">.</span><span style="color: #BB4444">newInsert</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_URI</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValueBackReference</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">RAW_CONTACT_ID</span><span style="color: #666666">,</span> <span style="color: #666666">0)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">Data</span><span style="color: #666666">.</span><span style="color: #BB4444">MIMETYPE</span><span style="color: #666666">,</span>
+                    ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">Email</span><span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_ITEM_TYPE</span><span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">Email</span><span style="color: #666666">.</span><span style="color: #BB4444">DATA</span><span style="color: #666666">,</span> email<span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">CommonDataKinds</span><span style="color: #666666">.</span><span style="color: #BB4444">Email</span><span style="color: #666666">.</span><span style="color: #BB4444">TYPE</span><span style="color: #666666">,</span> emailType<span style="color: #666666">)</span>
+            <span style="color: #666666">.</span><span style="color: #BB4444">build</span><span style="color: #666666">());</span>
+
+    <span style="color: #008800; font-style: italic">/*</span>
+<span style="color: #008800; font-style: italic">     * Demonstrates a yield point. At the end of this insert, the batch operation&#39;s thread</span>
+<span style="color: #008800; font-style: italic">     * will yield priority to other threads. Use after every set of operations that affect a</span>
+<span style="color: #008800; font-style: italic">     * single contact, to avoid degrading performance.</span>
+<span style="color: #008800; font-style: italic">     */</span>
+    op<span style="color: #666666">.</span><span style="color: #BB4444">withYieldAllowed</span><span style="color: #666666">(</span><span style="color: #AA22FF; font-weight: bold">true</span><span style="color: #666666">);</span>
+
+    <span style="color: #008800; font-style: italic">// Ask the Contact provider to create a new contact</span>
+    Log<span style="color: #666666">.</span><span style="color: #BB4444">i</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span><span style="color: #BB4444">&quot;Selected account: &quot;</span> <span style="color: #666666">+</span> mSelectedAccount<span style="color: #666666">.</span><span style="color: #BB4444">getName</span><span style="color: #666666">()</span> <span style="color: #666666">+</span> <span style="color: #BB4444">&quot; (&quot;</span> <span style="color: #666666">+</span>
+            mSelectedAccount<span style="color: #666666">.</span><span style="color: #BB4444">getType</span><span style="color: #666666">()</span> <span style="color: #666666">+</span> <span style="color: #BB4444">&quot;)&quot;</span><span style="color: #666666">);</span>
+    Log<span style="color: #666666">.</span><span style="color: #BB4444">i</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span><span style="color: #BB4444">&quot;Creating contact: &quot;</span> <span style="color: #666666">+</span> name<span style="color: #666666">);</span>
+    <span style="color: #AA22FF; font-weight: bold">try</span> <span style="color: #666666">{</span>
+        getContentResolver<span style="color: #666666">().</span><span style="color: #BB4444">applyBatch</span><span style="color: #666666">(</span>ContactsContract<span style="color: #666666">.</span><span style="color: #BB4444">AUTHORITY</span><span style="color: #666666">,</span> ops<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span> <span style="color: #AA22FF; font-weight: bold">catch</span> <span style="color: #666666">(</span>Exception e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #008800; font-style: italic">// Display warning</span>
+        Context ctx <span style="color: #666666">=</span> getApplicationContext<span style="color: #666666">();</span>
+        CharSequence txt <span style="color: #666666">=</span> getString<span style="color: #666666">(</span>R<span style="color: #666666">.</span><span style="color: #BB4444">string</span><span style="color: #666666">.</span><span style="color: #BB4444">contactCreationFailure</span><span style="color: #666666">);</span>
+        <span style="color: #00BB00; font-weight: bold">int</span> duration <span style="color: #666666">=</span> Toast<span style="color: #666666">.</span><span style="color: #BB4444">LENGTH_SHORT</span><span style="color: #666666">;</span>
+        Toast toast <span style="color: #666666">=</span> Toast<span style="color: #666666">.</span><span style="color: #BB4444">makeText</span><span style="color: #666666">(</span>ctx<span style="color: #666666">,</span> txt<span style="color: #666666">,</span> duration<span style="color: #666666">);</span>
+        toast<span style="color: #666666">.</span><span style="color: #BB4444">show</span><span style="color: #666666">();</span>
+
+        <span style="color: #008800; font-style: italic">// Log exception</span>
+        Log<span style="color: #666666">.</span><span style="color: #BB4444">e</span><span style="color: #666666">(</span>TAG<span style="color: #666666">,</span> <span style="color: #BB4444">&quot;Exceptoin encoutered while inserting contact: &quot;</span> <span style="color: #666666">+</span> e<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>
+</td></tr></table>
+
+<ul>
+<li>LINE 6 - 12 从编辑框里获取名字，电话，邮件以及电话类型和邮件类型。</li>
+<li>LINE 19 - 23 构建一个操作，这个操作向 RawContact 插入一条记录。然后将这个操作放在批量操作列表里。记住，这个操作的索引值是 0 。</li>
+<li>LINE 24 - 43 构建三个操作，分别向 Data 表里插入名字，电话和邮件。在这三个操作时，每个操作对 RAW_CONTACT_ID 的处理都使用了反向引用的原理，引用索引值为 0，即插入 RawContact 这个操作的返回值作为 Data 表里 RAW_CONTACT_ID 的值。</li>
+<li>LINE 50 插入一个释放点。当 Contact Provider 执行到这里时可以把CPU释放出来给别的进程执行。</li>
+<li>LINE 57 把这个批量操作列表提交给 Contact Provider 作为一个事务来执行。</li>
+</ul>
+<p>批量操作也可以用来<strong>优化并发控制</strong>，它让一个事务执行时不用对数据库加锁。要使用这个方法，你可以执行这个事务，然后检查其它的修改是否同时发生了。如果发现数据不一致，则回滚整个事务，然后重试。</p>
+<p>优化并发控制对手机设备特别有用，因为手机设备大部分情况下只有一个用户在使用，同时并发操作数据库的情景比较少。因为没有用锁来控制数据操作，所以不需要花时间来请求锁和释放锁，这样整个系统性能会比较好。要使用<strong>优化并发控制</strong>来修改一行 RawContact 的数据，可以用下面的步骤来进行：</p>
+<ol>
+<li>获取 RawContact 的数据时，把 VERSION 字段也一并获取出来</li>
+<li>使用 newAssertQuery(Uri) 静态方法来创建 ContentProviderOperation.Builder 实例，其 Uri 参数使用 RawContacts.CONTENT_URI 加 RawContact._ID组合起来。</li>
+<li>对创建出来的 ContentProviderOperation.Builder 实例，使用 withValue() 来和步骤 1 获取出来的 VERSION 字段值进行比较。</li>
+<li>对同一个 ContentProviderOperation.Builder 实例，使用 withExpectedCount() 来保证获得出来的记录有且只有一条。</li>
+<li>调用 build() 方法来创建 ContentProviderOperation 实例，并把它添加到批量操作列表的第一项。</li>
+<li>调用 applyPatch() 来执行这个事务。</li>
+</ol>
+<p>如果一个潜在的修改在你获取数据和修改数据之间发生，那么 VERSION 值将会自动递增，这样步骤 4 的断言动作就会失败，从而整个事务都会回退。这样你可以选择重试或其它操作，总之数据会保持一致。下面的代码演示如何使用 CursorLoader 来创建包含<strong>断言</strong>的 ContentProviderOperation 实例。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">/*</span>
+<span style="color: #008800; font-style: italic"> * The application uses CursorLoader to query the raw contacts table. The system calls this method</span>
+<span style="color: #008800; font-style: italic"> * when the load is finished.</span>
+<span style="color: #008800; font-style: italic"> */</span>
+<span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onLoadFinished</span><span style="color: #666666">(</span>Loader<span style="color: #666666">&lt;</span>Cursor<span style="color: #666666">&gt;</span> loader<span style="color: #666666">,</span> Cursor cursor<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #008800; font-style: italic">// Gets the raw contact&#39;s _ID and VERSION values</span>
+    mRawContactID <span style="color: #666666">=</span> cursor<span style="color: #666666">.</span><span style="color: #BB4444">getLong</span><span style="color: #666666">(</span>cursor<span style="color: #666666">.</span><span style="color: #BB4444">getColumnIndex</span><span style="color: #666666">(</span>BaseColumns<span style="color: #666666">.</span><span style="color: #BB4444">_ID</span><span style="color: #666666">));</span>
+    mVersion <span style="color: #666666">=</span> cursor<span style="color: #666666">.</span><span style="color: #BB4444">getInt</span><span style="color: #666666">(</span>cursor<span style="color: #666666">.</span><span style="color: #BB4444">getColumnIndex</span><span style="color: #666666">(</span>SyncColumns<span style="color: #666666">.</span><span style="color: #BB4444">VERSION</span><span style="color: #666666">));</span>
+<span style="color: #666666">}</span>
+
+<span style="color: #666666">...</span>
+
+    <span style="color: #008800; font-style: italic">// Sets up a Uri for the assert operation</span>
+    Uri rawContactUri <span style="color: #666666">=</span> ContentUris<span style="color: #666666">.</span><span style="color: #BB4444">withAppendedId</span><span style="color: #666666">(</span>RawContacts<span style="color: #666666">.</span><span style="color: #BB4444">CONTENT_URI</span><span style="color: #666666">,</span> mRawContactID<span style="color: #666666">);</span>
+
+    <span style="color: #008800; font-style: italic">// Creates a builder for the assert operation</span>
+    ContentProviderOperation<span style="color: #666666">.</span><span style="color: #BB4444">Builder</span> assertOp <span style="color: #666666">=</span> ContentProviderOperation<span style="color: #666666">.</span><span style="color: #BB4444">netAssertQuery</span><span style="color: #666666">(</span>rawContactUri<span style="color: #666666">);</span>
+
+    <span style="color: #008800; font-style: italic">// Adds the assertions to the assert operation: checks the version and count of rows tested</span>
+    assertOp<span style="color: #666666">.</span><span style="color: #BB4444">withValue</span><span style="color: #666666">(</span>SyncColumns<span style="color: #666666">.</span><span style="color: #BB4444">VERSION</span><span style="color: #666666">,</span> mVersion<span style="color: #666666">);</span>
+    assertOp<span style="color: #666666">.</span><span style="color: #BB4444">withExpectedCount</span><span style="color: #666666">(1);</span>
+
+    <span style="color: #008800; font-style: italic">// Creates an ArrayList to hold the ContentProviderOperation objects</span>
+    ArrayList ops <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> ArrayList<span style="color: #666666">&lt;</span>ContentProviderOperationg<span style="color: #666666">&gt;;</span>
+
+    ops<span style="color: #666666">.</span><span style="color: #BB4444">add</span><span style="color: #666666">(</span>assertOp<span style="color: #666666">.</span><span style="color: #BB4444">build</span><span style="color: #666666">());</span>
+
+    <span style="color: #008800; font-style: italic">// You would add the rest of your batch operations to &quot;ops&quot; here</span>
+
+    <span style="color: #666666">...</span>
+
+    <span style="color: #008800; font-style: italic">// Applies the batch. If the assert fails, an Exception is thrown</span>
+    <span style="color: #AA22FF; font-weight: bold">try</span>
+        <span style="color: #666666">{</span>
+            ContentProviderResult<span style="color: #666666">[]</span> results <span style="color: #666666">=</span>
+                    getContentResolver<span style="color: #666666">().</span><span style="color: #BB4444">applyBatch</span><span style="color: #666666">(</span>AUTHORITY<span style="color: #666666">,</span> ops<span style="color: #666666">);</span>
+
+        <span style="color: #666666">}</span> <span style="color: #AA22FF; font-weight: bold">catch</span> <span style="color: #666666">(</span>OperationApplicationException e<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+            <span style="color: #008800; font-style: italic">// Actions you want to take if the assert operation fails go here</span>
+        <span style="color: #666666">}</span>
+</pre></div>
+</td></tr></table>
+
+<h2 id="_14">结语</h2>
+<p>联系人的数据结构特别复杂。把握住了本文介绍的这几个核心数据结构及操作。基本上原电话本就会有一个全面的了解。下一篇关于电话本的文章，我们将结合 Android 的示例程序 SampleSyncAdapter 来介绍如何做一个电话本同步服务器以及如何在手机端添加一个同步适配器来同步自己的电话本数据。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2014-11-27(Thursday) 22:00. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, <a href="http://kamidox.com/tag/contacts.html">contacts</a>, <a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

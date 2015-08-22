@@ -1,0 +1,359 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Android Theme结构分析与典型案例</h2>
+	<div class="toc">
+<ul>
+<li><a href="#actionbar">ActionBar外观样式结构</a><ul>
+<li><a href="#1-attrsxmlactionbar">1. attrs.xml用ActionBar定义了外观属性</a></li>
+<li><a href="#2-themesxmlandroidactionbarstyleactionbar">2. themes.xml里的android:actionBarStyle定义了不同主题的ActionBar外观</a></li>
+<li><a href="#3-stylesxml">3. styles.xml定义了具体的属性值</a></li>
+<li><a href="#4">4. 典型属性说明</a></li>
+<li><a href="#5-themehololightactionbar">5. 实例: 修改Theme.Holo.Light的ActionBar背景</a></li>
+</ul>
+</li>
+<li><a href="#preference">Preference外观样式</a><ul>
+<li><a href="#1-preferencecategory">1. PreferenceCategory外观定义分析</a></li>
+<li><a href="#2-preferencecategory">2. PreferenceCategory外观修改</a></li>
+</ul>
+</li>
+<li><a href="#attrs">attrs详解</a></li>
+<li><a href="#_1">参考内容</a></li>
+</ul>
+</div>
+<p>本文记录android源码平台通过theme来定制UI的典型案例，进而梳理出theme的整体结构。</p>
+<h2 id="actionbar">ActionBar外观样式结构</h2>
+<h3 id="1-attrsxmlactionbar">1. <a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/attrs.xml">attrs.xml</a>用ActionBar定义了外观属性</h3>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;declare-styleable</span> <span style="color: #BB4444">name=&quot;ActionBar&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    ......
+<span style="color: #008000; font-weight: bold">&lt;/declare-styleable&gt;</span>
+</pre></div>
+
+
+<h3 id="2-themesxmlandroidactionbarstyleactionbar">2. <a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">themes.xml</a>里的android:actionBarStyle定义了不同主题的ActionBar外观</h3>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;actionBarStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.ActionBar<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+
+<span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:actionBarStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.Light.ActionBar.Solid<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<h3 id="3-stylesxml">3. <a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">styles.xml</a>定义了具体的属性值</h3>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.ActionBar&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.Holo.ActionBar&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:titleTextStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/TextAppearance.Holo.Widget.ActionBar.Title<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:subtitleTextStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_transparent_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:backgroundStacked&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_stacked_transparent_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:backgroundSplit&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_bottom_transparent_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:homeAsUpIndicator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ic_ab_back_holo_light<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:progressBarStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.Light.ProgressBar.Horizontal<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:indeterminateProgressStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.Light.ProgressBar<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<h3 id="4">4. 典型属性说明</h3>
+<ul>
+<li>android:background: ActionBar背景</li>
+<li>android:backgroundSplit: ActionBar拆分出来的在屏幕下部的背景</li>
+<li>android:homeAsUpIndicator: ActionBar上的返回图标</li>
+<li>android:titleTextStyle: ActionBar标题文本样式</li>
+</ul>
+<h3 id="5-themehololightactionbar">5. 实例: 修改Theme.Holo.Light的ActionBar背景</h3>
+<p>在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">styles.xml</a>里找到Widget.Holo.Light.ActionBar.Solid的定义，并且修改background和backgroundSplit的值即可。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.ActionBar.Solid&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_solid_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:backgroundSplit&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_bottom_solid_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<h2 id="preference">Preference外观样式</h2>
+<h3 id="1-preferencecategory">1. PreferenceCategory外观定义分析</h3>
+<p>PreferenceCategory由Theme里的PreferenceCategoryStyle决定其外观样式。在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">theme.xml</a>里有如下定义：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span> <span style="color: #BB4444">parent=&quot;Theme.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    ...
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;preferenceCategoryStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Preference.Holo.Category<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    ...
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<p><code>Preference.Holo.Category</code>在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">style.xml</a>里定义如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Preference.Holo.Category&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:layout&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:layout/preference_category_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008800; font-style: italic">&lt;!-- The title should not dim if the category is disabled, instead only the preference children should dim. --&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:shouldDisableView&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>false<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:selectable&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>false<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<p><code>preference_category_holo</code>定义如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">&lt;!-- Layout used for PreferenceCategory in a PreferenceActivity. --&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;TextView</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #BB4444">style=&quot;?android:attr/listSeparatorTextViewStyle&quot;</span>
+    <span style="color: #BB4444">android:id=&quot;@+android:id/title&quot;</span>
+    <span style="color: #BB4444">android:paddingStart=&quot;@dimen/preference_item_padding_side&quot;</span>
+    <span style="color: #BB4444">android:paddingEnd=&quot;@dimen/preference_item_padding_side&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+</pre></div>
+
+
+<p>由此可见PreferenceCategory实际是一个TextView，它使用theme里定义的<code>listSeparatorTextViewStyle</code>的外观来定义自己的外观。<code>listSeparatorTextViewStyle</code>定义在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">theme.xml</a>里：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span> <span style="color: #BB4444">parent=&quot;Theme.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    ...
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;listSeparatorTextViewStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.Light.TextView.ListSeparator<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    ...
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<p><code>Widget.Holo.Light.TextView.ListSeparator</code>定义在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">style.xml</a>里：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.TextView.ListSeparator&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.TextView.ListSeparator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/list_section_divider_holo_light<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textAllCaps&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>true<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<h3 id="2-preferencecategory">2. PreferenceCategory外观修改</h3>
+<p>如果想修改<code>PreferenceCategory</code>的背景和文字颜色，由上面的分析，我们只需要修改theme的<code>listSeparatorTextViewStyle</code>即可。定义一个新的背景图片即可实现：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;MyListSeparator&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.Holo.Light.TextView.ListSeparator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@drawable/my_list_section_divider_holo_light<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>bold<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textColor&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@color/my_text_color_list_separator<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textSize&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>16sp<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
+</pre></div>
+
+
+<p>这样，定义一个theme，将其<code>listSeparatorTextViewStyle</code>设置成<code>MyListSeparator</code>即可。</p>
+<h2 id="attrs">attrs详解</h2>
+<ul>
+<li>dialogTitleIconsDecorLayout: 用来定义对话框窗口标题的装饰器。修改对话框标题样式时，可定制这个属性。参阅@layout/dialog_title_icons_holo</li>
+</ul>
+<h2 id="_1">参考内容</h2>
+<ul>
+<li><a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/attrs.xml">属性的定义</a></li>
+<li><a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">样式的定义</a></li>
+<li><a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">主题的定义</a></li>
+<li><a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/policy/src/com/android/internal/policy/impl/PhoneWindow.java">窗口组件的代码流程</a></li>
+</ul>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2014-09-26(Friday) 20:20. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, <a href="http://kamidox.com/tag/theme.html">theme</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

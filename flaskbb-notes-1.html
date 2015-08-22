@@ -1,0 +1,558 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li class="active"><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>FlaskBB阅读笔记（一）</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">开篇</a></li>
+<li><a href="#_2">配置</a></li>
+<li><a href="#blueprint">Blueprint</a></li>
+<li><a href="#flaskbbflask">FlaskBB用到的Flask扩展</a></li>
+<li><a href="#jinja2">自定义的Jinja2过滤器</a></li>
+<li><a href="#_3">向模板注入设置信息</a></li>
+<li><a href="#_4">更新用户在线信息</a></li>
+<li><a href="#_5">自定义错误处理</a></li>
+<li><a href="#log">LOG配置</a></li>
+<li><a href="#_6">结束语</a></li>
+</ul>
+</div>
+<h2 id="_1">开篇</h2>
+<p><a href="https://github.com/sh4nks/flaskbb">FlaskBB</a>是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。</p>
+<p>本文是这系列文章的第一遍。本文分析FlaskBB的主程序<code>app.py</code>的源码。我们从<code>create_app()</code>函数入手，分析FlaskBB的软件结构。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">create_app</span>(config<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BB4444; font-style: italic">    Creates the app.</span>
+<span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #008800; font-style: italic"># Initialize the app</span>
+    app <span style="color: #666666">=</span> Flask(<span style="color: #BB4444">&quot;flaskbb&quot;</span>)
+
+    <span style="color: #008800; font-style: italic"># Use the default config and override it afterwards</span>
+    app<span style="color: #666666">.</span>config<span style="color: #666666">.</span>from_object(<span style="color: #BB4444">&#39;flaskbb.configs.default.DefaultConfig&#39;</span>)
+    <span style="color: #008800; font-style: italic"># Update the config</span>
+    app<span style="color: #666666">.</span>config<span style="color: #666666">.</span>from_object(config)
+    <span style="color: #008800; font-style: italic"># try to update the config via the environment variable</span>
+    app<span style="color: #666666">.</span>config<span style="color: #666666">.</span>from_envvar(<span style="color: #BB4444">&quot;FLASKBB_SETTINGS&quot;</span>, silent<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+
+    configure_blueprints(app)
+    configure_extensions(app)
+    configure_template_filters(app)
+    configure_context_processors(app)
+    configure_before_handlers(app)
+    configure_errorhandlers(app)
+    configure_logging(app)
+
+    <span style="color: #AA22FF; font-weight: bold">return</span> app
+</pre></div>
+</td></tr></table>
+
+<h2 id="_2">配置</h2>
+<p>FlaskBB使用下面典型的配置代码了加载应用程序的配置信息。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># Use the default config and override it afterwards</span>
+app<span style="color: #666666">.</span>config<span style="color: #666666">.</span>from_object(<span style="color: #BB4444">&#39;flaskbb.configs.default.DefaultConfig&#39;</span>)
+<span style="color: #008800; font-style: italic"># Update the config</span>
+app<span style="color: #666666">.</span>config<span style="color: #666666">.</span>from_object(config)
+<span style="color: #008800; font-style: italic"># try to update the config via the environment variable</span>
+app<span style="color: #666666">.</span>config<span style="color: #666666">.</span>from_envvar(<span style="color: #BB4444">&quot;FLASKBB_SETTINGS&quot;</span>, silent<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+</pre></div>
+</td></tr></table>
+
+<p><code>Flask.config</code>类是专门用来处理应用程序全局配置信息的。它类似python的<code>dict</code>类，增加了一些导入配置的函数而已。其中<code>Flask.config.from_object()</code>用来从一个python类里导入配置信息，需要注意的是，这个函数<strong>只导入大写的类成员变量</strong>，小写的类成员函数是不导入的。</p>
+<p><code>Flask.config.from_envvar()</code>用来从环境变量指定的文件中导入设置信息，比如上例中，可以设置<code>FLASKBB_SETTINGS</code>的环境变量指向<em>/path/to/python/config/file.py</em>，这样程序就会从这个文件里导入配置信息。</p>
+<p>需要注意的是，最后导入的配置信息可覆盖前面导入的信息。所以，一般会有三个层次：一是默认配置；二是应用程序创建时传入的参数；最后再从环境变量里导入。</p>
+<p>FlaskBB提供了不少配置信息，比如<code>SEND_LOGS</code>表示是不是要把错误信息发送给网站管理员邮箱；<code>SQLALCHEMY_DATABASE_URI</code>表示ORM数据库路径等等。具体参阅<code>flaskbb.configs.default.DefaultConfig</code>类。</p>
+<h2 id="blueprint">Blueprint</h2>
+<p>Blueprint是Flask提供的模块化设计组件。FlaskBB通过<code>configure_blueprints()</code>来初始化Blueprint</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">configure_blueprints</span>(app):
+    app<span style="color: #666666">.</span>register_blueprint(forum, url_prefix<span style="color: #666666">=</span>app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&quot;FORUM_URL_PREFIX&quot;</span>])
+    app<span style="color: #666666">.</span>register_blueprint(user, url_prefix<span style="color: #666666">=</span>app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&quot;USER_URL_PREFIX&quot;</span>])
+    app<span style="color: #666666">.</span>register_blueprint(auth, url_prefix<span style="color: #666666">=</span>app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&quot;AUTH_URL_PREFIX&quot;</span>])
+    app<span style="color: #666666">.</span>register_blueprint(management, url_prefix<span style="color: #666666">=</span>app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&quot;ADMIN_URL_PREFIX&quot;</span>])
+</pre></div>
+</td></tr></table>
+
+<p>主要由四个Blueprint组成：</p>
+<ol>
+<li>forum<br />
+  论坛主模块，由<code>flaskbb.forum.views.forum</code>Blueprint实现，默认其挂载的URL是<code>/</code></li>
+<li>user<br />
+  用户管理模块，由<code>flaskbb.user.views.user</code>Blueprint实现，默认其挂载的URL是<code>/user</code></li>
+<li>auth<br />
+  鉴权模块，由<code>flaskbb.auth.views.auth</code>Blueprint实现，默认其挂载的URL是<code>/auth</code></li>
+<li>management<br />
+  后台管理模块，由<code>flaskbb.management.views.management</code>Blueprint实现，默认其挂载的URL是<code>/admin</code></li>
+</ol>
+<h2 id="flaskbbflask">FlaskBB用到的Flask扩展</h2>
+<p>有大量的第三方开发者为Flask构架开发扩展，在<a href="http://flask.pocoo.org/extensions/">这里</a>可以找到官方收录的所有Flask扩展。FlaskBB通过<code>configure_extensions()</code>函数来初始化用到的扩展。这些扩展的简要信息汇总如下：</p>
+<ol>
+<li><a href="http://github.com/mitsuhiko/flask-sqlalchemy/">Flask-SQLAlchemy</a><br />
+  这是<a href="http://www.sqlalchemy.org/">sqlalchemy</a>的Flask扩展，提供SQL数据库和ORM访问。</li>
+<li><a href="http://github.com/maxcountryman/flask-login/">Flask-Login</a><br />
+  这个扩展提供了用户会话管理。实现了一些通用的会话管理任务，如登录，登出，以及记录用户会话期间的状态数据等。</li>
+<li><a href="　http://github.com/mattupstate/flask-mail/">Flask-Mail</a><br />
+  这个扩展让Flask应用很容易地发送电子邮件，而且支持单元测试。</li>
+<li><a href="http://github.com/thadeusb/flask-cache/">Flask-Cache</a><br />
+  给Flask程序提供Cache支持。</li>
+<li><a href="http://github.com/mgood/flask-debugtoolbar/">Flask-DebugToolbar</a><br />
+  从Django移植过来的适用于Flask的调试器。主要用来调试Flask程序及性能。</li>
+<li><a href="https://github.com/rhyselsmore/flask-redis/">Flask-Redis</a><br />
+  给Flask程序添加<a href="http://www.redis.cn/">Redis</a>的扩展。Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。</li>
+<li><a href="https://github.com/miguelgrinberg/Flask-Migrate">Flask-Migrate</a><br />
+  给Flask用的SQLAlchemy数据库迁移工具。比如，Flask应用的1.3版本在1.2版本的数据库的某个表里添加了一个字段，那么使用这个工具可以自动生成数据库迁移脚本，帮助使用1.2版本的用户把数据库从1.2版本升级到1.3版本。</li>
+<li><a href="https://github.com/sysr-q/flask-themes2">Flask-Theme2</a><br />
+  给Flask应用添加主题支持。</li>
+<li><a href="https://github.com/sh4nks/flask-plugins">Flask-Plugins</a><br />
+  和FlaskBB的作者是同一个人。提供更简单的插件管理。</li>
+<li><a href="https://github.com/gyllstromk/Flask-WhooshAlchemy">Flask-WhooshAlchemy</a><br />
+  这个扩展帮助Flask程序实现基于SQLAlchemy数据库内容的文本搜索和索引服务。正如扩展的名字，它是使用<a href="https://bitbucket.org/mchaput/whoosh/wiki/Home">whoosh</a>和SQLAlchemy的ORM结合起来实现广西内容的搜索和索引功能。</li>
+<li><a href="https://github.com/lepture/flask-wtf">Flask-WTF</a><br />
+  当你必须处理浏览器提交的表单数据时，视图代码很快会变得难以阅读。有一些库可以简化这个工作，其中之一便是WTForms。这个扩展让Flask使用更简单地集成WTForms，同时处理了CSRF(Cross-Site Rrequest Forgery，跨站请求伪造)，提供更好的安全性。还提供文件上传等功能。</li>
+<li><a href="http://github.com/techniq/flask-script/">Flask-Script</a><br />
+  给Flask应用程序提供外部脚本支持。比如运行开发服务器，初始化数据库，等命令行相关的任务。对FlaskBB而言，<code>python manage.py runserver</code>和<code>python manage.py createall</code>等命令就是通过这个扩展实现的。</li>
+</ol>
+<h2 id="jinja2">自定义的Jinja2过滤器</h2>
+<p>Jinja2提供了<a href="http://jinja.pocoo.org/docs/dev/api/#custom-filters">自定义过滤器</a>的功能，可以在Jinja2模板里灵活使用。FlaskBB通过函数<code>configure_template_filters()</code>定义了一系列过滤器，其中<code>is_online</code>过滤器是这样定义的：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">app<span style="color: #666666">.</span>jinja_env<span style="color: #666666">.</span>filters[<span style="color: #BB4444">&#39;is_online&#39;</span>] <span style="color: #666666">=</span> is_online
+</pre></div>
+
+
+<p>过滤器就是一个简单的python函数，<code>is_online()</code>函数定义在<em>flaskbb/utils/helper.py</em>里：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">is_online</span>(user):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;A simple check to see if the user was online within a specified</span>
+<span style="color: #BB4444; font-style: italic">    time range</span>
+
+<span style="color: #BB4444; font-style: italic">    :param user: The user who needs to be checked</span>
+<span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #AA22FF; font-weight: bold">return</span> user<span style="color: #666666">.</span>lastseen <span style="color: #666666">&gt;=</span> time_diff()
+</pre></div>
+</td></tr></table>
+
+<p>这样，在Jinaja2模板<em>flaskbb/templates/user/profile.html</em>里，就可以使用下面的代码来判断用户是否在线：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">{% if user|is_online %}
+<span style="color: #008000; font-weight: bold">&lt;tr&gt;&lt;td&gt;&lt;span</span> <span style="color: #BB4444">class=&quot;label label-success&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>Online<span style="color: #008000; font-weight: bold">&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+{% else %}
+<span style="color: #008000; font-weight: bold">&lt;tr&gt;&lt;td&gt;&lt;span</span> <span style="color: #BB4444">class=&quot;label label-default&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>Offline<span style="color: #008000; font-weight: bold">&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+{% endif %}
+</pre></div>
+
+
+<p>上面Jinja2模板里<code>user|is_online</code>脚本会导致<code>is_online(user)</code>被调用来判断用户是否在线。</p>
+<h2 id="_3">向模板注入设置信息</h2>
+<p>FlaskBB通过调用<code>configure_context_processors()</code>向模板注入设置信息。代码如下：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">configure_context_processors</span>(app):
+<span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BB4444; font-style: italic">Configures the context processors</span>
+<span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #AA22FF">@app.context_processor</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">inject_flaskbb_config</span>():
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BB4444; font-style: italic">    Injects the ``flaskbb_config`` config variable into the templates.</span>
+<span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">dict</span>(flaskbb_config<span style="color: #666666">=</span>flaskbb_config)
+</pre></div>
+</td></tr></table>
+
+<p>使用<code>context_processor</code>装饰器来装饰<code>inject_flaskbb_config()</code>函数，这样这个函数会被Flask记录起来，每次要渲染模板时，会先调用这个函数更新一下模板上下文信息。这样，在模板里就可以访问这里注入的上下文信息。上下文处理器函数必须返回一个<code>dict</code>实例。Flask官方文档对<a href="http://flask.pocoo.org/docs/0.10/templating/#context-processors">context_processor</a>有详细的描述。</p>
+<p>例如，返回的<code>dict</code>里包含&rsquo;name: kamidox&rsquo;这样的值，则在Jinja2模板里可以直接用<code>{% name %}</code>来访问<code>name</code>变量，其值为<code>kamidox</code>。</p>
+<h2 id="_4">更新用户在线信息</h2>
+<p>FlaskBB通过<code>configure_before_handlers()</code>函数来注册每个请求之前的动作，以记录用户的在线信息。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">configure_before_handlers</span>(app):
+<span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BB4444; font-style: italic">Configures the before request handlers</span>
+<span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+
+<span style="color: #AA22FF">@app.before_request</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">update_lastseen</span>():
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BB4444; font-style: italic">    Updates `lastseen` before every reguest if the user is authenticated</span>
+<span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #AA22FF; font-weight: bold">if</span> current_user<span style="color: #666666">.</span>is_authenticated():
+        current_user<span style="color: #666666">.</span>lastseen <span style="color: #666666">=</span> datetime<span style="color: #666666">.</span>datetime<span style="color: #666666">.</span>utcnow()
+        db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>add(current_user)
+        db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>commit()
+</pre></div>
+</td></tr></table>
+
+<p>这里，<code>before_request</code>装饰器将把<code>update_lastseen()</code>函数注册进Flask，Flask在处理请求之前都会调用这个函数。FlaskBB使用这个机制来记录最后一次看到用户的时间。结合会话的超时机制，就可以判断用户是否在线。</p>
+<h2 id="_5">自定义错误处理</h2>
+<p>通过<code>configure_errorhandlers()</code>来实现自定义错误处理。其中，HTTP 403, 404及500的错误处理定义如下</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">configure_errorhandlers</span>(app):
+<span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BB4444; font-style: italic">Configures the error handlers</span>
+<span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;</span>
+
+<span style="color: #AA22FF">@app.errorhandler</span>(<span style="color: #666666">403</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">forbidden_page</span>(error):
+    <span style="color: #AA22FF; font-weight: bold">return</span> render_template(<span style="color: #BB4444">&quot;errors/forbidden_page.html&quot;</span>), <span style="color: #666666">403</span>
+
+<span style="color: #AA22FF">@app.errorhandler</span>(<span style="color: #666666">404</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">page_not_found</span>(error):
+    <span style="color: #AA22FF; font-weight: bold">return</span> render_template(<span style="color: #BB4444">&quot;errors/page_not_found.html&quot;</span>), <span style="color: #666666">404</span>
+
+<span style="color: #AA22FF">@app.errorhandler</span>(<span style="color: #666666">500</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">server_error_page</span>(error):
+    <span style="color: #AA22FF; font-weight: bold">return</span> render_template(<span style="color: #BB4444">&quot;errors/server_error.html&quot;</span>), <span style="color: #666666">500</span>
+</pre></div>
+</td></tr></table>
+
+<p>这样当发生这些http错误时，错误网页将从服务器返回自定义的错误网页，而不是浏览器客户端默认的错误页面。</p>
+<h2 id="log">LOG配置</h2>
+<p>通过<code>configure_logging()</code>来配置系统的LOG。FlaskBB的LOG主要保存在应用程序根目录下的<em>logs</em>目录里，分两个文件保存，一个是INFO级别的LOG，另外一个是ERROR级别的LOG。同时还支持把ERROR级别的LOG通过邮件的方式发送给网站管理员。</p>
+<p>下面代码配置了INFO级别的LOG：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">logs_folder <span style="color: #666666">=</span> os<span style="color: #666666">.</span>path<span style="color: #666666">.</span>join(app<span style="color: #666666">.</span>root_path, os<span style="color: #666666">.</span>pardir, <span style="color: #BB4444">&quot;logs&quot;</span>)
+formatter <span style="color: #666666">=</span> logging<span style="color: #666666">.</span>Formatter(
+    <span style="color: #BB4444">&#39;</span><span style="color: #BB6688; font-weight: bold">%(asctime)s</span><span style="color: #BB4444"> </span><span style="color: #BB6688; font-weight: bold">%(levelname)s</span><span style="color: #BB4444">: </span><span style="color: #BB6688; font-weight: bold">%(message)s</span><span style="color: #BB4444"> &#39;</span>
+    <span style="color: #BB4444">&#39;[in </span><span style="color: #BB6688; font-weight: bold">%(pathname)s</span><span style="color: #BB4444">:</span><span style="color: #BB6688; font-weight: bold">%(lineno)d</span><span style="color: #BB4444">]&#39;</span>)
+
+info_log <span style="color: #666666">=</span> os<span style="color: #666666">.</span>path<span style="color: #666666">.</span>join(logs_folder, app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&#39;INFO_LOG&#39;</span>])
+
+info_file_handler <span style="color: #666666">=</span> logging<span style="color: #666666">.</span>handlers<span style="color: #666666">.</span>RotatingFileHandler(
+    info_log,
+    maxBytes<span style="color: #666666">=100000</span>,
+    backupCount<span style="color: #666666">=10</span>
+)
+
+info_file_handler<span style="color: #666666">.</span>setLevel(logging<span style="color: #666666">.</span>INFO)
+info_file_handler<span style="color: #666666">.</span>setFormatter(formatter)
+app<span style="color: #666666">.</span>logger<span style="color: #666666">.</span>addHandler(info_file_handler)
+</pre></div>
+</td></tr></table>
+
+<p>下面代码配置了通过邮件发送错误LOG给网站管理员：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">logging.handlers</span> <span style="color: #AA22FF; font-weight: bold">import</span> SMTPHandler
+<span style="color: #AA22FF; font-weight: bold">if</span> app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&quot;SEND_LOGS&quot;</span>]:
+    mail_handler <span style="color: #666666">=</span> \
+        SMTPHandler(app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&#39;MAIL_SERVER&#39;</span>],
+                    app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&#39;MAIL_DEFAULT_SENDER&#39;</span>],
+                    app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&#39;ADMINS&#39;</span>],
+                    <span style="color: #BB4444">&#39;application error, no admins specified&#39;</span>,
+                    (
+                        app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&#39;MAIL_USERNAME&#39;</span>],
+                        app<span style="color: #666666">.</span>config[<span style="color: #BB4444">&#39;MAIL_PASSWORD&#39;</span>],
+                    ))
+
+    mail_handler<span style="color: #666666">.</span>setLevel(logging<span style="color: #666666">.</span>ERROR)
+    mail_handler<span style="color: #666666">.</span>setFormatter(formatter)
+    app<span style="color: #666666">.</span>logger<span style="color: #666666">.</span>addHandler(mail_handler)
+</pre></div>
+</td></tr></table>
+
+<h2 id="_6">结束语</h2>
+<p>通过对主程序<code>app.py</code>的代码分析，我们基本上知道了FlaskBB的主体框架，模块划分，用到的外部扩展等信息。下一篇将分模块深入阅读各个Blueprint模块的实现以及数据库设计方面的内容。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/flask.html">flask</a> on 2014-11-02(Sunday) 23:25. Tags: <a href="http://kamidox.com/tag/python.html">python</a>, <a href="http://kamidox.com/tag/flask.html">flask</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

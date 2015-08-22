@@ -1,0 +1,407 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li class="active"><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Python SocketServer</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">摘要</a></li>
+<li><a href="#socketserver">SocketServer概述</a><ul>
+<li><a href="#_2">网络服务种类</a></li>
+<li><a href="#_3">网络服务处理请求的方式</a></li>
+<li><a href="#_4">创建网络服务</a></li>
+<li><a href="#_5">多线程并发的注意事项</a></li>
+</ul>
+</li>
+<li><a href="#_6">类和接口介绍</a><ul>
+<li><a href="#baseserver">BaseServer介绍</a></li>
+<li><a href="#requesthandler">RequestHandler介绍</a></li>
+</ul>
+</li>
+<li><a href="#_7">例子</a></li>
+<li><a href="#_8">参考文档</a></li>
+</ul>
+</div>
+<h2 id="_1">摘要</h2>
+<p>本文介绍Python标准库SocketServer。SocketServer标准库简化了编写一个网络服务器的工作。阅读本文需要基本的网络编程知识以及线程和进程的概念。</p>
+<p><strong>注意：</strong><code>SocketServer</code>在Python 3之后被重命名为<code>socketserver</code></p>
+<h2 id="socketserver">SocketServer概述</h2>
+<h3 id="_2">网络服务种类</h3>
+<p>SocketServer包里最常用的两个基础服务类：</p>
+<ul>
+<li><code>TCPServer</code>：提供TCP服务的网络服务可以从这个类继承</li>
+<li><code>UDPServer</code>：提供UDP服务的网络服务可以从这个类继承</li>
+</ul>
+<p>另外两个不常用，且只在类UNIX系统里可以使用的是<code>UnixStreamServer</code>和<code>UnixDatagramServer</code>，他们分别提供TCP和UDP的本地服务，一般用来实现进程间通信。</p>
+<h3 id="_3">网络服务处理请求的方式</h3>
+<p>这四个类都只能串行地处理请求。即一个请求处理完成之前，新来的请求只能在排队，而无法得到及时处理。这在网络服务器中是不可接受的。解决方案是创建一个单独的进程或线程来处理每个请求。所幸SocketServer包里提供了另外两个工具类来实现请求的并行处理，他们是<code>ForkingMixIn</code>和<code>ThreadingMixIn</code>，分别实现<strong>进程</strong>和<strong>线程</strong>的并行方案。</p>
+<h3 id="_4">创建网络服务</h3>
+<p>创建一个服务需要以下几个步骤：</p>
+<ol>
+<li>继承<code>BaseRequestHandler</code>类，并重载其<code>handle()</code>方法来实现一个请求处理器。</li>
+<li>创建一个服务器实例(<code>TCPServer</code> or <code>UDBPServer</code> etc.)，指定其提供服务的地址和端口，指定请求处理器。</li>
+<li>调用服务器实例的<code>serve_forever()</code>启动服务。当请求到来时，就会把请求派发给请求处理器处理。</li>
+</ol>
+<h3 id="_5">多线程并发的注意事项</h3>
+<p>当使用<code>ThreadingMixIn</code>来实现多线程并发处理请求时，需要特别注意，当处理请求的线程意外终止时，网络服务进程需要作何反应。这个类提供了一个属性<code>daemon_threads</code>来定义网络服务进程的行为。当<code>daemon_threads</code>设置为False（默认）时，表示当处理请求的线程意外终止时，网络服务进程不会退出。而当<code>daemon_threads</code>设置为True的时候，如果处理请求的线程意外终止，网络服务进程会退出。</p>
+<p>一个并发的UDP网络服务可以简单地通过下面的代码实现：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">ThreadingUDPServer</span>(ThreadingMixIn, UDPServer): <span style="color: #AA22FF; font-weight: bold">pass</span>
+</pre></div>
+
+
+<p>这里需要注意的是，<code>ThreadingMixIn</code>需要写在<code>UDPServer</code>之前，因为<code>ThreadingMixIn</code>重写了<code>UDPServer</code>类里的一些方法。具体原因可阅读Python多继承机制相关资料。</p>
+<p>请求处理类<code>BaseRequestHandler</code>有两个子类，他们是<code>StreamRequestHandler</code>和<code>DatagramRequestHandler</code>，分别用来处理TCP请求和UDP请求。在使用时可以直接使用子类以便提供更大的方便性。</p>
+<p>如何决定使用<strong>多线程</strong>还是<strong>多进程</strong>来实现并发请求处理？这个没有优劣之分。但需要注意<strong>线程</strong>和<strong>进程</strong>的本质区别，线程间是共享内存的，而进程是运行在独立的地址空间的。假如一个网络服务把状态信息保存在内存里，并且根据内存里的状态信息对请求做出不同的处理，这个时候就需要使用多线程。因为只有多线程才能及时地读到内存中最新的服务状态。如果实现的是HTTP服务器，它的状态信息都保存在文件里，那么多线程或多进程都可以满足要求。</p>
+<p>有些时候，实现网络服务并发时，一个更灵活的方式是分部处理，即计算速度快的直接并行处理，而需要的计算量比较大的通过子进程来处理。这个方式就不能通过继承<code>ThreadingMixIn</code>来实现，而应该在请求处理器的<code>handle()</code>函数里，显式地通过<code>fork()</code>来创建一个子进程来实现。</p>
+<p>线程和进程毕竟是比较昂贵的系统资源，在系统中线程和进程的数量往往都是有限制的。特别是针对那些TCP服务，一个连接可能持续保持很长时间，导致线程或进程长时间被占用。所以，另外一个方案是，维护一张数组，用来记录那些部分完成的请求，然后使用<code>select()</code>函数选择那些已经准备就绪的请求进入下一步处理的流程。具体可参考Python标准库<code>asyncore</code>，它提供用这种方式实现并发处理的一些基础设施。</p>
+<h2 id="_6">类和接口介绍</h2>
+<h3 id="baseserver">BaseServer介绍</h3>
+<p><code>BaseServer</code>是<code>TCPServer</code>和<code>UDPServer</code>等服务类的共同父类。它定义了下面的接口，但大部分没有实现。而是由其子类实现。</p>
+<ul>
+<li>BaseServer.fileno()<br />
+  返回一个int型的文件描述符，这个文件代表当前服务正在监听的socket接口。当一个进程里有多个网络服务时，就可以使用这个返回值传给<code>select()</code>函数用来监测哪个服务已经有请求进来。</li>
+<li>BaseServer.handle_request()<br />
+  处理一个请求。这是个阻塞的函数。当服务进入事件循环开始提供服务时，这个接口被调用。当没有请求到来时，这个函数会阻塞在这等待请求的到来或者超时了返回。这个函数依次调用下面函数：<code>get_request()</code>，<code>verify_request()</code>，<code>process_request()</code>，如果用户提供的请求处理器的<code>handle()</code>函数抛出异常，服务的<code>handle_error()</code>函数将被调用。如果在<code>self.timeout</code>秒内没有收到请求，则调用<code>handle_timeout()</code>之后，这个函数就返回。</li>
+<li>BaseServer.serve_forever(poll_interval=0.5)<br />
+  进入事件循环，开始提供服务，直到<code>shutdown()</code>被调用为止。检查<code>shutdown()</code>是否被调用的时间间隔默认是0.5秒。</li>
+<li>BaseServer.shutdown()<br />
+  停止提供服务。此函数是阻塞函数，会一直等到服务停止后才返回。这个函数必须在<code>serve_forever()</code>函数运行的不同线程调用，否则会引起死锁。这个函数是Python 2.6版本新加的。</li>
+<li>BaseServer.RequestHandlerClass<br />
+  用户提供的请求处理器类。在处理新的请求时，会创建一个新的类实例给这个请求使用。</li>
+<li>BaseServer.server_address<br />
+  服务监听的地址。地址的格式和所使用的协议(TCP/IP or UNIX domain socket)有极大的相关性，具体参阅<code>socket</code>模块。如果是IPV4的地址，则其格式是一个包含地址和端口的元组，如<code>("127.0.0.1", "80")</code>。</li>
+<li>BaseServer.socket<br />
+  服务监听请求的socket实例。</li>
+<li>BaseServer.request_queue_size<br />
+  请求队列长度。当服务在处理一个请求时，新来的请求将在这里排除。如果队列长度己满时收到新的请求，则直接会返回一个错误给客户端。默认值是5，子类可以改写这个值。</li>
+<li>BaseServer.timeout<br />
+  当服务进入事件循环，开始等待请求到来时，如果超出<code>timeout</code>秒还没有请求到来，则会调用<code>handle_timeout()</code>。如果这个值是<code>None</code>则表示没有超时限制。</li>
+</ul>
+<h3 id="requesthandler">RequestHandler介绍</h3>
+<ul>
+<li>RequestHandler.setup()<br />
+  在<code>handle()</code>调用之前被调用。可以用来做一些初始化工作。默认是空实现。</li>
+<li>RequestHandler.finish()<br />
+  在<code>handle()</code>返回后被调用。可以用来做一些清理工作。默认是空实现。需要注意的是，如果<code>setup()</code>抛出异常，这个函数不会被调用。</li>
+<li>RequestHandler.handle()<br />
+  这个函数用来处理请求。默认空实现。一些上下文信息在这个函数里可以使用，<code>self.request</code>是请求信息；<code>self.client_address</code>是请求的客户端地址；<code>self.server</code>是服务实例。<code>self.request</code>的类型对TCP和UDP服务是不一样的，对TCP它是socket对象，对UDP是一对字符串和socket对象。可以使用<code>StreamRequestHandler</code>和<code>DatagramRequestHandler</code>来隐藏这个差异。这两个子类重载了<code>setup()</code>和<code>finish()</code>方法，然后提供<code>request.rfile</code>和<code>request.wfile</code>的类文件对象，用来读写数据。读即获取请求数据；写即返回应答数据。</li>
+</ul>
+<h2 id="_7">例子</h2>
+<p>一个简单的回显服务。</p>
+<p>下面是服务端代码。保存为EchoTCPServer.py。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+<span style="color: #008800; font-style: italic"># -*- coding: utf-8 -*-</span>
+
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">SocketServer</span>
+
+<span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">EchoRequestHandler</span>(SocketServer<span style="color: #666666">.</span>StreamRequestHandler):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot; demo request handler &quot;&quot;&quot;</span>
+
+    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">handle</span>(<span style="color: #AA22FF">self</span>):
+        <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>data <span style="color: #666666">=</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>rfile<span style="color: #666666">.</span>readline()<span style="color: #666666">.</span>strip()
+        <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;</span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BB4444"> write: </span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BB4444">&quot;</span> <span style="color: #666666">%</span> (<span style="color: #AA22FF">self</span><span style="color: #666666">.</span>client_address, <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>data))
+        <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>wfile<span style="color: #666666">.</span>write(<span style="color: #AA22FF">self</span><span style="color: #666666">.</span>data<span style="color: #666666">.</span>upper())
+
+<span style="color: #AA22FF; font-weight: bold">if</span> __name__ <span style="color: #666666">==</span> <span style="color: #BB4444">&quot;__main__&quot;</span>:
+    HOST, PORT <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;localhost&#39;</span>, <span style="color: #666666">5639</span>
+
+    server <span style="color: #666666">=</span> SocketServer<span style="color: #666666">.</span>TCPServer((HOST, PORT), EchoRequestHandler)
+    <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;ECHO TCP server is running ...&quot;</span>)
+    server<span style="color: #666666">.</span>serve_forever()
+</pre></div>
+</td></tr></table>
+
+<p>客户端代码。保存为EchoTCPClient.py</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+<span style="color: #008800; font-style: italic"># -*- coding: utf-8 -*-</span>
+
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">socket</span>
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">sys</span>
+
+HOST, PORT <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;localhost&#39;</span>, <span style="color: #666666">5639</span>
+data <span style="color: #666666">=</span> <span style="color: #BB4444">&quot; &quot;</span><span style="color: #666666">.</span>join(sys<span style="color: #666666">.</span>argv[<span style="color: #666666">1</span>:])
+
+sock <span style="color: #666666">=</span> socket<span style="color: #666666">.</span>socket(socket<span style="color: #666666">.</span>AF_INET, socket<span style="color: #666666">.</span>SOCK_STREAM)
+
+<span style="color: #AA22FF; font-weight: bold">try</span>:
+    sock<span style="color: #666666">.</span>connect((HOST, PORT))
+    sock<span style="color: #666666">.</span>sendall(data <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;</span><span style="color: #BB6622; font-weight: bold">\n</span><span style="color: #BB4444">&#39;</span>)
+
+    received <span style="color: #666666">=</span> sock<span style="color: #666666">.</span>recv(<span style="color: #666666">1024</span>)
+<span style="color: #AA22FF; font-weight: bold">finally</span>:
+    sock<span style="color: #666666">.</span>close()
+
+<span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;Send:     </span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BB4444">&quot;</span> <span style="color: #666666">%</span> (data))
+<span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;received: </span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BB4444">&quot;</span> <span style="color: #666666">%</span> (received))
+</pre></div>
+</td></tr></table>
+
+<p>先执行服务端<code>python EchoTCPServer.py</code>，再执行客户端<code>python EchoTCPClient.py hello SocketServer</code>。</p>
+<p>服务端输出如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">D:\lab\python&gt;python DemoTCPServer.py
+Echo TCP server is running ...
+(&#39;127.0.0.1&#39;, 51245) write: hello SocketServer
+</pre></div>
+
+
+<p>客户端输出如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">D:\lab\python&gt;python EchoTCPClient.py hello SocketServer
+Send:     hello SocketServer
+received: HELLO SOCKETSERVER
+</pre></div>
+
+
+<h2 id="_8">参考文档</h2>
+<p>Python官方标准库关于<a href="https://docs.python.org/2/library/socketserver.html">SocketServer</a>的文档。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/python.html">python</a> on 2014-10-05(Sunday) 20:20. Tags: <a href="http://kamidox.com/tag/python.html">python</a>, <a href="http://kamidox.com/tag/socketserver.html">SocketServer</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

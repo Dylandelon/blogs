@@ -1,0 +1,592 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li class="active"><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>FlaskBB阅读笔记（三）</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">开篇</a></li>
+<li><a href="#orm">什么是 ORM</a></li>
+<li><a href="#_2">定义表</a></li>
+<li><a href="#_3">定义一对多关系</a></li>
+<li><a href="#_4">定义多对多关系</a></li>
+<li><a href="#_5">插入及修改记录</a></li>
+<li><a href="#_6">删除记录</a></li>
+<li><a href="#_7">查询记录</a></li>
+<li><a href="#mvc">MVC 代码结构</a></li>
+<li><a href="#_8">结束语</a></li>
+</ul>
+</div>
+<h2 id="_1">开篇</h2>
+<p><a href="http://www.w3school.com.cn/sql/sql_join.asp">FlaskBB</a>是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。</p>
+<p>本文是本系列文章的第三篇，将介绍ORM基础知识，分析Flask-SQLAlchemy及sqlalchemy ORM引擎的一些常用方法，进而介绍FlaskBB用户管理模块的数据库设计。</p>
+<h2 id="orm">什么是 ORM</h2>
+<blockquote>
+<p>对象关系映射（英语：Object Relational Mapping，简称ORM，或O/RM，或O/R mapping），是一种程序技术，用于实现面向对象编程语言里不同类型系统的数据之间的转换。从效果上说，它其实是创建了一个可在编程语言里使用的“虚拟对象数据库”。-百度百科</p>
+</blockquote>
+<p>简单地说，使用 ORM 来操作数据库，我们基本上不用跟 SQL 打交道了。直接用程序语言的对象来打交道即可。Flask-SQLAlchemy 是 ORM 引擎 sqlalchemy 针对 Flask 的扩展。</p>
+<h2 id="_2">定义表</h2>
+<p>定义一个表只需要继承自 <code>db.Model</code> 即可。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
+    __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;users&quot;</span>
+    __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;username&#39;</span>, <span style="color: #BB4444">&#39;email&#39;</span>]
+
+    <span style="color: #AA22FF">id</span> <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, primary_key<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+    username <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), unique<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>, nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    email <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), unique<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>, nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    _password <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;password&#39;</span>, db<span style="color: #666666">.</span>String(<span style="color: #666666">120</span>), nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+</pre></div>
+</td></tr></table>
+
+<p>这样我们就定义了一个叫 <code>users</code> 的表格，表格的名称由 <code>__tablename__</code> 指定。这样任何对表格的操作，都可以转化为对 <code>User</code> 类的操作。代码里的 <code>db</code> 对象是什么呢？在 extensions.py 里创建了 db 对象 <code>db = SQLAlchemy()</code>。然后在 app.py 里初始化这个 db 对象 <code>db.init_app(app)</code>。</p>
+<h2 id="_3">定义一对多关系</h2>
+<p>一个论坛用户会对应多个论坛主题。论坛主题由类 <code>Topic</code> 表达。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Topic</span>(db<span style="color: #666666">.</span>Model):
+    __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;topics&quot;</span>
+    __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;title&#39;</span>, <span style="color: #BB4444">&#39;username&#39;</span>]
+
+    <span style="color: #AA22FF">id</span> <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, primary_key<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+    forum_id <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer,
+                         db<span style="color: #666666">.</span>ForeignKey(<span style="color: #BB4444">&quot;forums.id&quot;</span>,
+                                       use_alter<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>,
+                                       name<span style="color: #666666">=</span><span style="color: #BB4444">&quot;fk_topic_forum_id&quot;</span>),
+                         nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    title <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">255</span>), nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    user_id <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, db<span style="color: #666666">.</span>ForeignKey(<span style="color: #BB4444">&quot;users.id&quot;</span>))
+    username <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    date_created <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>DateTime, default<span style="color: #666666">=</span>datetime<span style="color: #666666">.</span>utcnow())
+    last_updated <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>DateTime, default<span style="color: #666666">=</span>datetime<span style="color: #666666">.</span>utcnow())
+    locked <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Boolean, default<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    important <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Boolean, default<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    views <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, default<span style="color: #666666">=0</span>)
+    post_count <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, default<span style="color: #666666">=0</span>)
+</pre></div>
+</td></tr></table>
+
+<p>User 类通过 <code>db.relationship</code> 来定义表 User 和 Topic 的一对多关系。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
+    __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;users&quot;</span>
+    __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;username&#39;</span>, <span style="color: #BB4444">&#39;email&#39;</span>]
+
+    <span style="color: #AA22FF">id</span> <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, primary_key<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+    username <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), unique<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>, nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    email <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), unique<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>, nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    _password <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;password&#39;</span>, db<span style="color: #666666">.</span>String(<span style="color: #666666">120</span>), nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    <span style="color: #666666">...</span>
+    topics <span style="color: #666666">=</span> db<span style="color: #666666">.</span>relationship(<span style="color: #BB4444">&quot;Topic&quot;</span>, backref<span style="color: #666666">=</span><span style="color: #BB4444">&quot;user&quot;</span>, lazy<span style="color: #666666">=</span><span style="color: #BB4444">&quot;dynamic&quot;</span>)
+</pre></div>
+</td></tr></table>
+
+<p>关键代码在 LINE 10 。这一行代码会在 <code>users</code> 表里创建一个列叫 <code>topics</code>，这个列就保存了这个用户发起的所有论坛主题。然后在 <code>topics</code> 表里创建一个列叫 <code>user</code>，这是通过 <code>backref</code> 这个参数实现的，所以我们可以通过 <code>Topic.user</code> 来引用论坛主题的发起用户。最后一个参数 <code>lazy</code> 可以有四个值：</p>
+<ul>
+<li><code>select</code><br />
+  这是默认值，表示 SQLAlchemy 会在必要的时候一次性把所有的数据从数据库里通过 SQL SELECT 语句读取出来。当一对多的数据量比较小时可以用这个值，当数据量比较大时，用这个值会降低程序的性能。</li>
+<li><code>joined</code><br />
+  告诉 SQLAlchemy 使用 JOIN 子句一次性地把关系数据从数据库里导出来。关于 JOIN 可参阅<a href="http://www.w3school.com.cn/sql/sql_join.asp">这篇文章</a>。</li>
+<li><code>subquery</code><br />
+  类似 <code>joined</code>，但 SQLAlchemy 会使用子查询来读取数据库。关于子查询可参阅<a href="http://www.360doc.com/content/11/0407/17/5789627_107867377.shtml">这篇文章</a>。</li>
+<li><code>dynamic</code><br />
+  针对一对多关系里，数据量比较大时，这是个特殊且有用的类型。它不会一次性把所有的关系数据都从数据库里读出来，相反它会返回一个查询对象，在需要数据时，从这个查询对象时进行二次查询，才能获得需要的数据。这种类型可以提高程序性能。</li>
+</ul>
+<h2 id="_4">定义多对多关系</h2>
+<p>一个用户可以属于多个组，而一个组里也会有多个用户。针对这种多对多的关系，我们需要第三个表来保存这种多对多关系。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">groups_users <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Table(
+    <span style="color: #BB4444">&#39;groups_users&#39;</span>,
+    db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;user_id&#39;</span>, db<span style="color: #666666">.</span>Integer(), db<span style="color: #666666">.</span>ForeignKey(<span style="color: #BB4444">&#39;users.id&#39;</span>)),
+    db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;group_id&#39;</span>, db<span style="color: #666666">.</span>Integer(), db<span style="color: #666666">.</span>ForeignKey(<span style="color: #BB4444">&#39;groups.id&#39;</span>)))
+</pre></div>
+</td></tr></table>
+
+<p>首先直接使用 <code>db.Table</code> 定义一个多对多的关系表 <code>groups_users</code>。这里要注意不要使用继承 <code>db.Model</code> 来定义这个多对多关系表。然后，在 User 类里使用 <code>db.relationship</code> 来定义多对多关系：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
+    __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;users&quot;</span>
+    __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;username&#39;</span>, <span style="color: #BB4444">&#39;email&#39;</span>]
+
+    <span style="color: #AA22FF">id</span> <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>Integer, primary_key<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+    username <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), unique<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>, nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    email <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(db<span style="color: #666666">.</span>String(<span style="color: #666666">200</span>), unique<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>, nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    _password <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;password&#39;</span>, db<span style="color: #666666">.</span>String(<span style="color: #666666">120</span>), nullable<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+    <span style="color: #666666">...</span>
+    secondary_groups <span style="color: #666666">=</span> \
+        db<span style="color: #666666">.</span>relationship(<span style="color: #BB4444">&#39;Group&#39;</span>,
+                    secondary<span style="color: #666666">=</span>groups_users,
+                    primaryjoin<span style="color: #666666">=</span>(groups_users<span style="color: #666666">.</span>c<span style="color: #666666">.</span>user_id <span style="color: #666666">==</span> <span style="color: #AA22FF">id</span>),
+                    backref<span style="color: #666666">=</span>db<span style="color: #666666">.</span>backref(<span style="color: #BB4444">&#39;users&#39;</span>, lazy<span style="color: #666666">=</span><span style="color: #BB4444">&#39;dynamic&#39;</span>),
+                    lazy<span style="color: #666666">=</span><span style="color: #BB4444">&#39;dynamic&#39;</span>)
+</pre></div>
+</td></tr></table>
+
+<p>其中 LINE 10 - 15 使用 <code>db.relationship</code> 来定义多对多关系。第一个参数表示多对多关系的类为 Group，第二个参数 <code>secondary=groups_users</code> 表示需要从第三个叫 <code>groups_users</code> 的表里获取多对多关系，第三个参数 <code>primaryjoin=(groups_users.c.user_id == id)</code> 表示连接查询时的条件。第四个参数 <code>backref=db.backref('users', lazy='dynamic')</code> 会在 Group 类里创建一个成员叫 users，其中 <code>db.backref</code> 的 <code>lazy</code> 参数为 <code>dynamic</code> 表示 Group.users 为一个查询对象。第五个参数 <code>lazy='dynamic'</code> 表示 User.secondary_groups 为一个查询对象，其实这里可以不要使用 <code>dynamic</code>，因为一个用户所属的组是很有限的，不可能很多，可以一次性全部加载进来。</p>
+<h2 id="_5">插入及修改记录</h2>
+<p>插入记录时，不用再写 SQL 语句了，直接使用类对象来操作即可。用户注册成功后，需要向 users 表插入一条记录。在 <code>flaskbb.auth.RegisterForm.save()</code> 里实现：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">save</span>(<span style="color: #AA22FF">self</span>):
+    user <span style="color: #666666">=</span> User(username<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>username<span style="color: #666666">.</span>data,
+                email<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>email<span style="color: #666666">.</span>data,
+                password<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>password<span style="color: #666666">.</span>data,
+                date_joined<span style="color: #666666">=</span>datetime<span style="color: #666666">.</span>utcnow(),
+                primary_group_id<span style="color: #666666">=4</span>)
+    <span style="color: #AA22FF; font-weight: bold">return</span> user<span style="color: #666666">.</span>save()
+</pre></div>
+</td></tr></table>
+
+<p>创建一个 User 对象，然后调用对象的 <code>save()</code> 方法：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">save</span>(<span style="color: #AA22FF">self</span>, groups<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Saves a user. If a list with groups is provided, it will add those</span>
+<span style="color: #BB4444; font-style: italic">    to the secondary groups from the user.</span>
+
+<span style="color: #BB4444; font-style: italic">    :param groups: A list with groups that should be added to the</span>
+<span style="color: #BB4444; font-style: italic">                   secondary groups from user.</span>
+<span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
+
+    <span style="color: #AA22FF; font-weight: bold">if</span> groups:
+        <span style="color: #008800; font-style: italic"># TODO: Only remove/add groups that are selected</span>
+        secondary_groups <span style="color: #666666">=</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>secondary_groups<span style="color: #666666">.</span>all()
+        <span style="color: #AA22FF; font-weight: bold">for</span> group <span style="color: #AA22FF; font-weight: bold">in</span> secondary_groups:
+            <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>remove_from_group(group)
+        db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>commit()
+
+        <span style="color: #AA22FF; font-weight: bold">for</span> group <span style="color: #AA22FF; font-weight: bold">in</span> groups:
+            <span style="color: #008800; font-style: italic"># Do not add the primary group to the secondary groups</span>
+            <span style="color: #AA22FF; font-weight: bold">if</span> group<span style="color: #666666">.</span>id <span style="color: #666666">==</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>primary_group_id:
+                <span style="color: #AA22FF; font-weight: bold">continue</span>
+            <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>add_to_group(group)
+
+        <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>invalidate_cache()
+
+    db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>add(<span style="color: #AA22FF">self</span>)
+    db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>commit()
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">self</span>
+</pre></div>
+</td></tr></table>
+
+<p>其关键代码是 LINE 24 - 25。其中 <code>db.session</code> 对象是 Flask-SQLAlchemy 扩展为我们创建的一个事务对象，使用 <code>db.session.add()</code> 来插入记录，使用 <code>db.session.commit()</code> 来提交事务，使操作生效。LINE 9 - LINE 22是当需要改变一个用户所属的组时的操作代码，这里就不展开讨论。</p>
+<p>需要说明的是，修改记录时也是使用 <code>db.session.add()</code> 方法。SQLAlchemy 会自动根据主键的值来判断这是一个新加的记录还是要修改的记录。</p>
+<div class="admonition note">
+<p class="admonition-title">关于db.session.commit()</p>
+<p>User.save() 方法里，当 groups 参数不为空时，会有两个 db.session.commit() 的调用。把一个操作分成两个事务，就达不到保证数据一致性的目的了。这里的代码写法应该可以再考量一下。</p>
+</div>
+<h2 id="_6">删除记录</h2>
+<p>当我们需要从 users 表里删除记录里，调用 <code>User.delete()</code> 方法即可，它的代码是这样的：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">delete</span>(<span style="color: #AA22FF">self</span>):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Deletes the User.&quot;&quot;&quot;</span>
+
+    <span style="color: #008800; font-style: italic"># This isn&#39;t done automatically...</span>
+    PrivateMessage<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+    ForumsRead<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+    TopicsRead<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+
+    db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>delete(<span style="color: #AA22FF">self</span>)
+    db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>commit()
+
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">self</span>
+</pre></div>
+</td></tr></table>
+
+<p>LINE 9 - 10 是用来从 users 表里删除一条记录。LINE 5-7 是用来在删除用户之前，把一些用户相关的数据也一并删除掉。</p>
+<h2 id="_7">查询记录</h2>
+<p>继承自 <code>db.Model</code> 的类会引入 <code>query</code> 属性，这是个可查询对象 <code>Query</code> 的实例。其常用的方法有 <code>query.filter()</code>，<code>query.filter_by()</code>，<code>query.order_by()</code>，<code>query.limit()</code>，<code>query.get()</code>等等。这些函数只是指定了查询的条件，查询真正开始是在调用 <code>query.first()</code>，<code>query.all()</code> 等方法后才发生的。</p>
+<p>例如，获取用户的主题个数 <code>User.topic_count()</code>：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@property</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">topic_count</span>(<span style="color: #AA22FF">self</span>):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Returns the thread count&quot;&quot;&quot;</span>
+    <span style="color: #AA22FF; font-weight: bold">return</span> Topic<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter(Topic<span style="color: #666666">.</span>user_id <span style="color: #666666">==</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>count()
+</pre></div>
+</td></tr></table>
+
+<p>再如 <code>User.delete()</code> 的代码里删除用户相关的数据的代码：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">PrivateMessage<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+ForumsRead<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+TopicsRead<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+</pre></div>
+</td></tr></table>
+
+<p>再如 <code>User.save()</code> 的代码里关于群组的相关操作代码：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">secondary_groups <span style="color: #666666">=</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>secondary_groups<span style="color: #666666">.</span>all()
+<span style="color: #AA22FF; font-weight: bold">for</span> group <span style="color: #AA22FF; font-weight: bold">in</span> secondary_groups:
+    <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>remove_from_group(group)
+db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>commit()
+</pre></div>
+</td></tr></table>
+
+<p>通过 <code>self.secondary_groups.all()</code> 获取所有的群组，然后在这些群组里把用户移除。</p>
+<div class="admonition note">
+<p class="admonition-title">filter() vs filter_by()</p>
+<p><code>filter(*criterion)</code> 使用 SQL 表达式，而 <code>filter_by(**kwargs)</code> 使用关键字表达式。从函数声明可以看出来 <code>filter()</code> 接受的参数是一个元组表达式，而 <code>filter_by()</code> 接受的是一个 dict 表达式。所以，<code>Topic.query.filter(Topic.user_id == self.id).count()</code> 等价于 <code>Topic.query.filter_by(user_id = self.id).count()</code>。关于这个区别，还可以进一步查阅 <a href="http://stackoverflow.com/questions/2128505/whats-the-difference-between-filter-and-filter-by-in-sqlalchemy">StackOverFlow</a> 及 <a href="http://segmentfault.com/q/1010000000140472">SegmentFault</a> 上的文章，还有<a href="http://docs.sqlalchemy.org/en/latest/orm/query.html?highlight=filter_by#sqlalchemy.orm.query.Query.filter">官方的文档</a>。顺便吐槽一下，从这个对比可以看出来 StackOverFlow 和国内 SegmentFault 质量差异，顺便再感慨一下，学 IT 的人英文不好你就等着受苦吧，永远接触不到第一手的权威资料。</p>
+</div>
+<p>关于查询还需要说明的一点，Flask-SQLAlchemy 提供了便利的函数 <code>get_or_404()</code> 及 <code>first_or_404()</code> 来替代 <code>get()</code> 和 <code>first()</code> 方法。这两个方法在 view 里特别有用，如找不到这个用户时，直接抛出 404 异常。而不是返回一个 None。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@user.route</span>(<span style="color: #BB4444">&quot;/&lt;username&gt;&quot;</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">profile</span>(username):
+    user <span style="color: #666666">=</span> User<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(username<span style="color: #666666">=</span>username)<span style="color: #666666">.</span>first_or_404()
+    <span style="color: #AA22FF; font-weight: bold">return</span> render_template(<span style="color: #BB4444">&quot;user/profile.html&quot;</span>, user<span style="color: #666666">=</span>user)
+</pre></div>
+</td></tr></table>
+
+<h2 id="mvc">MVC 代码结构</h2>
+<p>介绍完 ORM，我们可以看一下 FlaskBB 项目 <code>flaskbb/flaskbb</code> 目录下的核心代码的 MVC 代码结构。它把每个模块封装成一个独立的 bluepoint，每个模块又分为 model，view，form 三个模块。这样整体代码结构非常清晰。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">flaskbb
+├── __init__.py
+├── _compat.py
+├── app.py
+├── email.py
+├── extensions.py
+├── auth
+│   ├── __init__.py
+│   ├── forms.py
+│   └── views.py
+├── configs
+│   ├── __init__.py
+│   ├── default.py
+│   ├── development.py
+│   ├── development.py.example
+│   ├── production.py.example
+│   └── testing.py
+├── fixtures
+│   ├── __init__.py
+│   ├── groups.py
+│   └── settings.py
+├── forum
+│   ├── __init__.py
+│   ├── forms.py
+│   ├── models.py
+│   └── views.py
+├── management
+│   ├── __init__.py
+│   ├── forms.py
+│   ├── models.py
+│   └── views.py
+├── user
+│   ├── __init__.py
+│   ├── forms.py
+│   ├── models.py
+│   └── views.py
+└── utils
+    ├── __init__.py
+    ├── decorators.py
+    ├── helpers.py
+    ├── permissions.py
+    ├── populate.py
+    ├── settings.py
+    └── widgets.py
+</pre></div>
+
+
+<h2 id="_8">结束语</h2>
+<p>本文简单介绍了 ORM 操作数据库的概念和一些基本的用法。可参考的资料很多，这里强烈推荐官方文档，深入浅出。关于入门资料，可参阅 <a href="http://flask-sqlalchemy.pocoo.org/2.0">Flask-SQLAlchemy 官方文档</a>。深入阅读可以参考 <a href="http://docs.sqlalchemy.org/en/latest/orm">sqlalchemy 官方文档</a>。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/flask.html">flask</a> on 2014-12-07(Sunday) 23:00. Tags: <a href="http://kamidox.com/tag/python.html">python</a>, <a href="http://kamidox.com/tag/flask.html">flask</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

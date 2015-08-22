@@ -1,0 +1,645 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li class="active"><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>使用Pelican搭建博客系统</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">摘要</a></li>
+<li><a href="#pelican">Pelican介绍</a><ul>
+<li><a href="#pelican_1">什么是Pelican</a></li>
+<li><a href="#pelican_2">为什么选择Pelican</a></li>
+</ul>
+</li>
+<li><a href="#pelican_3">Pelican安装与配置</a><ul>
+<li><a href="#pelican_4">安装Pelican并创建项目</a></li>
+<li><a href="#pelicanconfpypublishconfpy">配置pelicanconf.py和publishconf.py</a></li>
+<li><a href="#makefile">配置Makefile</a></li>
+<li><a href="#_2">配置主题</a></li>
+</ul>
+</li>
+<li><a href="#_3">撰写博客</a><ul>
+<li><a href="#_4">撰写博客</a></li>
+<li><a href="#_5">预览博客文章</a></li>
+</ul>
+</li>
+<li><a href="#_6">发布博客</a><ul>
+<li><a href="#nginx">配置Nginx</a></li>
+<li><a href="#_7">上传博客到服务器</a></li>
+</ul>
+</li>
+<li><a href="#_8">最佳实践</a></li>
+</ul>
+</div>
+<h2 id="_1">摘要</h2>
+<p>经过几天的折腾，用Pelican搭建的独立博客系统终于上线运行了。可以打开<a href="http://kamidox.com">kamidox.com</a>看一下效果图。由于选用了响应式网页设计的主题，所以在手机上的浏览效果也相当赞。本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出我自己的最佳实践描述。</p>
+<h2 id="pelican">Pelican介绍</h2>
+<h3 id="pelican_1">什么是Pelican</h3>
+<p><a href="https://github.com/getpelican/pelican">Perlican</a>是用Python实现的一个静态网站生成器，支持<a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>或<a href="http://daringfireball.net/projects/markdown/">Markdown</a>。它支持以下功能：</p>
+<ul>
+<li>博客文章和静态网页</li>
+<li>支持评论。评论是通过第三方服务<a href="https://disqus.com/">Disqus</a>支持的。即评论数据保存在第三方服务器上</li>
+<li>主题支持</li>
+<li>把博客文章生成PDF格式文档</li>
+<li>多语言博客支持，如可以用英文和中文写同一篇博客。不同语言访问者访问相应语言的博文</li>
+<li>支持Atom/RSS订阅</li>
+<li>博文中代码高亮支持</li>
+<li>博客搬家支持(WordPress, Dotclear, 或RSS feeds)</li>
+<li>支持插件，如Twiter, Google Analytics等</li>
+</ul>
+<h3 id="pelican_2">为什么选择Pelican</h3>
+<p>首先排除掉WordPress之类的CMS系统。因为我不想要数据库，我只需要一个轻量级的静态网站生成器。我的博客使用Markdown编写，且保存在GitHub上。我想要的，只是用Markdown写完博客之后，git commit + git push即可直接发布到博客网站上。</p>
+<p><a href="http://blog.iwantmyname.com/2014/05/the-updated-big-list-of-static-website-generators-for-your-site-blog-or-wiki.html">这篇文章</a>介绍了32个各种语言实现的博客引擎，而<a href="http://siliconangle.com/blog/2012/03/20/5-minimalist-static-html-blog-generators-to-check-out/">这篇文章</a>介绍了５个最轻量级的静态网站生成器。最终选择Pelican是基于如下原因：</p>
+<ul>
+<li>使用Python实现。由于最近在学习Python，我可以阅读源码并按照我的需求来改造Pelican使之完全符合我的需求。下次学习Ruby，用<a href="https://github.com/jekyll/jekyll">jekyll</a>再折腾一遍。因为Jekyll是用Ruby实现的。且GitHub Pages的后台就是用Jekyll，到时可直接用GitHub Pages实现个人博客。</li>
+<li>足够轻量级。总的代码量才1MB多。安装也方便。</li>
+<li>有一堆现成的主题可以使用。这对我这种非专业前端的开发者来说，省了不少事。</li>
+<li>文档齐全。</li>
+<li>开发活动活跃。GitHub上代码提交活跃。上面文章里介绍的很多博客系统基本上都2+年前就停止更新了。</li>
+</ul>
+<p>最后两点对使用任何开源工具来说都是很重要的，只有开发活跃，社区资源多，文档齐全，遇到问题的时候才能较快地得到解决。</p>
+<h2 id="pelican_3">Pelican安装与配置</h2>
+<h3 id="pelican_4">安装Pelican并创建项目</h3>
+<p>详细的信息可以参阅<a href="http://docs.getpelican.com/en/3.4.0/">Pelican官方文档</a>。假设电脑上已经安装Python和pip。首先，通过pip安装pelican和markdown：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">pip install pelican markdown
+</pre></div>
+
+
+<p>然后创建你的博客项目：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/blogs
+<span style="color: #AA22FF">cd</span> ~/blogs
+pelican-quickstart
+</pre></div>
+
+
+<p>在运行pelican-quickstart时，系统会问一系列问题，比如你的博客网址啊，作者名字啊之类的，根据真实情况填写即可，这些问题只是用来生成配置文件的，我们后面都可以通过修改配置文件来手动修改这些设置。我填写的内容如下：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">kamidox@kamidox-laptop:~/lab/blogs<span style="color: #B8860B">$ </span>pelican-quickstart
+Welcome to pelican-quickstart v3.4.0.
+
+This script will <span style="color: #AA22FF">help </span>you create a new Pelican-based website.
+
+Please answer the following questions so this script can generate the files
+needed by Pelican.
+
+&gt; Where <span style="color: #AA22FF; font-weight: bold">do</span> you want to create your new web site? <span style="color: #666666">[</span>.<span style="color: #666666">]</span>
+&gt; What will be the title of this web site? kamidox
+&gt; Who will be the author of this web site? Joey Huang
+&gt; What will be the default language of this web site? <span style="color: #666666">[</span>en<span style="color: #666666">]</span>
+&gt; Do you want to specify a URL prefix? e.g., http://example.com   <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span>
+&gt; What is your URL prefix? <span style="color: #666666">(</span>see above example; no trailing slash<span style="color: #666666">)</span> http://kamidox.com
+&gt; Do you want to <span style="color: #AA22FF">enable </span>article pagination? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span> Y
+&gt; How many articles per page <span style="color: #AA22FF; font-weight: bold">do</span> you want? <span style="color: #666666">[</span>10<span style="color: #666666">]</span>
+&gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span> Y
+&gt; Do you want an auto-reload &amp; simpleHTTP script to assist with theme and site development? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span>
+&gt; Do you want to upload your website using FTP? <span style="color: #666666">(</span>y/N<span style="color: #666666">)</span> N
+&gt; Do you want to upload your website using SSH? <span style="color: #666666">(</span>y/N<span style="color: #666666">)</span> y
+&gt; What is the hostname of your SSH server? <span style="color: #666666">[</span>localhost<span style="color: #666666">]</span> kamidox.com
+&gt; What is the port of your SSH server? <span style="color: #666666">[</span>22<span style="color: #666666">]</span>
+&gt; What is your username on that server? <span style="color: #666666">[</span>root<span style="color: #666666">]</span> ubuntu
+&gt; Where <span style="color: #AA22FF; font-weight: bold">do</span> you want to put your web site on that server? <span style="color: #666666">[</span>/var/www<span style="color: #666666">]</span> /home/ubuntu/blogs
+&gt; Do you want to upload your website using Dropbox? <span style="color: #666666">(</span>y/N<span style="color: #666666">)</span> N
+&gt; Do you want to upload your website using S3? <span style="color: #666666">(</span>y/N<span style="color: #666666">)</span> N
+&gt; Do you want to upload your website using Rackspace Cloud Files? <span style="color: #666666">(</span>y/N<span style="color: #666666">)</span> N
+&gt; Do you want to upload your website using GitHub Pages? <span style="color: #666666">(</span>y/N<span style="color: #666666">)</span> N
+Done. Your new project is available at /home/kamidox/lab/blogs
+</pre></div>
+</td></tr></table>
+
+<p>其中第14行的<code>http://kamidox.com</code>以及第21行的<code>kamidox.com</code>是我的域名，如果你只是在本机试验，可以填localhost。创建完项目后，目录下看起来象这样。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">kamidox@kamidox-laptop:~/lab/blogs<span style="color: #B8860B">$ </span>tree
+.
+├── content     <span style="color: #008800; font-style: italic"># 这个就是放博客内容目录，这个目录及子目录下的所有md和rst文件将会被转成html文件</span>
+├── develop_server.sh   <span style="color: #008800; font-style: italic">#这个是用来在本地运行一个服务器来实时查看生成的html文档的脚本</span>
+├── fabfile.py  <span style="color: #008800; font-style: italic"># 这个是使用Python的fabric来实现文件上传的工具，即Deploy工具</span>
+├── Makefile    <span style="color: #008800; font-style: italic"># 这个是使用是用来生成网站内容并上传的工具。后文详细解释</span>
+├── output      <span style="color: #008800; font-style: italic"># 这个是从content目录生成的html目标文件的存放目录</span>
+├── pelicanconf.py      <span style="color: #008800; font-style: italic"># 这个是本地开发时的配置文件</span>
+└── publishconf.py      <span style="color: #008800; font-style: italic"># 这个是发布时的配置文件</span>
+
+<span style="color: #666666">2</span> directories, <span style="color: #666666">5</span> files
+</pre></div>
+
+
+<h3 id="pelicanconfpypublishconfpy">配置pelicanconf.py和publishconf.py</h3>
+<p>Pelican的配置文件是直接用Python写的，我本地开发配置文件<code>pelicanconf.py</code>内容如下：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+<span style="color: #008800; font-style: italic"># -*- coding: utf-8 -*- #</span>
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">__future__</span> <span style="color: #AA22FF; font-weight: bold">import</span> unicode_literals
+
+AUTHOR <span style="color: #666666">=</span> <span style="color: #BB4444">u&#39;Joey Huang&#39;</span>
+SITENAME <span style="color: #666666">=</span> <span style="color: #BB4444">u&quot;kamidox.com&quot;</span>
+SITEURL <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;http://localhost&#39;</span>
+DISQUS_SITENAME <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;kamidox&#39;</span>
+
+PATH <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;content&#39;</span>
+
+TIMEZONE <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;Asia/Shanghai&#39;</span>
+
+DEFAULT_LANG <span style="color: #666666">=</span> <span style="color: #BB4444">u&#39;zh_CN&#39;</span>
+DEFAULT_DATE_FORMAT <span style="color: #666666">=</span> (<span style="color: #BB4444">&#39;%Y-%m-</span><span style="color: #BB6688; font-weight: bold">%d</span><span style="color: #BB4444">(%A) %H:%M&#39;</span>)
+
+USE_FOLDER_AS_CATEGORY <span style="color: #666666">=</span> <span style="color: #AA22FF">True</span>
+DEFAULT_CATEGORY <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;hide&#39;</span>
+
+<span style="color: #008800; font-style: italic"># Feed generation is usually not desired when developing</span>
+FEED_ATOM <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;feeds/atom.xml&#39;</span>
+FEED_RSS <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;feeds/rss.xml&#39;</span>
+FEED_ALL_ATOM <span style="color: #666666">=</span> <span style="color: #AA22FF">None</span>
+FEED_ALL_RSS <span style="color: #666666">=</span> <span style="color: #AA22FF">None</span>
+CATEGORY_FEED_ATOM <span style="color: #666666">=</span> <span style="color: #AA22FF">None</span>
+TRANSLATION_FEED_ATOM <span style="color: #666666">=</span> <span style="color: #AA22FF">None</span>
+
+<span style="color: #008800; font-style: italic"># menu items</span>
+MENUITEMS <span style="color: #666666">=</span> [(<span style="color: #BB4444">&#39;Home&#39;</span>, SITEURL),
+            (<span style="color: #BB4444">&#39;About&#39;</span>, <span style="color: #BB4444">&#39;about.html&#39;</span>),]
+
+DEFAULT_PAGINATION <span style="color: #666666">=</span> <span style="color: #666666">10</span>
+MD_EXTENSIONS <span style="color: #666666">=</span> [
+        <span style="color: #BB4444">&quot;extra&quot;</span>,
+        <span style="color: #BB4444">&quot;toc&quot;</span>,
+        <span style="color: #BB4444">&quot;headerid&quot;</span>,
+        <span style="color: #BB4444">&quot;meta&quot;</span>,
+        <span style="color: #BB4444">&quot;sane_lists&quot;</span>,
+        <span style="color: #BB4444">&quot;smarty&quot;</span>,
+        <span style="color: #BB4444">&quot;wikilinks&quot;</span>,
+        <span style="color: #BB4444">&quot;admonition&quot;</span>,
+        <span style="color: #BB4444">&quot;codehilite(guess_lang=False,pygments_style=emacs,noclasses=True)&quot;</span>]
+
+CNZZ_ANALYTICS <span style="color: #666666">=</span> <span style="color: #AA22FF">True</span>
+MONTH_ARCHIVE_SAVE_AS <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;posts/{date:%Y}/{date:%m}/index.html&#39;</span>
+THEME <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;themes/foundation-default-colours&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<ol>
+<li>第6行的SITENAME是博客网站的名称，可以是任何字符；第7行是博客网站的网址，这个字段在本地开发和发布版本是不一样的，本地直接填localhost即可，发布版本里需要填博客网址。</li>
+<li>第8行：我使用了Disqus作为我的评论系统，Disqus也是<a href="https://www.ycombinator.com/">YC</a>毕业生。启用Disqus评论系统非常简单，在官网上注册一个Disqus帐户，然后把帐户名填在<code>DISQUS_SITENAME</code>值里即可启用。我的Disqus帐号刚好也是<code>kamidox</code>。</li>
+<li>第33－42行：这里是配置Markdown扩展，用来支持代码高亮。并且使用Emacs风格的代码高亮。</li>
+<li>第44行：由于GFW的存在，我把Google Analize换成了国内的CNZZ统计。</li>
+<li>第46行：我的博客使用了<code>foundation-default-colours</code>这套主题。关于主题，后文详解。</li>
+</ol>
+<p>开发环境和发布环境的配置差不多，除SITEURL不一样外，还多了两个配置：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">SITEURL <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;http://kamidox.com&#39;</span>
+<span style="color: #008800; font-style: italic"># usful setting for publish</span>
+RELATIVE_URLS <span style="color: #666666">=</span> <span style="color: #AA22FF">False</span>   <span style="color: #008800; font-style: italic"># 禁用相对路径引用</span>
+DELETE_OUTPUT_DIRECTORY <span style="color: #666666">=</span> <span style="color: #AA22FF">True</span>      <span style="color: #008800; font-style: italic"># 编译之前删除output目录，这样保证output下生成的内容是干净的</span>
+</pre></div>
+
+
+<p>其它的配置项，可以参阅<a href="http://docs.getpelican.com/en/3.4.0/settings.html">Pelican设置文档</a>。</p>
+<h3 id="makefile">配置Makefile</h3>
+<p>撰写完博客，并在本地预览后，需要发布到服务器上。我使用Makefile的形式来生成文档并发布。我的Makefile核心代码如下：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/makefile</span>
+<span style="color: #B8860B">SSH_HOST</span><span style="color: #666666">=</span>kamidox.com
+<span style="color: #B8860B">SSH_PORT</span><span style="color: #666666">=</span>22
+<span style="color: #B8860B">SSH_USER</span><span style="color: #666666">=</span>ubuntu
+<span style="color: #B8860B">SSH_TARGET_DIR</span><span style="color: #666666">=</span>/home/ubuntu/blogs/
+<span style="color: #B8860B">SSH_KEY</span><span style="color: #666666">=</span>/home/kamidox/work/aws/kamidox-key-tokyo.pem
+
+<span style="color: #00A000">rsync_upload</span><span style="color: #666666">:</span> publish
+    rsync -e <span style="color: #BB4444">&quot;ssh -p </span><span style="color: #AA22FF; font-weight: bold">$(</span>SSH_PORT<span style="color: #AA22FF; font-weight: bold">)</span><span style="color: #BB4444"> -i </span><span style="color: #AA22FF; font-weight: bold">$(</span>SSH_KEY<span style="color: #AA22FF; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span> -P -rvzc --delete <span style="color: #AA22FF; font-weight: bold">$(</span>OUTPUTDIR<span style="color: #AA22FF; font-weight: bold">)</span>/ <span style="color: #AA22FF; font-weight: bold">$(</span>SSH_USER<span style="color: #AA22FF; font-weight: bold">)</span>@<span style="color: #AA22FF; font-weight: bold">$(</span>SSH_HOST<span style="color: #AA22FF; font-weight: bold">)</span>:<span style="color: #AA22FF; font-weight: bold">$(</span>SSH_TARGET_DIR<span style="color: #AA22FF; font-weight: bold">)</span> --cvs-exclude
+</pre></div>
+</td></tr></table>
+
+<ol>
+<li>第2－4行：指定了要上传内容的目的服务器的地址，端口以及用户名</li>
+<li>第5行：指定了远程服务器上保存博客内容的目录</li>
+<li>第6行：我添加的SSH Identity文件路径。这是因为Amazon EC2登录时我是用SSH Identity文件登录的，而不是使用用户名和密码</li>
+<li>第8-9行：我使用rsync来进行上传操作。rsync可以在本地和远程服务器之间同步文件。同步过程中只同步那些改变了的文件，且传输过程中会压缩数据，它比scp要所需要的带宽要小。这里要注意的是，我在默认生成的Makefile上增加了<code>-i $(SSH_KEY)</code>，这个就是指定SSH Identity文件登录远程SSH的方法。</li>
+</ol>
+<h3 id="_2">配置主题</h3>
+<p>Pelican支持大量的开源主题，GitHub上的<a href="https://github.com/getpelican/pelican-themes">pelican-themes</a>项目有几十套主题，大部分都带了效果预览图。可以从里面挑一个你喜欢的主题样式来使用。还有一个更方便的挑选主题的方式，直接打开<a href="http://www.pelicanthemes.com/">www.pelicanthemes.com</a>挑选吧。一个网页里就列出了几乎所有的主题。我的博客是使用<code>foundation-default-colours</code>主题，并在这套主题的基础上进行了一些定制。选定好喜欢的主题后，从GitHub上下载下来所有的主题：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/pelican
+<span style="color: #AA22FF">cd</span> ~/pelican
+git clone https://github.com/getpelican/pelican-themes.git
+</pre></div>
+
+
+<p>从里面拷贝一份你选中的主题到项目根目录的<code>themes</code>目录下，在本文的例子中是<code>~/lab/blogs/themes</code>。然后在<code>pelicanconf.py</code>和<code>publishconf.py</code>里通过下面代码指定博客主题：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">THEME <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;themes/foundation-default-colours&quot;</span>
+</pre></div>
+
+
+<p>通常的做法是，选中一个自己喜欢的主题后，会进行一些定制。Pelican使用<a href="http://jinja.pocoo.org/">Jinja2</a>来配置主题。一个主题的典型结构如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">├── static
+│   ├── css
+│   └── images
+└── templates
+    ├── analytics_cnzz.html // 这个是我添加的使用cnzz的统计服务的代码
+    ├── analytics.html      // 这是Google Analytics的代码
+    ├── archives.html       // 这个是博客归档页面的模板
+    ├── article.html        // 这个是博客正文的显示模板
+    ├── base.html           //　这个是所有页面的父类模板，即所有页面都引用这个页面。比如网页导航栏啊之类的，都定义在这里
+    ├── categories.html     //　所有博客文章的分类列表
+    ├── category.html       // 某个博客分类的文章列表模板
+    ├── index.html          // 主页
+    ├── page.html           // 分页显示的模板
+    ├── tag.html            // 某类标签下的文章列表
+    └── tags.html           // 所有的标签列表页面模板
+</pre></div>
+
+
+<p>稍微有点Jinja的知识加上一些HTML和CSS的知识，就可以自己定义主题了。</p>
+<div class="admonition note">
+<p class="admonition-title">为什么博客主页打开半天都不显示出来</p>
+<p>因为GFW封锁了几乎所有和Google相关的网站，这些主题里又用了Google的字体，所以下载这些字体时会导致无法下载成功而半天不显示网页。解决方案很简单，直接修改css文件，不去下载Google字体即可。比如针对<code>foundation-default-colours</code>主题，打开主题根目录下的<code>static/css/foundation.css</code>和<code>static/css/foundation.min.css</code>文件，删除掉<code>@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");</code>内容即可。当然，如果你和你的读者都是翻墙高手，那就不会遇到这个问题了。</p>
+</div>
+<h2 id="_3">撰写博客</h2>
+<h3 id="_4">撰写博客</h3>
+<p>在<code>content</code>目录下新建一个xxx.md，使用Makedown语法直接撰写文档即可。我在ubuntu下使用的是gedit，代码高亮效果很好。撰写博客的时候需要注意，Pelican支持一些元数据。比如，本文的元数据如下：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Title: 使用Pelican搭建博客系统
+Date: 2014-10-07 22:20
+Modified: 2014-10-07 23:04
+Tags: python, pelican
+Slug: build-blog-system-by-pelican
+Authors: Joey Huang
+Summary: 本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。
+Status: draft
+</pre></div>
+</td></tr></table>
+
+<ol>
+<li>第5行：Slug是文档的唯一标识，生成html时，会直接使用这个值当html的文件名。所以，不同博客文章这个值需要保证唯一性，否则生成html时会报错。</li>
+<li>第8行：这个表示本文是草稿。比如我们一篇博客经常不是一次性写完的，写了一半暂不想让读者看到，或者写完想让别人帮忙审查一下，就可以加这一行标识。这样Pelican在处理时，这篇文章也会生成html，但不会放在博客的主页及分类索引里，这样普通的读者一般看不到这个文章。有这个标识的文章生成时放在<code>output/drafts</code>目录下，你就可以通过分享url的方式让你的co-worker帮你review你的文章。</li>
+</ol>
+<p>我们可以在<code>content</code>目录下任意建子目录来组织管理博客文章。由于我们在设置文件里指定这个值<code>USE_FOLDER_AS_CATEGORY = True</code>，这样这些目录名称就自动变成博文分类的目录了。</p>
+<h3 id="_5">预览博客文章</h3>
+<p>撰写文章的过程中，可以随时在浏览器里预览博客文章。方法是先在博客项目的根目录下执行下面命令来启动预览服务器：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">make devserver
+</pre></div>
+
+
+<p>这条命令会自动使用<code>pelicanconf.py</code>的配置文件来生成html网页，同时在本地的8000端口上启动一个http服务器，供你预览文章。这样，直接打开浏览器，输入<code>localhost:8000</code>即可打开本地服务器上的你的博客主页。比如，撰写本文时，我就直接在gedit里码字，然后在浏览器里输入<code>http://localhost:8000/drafts/build-blog-system-by-pelican.html</code>来实时预览效果。需要注意的是，上述命令会在后台持续监听<code>content</code>目录下的内容，如果这个目录下的内容发生变化，会自动重新生成html页面。所以，在gedit里写完一段内容，切换到浏览器，直接刷新一下就可以看到最新的结果了。</p>
+<p>当文章写完后，需要在博客项目根目录上运行<code>make stopserver</code>来停止这个预览服务以及数据监控功能。</p>
+<div class="admonition note">
+<p class="admonition-title">文章在主页上没看到？</p>
+<p>撰写完文章，需要发布时，需要把<code>Status: draft</code>这行元数据去掉。否则文章不会出现在博客主页。只会在drafts下看得到。</p>
+</div>
+<h2 id="_6">发布博客</h2>
+<p>写完博客，我们想发布到网上。这个时候我们就需要一个主机和一个域名，我的独立博客系统用到的下面资源：</p>
+<ul>
+<li>Amazon EC2主机。一个帐户可以免费使用一年。可以点击<a href="https://aws.amazon.com">这里</a>注册。</li>
+<li>申请独立域名。我是通过<a href="http://www.aliyun.com/">阿里云</a>直接在<a href="http://www.net.cn/">万网</a>上注册的。一年45元。</li>
+</ul>
+<p>我的博客运行的软件环境：</p>
+<ul>
+<li>Ubuntu 14.04 Server版，运行在Anazon EC2主机上</li>
+<li>Nginx</li>
+</ul>
+<h3 id="nginx">配置Nginx</h3>
+<p>Ubuntu下安装Nginx：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo apt-get install nginx-full
+</pre></div>
+
+
+<p>安装完成后，编辑配置文件：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo vim /etc/nginx/sites-enabled/default
+</pre></div>
+
+
+<p>将配置文件替换成如下的内容：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">server {
+  listen 80 default_server;
+  server_name localhost;
+  root /home/kamidox/lab/blogs/output;
+
+  location / {
+    index index.html;
+  }
+}
+</pre></div>
+</td></tr></table>
+
+<ol>
+<li>第3行：这个是服务器地址。这里使用本机作为测试服务器就填localhost，如果是配置服务器，就要填服务器的域名。比如我的服务器上，这行是配置成kamidox.com。</li>
+<li>第4行：这个设置成博客文章的根目录。这个使用本机作为测试服务器，所以直接填博客项目的<code>output</code>目录。如果是在服务器上，我是直接配置成<code>/home/ubuntu/blogs</code>。</li>
+</ol>
+<p>配置完成后，重启一下Nginx服务：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo service nginx resart
+</pre></div>
+
+
+<p>然后在浏览器里输入<code>localhost</code>就可以看到博客首页。在本机验证成功Nginx配置后，就可以用SSH登录服务器去配置服务器了。</p>
+<h3 id="_7">上传博客到服务器</h3>
+<p>直接在项目根目录下运行下面的命令即可把文章上传到博客服务器:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">make rsync_upload
+</pre></div>
+
+
+<p>因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用<code>publishconf.py</code>来生成html，并且通过rsync上传到服务器Amazon EC2服务器的<code>/home/ubuntu/blogs/</code>目录下。</p>
+<div class="admonition hint">
+<p class="admonition-title">配置Amazon EC2主机</p>
+<p>发布博客到服务器上，需要先完成Amazon EC2主机的配置。具体可参阅<a href="https://aws.amazon.com">Amazon官网上的文档</a>。如果还没有主机，也可以把自己的电脑配置成服务器来作试验，所要做的，就是修改Makefile里的SSH_HOST的值为localhost即可。</p>
+</div>
+<h2 id="_8">最佳实践</h2>
+<p>我的博客内容托管在GitHub上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行<code>make devserver</code>，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据<code>Status: draft</code>。然后git commit + git push提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后git commit + git push先提交到GitHub上；接着运行<code>make rsync_upload</code>即可把博客内容上传到Amazon EC2主机上。打开<a href="http://kamidox.com">kamidox.com</a>确认一下即完成了一篇博文的发布。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/tools.html">tools</a> on 2014-10-26(Sunday) 23:20. Tags: <a href="http://kamidox.com/tag/python.html">python</a>, <a href="http://kamidox.com/tag/pelican.html">pelican</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

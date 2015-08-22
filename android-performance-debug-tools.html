@@ -1,0 +1,745 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Android应用性能调试</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">开篇</a></li>
+<li><a href="#_2">性能问题汇总</a></li>
+<li><a href="#_3">性能调试工具</a></li>
+<li><a href="#gpu">GPU呈现模式分析</a></li>
+<li><a href="#gpu_1">调试GPU过度绘制</a></li>
+<li><a href="#method-profiling">Method Profiling工具</a><ul>
+<li><a href="#_4">刷新时间</a></li>
+<li><a href="#listviewviewholder">ListView的ViewHolder</a></li>
+<li><a href="#_5">一些技巧</a></li>
+</ul>
+</li>
+<li><a href="#_6">结束语</a></li>
+</ul>
+</div>
+<h2 id="_1">开篇</h2>
+<p>关于Android性能方面，不能不读<a href="http://www.curious-creature.org/docs/android-performance-case-study-1.html">这篇文章</a>。作者是GOOGLE员工，同时也是个摄影爱好者。本文就是通过阅读这篇文章，结合Android 4.4平台和自身实践总结出来的，个人认为对Android应用程序性能优化较有帮助的一些工具及使用示例。不足之处欢迎指正。</p>
+<h2 id="_2">性能问题汇总</h2>
+<p>性能问题总的来说，就是反映慢。实际上，从图形学意义来讲，就是帧率低。性能问题最终可以归纳成两类问题：</p>
+<ol>
+<li>布局不合理导致过度绘制。<br />
+   重绘(Over Draw)是指屏幕上的一个象素点被画了多次，比如一个图片按钮(ImageButton)要先按出背景，再画出按钮上的图片，这就是重绘的概念。过度重绘是指有由于布局不合理导致一些不必要的重绘，比如一个窗口多有层背景，那么在渲染的时候，就会一层一层地画上去，上面的背景覆盖掉下而把背景。这个时候我们可以把下面的背景去掉。只画上层的背景，从而提高刷新速度。</li>
+<li>函数调用不合理导致每帧的刷新之间CPU花了太长的时间。<br />
+   比如每次刷新时，或者处理点击事件时，都去大量地读写文件。对于这种问题，要么使用缓存减少文件读取次数。如果不得不读，可能就要考虑使用异步加载的方式来确保界面刷新，数据加载完填充数据的方式来优化性能和用户体验。</li>
+</ol>
+<h2 id="_3">性能调试工具</h2>
+<p>Android的开发者选项里以及ADT/monitor提供了大量性能调试工具来调试上述性能问题。本文重点介绍三个工具：</p>
+<ol>
+<li>GPU呈现模式分析 -&gt; 在adb shell dumpsys gfxinfo中<br />
+   这个在开发者选项的<strong>监控</strong>里面。可以从GPU刷新的角度分析我们的刷新帧率问题。</li>
+<li>调试GPU过度绘制 -&gt; 显示过度重绘区域<br />
+   这个在开发者选项的<strong>硬件加速渲染</strong>里面。这个可以查看一些界面的布局不合理导致的过度绘制的性能问题。</li>
+<li>Method Profiling工具<br />
+   这个在DDMS/monitor里可以找到，这个工具可以从虚拟机层面抓取每个函数及其调用的函数的运行时间，统计运行次数等功能。是分析性能问题的绝佳工具。</li>
+</ol>
+<h2 id="gpu">GPU呈现模式分析</h2>
+<p>GPU呈现模式分析可以从GPU层面上分析我们的刷新效率。使用这个工具可以用来发现有没有刷新帧率过低的问题。</p>
+<p>首先，在开发者模式里打开<strong>GPU呈现模式分析</strong>菜单，在弹出式菜单里选择<strong>在adb shell dumpsys gfxinfo中</strong>选项。打开这个选项后，系统会为每个窗口记录最近128帧的刷新时间。</p>
+<p>接着，手机连接电脑，确保adb可用。然后运行你要调试的应用程序做一些必要的操作之后，运行下面的命令在抓取GPU刷新的LOG：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">adb shell dumpsys gfxinfo com.android.soundrecorder &gt; soundrecorder_gfxinfo_1.log
+</pre></div>
+
+
+<p>其中<em>com.android.soundrecorder</em>是要分析的应用的包名称；<em>soundrecorder_gfxinfo_1.log</em>是抓取出来的LOG保存位置。</p>
+<p>接着，打开LOG文件<em>soundrecorder_gfxinfo_1.log</em>，找到<strong>Profile data in ms:</strong>那节，可以看到类似下面的数据：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">com.android.soundrecorder/com.android.soundrecorder.SoundRecorder/android.view.ViewRootImpl@41db6d18
+Draw    Process Execute
+4.38    6.49    0.87
+0.65    5.69    0.84
+4.40    7.82    3.10
+2.64    4.62    0.92
+...     ...     ...
+</pre></div>
+
+
+<p>其中有三种类型的数据数据：</p>
+<ul>
+<li>Draw是在java里构建显示列表所花的时间，这个表示花在<code>View.onDraw(Canvas canvas)</code>里的时间</li>
+<li>Process是android的2D渲染器执行Draw所构建出来的显示列表所花的时间，一个View的结构层次越复杂，就有越多的渲染命令需要被执行，就会花越多的时间</li>
+<li>Execute是发送一帧显示数据给GPU的合成器所花的时间，这部分时间一般较短且较固定</li>
+</ul>
+<p>上述的描述比较抽象，我们从代码层面来看这三个数据的含义：</p>
+<p><code>android.view.HardwareRender$GlRenderer.draw()</code>函数抛开无关代码后，只剩下两行：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@Override</span>
+<span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">draw</span><span style="color: #666666">(</span>View view<span style="color: #666666">,</span> View<span style="color: #666666">.</span><span style="color: #BB4444">AttachInfo</span> attachInfo<span style="color: #666666">,</span> HardwareDrawCallbacks callbacks<span style="color: #666666">,</span> Rect dirty<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+
+    <span style="color: #666666">...</span>
+
+    DisplayList displayList <span style="color: #666666">=</span> buildDisplayList<span style="color: #666666">(</span>view<span style="color: #666666">,</span> canvas<span style="color: #666666">);</span>
+
+    <span style="color: #666666">...</span>
+
+    status <span style="color: #666666">|=</span> drawDisplayList<span style="color: #666666">(</span>attachInfo<span style="color: #666666">,</span> canvas<span style="color: #666666">,</span> displayList<span style="color: #666666">,</span> status<span style="color: #666666">);</span>
+
+    <span style="color: #666666">...</span>
+<span style="color: #666666">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>Line 6: 这个就是Draw的时间，<code>buildDisplayList()</code>最终会调用<code>View.getDisplayList()</code>，而后者就是从View树里从根部开始遍历所有的子View，并且依次调用每个View的<code>View.onDraw()</code>方法把控件都画在画布上。这里，每个View都独立地画在一个Canvas上。<br />
+Line 10: 这个就是Process的时间，<code>drawDisplayList()</code>会调用<code>android.view.GLE20Canvas.drawDisplayList()</code>函数来把DisplayList合并起来。即Draw的结果是一个DisplayList，Process要做的就是把这个DisplayList合并起来。</p>
+<p>有了上面的分析，我们就清楚了这三个数据的含义，要减少Draw的时间，就要去减少控件层次结构和个数，同时优化每个控件的onDraw函数。要减少Process时间，就去减少控件层次结构和个数以及一些复杂的效果，如半透明之类的。而Execute的时间基本不受软件控制，可以排除在优化对象之外。</p>
+<p>接下来，回到我们抓到的LOG数据<em>soundrecorder_gfxinfo_1.log</em>里面。我们把这三个数据拷贝到excel里，做一个柱状图(Stacked Column)来直观地观察一下GPU的刷新时间。</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_gfxinfo_1_stacked_column.jpg" /></p>
+<p>从上图可以看出来，一帧的刷新时间大部分都小于16ms，部分帧超过16ms。除了这个数据外，我们也可以算一下Draw和Process的平均时间，计算这个时间是为了量化对比优化前后的性能指标。我们可以精确地计算出性能提升了多少个百分点。针对本次抓到的LOG，我们计算出来的平均时间如下：</p>
+<ul>
+<li>Draw平均时间：3.926ms</li>
+<li>Process平均时间：7.262ms</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">16ms的含义</p>
+<p>一般情况下，如果能保证60fps的刷新帧率，那么人眼看起来就会觉得很流畅。这样1000 / 60大概就是16ms。所以需要保证一帧的刷新时间小于16ms就能保证流畅度。</p>
+</div>
+<h2 id="gpu_1">调试GPU过度绘制</h2>
+<p>GPU呈现模式分析让我们了解GPU刷新，并且能知道帧率能不能达到60fps。还能算出Draw和Process平均时间供对比分析，但对怎么样优化就不明确了。这样我们就需要GPU过度绘制工具来帮忙。</p>
+<p>首先，在开发者模式里关闭之前打开的<strong>GPU呈现模式分析</strong>，然后打开<strong>调试GPU过度绘制</strong>，选择<strong>显示过度重绘区域</strong>。这样就会看到界面会画出花花绿绿的背景。这些不同颜色的背景就是用来指示出过度重绘的程度的。</p>
+<table>
+<thead>
+<tr>
+<th>背景颜色</th>
+<th>表示的含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无颜色</td>
+<td>表示没有重绘，即一个象素点只被绘制了1次。</td>
+</tr>
+<tr>
+<td>蓝色</td>
+<td>表示重绘了1次，即一个象素点被绘制了2次。屏幕上如果有大块的的蓝色区域是可以接受的，但如果整个屏幕都是蓝色的，那就需要优化了，可以去掉一层。</td>
+</tr>
+<tr>
+<td>绿色</td>
+<td>表示重绘了2次，即一个象素点被绘制了3次。中等面积的绿色区域是可以接受的，不过最好引起警惕，去看一下能不能优化。</td>
+</tr>
+<tr>
+<td>淡红色</td>
+<td>表示重绘了3次，即一个象素绘制了4次。很小的淡红色区域是可以接受的，其他情况就需要去优化。</td>
+</tr>
+<tr>
+<td>深红色</td>
+<td>表示重绘了4次以上。这个不正确的，必须进行优化。</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以打开录音机模块，看一下录音机这个模块在优化之前的GPU过度绘制显示图片：</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/recorder_1.png" /> <img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/recorder_list_1.png" /></p>
+<p>录音主界面可以看出两个明显的问题：</p>
+<ol>
+<li>整个背景都是蓝色的。这个应该可以优化，去掉一层。</li>
+<li>底部区域是绿色的，被重绘了2次，需要分析一下是否可以优化。</li>
+</ol>
+<p>录音列表界面也可以看出一个问题：底部区域是蓝色的，重绘了2次，可以想办法优化。</p>
+<p>我们以录音主界面为例，看一下它的布局文件：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;LinearLayout</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #BB4444">android:layout_width=&quot;match_parent&quot;</span>
+    <span style="color: #BB4444">android:layout_height=&quot;match_parent&quot;</span>
+    <span style="color: #BB4444">android:orientation=&quot;vertical&quot;</span>
+    <span style="color: #BB4444">android:background=&quot;@drawable/main_bg&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span> <span style="color: #BB4444">android:id=&quot;@+id/timerViewLayout&quot;</span>
+        <span style="color: #BB4444">android:layout_width=&quot;match_parent&quot;</span>
+        <span style="color: #BB4444">android:layout_height=&quot;123dip&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ImageButton</span> <span style="color: #BB4444">android:id=&quot;@+id/listButtons&quot;</span>
+                <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+                <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span>
+                <span style="color: #BB4444">android:layout_alignParentTop=&quot;true&quot;</span>
+                <span style="color: #BB4444">android:layout_alignParentRight=&quot;true&quot;</span>
+                <span style="color: #BB4444">android:src=&quot;@drawable/record_ic_recordlist&quot;</span>
+                <span style="color: #BB4444">android:background=&quot;@null&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span> <span style="color: #BB4444">android:id=&quot;@+id/stateMessage1&quot;</span>
+            <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_toLeftOf=&quot;@+id/listButtons&quot;</span>
+            <span style="color: #BB4444">android:layout_alignParentTop=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:layout_alignParentLeft=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:layout_marginTop=&quot;15dip&quot;</span>
+            <span style="color: #BB4444">android:layout_marginLeft=&quot;45dip&quot;</span>
+            <span style="color: #BB4444">android:gravity=&quot;center&quot;</span>
+            <span style="color: #BB4444">style=&quot;@android:style/TextAppearance.Small.Inverse&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span> <span style="color: #BB4444">android:id=&quot;@+id/timerView&quot;</span>
+            <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:textSize=&quot;60sp&quot;</span>
+            <span style="color: #BB4444">android:layout_centerHorizontal=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:layout_alignParentBottom=&quot;true&quot;</span>
+            <span style="color: #BB4444">style=&quot;@android:style/TextAppearance.Large.Inverse&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;com.android.soundrecorder.VUMeter</span> <span style="color: #BB4444">android:id=&quot;@+id/uvMeter&quot;</span>
+        <span style="color: #BB4444">android:layout_width=&quot;match_parent&quot;</span>
+        <span style="color: #BB4444">android:layout_height=&quot;0dip&quot;</span>
+        <span style="color: #BB4444">android:layout_weight=&quot;1&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span>
+        <span style="color: #BB4444">android:layout_width=&quot;match_parent&quot;</span>
+        <span style="color: #BB4444">android:layout_height=&quot;150dip&quot;</span>
+        <span style="color: #BB4444">android:background=&quot;@drawable/op_bar_bg&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ImageButton</span> <span style="color: #BB4444">android:id=&quot;@+id/recordButton&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span> 
+            <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_centerInParent=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:src=&quot;@drawable/record_btn_record&quot;</span>
+            <span style="color: #BB4444">android:background=&quot;@null&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span> <span style="color: #BB4444">android:id=&quot;@+id/stopButton&quot;</span>
+            <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:textSize=&quot;14sp&quot;</span>
+            <span style="color: #BB4444">android:textColor=&quot;#CCCCCC&quot;</span>
+            <span style="color: #BB4444">android:text=&quot;@string/accept&quot;</span>
+            <span style="color: #BB4444">android:layout_alignParentRight=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:layout_centerVertical=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:singleLine=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:gravity=&quot;center&quot;</span>
+            <span style="color: #BB4444">android:layout_marginRight=&quot;25dip&quot;</span>
+            <span style="color: #BB4444">android:clickable=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:background=&quot;@drawable/record_btn_complete&quot;</span>
+             <span style="color: #008000; font-weight: bold">/&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/LinearLayout&gt;</span>
+</pre></div>
+</td></tr></table>
+
+<p>LINE 5：主界面有个主背景图片<code>@drawable/main_bg</code>，这是个全屏的背景图片。加上窗口背景图片，这块实际上有完全叠加起来的两层背景。我们可以优化去掉一层背景。<br />
+LINE 48：底部区域也有个背景图片<code>@drawable/op_bar_bg</code>。这个实际上是多余的，可以去掉。</p>
+<p>优化措施：</p>
+<ol>
+<li>去掉LINE 5及LINE 48的背景图片</li>
+<li>在录音Activity的<code>onCreate()</code>方法设置窗口的背景图片<code>getWindow().setBackgroundDrawableResource(R.drawable.main_bg);</code></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">窗口背景图片</p>
+<p>定义在Theme里的窗口背景，在Activity启动的时候由系统创建并应用在Activity窗口里。所以在上面第2个优化步骤里。我们是直接把背景图片从布局文件里删除，移到Activity的窗口里。这样就省去了一层背景图片。</p>
+</div>
+<p>再来看一下录音列表这个activity的布局文件：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;LinearLayout</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span style="color: #BB4444">android:orientation=&quot;vertical&quot;</span> 
+    <span style="color: #BB4444">android:layout_width=&quot;fill_parent&quot;</span>
+    <span style="color: #BB4444">android:layout_height=&quot;fill_parent&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;FrameLayout</span> <span style="color: #BB4444">android:layout_width=&quot;fill_parent&quot;</span>
+        <span style="color: #BB4444">android:layout_height=&quot;0dip&quot;</span>
+        <span style="color: #BB4444">android:layout_weight=&quot;1&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;TextView</span> <span style="color: #BB4444">android:id=&quot;@android:id/empty&quot;</span>
+            <span style="color: #BB4444">android:layout_width=&quot;fill_parent&quot;</span> 
+            <span style="color: #BB4444">android:layout_height=&quot;fill_parent&quot;</span>
+            <span style="color: #BB4444">android:gravity=&quot;center|center&quot;</span> 
+            <span style="color: #BB4444">android:textSize=&quot;18sp&quot;</span>
+            <span style="color: #BB4444">android:text=&quot;@string/list_empty&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ListView</span> <span style="color: #BB4444">android:id=&quot;@android:id/list&quot;</span> 
+            <span style="color: #BB4444">android:layout_width=&quot;fill_parent&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span> 
+            <span style="color: #BB4444">android:gravity=&quot;left|top&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;/FrameLayout&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;View</span> <span style="color: #BB4444">android:id=&quot;@+id/menuAnchor&quot;</span>
+        <span style="color: #BB4444">android:layout_width=&quot;1dip&quot;</span>
+        <span style="color: #BB4444">android:layout_height=&quot;5dip&quot;</span>
+        <span style="color: #BB4444">android:layout_gravity=&quot;right&quot;</span>
+        <span style="color: #BB4444">android:visibility=&quot;invisible&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>&quot;
+
+    <span style="color: #008000; font-weight: bold">&lt;RelativeLayout</span>
+        <span style="color: #BB4444">android:id=&quot;@+id/bottomBarLayout&quot;</span>
+        <span style="color: #BB4444">android:layout_width=&quot;match_parent&quot;</span>
+        <span style="color: #BB4444">android:layout_height=&quot;150dip&quot;</span>
+        <span style="color: #BB4444">android:background=&quot;@drawable/op_bar_bg&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ImageButton</span> <span style="color: #BB4444">android:id=&quot;@+id/recordButton&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span> 
+            <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_centerInParent=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:src=&quot;@drawable/record_btn_record&quot;</span>
+            <span style="color: #BB4444">android:background=&quot;@null&quot;</span> <span style="color: #008000; font-weight: bold">/&gt;</span>
+
+        <span style="color: #008000; font-weight: bold">&lt;ImageButton</span> <span style="color: #BB4444">android:id=&quot;@+id/optionButton&quot;</span>
+            <span style="color: #BB4444">android:layout_height=&quot;wrap_content&quot;</span> 
+            <span style="color: #BB4444">android:layout_width=&quot;wrap_content&quot;</span>
+            <span style="color: #BB4444">android:layout_alignParentRight=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:layout_centerVertical=&quot;true&quot;</span>
+            <span style="color: #BB4444">android:layout_marginRight=&quot;25dip&quot;</span>
+            <span style="color: #BB4444">android:src=&quot;@drawable/recordlist_btn_more&quot;</span>
+            <span style="color: #BB4444">android:background=&quot;@null&quot;</span><span style="color: #008000; font-weight: bold">/&gt;</span>
+
+    <span style="color: #008000; font-weight: bold">&lt;/RelativeLayout&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/LinearLayout&gt;</span>
+</pre></div>
+</td></tr></table>
+
+<p>LINE 35：底部区域有个背景图片<code>android:background="@drawable/op_bar_bg</code>，加上我们上面提到的窗口背景图片，所以底部区域这块实际上覆盖了两层背景。就是说这块背景会绘制2次，所以呈现了蓝色。</p>
+<p>优化措施：</p>
+<ol>
+<li>LINE 7的FrameLayout我们给它加上一个白色的背景色。</li>
+<li>在录音列表Activity的<code>onCreate()</code>方法里去掉窗口背景图片。<code>getWindow().setBackgroundDrawable(null)</code></li>
+</ol>
+<p>优化之后，我们再看一下这两个窗口在优化前后的样子：</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/recorder_1.png" /> <img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/recorder_2.png" /> </p>
+<p>对比可以看得出来，录音主界面从原来是全屏蓝色，底部绿色变成背景全部无色。这样我们就省去了一层背景图片。</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/recorder_list_1.png" /> <img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/recorder_list_2.png" /></p>
+<p>而录音列表界面背景也变成无色的，即背景只画一次。</p>
+<p>优化之后，我们通过上面介绍的<strong>GPU呈现模式分析</strong>再抓一次LOG，计算Draw和Process的平均时间分别是：</p>
+<ul>
+<li>Draw平均时间：3.566ms；优化之前是3.926ms</li>
+<li>Process平均时间：7.200ms；优化之前是7.262ms</li>
+</ul>
+<p>从上面定量来看，Draw性能大概提高了9.17%。而Process性能没有明显提高。这也是符合我们的预期的，因为我们只优化了画图部分，并没有优化布局的层次结构，所以Process不会提高。</p>
+<h2 id="method-profiling">Method Profiling工具</h2>
+<p>上面介绍的工具用来调试布局不合理导致过度绘制，而Method Profiling工具则可以调试刷新之外的性能，比如响应用户点击事件时花了大量的时间读写文件之类的问题。</p>
+<p>首先，手机连接电脑，确保adb可用。打开ADT/monitor，打开<strong>device</strong>窗口，选择要调试的应用程序，然后点击<strong>Start Method Profiling</strong>开始抓取LOG。</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_start_method_profiling.jpg" /></p>
+<p>接着，操作手机运行你要优化性能的程序，在里面做适当的操作。操作完成后，点击<strong>Stop Method Profiling</strong>按钮，会自动在临时目录保存一个trace文件，打开后大概如下图所示：</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_main_method_profiling.jpg" /></p>
+<p>一些关键数据的含义如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Incl Cpu Time %</td>
+<td>函数自己及其调用的函数总共所占用CPU的时间占总时间的百分比</td>
+</tr>
+<tr>
+<td>Incl Cpu Time</td>
+<td>函数自己及其调用的函数总共所占用CPU的时间，单位为ms</td>
+</tr>
+<tr>
+<td>Excl CPU Time %</td>
+<td>函数自己(不包含其调用的函数)运行时占用的CPU时间的百分比</td>
+</tr>
+<tr>
+<td>Excl CPU Time</td>
+<td>函数自己(不包含其调用的函数)运行时占用的CPU时间</td>
+</tr>
+<tr>
+<td>Incl Real Time</td>
+<td>函数自己及其调用的函数总共所用的时间</td>
+</tr>
+<tr>
+<td>Excl Real Time</td>
+<td>函数自己(不包含其调用的函数)运行时所用的时间</td>
+</tr>
+<tr>
+<td>Calls + RecurCalls/Total</td>
+<td>在抓LOG这段时间内函数的调用的总次数，包含递归调用的次数</td>
+</tr>
+<tr>
+<td>Cpu Time/Call</td>
+<td>函数调用一次所用的CPU时间</td>
+</tr>
+<tr>
+<td>Real Time/Call</td>
+<td>函数调用一次所用的时间</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">CPU Time vs Real Time</p>
+<p>这两个时间有什么区别呢？简单地讲，CPU Time就是CPU真正在运行这个函数的代码所花的时间；而Real time是Wall time，即这个函数从开始进入到真正退出所花的时间。这两个时间为什么会不同呢？举个例子，假如一个函数读取文件，并处理文件里的文本内容。读取文件涉及到IO操作，比如打开文件，实际上打开文件时调用打开文件的这个函数所在线程会短时间进入SLEEP状态，即不占用CPU，但也不返回，而是等待底层真正文件打开成功后，退出SLEEP状态再返回。这个短时间的SLEEP状态是不计处CPU Time的，因为它不占用CPU。但是计入Real time，因为函数还没返回。所以两者必定满足下面的条件：CPU Time &lt;= Real Time。</p>
+</div>
+<p>Method Profiling的信息量很大，可以挖掘很多很有意思的信息。下面列举一些信息来抛砖引玉。</p>
+<h3 id="_4">刷新时间</h3>
+<p>我们可以用Method Profiling抓一个录音过程中的LOG文件。在ADT/monitor里可以看到上文我们提到Draw和Process的概念：</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_GlRenderer.draw.jpg" /></p>
+<p>在ADT/monitor里的信息可以看出，<code>android.view.HardwareRender$GlRenderer.draw()</code>的<strong>Incl Cpu Time</strong>总共占用CPU 3012.359ms，占总CPU时间的88.8%，在抓LOG的这段时间里，总共调用了85次，每次调用的CPU时间是35.440ms，Real time是45.637ms。而其Children里面，<code>GlRenderer.buildDisplayList()</code>占用74.1%，这个实际上就是<code>View.onDraw()</code>占用的时间总和。<code>GlRenderer.drawDisplayList()</code>占用19.7%，这个就是合成DisplayList占用的时间。</p>
+<p>通过这些信息，我们知道我们抓的这段LOG里，CPU主要花费在界面刷新上（占了88.8%）。我们需要优化控件的<code>onDraw()</code>方法来优化性能。</p>
+<p>继续往下看，我们可以看到录音控件里的<code>UVMeter.onDraw()</code>方法占用了整个的CPU时间的61.8%。</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_VUMeter.onDraw.jpg" /></p>
+<p>我们可以看出来<code>drawLine()</code>函数CPU时间占用了44.8%，总共用时940.858ms，调用了15046次，每次调用需要用时0.063ms；从这些数据来看，我们优化的方向应该想办法减少<code>UVMeter.onDraw()</code>里对<code>drawLine()</code>的调用次数。<code>String.format()</code>函数CPU时间占用了35.4%。可以用类似的方法来分析。</p>
+<p>接下来，就是深入<code>UVMeter.onDraw()</code>方法的代码里，去看有没有办法减少<code>drawLine()</code>和<code>String.format()</code>函数的调用次数了。</p>
+<h3 id="listviewviewholder">ListView的ViewHolder</h3>
+<p>在优化ListView的滚动效率时，我们经常会给每个Item一个ViewHolder避免重复创建View。我们抓一个打开录音列表Activity的Method Profiling LOG文件，从LOG文件里可以定量地看出来这个优化能节省多少时间。</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_getView.jpg" /></p>
+<p>从trace里可以看到，<code>getView()</code>函数占总CPU时间的45.5%，每次调用平均CPU用时31.052ms。而其Children里的<code>LayoutInflater.inflate()</code>占用CPU时间72.7%，总共调用11次，每次CPU用时52.971ms。ViewHolder就是为了避免重复调用<code>inflate()</code>函数来创建View的。这样就可以为每个Item节省52.971ms。这是一个非常值得的优化项目。</p>
+<p>我们可以再录音列表里上下滚动来抓一个LOG来对比：</p>
+<p><img alt="IMAGE" src="http://kamidox-blogs.qiniudn.com/soundrecorder_scroll_getView.jpg" /></p>
+<p>从对比可知，<code>getView()</code>占总CPU时间为12.8%，每次调用平均CPU时间为10.369ms。由此可见尽量减少调用<code>inflate()</code>是优化性能的一个重要方法。同时要减少<code>inflate()</code>函数的用时，可以通过简化View的布局层次结构来达到目的。</p>
+<h3 id="_5">一些技巧</h3>
+<p>Method Profiling能看到的信息远不止这些。可以通过重点关注需要优化的性能瓶颈，有针对性地从Method Profiling Log里找到可优化的线索，一些有用的技巧总结如下：</p>
+<ol>
+<li>针对需要优化的性能问题抓取LOG<br />
+   比如需要优化滚动慢的问题，就只抓滚动的LOG，如果需要优化启动慢的问题，就只抓启动的LOG。这样才能有针对性地从LOG里找出可优化的线索。</li>
+<li>阅读LOG的时候，可以从上往下，按照CPU占用时间倒序来发现线索。针对framework里的一些函数如果不清楚其功能可以跳过。当看到应用里面的函数调用时，就需要深入去对比LOG和代码，来发现可优化的线索。</li>
+</ol>
+<h2 id="_6">结束语</h2>
+<p>性能问题是个复杂的问题。单靠这些调试工具不能完全解决问题，而应该在设计阶段就考虑性能问题。在优化阶段利用这些调试工具来优化细节，同时发现一些设计阶段没有发现的性能瓶颈问题。</p>
+<p>本文将录音机应用作为例子描述的一些log文件可以在<a href="http://pan.baidu.com/s/1Gp5Xc">这里</a>下载到。里面的文件说明如下：</p>
+<ul>
+<li>sound_record_list_start.trace：启动录音列表的trace文件</li>
+<li>sound_record_list.trace：在录音列表里上下滚动的trace文件</li>
+<li>sound_recorder.trace：录音过程中的trace文件</li>
+<li>soundrecorder_gfxinfo_1.log：优化前的gfxinfo文件</li>
+<li>soundrecorder_gfxinfo_1.xlsx：优化前的gfxinfo文件制作出来的excel文件</li>
+<li>soundrecorder_gfxinfo_2.log：优化后的gfxinfo文件</li>
+<li>soundrecorder_gfxinfo_2.xlsx：优化后的gfxinfo文件制作出来的excel文件</li>
+</ul>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2014-11-18(Tuesday) 23:30. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

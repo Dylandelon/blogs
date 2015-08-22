@@ -1,0 +1,335 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>利用 LeakCanary 来检查 Android 内存泄漏</h2>
+	<h3 id="_1">前言</h3>
+<p>你被概率性的 OOM 困扰么？有时候，OOM 像幽灵一样，挥之不去，可真想把它揪出来时，又捉之不着。或许，是时候用 <a href="https://github.com/square/leakcanary">LeakCanary</a> 来诊断一下了。它是一个用来检查 Android 下内存泄漏的开源库，这篇文章主要介绍其用法、架构和其背后的实现原理。</p>
+<p>Square <a href="https://corner.squareup.com/2015/05/leak-canary.html">有篇文章</a>介绍了开发这个库的原因。他们的一个付款流程里，需要用到用户的签名，他们直接用 Bitmap 来画签名，Bitmap 大小和屏幕分辨率是一样的。问题来了，在试图创建这个 Bitmap 对象时，概率性 OOM 如幽灵般相随。他们试了几个方法：</p>
+<ul>
+<li>使用 <code>Bitmap.Config.ALPHA_8</code> 来节省内存</li>
+<li>捕获 <code>OutOfMemoryError</code> 异常，调用 gc 清理内存，然后重试几次</li>
+</ul>
+<p>最终这些都不起作用。最终他们发现他们在错误的方向上走得太远了。当存在<strong>内存泄漏</strong>时，可用内存越来越少，这个时候 OOM 可以发生在任何地方，特别是试图创建一些大内存对象，如 Bitmap 的时候。</p>
+<p>我们在上一篇文章<a href="http://kamidox.com/android-memory-guide.html">《Android 内存与性能》</a>里介绍了使用 <a href="http://www.eclipse.org/mat/downloads.php">MAT</a> 来分析内存泄漏的方法。概括起来核心步骤是：</p>
+<ul>
+<li>发生 OOM 或做一些可能存在内存泄漏的操作后，导出 HPROF 文件</li>
+<li>利用 MAT 结合代码分析，来发现一些引用异常，比如哪些对象本来应该被回收的，却还在系统堆中，那么它就是内存泄漏</li>
+</ul>
+<p><strong>如果有一个工具能自动完成这些事情，甚至在发生 OOM 之前，就把内存泄漏报告给你，那是多么美好的一件事情啊。</strong>LeakCanary 就是用来干这个事情的。在测试你的 App 时，如果发生了内存泄漏，状态栏上会有通知告诉你。logcat 上也会有相应的 log 通知你。</p>
+<div class="admonition notes">
+<p class="admonition-title">启发</p>
+<p>LeakCanary 产生的背后有几个有意思的启发。一是像 Square 这样公司一样会被 OOM 这种问题困扰；二是他们也会犯错，试了几种方法都不起作用；三是他们最终用一个优雅的方式解决了这个问题，并且通过开源库的方式让所有人共享他们的工作成果。</p>
+</div>
+<h3 id="_2">用法</h3>
+<h4 id="activity">监控 Activity 泄露</h4>
+<p>我们经常把 Activity 当作为 Context 对象使用，在不同场合由各种对象引用 Activity。所以，Activity 泄漏是一个重要的需要检查的内存泄漏之一。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">ExampleApplication</span> <span style="color: #AA22FF; font-weight: bold">extends</span> Application <span style="color: #666666">{</span>
+
+    <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">static</span> RefWatcher <span style="color: #00A000">getRefWatcher</span><span style="color: #666666">(</span>Context context<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        ExampleApplication application <span style="color: #666666">=</span> <span style="color: #666666">(</span>ExampleApplication<span style="color: #666666">)</span> context<span style="color: #666666">.</span><span style="color: #BB4444">getApplicationContext</span><span style="color: #666666">();</span>
+        <span style="color: #AA22FF; font-weight: bold">return</span> application<span style="color: #666666">.</span><span style="color: #BB4444">refWatcher</span><span style="color: #666666">;</span>
+    <span style="color: #666666">}</span>
+
+    <span style="color: #AA22FF; font-weight: bold">private</span> RefWatcher refWatcher<span style="color: #666666">;</span>
+
+    <span style="color: #AA22FF">@Override</span> <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onCreate</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #AA22FF; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #BB4444">onCreate</span><span style="color: #666666">();</span>
+        refWatcher <span style="color: #666666">=</span> LeakCanary<span style="color: #666666">.</span><span style="color: #BB4444">install</span><span style="color: #666666">(</span><span style="color: #AA22FF; font-weight: bold">this</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>
+
+
+<p><code>LeakCanary.install()</code> 返回一个配置好了的 <code>RefWatcher</code> 实例。它同时安装了 <code>ActivityRefWatcher</code> 来监控 Activity 泄漏。即当 <code>Activity.onDestroy()</code> 被调用之后，如果这个 Activity 没有被销毁，logcat 就会打印出如下信息告诉你内存泄漏发生了。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    * com.example.leakcanary.MainActivity has leaked:
+    * GC ROOT thread java.lang.Thread.&lt;Java Local&gt; <span style="color: #666666">(</span>named <span style="color: #BB4444">&#39;AsyncTask #1&#39;</span><span style="color: #666666">)</span>
+    * references com.example.leakcanary.MainActivity<span style="color: #B8860B">$2</span>.this<span style="color: #B8860B">$0</span> <span style="color: #666666">(</span>anonymous class extends android.os.AsyncTask<span style="color: #666666">)</span>
+    * leaks com.example.leakcanary.MainActivity instance
+    * Reference Key: c4d32914-618d-4caf-993b-4b835c255873
+    * Device: Genymotion generic Google Galaxy Nexus - 4.2.2 - API <span style="color: #666666">17</span> - 720x1280 vbox86p
+    * Android Version: 4.2.2 API: 17
+    * Durations: <span style="color: #B8860B">watch</span><span style="color: #666666">=</span>5100ms, <span style="color: #B8860B">gc</span><span style="color: #666666">=</span>104ms, heap <span style="color: #B8860B">dump</span><span style="color: #666666">=</span>82ms, <span style="color: #B8860B">analysis</span><span style="color: #666666">=</span>3008ms
+</pre></div>
+
+
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>LeakCanary 自动检测 Activity 泄漏只支持 Android ICS 以上版本。因为 <code>Application.registerActivityLifecycleCallbacks()</code> 是在 API 14 引入的。如果要在 ICS 之前监测 Activity 泄漏，可以重载 <code>Activity.onDestroy()</code> 方法，然后在这个方法里调用 <code>RefWatcher.watch(this)</code> 来实现。</p>
+</div>
+<h4 id="fragment">监控 Fragment 泄漏</h4>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">abstract</span> <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">BaseFragment</span> <span style="color: #AA22FF; font-weight: bold">extends</span> Fragment <span style="color: #666666">{</span>
+
+    <span style="color: #AA22FF">@Override</span> 
+    <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onDestroy</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #AA22FF; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #BB4444">onDestroy</span><span style="color: #666666">();</span>
+        RefWatcher refWatcher <span style="color: #666666">=</span> ExampleApplication<span style="color: #666666">.</span><span style="color: #BB4444">getRefWatcher</span><span style="color: #666666">(</span>getActivity<span style="color: #666666">());</span>
+        refWatcher<span style="color: #666666">.</span><span style="color: #BB4444">watch</span><span style="color: #666666">(</span><span style="color: #AA22FF; font-weight: bold">this</span><span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+<span style="color: #666666">}</span>
+</pre></div>
+
+
+<p>当 <code>Fragment.onDestroy()</code> 被调用之后，如果这个 fragment 实例没有被销毁，那么就会从 logcat 里看到相应的泄漏信息。</p>
+<h4 id="_3">监控其他泄漏</h4>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #666666">...</span>
+    RefWatcher refWatcher <span style="color: #666666">=</span> ExampleApplication<span style="color: #666666">.</span><span style="color: #BB4444">getRefWatcher</span><span style="color: #666666">(</span>getActivity<span style="color: #666666">());</span>
+    refWatcher<span style="color: #666666">.</span><span style="color: #BB4444">watch</span><span style="color: #666666">(</span>someObjNeedGced<span style="color: #666666">);</span>
+</pre></div>
+
+
+<p>当 <code>someObjNeedGced</code> 还在内存中时，就会在 logcat 里看到内存泄漏的提示。</p>
+<h4 id="leakcanary">集成 LeakCanary 库</h4>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">dependencies {
+    debugCompile &#39;com.squareup.leakcanary:leakcanary-android:1.3&#39;
+    releaseCompile &#39;com.squareup.leakcanary:leakcanary-android-no-op:1.3&#39;
+}
+</pre></div>
+
+
+<p>在 debug 版本上，集成 LeakCanary 库，并执行内存泄漏监测，而在 release 版本上，集成一个无操作的 wrapper ，这样对程序性能就不会有影响。</p>
+<h3 id="_4">原理</h3>
+<h4 id="leakcanary_1">LeakCanary 流程图</h4>
+<p><img alt="leakcanary" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/leakcanary.png" /></p>
+<p>LeakCanary 的机制如下：</p>
+<ol>
+<li><code>RefWatcher.watch()</code> 会以监控对象来创建一个 <code>KeyedWeakReference</code> 弱引用对象</li>
+<li>在 <code>AndroidWatchExecutor</code> 的后台线程里，来检查弱引用已经被清除了，如果没被清除，则执行一次 GC</li>
+<li>如果弱引用对象仍然没有被清除，说明内存泄漏了，系统就导出 hprof 文件，保存在 app 的文件系统目录下</li>
+<li><code>HeapAnalyzerService</code> 启动一个单独的进程，使用 <code>HeapAnalyzer</code> 来分析 hprof 文件。它使用另外一个开源库 <a href="https://github.com/square/haha">HAHA</a>。</li>
+<li><code>HeapAnalyzer</code> 通过查找 <code>KeyedWeakReference</code> 弱引用对象来查找内在泄漏</li>
+<li><code>HeapAnalyzer</code> 计算 <code>KeyedWeakReference</code> 所引用对象的最短强引用路径，来分析内存泄漏，并且构建出对象引用链出来。</li>
+<li>内存泄漏信息送回给 <code>DisplayLeakService</code>，它是运行在 app 进程里的一个服务。然后在设备通知栏显示内存泄漏信息。</li>
+</ol>
+<h4 id="_5">几个有意思的代码</h4>
+<p><strong>如何导出 hprof 文件</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">File heapDumpFile <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> File<span style="color: #666666">(</span><span style="color: #BB4444">&quot;heapdump.hprof&quot;</span><span style="color: #666666">);</span>
+Debug<span style="color: #666666">.</span><span style="color: #BB4444">dumpHprofData</span><span style="color: #666666">(</span>heapDumpFile<span style="color: #666666">.</span><span style="color: #BB4444">getAbsolutePath</span><span style="color: #666666">());</span>
+</pre></div>
+
+
+<p>可以参阅 <a href="https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidHeapDumper.java">AndroidHeapDumper.java</a> 的代码。</p>
+<p><strong>如何分析 hprof 文件</strong></p>
+<p>这是个比较大的话题，感兴趣的可以移步另外一个开源库 <a href="https://github.com/square/haha">HAHA</a>，它的祖先是 <a href="http://www.eclipse.org/mat/downloads.php">MAT</a>。</p>
+<p><strong>如何使用 HandlerThread</strong></p>
+<p>可以参阅 <a href="https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidWatchExecutor.java">AndroidWatchExecutor.java</a>的代码，特别是关于 Handler, Loop 的使用。</p>
+<p><strong>怎么知道某个变量已经被 GC 回收</strong></p>
+<p>可以参阅 <a href="http://www.plantuml.com">RefWatcher.java</a> 的 <code>ensureGone()</code> 函数。最主要是利用 <code>WeakReference</code> 和 <code>ReferenceQueue</code> 机制。简单地讲，就是当弱引用 <code>WeakReference</code> 所引用的对象被回收后，这个 <code>WeakReference</code> 对象就会被添加到 <code>ReferenceQueue</code> 队列里，我们可以通过其 <code>poll()</code> 方法获取到这个被回收的对象的 <code>WeakReference</code> 实例，进而知道需要监控的对象是否被回收了。</p>
+<h3 id="_6">关于内存泄漏</h3>
+<p>内存泄漏可能很容易发现，比如 Cursor 没关闭；比如在 <code>Activity.onResume()</code> 里 register 了某个需要监听的事件，但在 <code>Activity.onPause()</code> 里忘记 unregister 了；内存泄漏也可能很难发现，比如 <a href="https://github.com/square/leakcanary/blob/master/library/leakcanary-sample/src/main/java/com/example/leakcanary/MainActivity.java">LeakCanary 示例代码</a>，隐含地引用，并且只有在旋转屏幕时才会发生。还有更难发现，甚至无能为力的内存泄漏，比如 Android SDK 本身的 BUG 导致内存泄漏。<a href="https://github.com/square/leakcanary/blob/master/library/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidExcludedRefs.java">AndroidExcludedRefs.java</a> 里就记录了一些己知的 AOSP 版本的以及其 OEM 实现版本里存在的内存泄漏。</p>
+<h3 id="_7">本期推荐</h3>
+<p>推荐一个画图工具 <a href="http://www.plantuml.com">planUML</a>，其最大的特色是使用脚本来画图。它和 <a href="http://staruml.io">starUML</a> 的最大区别是，前者是画图工具，类似于微软的 visio，而且支持脚本画图，后者是建模工具。<a href="http://www.plantuml.com/PlantUML_Language_Reference_Guide.pdf">这里</a>是 planUML 的官方文档。它还支持一堆<a href="http://www.plantuml.com/running.html">扩展</a>，比如 <a href="https://github.com/jvantuyl/sublime_diagram_plugin">Sublime Text</a>等。本文的<a href="https://raw.githubusercontent.com/kamidox/blogs/master/images/leakcanary.wsd">流程图</a>就是用 planUML 画的。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2015-05-12(Tuesday) 22:57. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

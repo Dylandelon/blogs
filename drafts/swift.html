@@ -1,0 +1,514 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>使用Swift开发iOS8应用程序</h2>
+	<div class="toc">
+<ul>
+<li><a href="#swiftios8">使用Swift开发iOS8应用程序</a><ul>
+<li><a href="#_1">前言</a></li>
+<li><a href="#_2">第一课</a></li>
+<li><a href="#_3">第二课</a></li>
+<li><a href="#_4">第三课</a></li>
+<li><a href="#_5">第四课</a><ul>
+<li><a href="#_6">函数参数</a></li>
+<li><a href="#properties-observer">Properties Observer</a></li>
+<li><a href="#lazy-init">Lazy init</a></li>
+<li><a href="#_7">构造函数</a></li>
+<li><a href="#anyobject">AnyObject</a></li>
+<li><a href="#array">Array<T></a></li>
+<li><a href="#_8">关于教学方式</a></li>
+</ul>
+</li>
+<li><a href="#_9">第五课</a></li>
+<li><a href="#_10">第六课</a><ul>
+<li><a href="#protocols">Protocols</a></li>
+<li><a href="#delegate">Delegate</a></li>
+<li><a href="#tips">TIPS</a></li>
+<li><a href="#gesture">Gesture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="swiftios8">使用Swift开发iOS8应用程序</h2>
+<p>Stanford公开课：<a href="https://itunesu.itunes.apple.com/WebObjects/LZDirectory.woa/ra/directory/courses/961180099/feed">iTunes Stanford CS193p</a></p>
+<h3 id="_1">前言</h3>
+<p>前三课从头开发一个计算器 demo 应用，对使用 Swift 来开发 iOS 应用做了较全面的介绍。特别是作者对编程思路的讲解，大量 xcode 使用技巧和最佳实践的说明都很有价值。学完这三课结合这三课的作业和阅读内容。基本能对使用 Swift 来开发 iOS 应用所需要的一些最基础的概念有较好的理解。</p>
+<h3 id="_2">第一课</h3>
+<ul>
+<li>UI: StoryBoard, Sence</li>
+<li>Controler: UIViewController</li>
+<li>Outlets: 把 UI 控件和 Swift 代码关联起来</li>
+<li>Actions: 设置 UI 控件的事件处理函数</li>
+<li>访问文档: 按住 ALT 键，鼠标点击相应的类或变量</li>
+<li>Optionals: 这个是 Swift 引入的一个非常重要的概念</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Optional</p>
+<p>关于 Optionals 可以参阅 The Swift Programming Language 里的 <code>Optional Chaining</code> 一节的内容。里面有一个详细的示例程序。</p>
+</div>
+<h3 id="_3">第二课</h3>
+<ul>
+<li>AutoLayout: iOS 控件排版系统</li>
+<li>Contraints: 排版规则</li>
+<li>Document Outline: StoryBoard 树形结构</li>
+<li>Computed Properties: 计算属性，包含 get, set 回调函数</li>
+<li>Closure: 闭包，特别是闭包的简化写法，包括省略参数使用 $0, $1 代替；省略 return 关键字；把最后一个参数放在最后函数拨号之后等。</li>
+<li>MVC: Controller 可以直接和 Model 和 View 通信。View 可以发送 Action 到 Controller 里的某个 Target，View 可以通过 delegate 在 Controller 里设置代理。Model 不能直接和 Controller 通信，他们之间使用 subscriber 模式进行通信，Model 设置一个通知中心，Controller 通过向通知中心注册事件通知的方式来获取 Model 的变化信息。</li>
+</ul>
+<p><em>关于 Closure，视频教程里最终把一段复杂的代码简化为如下简单的代码</em></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    performOperatoer() { <span style="color: #B8860B">$0</span> <span style="color: #666666">*</span> <span style="color: #B8860B">$1</span> }
+</pre></div>
+
+
+<h3 id="_4">第三课</h3>
+<ul>
+<li>Class v.s Structure<ul>
+<li>类可以继承，但结构体不行</li>
+<li>类是引用传递，但结构体是值传递</li>
+<li>在 Swift 里，Array, Dictionary 是结构体，不是类，所以当他们作为参数时是值传递，而不是引用传递。最终导致的结果是当 Array, Dictionary 作为参数传递给函数时，是只读的。因为这些值是拷贝过去的，函数里对这个 Array, Dictionary 所作的修改不会返回给调用者。</li>
+</ul>
+</li>
+<li>Swift 习惯用法<ul>
+<li><code>var ops = Array&lt;Double&gt;()</code> -&gt; <code>var ops = [Double]()</code></li>
+<li><code>var ops = Dictionary&lt;String, Double&gt;()</code> -&gt; <code>var ops = [String: Double]()</code></li>
+</ul>
+</li>
+<li>Enumulation: Swift 提供了强大的枚举类型，结合 switch 语句，可以实现很灵活的功能。具体参阅本课54分的视频。另可参阅 The Swift Programming Language 里 Swift Tour 里的 <code>Enumerations and Structures</code><ul>
+<li>枚举的值：可以是传统的数字，也可以是字符串或其他任意自定义的类型</li>
+<li>枚举可以有自己的成员函数</li>
+</ul>
+</li>
+<li>函数可以返回 Tuple，以便返回多个参数，调用者可以结合 <code>_</code> 来选择 Tuple 里感兴趣的返回值</li>
+<li>Printable: 在类，结构体，枚举等命名类型掭添加 <code>: Printable</code>，然后在命名类型里添加 <code>description: String</code> 的只读的计算属性，即可重定义这个类型的字符串表达形式，即可以通过 <code>println()</code> 来把这个类型的值打印出来。</li>
+</ul>
+<h3 id="_5">第四课</h3>
+<p>主要针对第三课的 reading: Project 1 的内容进行讲解。</p>
+<ul>
+<li><code>NSNumber</code>: 调用 Object-C 代码时需要用到</li>
+<li><code>NSDate</code>: 表达时间日期的数据结构</li>
+<li><code>NSObject</code>: 所有 Object-C 的在 Swift 里映射的类的子类</li>
+<li><code>NSData</code>: 字节流类</li>
+<li>Class v.s Struct: 大部分时候，我们使用 class 而不使用 struct。struct 是给 Foundation 使用的。</li>
+</ul>
+<h4 id="_6">函数参数</h4>
+<p>在 Swift 里的函数参数全部是命名参数。默认情况下，第一个参数调用者可以不用指定名字，而第二个起，需要指定参数名字。</p>
+<h4 id="properties-observer">Properties Observer</h4>
+<p>可以通过 <code>willSet</code>, <code>didSet</code> 来监控参数的改变。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span>: <span style="color: #AA22FF">Int</span> = <span style="color: #666666">4</span> {
+    <span style="color: #AA22FF; font-weight: bold">willSet</span> {
+        <span style="color: #AA22FF">println</span>(<span style="color: #BB4444">&quot;prop will set to </span><span style="color: #BB6688; font-weight: bold">\(</span>newValue<span style="color: #BB6688; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span>)
+    }
+    <span style="color: #AA22FF; font-weight: bold">didSet</span> {
+        <span style="color: #AA22FF">println</span>(<span style="color: #BB4444">&quot;prop did set, the old value is </span><span style="color: #BB6688; font-weight: bold">\(</span>oldValue<span style="color: #BB6688; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span>)
+    }
+}
+
+<span style="color: #008800; font-style: italic">// for inherit properties observer</span>
+<span style="color: #AA22FF; font-weight: bold">override</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span> {
+    <span style="color: #AA22FF; font-weight: bold">willSet</span> {
+    }
+    <span style="color: #AA22FF; font-weight: bold">didSet</span> {
+    }
+}
+<span style="color: #008800; font-style: italic">// 问题: 给继承的属性添加监听器后，父亲类的 willSet, didSet 会自动被调用吗？</span>
+</pre></div>
+
+
+<h4 id="lazy-init">Lazy init</h4>
+<p>Lazy init的属性只有在第一次被访问时才会被初始化，对那些开销比较大的属性这是个非常好的机制，可以让类快速创建。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">lazy</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">brain</span> = CalculatorBrain()
+
+<span style="color: #AA22FF; font-weight: bold">lazy</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span>: <span style="color: #AA22FF; font-weight: bold">Type</span> = {
+    <span style="color: #008800; font-style: italic">// execute a closure to init a expensive prop</span>
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">Type</span>()
+}
+
+<span style="color: #008800; font-style: italic">// call a function to init a property</span>
+<span style="color: #AA22FF; font-weight: bold">lazy</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span> = <span style="color: #AA22FF; font-weight: bold">self</span>.initSomeExpensiveProp()
+</pre></div>
+
+
+<h4 id="_7">构造函数</h4>
+<p>阅读构造函数的几个规则，用代码来演示。</p>
+<h4 id="anyobject">AnyObject</h4>
+<p>AnyObject 可以指向任意的类。使用时可以使用 as 或 as? 来转化，也可以使用 is 关键字来判断是不是属于一个特定的类。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">item</span>: <span style="color: #AA22FF">AnyObject</span> = ...
+
+<span style="color: #008800; font-style: italic">// force to convert, will crash if item is not a UIBarButtonItem</span>
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">toolBar</span> = item <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #AA22FF">UIBarButtonItem</span>
+
+<span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">toolBar</span> = item <span style="color: #AA22FF; font-weight: bold">as</span>? <span style="color: #AA22FF">UIBarButtonItem</span> {
+    <span style="color: #008800; font-style: italic">// do something with toolBar, it&#39;s now a UIBarButtonItem</span>
+}
+
+<span style="color: #AA22FF; font-weight: bold">if</span> item <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF">UIBarButtonItem</span> {
+    <span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">toolBar</span> = item <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #AA22FF">UIBarButtonItem</span>
+}
+</pre></div>
+
+
+<h4 id="array">Array<T></h4>
+<p>数组提供了一些很有意思的方法。<code>sort</code>，<code>replace</code>, <code>insert</code>等。另外还有一些可以批量处理数组里的元素的方法。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// 过滤一个数组，返回满足条件的一个新数组</span>
+<span style="color: #AA22FF">filter</span>(includeElement: (T) -&gt; <span style="color: #AA22FF">Bool</span>) -&gt; [T]
+
+<span style="color: #008800; font-style: italic">// 把一个数组映射到另外一个数组，比如把一个按钮全部转化为其对应的字符串数组</span>
+<span style="color: #AA22FF">map</span>(transform: (T) -&gt; U) -&gt; [U]
+<span style="color: #008800; font-style: italic">// 利用 map 把数组转化为字符串数组</span>
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">strs</span>: [<span style="color: #AA22FF">String</span>] = [<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>].<span style="color: #AA22FF">map</span> { <span style="color: #BB4444">&quot;</span><span style="color: #BB6688; font-weight: bold">\(</span><span style="color: #B8860B">$0</span><span style="color: #BB6688; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span> }
+
+<span style="color: #008800; font-style: italic">// 对数组里的元素进行运算，返回一个值</span>
+<span style="color: #AA22FF">reduce</span>(initial: U, combine: (U, T) -&gt; U) -&gt; U
+<span style="color: #008800; font-style: italic">// 利用 reduce 对数组求各</span>
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">sum</span>: <span style="color: #AA22FF">Int</span> = [<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>].<span style="color: #AA22FF">reduce</span>(<span style="color: #666666">0</span>) { <span style="color: #B8860B">$0</span> <span style="color: #666666">+</span> <span style="color: #B8860B">$1</span> }
+</pre></div>
+
+
+<h4 id="_8">关于教学方式</h4>
+<p>这一节里讲解了大量比较枯燥的语法和基础知识。从这里也可以看到教学的脉络：先用一个合适的 demo 来给学生建立成就感和兴趣。然后再回到基础性的和原理性的内容上。</p>
+<p>使用示例代码来讲解复杂概念，比如针对 Optional 的讲解：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// Optional 的定义</span>
+<span style="color: #AA22FF; font-weight: bold">enum</span> <span style="color: #0000FF">Optional</span>&lt;T&gt; {
+    <span style="color: #AA22FF; font-weight: bold">case</span> None
+    <span style="color: #AA22FF; font-weight: bold">case</span> Some(T)
+}
+
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">n</span>: <span style="color: #AA22FF">Double</span>? = <span style="color: #AA22FF; font-weight: bold">nil</span>
+<span style="color: #008800; font-style: italic">// 等价于</span>
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">n</span> = <span style="color: #AA22FF">Optional</span>&lt;<span style="color: #AA22FF">Double</span>&gt;.None
+
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">n</span>: <span style="color: #AA22FF">Double</span>? = <span style="color: #666666">5</span>
+<span style="color: #008800; font-style: italic">// 等价于</span>
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">n</span> = <span style="color: #AA22FF">Optional</span>&lt;<span style="color: #AA22FF">Double</span>&gt;.Some(<span style="color: #666666">5</span>)
+
+n!
+<span style="color: #008800; font-style: italic">// 等价于</span>
+<span style="color: #AA22FF; font-weight: bold">switch</span> <span style="color: #AA22FF">Optional</span>&lt;T&gt; {
+    <span style="color: #AA22FF; font-weight: bold">case</span> .None:
+        <span style="color: #008800; font-style: italic">// raise a runtime error</span>
+        <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">nil</span>
+    <span style="color: #AA22FF; font-weight: bold">case</span> .Some(<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">v</span>):
+        <span style="color: #AA22FF; font-weight: bold">return</span> v
+}
+</pre></div>
+
+
+<p>类似这种伪代码的解释，非常清晰地解释了一些复杂的概念。</p>
+<h3 id="_9">第五课</h3>
+<h3 id="_10">第六课</h3>
+<h4 id="protocols">Protocols</h4>
+<p>前面主要介绍了 protocol，其概念类似 Java 里面的 interface。其和 Java 的 interface 有一个区别就是，swift 的 protocol 支持 optional metnod。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">@objc</span> <span style="color: #AA22FF; font-weight: bold">protocol</span> <span style="color: #0000FF">Car</span> {
+    <span style="color: #AA22FF; font-weight: bold">optional</span> <span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">fillGas</span>()
+    <span style="color: #AA22FF; font-weight: bold">optional</span> <span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">fillWater</span>() -&gt; <span style="color: #AA22FF">Bool</span>
+}
+</pre></div>
+
+
+<p>有几个关键点：</p>
+<ul>
+<li>optional 协议必须添加 <code>@objc</code> 前缀</li>
+<li>添加了 <code>@objc</code> 前缀的 protocol 有以下几个特性：<ul>
+<li>只能由类来实现，不能由结构体和枚举实现</li>
+<li>可以使用 <code>is</code>, <code>as</code>, <code>as?</code> 来判断是否实现特定协议</li>
+<li>只能使用和 Object-C 兼容的数据类型，比如不能使用 swfit 特有的 optional</li>
+</ul>
+</li>
+</ul>
+<h4 id="delegate">Delegate</h4>
+<p>由 <code>protocol</code> 引入了一个 MVC 的设计理念。View 和 Controller 通信时，View 不能直接引用 Controller，view 通过 protocol 来设置一个 Controller 的委托代理来实现通信。主要步骤如下：</p>
+<ul>
+<li>创建一个代理协议 (delegation protocol)，描述用到这个 View 的 Controller 需要具备哪些特性，需要实现哪些协议</li>
+<li>在 View 里创建一个委托代理属性 (delegate property)，其数据类型就是这个 protocol</li>
+<li>在 View 里使用这个 protocol 实例来和使用这个 View 的 Controller 通信</li>
+<li>Controller 声明它支持这个协议</li>
+<li>Controller 把自己设置成 View 的委托代理属性 (步骤 2 里创建的)</li>
+<li>Controller 实现这个协议</li>
+</ul>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">/**</span>
+<span style="color: #008800; font-style: italic"> * </span><span style="color: #008800; font-weight: bold">MARK:</span><span style="color: #008800; font-style: italic"> code in View </span>
+<span style="color: #008800; font-style: italic"> */</span>
+
+<span style="color: #008800; font-style: italic">// define delegation protocol, it can only implement by class</span>
+<span style="color: #AA22FF; font-weight: bold">protocol</span> <span style="color: #0000FF">HappinessDataSource</span>: <span style="color: #AA22FF; font-weight: bold">class</span> {
+    <span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">smilinessForFaceView</span>(sender: <span style="color: #AA22FF">UIView</span>) -&gt; <span style="color: #AA22FF">Double</span>?
+}
+
+<span style="color: #008800; font-style: italic">// define delegate property as weak reference</span>
+<span style="color: #AA22FF; font-weight: bold">weak</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">dataSource</span>: HappinessDataSource? = <span style="color: #AA22FF; font-weight: bold">nil</span>
+
+<span style="color: #008800; font-style: italic">// use delegate property to do/get things not belong to View</span>
+<span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">smiliness</span> = dataSource?.smilinessForFaceView(<span style="color: #AA22FF; font-weight: bold">self</span>) ?? <span style="color: #666666">0.5</span>
+
+<span style="color: #008800; font-style: italic">/**</span>
+<span style="color: #008800; font-style: italic"> * </span><span style="color: #008800; font-weight: bold">MARK:</span><span style="color: #008800; font-style: italic"> code in Controller </span>
+<span style="color: #008800; font-style: italic"> */</span>
+
+<span style="color: #008800; font-style: italic">// declare that this will implement HappinessDataSource protocol</span>
+HappinessViewController: <span style="color: #AA22FF">UIViewController</span>, HappinessDataSource {
+
+    <span style="color: #AA22FF; font-weight: bold">@IBOutlet</span> <span style="color: #AA22FF; font-weight: bold">weak</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">faceView</span>: FaceView! {
+        <span style="color: #AA22FF; font-weight: bold">didSet</span> {
+            <span style="color: #008800; font-style: italic">// set myself as View&#39;s delegate property</span>
+            faceView.dataSource = <span style="color: #AA22FF; font-weight: bold">self</span>
+        }
+    }
+
+    <span style="color: #008800; font-style: italic">// implement delegation protocol</span>
+    <span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">smilinessForFaceView</span>(sender: FaceView) -&gt; <span style="color: #AA22FF">Double</span>? {
+        <span style="color: #AA22FF; font-weight: bold">return</span> ((<span style="color: #AA22FF">Double</span>)(happiness <span style="color: #666666">-</span> <span style="color: #666666">50</span>)) <span style="color: #666666">/</span> <span style="color: #666666">50</span>
+    }
+}
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">week reference</p>
+<p><code>dataSource</code> 定义为 <code>weak var</code> 这个涉及到内存管理，它不会阻止 dataSource 指向的实例被回收。另外由于 swift 里只有类才涉及到引用传递，所以这里的 dataSource 必须指向一个类，而不能是 struct 或 enum。所以，这里的 protocol 定义为 class，即只有类才能实现这个协议。</p>
+</div>
+<h4 id="tips">TIPS</h4>
+<ul>
+<li><code>??</code> 运算符：<code>let v = dataSource?.getData(i, self) ?? "empty"</code></li>
+<li>Command + Shift + o: 快速打开文件或变量</li>
+</ul>
+<h4 id="gesture">Gesture</h4>
+<p>使用 iOS 内置的手势识别类来处理用户操作事件。关键有两个动作。</p>
+<ul>
+<li>给 View 添加动作识别</li>
+<li>提供一个函数来处理这个动作</li>
+</ul>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">@IBOutlet</span> <span style="color: #AA22FF; font-weight: bold">weak</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">pannableView</span>: <span style="color: #AA22FF">UIView</span> {
+    <span style="color: #AA22FF; font-weight: bold">didSet</span> {
+        <span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">recognizer</span> = <span style="color: #AA22FF">UIPanGestureRecognizer</span>(target: <span style="color: #AA22FF; font-weight: bold">self</span>, action: <span style="border: 1px solid #FF0000">“</span>pan:<span style="border: 1px solid #FF0000">”</span>)
+        pannableView.addGestureRecognizer(recognizer)
+    }
+}
+
+<span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">pan</span>(gesture: <span style="color: #AA22FF">UIPanGestureRecognizer</span>) {
+    <span style="color: #AA22FF; font-weight: bold">switch</span> gesture.state {
+    <span style="color: #AA22FF; font-weight: bold">case</span> .Changed: <span style="color: #AA22FF; font-weight: bold">fallthrough</span>
+    <span style="color: #AA22FF; font-weight: bold">case</span> .Ended:
+        <span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">translation</span> = gesture.translationInView(pannableView)
+        <span style="color: #008800; font-style: italic">// update anything that depends on the pan gesture using translation.x and .y</span>
+        gesture.setTranslation(CGPointZero, inView: pannableView)
+    <span style="color: #AA22FF; font-weight: bold">default</span>: <span style="color: #AA22FF; font-weight: bold">break</span>
+    } 
+}
+</pre></div>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/notes.html">notes</a> on 2015-02-18(Wednesday) 20:20.</h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

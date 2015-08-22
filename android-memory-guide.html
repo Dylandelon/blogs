@@ -1,0 +1,345 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Android 内存与性能</h2>
+	<h3 id="_1">官方教程</h3>
+<ol>
+<li><a href="https://www.udacity.com/course/ud825">Android Performance</a> 是 GOOGLE 近期发布在 Udacity 上的官方教程<br />
+   不方便科学上网的同学可以从我的<a href="http://pan.baidu.com/s/1sjPZbxr">百度网盘</a>里下载。</li>
+<li><a href="http://www.youku.com/playlist_show/id_23494296.html">Android Performance Patterns</a> 是 GOOGLE 在 2015 年初发布在 Facebook 上的专题课程<br />
+   这部分内容 <a href="http://www.youku.com/playlist_show/id_23494296.html">CDGChina</a> 加了中文字幕，并放在 <a href="http://www.youku.com/playlist_show/id_23494296.html">Youku</a> 上了。</li>
+</ol>
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>看来 Android 生态圈的性能和电量消耗等问题，已经严重到让 Google 不得不重视的地步啦 ~~</p>
+</div>
+<h3 id="_2">关于内存的几个理论知识</h3>
+<p><strong>GC 的工作机制</strong><br />
+当 GC 工作时，虚拟机停止其他工作。频繁地触发 GC 进行内存回收，会导致系统性能严重下降。</p>
+<p><strong>内存抖动</strong><br />
+在极短的时间内，分配大量的内存，然后又释放它，这种现象就会造成内存抖动。典型地，在 View 控件的 onDraw 方法里分配大量内存，又释放大量内存，这种做法极易引起内存抖动，从而导致性能下降。因为 onDraw 里的大量内存分配和释放会给系统堆空间造成压力，触发 GC 工作去释放更多可用内存，而 GC 工作起来时，又会吃掉宝贵的帧时间 (帧时间是 16ms) ，最终导致性能问题。</p>
+<p><strong>内存泄漏</strong><br />
+Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不正确地引用导致某个对象无法被 GC 释放，从而导致可用内存越来越少。比如，一个图片查看程序，使用一个静态 Map 实例来缓存解码出来的 Bitmap 实例来加快加载进度。这个时候就可能存在内存泄漏。</p>
+<p>内存泄漏会导致可用内存越来越少，从而导致频繁触发 GC 回收内存，进而导致性能下降。</p>
+<p><strong>调试工具</strong></p>
+<ul>
+<li>Memory Monitor Tool: 可以查阅 GC 被触发起来的时间序列，以便观察 GC 是否影响性能。</li>
+<li>Allocation Tracker Tool: 从 Android Studio 的这个工具里查看一个函数调用栈里，是否有大量的相同类型的 Object 被分配和释放。如果有，则其可能引起性能问题。</li>
+<li>MAT: 这是 Eclipse 的一个插件，也有 <a href="http://www.eclipse.org/mat/downloads.php">stand alone</a> 的工具可以下载使用。</li>
+</ul>
+<p><strong>几个原则</strong></p>
+<ul>
+<li>别在循环里分配内存 (创建新对象)</li>
+<li>尽量别在 View 的 onDraw 函数里分配内存</li>
+<li>实在无法避免在这些场景里分配内存时，考虑使用对象池 (Object Pool)</li>
+</ul>
+<h3 id="_3">两个简单的实例</h3>
+<p><strong>内存抖动</strong></p>
+<p>通过一个非常简单的例子来演示内存抖动。这个例子里，在自定义 View 的 onDraw 方法里大量分配内存来演示内存抖动和性能之间的关系。</p>
+<p>版本一：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #AA22FF; font-weight: bold">protected</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onDraw</span><span style="color: #666666">(</span>Canvas canvas<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #AA22FF; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #BB4444">onDraw</span><span style="color: #666666">(</span>canvas<span style="color: #666666">);</span>
+
+        String msg <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;&quot;</span><span style="color: #666666">;</span>
+        <span style="color: #AA22FF; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #00BB00; font-weight: bold">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">500;</span> i<span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+            <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #666666">(</span>i <span style="color: #666666">!=</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+                msg <span style="color: #666666">+=</span> <span style="color: #BB4444">&quot;, &quot;</span><span style="color: #666666">;</span>
+            <span style="color: #666666">}</span>
+            msg <span style="color: #666666">+=</span> Integer<span style="color: #666666">.</span><span style="color: #BB4444">toString</span><span style="color: #666666">(</span>i <span style="color: #666666">+</span> <span style="color: #666666">1);</span>
+        <span style="color: #666666">}</span>
+        Log<span style="color: #666666">.</span><span style="color: #BB4444">d</span><span style="color: #666666">(</span><span style="color: #BB4444">&quot;DEBUG&quot;</span><span style="color: #666666">,</span> msg<span style="color: #666666">);</span>
+    <span style="color: #666666">}</span>
+</pre></div>
+
+
+<p>版本二：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #AA22FF">@Override</span>
+    <span style="color: #AA22FF; font-weight: bold">protected</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onDraw</span><span style="color: #666666">(</span>Canvas canvas<span style="color: #666666">)</span> <span style="color: #666666">{</span>
+        <span style="color: #AA22FF; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #BB4444">onDraw</span><span style="color: #666666">(</span>canvas<span style="color: #666666">);</span>
+
+        StringBuilder sb <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> StringBuilder<span style="color: #666666">();</span>
+        <span style="color: #AA22FF; font-weight: bold">for</span> <span style="color: #666666">(</span><span style="color: #00BB00; font-weight: bold">int</span> i <span style="color: #666666">=</span> <span style="color: #666666">0;</span> i <span style="color: #666666">&lt;</span> <span style="color: #666666">500;</span> i <span style="color: #666666">++)</span> <span style="color: #666666">{</span>
+            <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #666666">(</span>i <span style="color: #666666">!=</span> <span style="color: #666666">0)</span> <span style="color: #666666">{</span>
+                sb<span style="color: #666666">.</span><span style="color: #BB4444">append</span><span style="color: #666666">(</span><span style="color: #BB4444">&quot;, &quot;</span><span style="color: #666666">);</span>
+            <span style="color: #666666">}</span>
+            sb<span style="color: #666666">.</span><span style="color: #BB4444">append</span><span style="color: #666666">(</span>i <span style="color: #666666">+</span> <span style="color: #666666">1);</span>
+        <span style="color: #666666">}</span>
+        Log<span style="color: #666666">.</span><span style="color: #BB4444">d</span><span style="color: #666666">(</span><span style="color: #BB4444">&quot;DEBUG&quot;</span><span style="color: #666666">,</span> sb<span style="color: #666666">.</span><span style="color: #BB4444">toString</span><span style="color: #666666">());</span>
+    <span style="color: #666666">}</span>
+</pre></div>
+
+
+<p>内存抖动的特征：</p>
+<p>从 Memory Monitor 来看，有毛刺出现。即短时间内分配大量的内存并触发 GC。<br />
+<img alt="memory_churn" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_churn.gif" /></p>
+<p>从 Allocation Tracker 里看，一次操作会有大量的内存分配产生。<br />
+<img alt="memory_tracker" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_tracker.png" /></p>
+<p><strong>内存泄漏</strong></p>
+<p>这个例子里，我们简单地让点击 Settings 菜单，就产生一个 100KB 的内存泄漏。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #AA22FF; font-weight: bold">private</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">addSomeCache</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+        <span style="color: #008800; font-style: italic">// add 100KB cache</span>
+        <span style="color: #00BB00; font-weight: bold">int</span> key <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> Random<span style="color: #666666">().</span><span style="color: #BB4444">nextInt</span><span style="color: #666666">(100);</span>
+        Log<span style="color: #666666">.</span><span style="color: #BB4444">d</span><span style="color: #666666">(</span><span style="color: #BB4444">&quot;sfox&quot;</span><span style="color: #666666">,</span> <span style="color: #BB4444">&quot;add cache for key &quot;</span> <span style="color: #666666">+</span> key<span style="color: #666666">);</span>
+        sCache<span style="color: #666666">.</span><span style="color: #BB4444">put</span><span style="color: #666666">(</span>key<span style="color: #666666">,</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">byte</span><span style="color: #666666">[102400]);</span>
+    <span style="color: #666666">}</span>
+</pre></div>
+
+
+<p>内存泄漏的特征：</p>
+<p>从 Memory Monitor 来看，内存占用越来越大<br />
+<img alt="memory_tracker" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_leak.png" /></p>
+<p>利用 <a href="http://www.eclipse.org/mat/downloads.php">MAT</a> 工具进行专业分析。这是个很大的话题。几乎可以独立成几个章节来讲。可以参阅 MAT 本身自带的 Tutorials 来学习。另外，<a href="http://android-developers.blogspot.hk/2011/03/memory-analysis-for-android.html">这篇文章</a>里的分析方法是个不错的开始。</p>
+<p>示例代码使用 Android Studio 开发环境，可以从<a href="http://pan.baidu.com/s/1sj3Exsx">这里</a>下载。</p>
+<h3 id="mat">利用 MAT 分析内存问题</h3>
+<p><strong>内存泄漏</strong></p>
+<p>一个典型的问题是 Android 系统越用越慢。这种典型地是由内存泄漏引起的。一个很有用的解决这种问题的办法是：比较前后两个阶段的内存的使用情况。一般流程如下：</p>
+<ol>
+<li>利用 ddms 工具 dump HPROF file</li>
+<li>利用 hprof-conv 把 dalvik 格式的转换为普通 jvm 格式</li>
+<li>重复步骤 1 和 2 抓出两份 LOG。</li>
+<li>利用 MAT 对两份 HRPOF 文件进行分析，结合代码找出可能存在的内存泄漏</li>
+</ol>
+<p>比如针对拨号盘越来越慢的问题，我们可以开机后启动拨号盘，打进打出10个电话。然后抓个 HPROF 文件。接着，再打进打出10个电话，再抓一个 HPROF 文件。接着拿这两个文件对比分析，看是不是会造成电话打进打出越多，内存占用越多的情况发生。</p>
+<div class="admonition notes">
+<p class="admonition-title">HPROF文件</p>
+<p>HPROF 简单地理解，就是从 jvm 里 dump 出来的内存和 CPU 使用情况的一个二进制文件。它的英文全名叫 A Heap/CPU Profiling Tool。<a href="http://docs.oracle.com/javase/7/docs/technotes/samples/hprof.html">这里</a>有它完整的官方文档和它的历史介绍。</p>
+</div>
+<p>打开 MAT 后，会有一个 Tutorials 来教大家怎么用。这里列出几个操作步骤及其注意事项。</p>
+<ul>
+<li>在 DDMS 里导出 HPROF 文件前，最好手动执行一下 GC。目的是让导出的内存全部是被引用的。否则在做内存占用对比时，会有很多不必要的内存占用被标识出来，干扰我们进行分析。</li>
+<li>进行对比时，最好是选择操作较多的和操作较少的对比，这样得出的 delta 是正数</li>
+<li>通过对比，发现内存泄漏时，可以用 OQL 来查询，并通过 Root to GC 功能来找到发生泄漏的源代码</li>
+</ul>
+<p>在我们的示例程序里面，每次点击 Settings 菜单，都会导致一次100KB的内存泄漏。下面是我们利用上面介绍的流程来查找内存泄漏问题。我们先点击 5 次 Settings 菜单，然后手动触发一次 GC，再导出 HPROF 文件。接着，我们再点击 6 次 Settings 菜单，然后手动触发一次 GC，再导出第二份 HPROF 文件。我们拿这两份 HPROF 就可以做一些对比。</p>
+<p><img alt="mat_diff.png" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_diff.png" /></p>
+<p>通过上图可以看到，两次操作确实导致了某些类的实例增加了。图中可以清楚地看到 byte[] 和 java.util.HashMap$HashMapEntry 两个类增加得比较明显。这样，我们随便选择一个，通过 OQL 来查询系统中的这个内存。</p>
+<p><img alt="mat_qql.png" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_qql.png" /></p>
+<p>从上图可以找到，本次 dump 出来的内存里，确实有很多个这个类的实例。在图上右击任何一个实例，右击，选择 <code>Paths to GC roots</code>，可以找到这个实例是被谁引用的。</p>
+<p><img alt="mat_gc_root.png" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/mat_gc_root.png" /></p>
+<p>从上图可以看出来，这个内存是被 MainActivity 里的 sCache 引用的。通过阅读代码，我们就可以找到这个漏洞了。即每次都往 sCache 里保存一个引用。</p>
+<h3 id="_4">总结</h3>
+<p>Google 视频介绍的内容是硬知识，了解这些知识可以帮助我们写出高质量，高性能的代码。而 MAT, HPROF, Memory Monitor, Allocation Tracker 提供了一个“破案”的工具给我们。我们利用这些工具，倒回来去发现代码里的问题。</p>
+<h3 id="_5">延伸阅读</h3>
+<p>关于 Android 性能优化，网络上有几篇比较好的文章，基本按照 GOOGLE 的官方教程翻译过来的，质量比较高。可以参考一下。</p>
+<ol>
+<li><a href="http://hukai.me/android-performance-memory/">Android 性能优化内存篇</a>－<a href="http://hukai.me">胡凯的博客</a></li>
+<li><a href="http://hukai.me/android-performance-patterns/">Android性能优化典范</a>－<a href="http://hukai.me">胡凯的博客</a></li>
+</ol>
+<p><strong>冷知识</strong></p>
+<p>GC 是在 1959 年由 John McCarthy 发明的，此发明是为了解决 Lisp 编程语言里的内存问题的。<a href="http://book.douban.com/subject/6021440/">《黑客和画家》</a>作者，硅谷最有影响力的孵化器公司 YC 创立者 Paul Graham 高度评价 Lisp 语言，认为编程语言发展到现在，还是没有跳出 Lisp 语言在上世纪 60 年代所倡导的那些理念。并且，他还把自己当初创业，实现财务自由的项目 Viaweb 的成功归功于 Lisp 语言。详细可阅读 Paul Graham 的<a href="http://www.paulgraham.com/hundred.html">这篇博客</a>和<a href="http://www.paulgraham.com/diff.html">这篇博客</a>。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2015-04-22(Wednesday) 23:30. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

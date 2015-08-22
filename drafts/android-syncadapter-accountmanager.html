@@ -1,0 +1,369 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li class="active"><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Android　联系人数据同步</h2>
+	<h2 id="_1">开篇</h2>
+<p>上一篇关于电话本的文章，我们总结了电话本数据库的关键数据结构。本篇文章重点介绍要实现一个电话本同步功能的步骤和方法。同步功能需要客户端和服务器，本文重点介绍客户端的实现机制和方法。</p>
+<p>Contacts Provider 被设计成很容易处理在设备和服务器之间<strong>同步</strong>数据。可以让用户从服务器下载数据到一个新设备上，也可以让用户把设备上的数据上传到服务器上。同步机制保证了用户可以时刻在设备上拥有最新的数据，不管这些数据是修改的，添加的。</p>
+<p>虽然有各种各样的方式来同步数据，但 Android 平台提供了一个同步框架让实现数据同步变得更加简单。这个框架会完成下面的事情：</p>
+<ul>
+<li>检查网络是否可用</li>
+<li>根据用户的偏好来调度并执行数据同步</li>
+<li>重新执行意外停止的同步操作</li>
+</ul>
+<p>要利用 Android 框架实现数据同步，你只需要提供一个<strong>同步适配器</strong>，每个同步适配器都唯一地对应一个特定的服务和内容，可以处理同一服务下的多个帐户的数据同步。框架也允许多个同步适配器对应一个服务和内容。</p>
+<h2 id="_2">实现同步适配器</h2>
+<p>要给电话本实现一个同步适配器，你可以创建一个包含下面内容的应用程序：</p>
+<ul>
+<li>实现一个同步适配器服务来响应系统的绑定同步适配器的请求<br />
+  当系统要执行数据同步时，它调用 Service 的 <code>onBind()</code> 方法来获取同步适配器的 <code>IBinder</code> 接口。这样系统就可以用 <code>IBinder</code> 接口进行跨进程调用同步适配器里定义的方法。在 SampleSyncAdapter 这个示例应用里，<code>com.example.android.samplesync.syncadapter.SyncService</code> 类实现了这个服务。</li>
+<li>从 <code>AbstractThreadedSyncAdapter</code> 类继承来实现一个实际的同步适配器<br />
+  这个类完成真正从服务器下载数据的任务，从设备上传数据到服务器以及解决冲突等功能。这个类的关键方法是 <code>onPerformSync()</code> ，在这个方法里完成所有的工作。这个类必须被实现成<strong>单例</strong>。在 SampleSyncAdapter 这个示例应用里，<code>com.example.android.samplesync.syncadapter.SyncAdapter</code> 类就是实际的同步适配器。</li>
+<li>实现 <code>Application</code> 子类<br />
+  这个类会作为同步适配器单例的工厂类，在其 <code>onCreate()</code> 方法里创建同步适配器单例，然后提供一个静态的 getter 方法来返回这个同步适配器单例。同步适配器服务里的 <code>onBind()</code> 方法会调用这个 getter 函数来获取同步适配器，并把这个适配器作为 <code>IBinder</code> 接口返回给系统。</li>
+<li>实现一个用户鉴权服务来响应系统的鉴权请求（可选）<br />
+<code>AccountManager</code> 会启动这个服务来完成鉴权。服务的 <code>onCreate()</code> 方法鉴权实例。当系统想为同步适配器的用户帐户进行鉴权时，系统会调用服务的 <code>onBind()</code> 方法来获取一个 <code>IBinder</code> 接口，这样系统就可以用 <code>IBinder</code> 接口进行跨进程调用来完成鉴权工作。在 SimpleSyncAdapter 示例代码里，实现这个功能的类是 <code>com.example.android.samplesync.authenticator.AuthenticationService</code>。</li>
+<li>继承 <code>AbstractAccountAuthenticator</code> 来实现一个处理鉴权请求的类（可选）<br />
+<code>AccountManager</code> 会调用这个类提供的接口以完成用户鉴权。完成鉴权的方法各异，取决于服务器使用的技术。在 SimpleSyncAdapter 示例代码里，这个类由 <code>com.example.android.samplesync.authenticator.Authenticator</code> 实现。</li>
+<li>向系统注册同步适配器和帐户鉴权的 XML 文件<br />
+  前面描述的同步适配器和鉴权服务通过 <code>&lt;service&gt;</code> 标签在应用程序的 <code>AndroidManifest.xml</code> 里定义。在服务声明标签里，通过 <code>&lt;meta-data&gt;</code> 标签来给系统提供特殊的数据。在 SimpleSyncAdapter 示例代码里，包含两个 XML 文件：同步适配器描述文件 <code>res/xml/syncadapter.xml</code> ，这个文件描述了同步的服务器地址以和帐户类型。帐户鉴权描述文件 <code>res/xml/authenticator.xml</code> 。这个文件描述了这个帐户支持的鉴权帐户类型。以及在鉴权过程中会显示的 UI 资源。这里描述的帐户类型和同步适配器里描述的帐户类型必须相同。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">关于帐户和同步适配器</p>
+<p>一般情况下，一个帐户下会有多种同步服务，比如 GOOGLE 帐户可以支持电话本，日程表，书签，照片等同步服务。所以帐户一般不会和同步适配器放在同一个应用程序里，而是单独放在一个应用程序里，比如 GOOGLE 帐户就放在开机向导 SetupWizard 里，而同步适配器则是实现在相应的应用程序里。帐户和同步适配器的关联关系就是靠上文提到的 XML 里的帐户类型。当系统调用同步适配器来同步数据时，会在系统里找这个同步适配器帐户类型指定的帐户来进行鉴权。</p>
+</div>
+<h2 id="_3">用同步适配器打造电话本的社交数据</h2>
+<p>Contact Provider 使用 <code>ContactsContract.StreamItems</code> 和 <code>ContactsContract.StreamItemPhotos</code> 来管理来自社交网络的数据。你可以写一个同步适配器来从你的服务器上下载社交数据，并保存在这两个表里。你也可以从这两个表里读取数据，然后显示在你自己的应用程序里。使用这个机制，可以让你的社交网络服务和应用程序无缝地集成进 Android 系统里，跟原生电话本应用绑定起来。比如，可以在 Android 电话本里看到好友的微博信息以及头象等等。</p>
+<h3 id="_4">社交文本信息流</h3>
+<p>信息流和 RawContact 里的某个记录是关联的，通过 <code>ContactsContract.StreamItems.RAW_CONTACT_ID</code> 来和 RawContact 表里的 _ID 值关联起来。RawContact 里的帐户类型和帐户名称也保存在 <code>ContactsContract.StreamItems</code> 表里的记录里。下表是 StreamItems 表的一些关键字段。</p>
+<table>
+<thead>
+<tr>
+<th>字段名称</th>
+<th>必填字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACCOUNT_TYPE</td>
+<td>是</td>
+<td>信息流所属的帐户类型，与其关联的 RawContact 里的帐户类型一致</td>
+</tr>
+<tr>
+<td>ACCOUNT_NAME</td>
+<td>是</td>
+<td>信息流所属的帐户名，与其关联的 RawContact 里帐户名一致</td>
+</tr>
+<tr>
+<td>CONTACT_ID</td>
+<td>是</td>
+<td>作为外键与 Contacts 表里的 _ID 字段关联</td>
+</tr>
+<tr>
+<td>CONTACT_LOOKUP_KEY</td>
+<td>是</td>
+<td>作为外键与 Contacts 表里的 LOOKUP_KEY 字段关联</td>
+</tr>
+<tr>
+<td>RAW_CONTACT_ID</td>
+<td>是</td>
+<td>作为外键与 RawContacts 表里的 _ID 字段关联</td>
+</tr>
+<tr>
+<td>COMMENTS</td>
+<td>否</td>
+<td>在信息流之前显示的一段可选的文本描述</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>是</td>
+<td>信息流的文本内容。内容可以是 HTML 格式的，系统通过 <code>fromHtml()</code> 函数来展示内容。系统还可能会对太长的内容进行裁剪，但会尽量避免破坏 HTML 的 TAB。</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>是</td>
+<td>信息更新的时间，用1970年1月1日开始的毫秒数表示。由同步适配器维护，Contact Provider 不会维护这个字段。相反，当超出空间限制后，系统会根据这个字段，挑出最早的信息流进行删除。</td>
+</tr>
+</tbody>
+</table>
+<p>StreamItems 表还包含 SYNC1 - SYNC4 等字段来给同步适配器使用。</p>
+<h3 id="_5">社交照片流</h3>
+<p>Contact Provider 里的 <code>ContactsContract.StreamItemPhotos</code> 表用来保存与信息流相关联的照片信息。这个表的 STREAM_ITEM_ID 字段通过外键与 <code>ContactsContract.StreamItems</code> 表的 _ID 字段关联起来。这个表的关键字段如下：</p>
+<table>
+<thead>
+<tr>
+<th>字段名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STREAM_ITEM_ID</td>
+<td>通过外键与 StreamItems 关联，表示所尾的信息流</td>
+</tr>
+<tr>
+<td>PHOTO</td>
+<td>这个二进制 blob 字段由 Contact Provider 维护，用来保存图片的 thumbnail 信息。这个字段是为了向后兼容而存在的。</td>
+</tr>
+<tr>
+<td>PHOTO_FILE_ID</td>
+<td>RawContacts 里照片的数字索引值。把这个值串在 <code>DisplayPhoto.CONTENT_URI</code> 后面，这样就得到了一个指向照片文件的 Uri，再调用 <code>openAssetFileDescriptor()</code> 来获取照片文件的句柄。</td>
+</tr>
+<tr>
+<td>PHOTO_URI</td>
+<td>直接指向照片文件的 Uri，可以直接调用 <code>openAssetFileDescriptor()</code> 来打开文件。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">使用社交信息流表的限制</h3>
+<p>当使用 <code>ContactsContract.StreamItems</code> 和 <code>ContactsContract.StreamItemPhotos</code> 等社交信息表时，有一些额外的限制。</p>
+<ul>
+<li>权限<br />
+  这些表需要额外的权限，要从这些表中读取内容，你的应用程序需要申请 <code>READ_SOCIAL_STREAM</code> 权限。要修改它们，需要 <code>WRITE_SOCIAL_STREAM</code> 权限。</li>
+<li>容量限制<br />
+  对 <code>ContactsContract.StreamItems</code> 表的使用有容量限制，针对一个 RawContacts 记录，保存在这个表里的数据条数有限制。当达到条数限制后，Contact Provider 会根据 <code>TIMESTAMP</code> 字段的值把旧的数据删除掉，以便腾出空间给新插入的数据。要获取容量限制，可以用 <code>CONTENT_LIMIT_URI</code> 发起一个查询，查询的结果只会包含一条记录，从 <code>StreamItem.MAX_ITEMS</code> 这个字段里可以读到条数限制。</li>
+</ul>
+<h3 id="_7">社交信息流的交互</h3>
+<p>由 Contact Provider 管理起来的社交信息流结合系统原生的电话本应用，可以让你的社交数据与设备的联系人产生很强的关联关系。通过同步适配器让你的社交数据和 Contact Provider 结合可以提供以下的附加功能：</p>
+<ul>
+<li>可以把用户联系人的动态信息保存在 <code>ContactsContract.StreamItems</code> 和 <code>ContactsContract.StreamItemPhotos</code> 表里以便后续需要时使用。</li>
+<li>除了普通的同步功能之外，当用户查看某个联系人时，可以触发同步适配器去获取关于这个联系人的额外数据，这样就可以在用户查看联系人时，可以看到联系人的高清照片以及最近的动态信息流。</li>
+<li>通过 Contact Provider 向设备的联系人应用程序注册一个通知，这样当用户打开联系人查看时，可以收到和个 Intent ，这时你可以通过同步适配器去获取用户的状态信息（是否在线等）然后显示出来。这种策略比全部同步一遍要更省带宽和时间。</li>
+<li>用户在查看联系人信息时，可以邀请联系人加入你的社交网络。要实现这个功能，需要启用邀请联系人的机制，你需要实现一个 Activity 来处理现有的联系人加入社交网络的功能。然后把这个 Activity 通过 XML 的方式告诉设备的联系人应用程序。</li>
+</ul>
+<h3 id="_8">查看联系人事件及社交信息流查看</h3>
+<p>为了当用户打开一个联系人查看时同步适配器能收到通知，需要通过下面的步骤来完成一些配置：</p>
+<ol>
+<li>在项目的 res/xml/ 目录下创建一个名为 contacts.xml 的文件。如果这个文件已经有了，这一步可以跳过。</li>
+<li>在这个文件里，添加 <code>&lt;ContactsAccountType xmlns:android="http://schemas.android.com/apk/res/android"&gt;</code>，如果这个标签已经存在，则跳过这个步骤。</li>
+<li>向这个 xml 元素添加 <code>viewContactNotifyService="serviceclass"</code> 属性，这样就向设备的联系人应用程序注册了一个服务，当用户打开联系人的详情页面时，这个服务会收到通知。其中 serviceclass 是要接收这个通知的 intent 的类名。在实现时，可以通过继承 <code>IntentService</code> 类来让 service 可以接受 intent 。用户查看的联系人的 RawConctact 的 URI 在 intent 的 data 里。在这个 service 里，我们可以根据这个 URI 来让同步适配器更新针对这个联系人的相关数据。</li>
+</ol>
+<p>为了当用户点击社交信息流或照片时，能打开自定义的 activity。需要做如下配置。</p>
+<ol>
+<li>在项目的 res/xml/ 目录下创建一个名为 contacts.xml 的文件。如果这个文件已经有了，这一步可以跳过。</li>
+<li>在这个文件里，添加 <code>&lt;ContactsAccountType xmlns:android="http://schemas.android.com/apk/res/android"&gt;</code>，如果这个标签已经存在，则跳过这个步骤。</li>
+<li>向这个 xml 元素添加 <code>viewStreamItemActivity="activityclass"</code> 属性，这样当用户通过设备的联系人应用程序点击社交流信息时，这个 activity 就会收到一个 intent 通知。向 xml 元素添加 <code>viewStreamItemPhotoActivity="activityclass"</code> 属性，这样当用户通过设备的联系人应用程序点击社交流照片时，这个 activity 就会收到一个 intent 通知。系统传进来的 intent 里包含有社交流信息或照片的 content URI。</li>
+</ol>
+<h3 id="_9">与社交网络服务交互</h3>
+<p>用户不必离开设备的联系人应用就能邀请联系人加入你的社交网络服务。你可以让设备的联系人应用通过你的一个 activity 来邀请联系人加入你的社交网络。</p>
+<ol>
+<li>在项目的 res/xml/ 目录下创建一个名为 contacts.xml 的文件。如果这个文件已经有了，这一步可以跳过。</li>
+<li>在这个文件里，添加 <code>&lt;ContactsAccountType xmlns:android="http://schemas.android.com/apk/res/android"&gt;</code>，如果这个标签已经存在，则跳过这个步骤。</li>
+<li>向这个 xml 元素添加 <code>inviteContactActivity="activityclass"</code>　和 <code>inviteContactActionLabel="@string/invite_action_label"</code> 属性， activityclass 是接收 intent 的类，invite_action_label 是一个文本，它将会出现在设备的联系人应用的添加连接菜单里。</li>
+</ol>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/android.html">android</a> on 2014-11-28(Friday) 22:00. Tags: <a href="http://kamidox.com/tag/android.html">android</a>, <a href="http://kamidox.com/tag/syncadapter.html">SyncAdapter</a>, <a href="http://kamidox.com/tag/accountmanager.html">AccountManager</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

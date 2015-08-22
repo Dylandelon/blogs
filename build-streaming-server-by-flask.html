@@ -1,0 +1,390 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://kamidox.com/theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="http://kamidox.com/theme/img/favicon.ico">
+
+		<script src="http://kamidox.com/theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="http://kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://kamidox.com/category/essay.html">essay</a></li>
+							<li class="active"><a href="http://kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.com/category/python.html">python</a></li>
+							<li ><a href="http://kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="http://kamidox.com/">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>使用Flask搭建一个流媒体服务器</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">摘要</a></li>
+<li><a href="#_2">理论基础</a><ul>
+<li><a href="#_3">生成器函数</a></li>
+<li><a href="#multipart">Multipart应答</a></li>
+</ul>
+</li>
+<li><a href="#_4">实现流媒体服务器</a></li>
+<li><a href="#_5">模拟视频帧数据</a></li>
+<li><a href="#_6">连接硬件摄像头</a></li>
+<li><a href="#_7">一些限制</a></li>
+</ul>
+</div>
+<h2 id="_1">摘要</h2>
+<p>收到前不久订阅的<a href="http://www.pythonweekly.com/">PythonWeekly</a>发过来的一个邮件通知，由<a href="http://blog.miguelgrinberg.com/">Miguel</a>写的一篇介绍如何使用Flask搭建一个流媒体服务器的文章，思路很新颖也很有意思。你可以点击<a href="http://blog.miguelgrinberg.com/post/video-streaming-with-flask">这里</a>阅读英文原文。或者跟随本文跟我一起体验一把搭建一个流媒体服务器的过程吧。</p>
+<h2 id="_2">理论基础</h2>
+<p>流媒体有两大特点，一是数据量大。二是有实时性要求。针对这两个特点，我们必须把应答数据分块传输给客户端来实现流媒体服务器。这里我们用到了两个关键技术来实现流媒体服务器，我们使用生成器函数来把数据分块传送，Flask的<code>Response</code>类本身对生成器函数有良好的支持。接着，我们使用<strong>Multipart</strong>来组装一个HTTP应答。</p>
+<h3 id="_3">生成器函数</h3>
+<p>生成器函数是可被打断和恢复的函数。其关键字是<code>yield</code>，来看一个例子：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">gen</span>():
+    <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #666666">1</span>
+    <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #666666">2</span>
+    <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #666666">3</span>
+</pre></div>
+
+
+<p>上面的代码我们就定义了一个生成器函数，当生成器函数被调用时，它返回一个生成器迭代器，或直接叫生成器。通过不断地调用生成器的<code>next()</code>方法来执行生成器函数体的代码，直到遇到异常为止。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> g <span style="color: #666666">=</span> gen()
+<span style="color: #666666">&gt;&gt;&gt;</span> g
+<span style="color: #666666">&lt;</span>generator <span style="color: #AA22FF">object</span> gen at <span style="color: #666666">0xb72330a4&gt;</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> g<span style="color: #666666">.</span>next()
+<span style="color: #666666">1</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> g<span style="color: #666666">.</span>next()
+<span style="color: #666666">2</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> g<span style="color: #666666">.</span>next()
+<span style="color: #666666">3</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> g<span style="color: #666666">.</span>next()
+Traceback (most recent call last):
+  File <span style="color: #BB4444">&quot;&lt;stdin&gt;&quot;</span>, line <span style="color: #666666">1</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+<span style="color: #D2413A; font-weight: bold">StopIteration</span>
+</pre></div>
+
+
+<p>从上面的例子可以看到一个生成器函数可以返回多个结果。每当程序执行到<code>yield</code>语句时，函数现场会被保留，同时返回一个值。Flask就是利用这个特性把应答数据通过生成器分块发送给客户端。</p>
+<h3 id="multipart">Multipart应答</h3>
+<p>Multipart应答包含一个<em>multipart</em>媒体类型，后面跟着多块独立的数据，每块数据有自己的<em>Content-Type</em>，每块数据之间通过<em>boundary</em>分隔。下面是一个例子：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">HTTP/1.1 200 OK
+Content-Type: multipart/x-mixed-replace; boundary=frame
+
+--frame
+Content-Type: image/jpeg
+
+&lt;jpeg data here&gt;
+--frame
+Content-Type: image/jpeg
+
+&lt;jpeg data here&gt;
+...
+</pre></div>
+
+
+<p>Multipart有多种不同的类型，针对流媒体，我们使用<code>multipart/x-mixed-replace</code>。浏览器处理这种Multipart类型时，会使用当前的块数据替换之前的块数据。这刚好就是我们想要的流媒体的效果。我们可以把媒体的一帧数据打包为一个数据块，每块数据有自己的<em>Content-Type</em>和可选的<em>Content-Length</em>。浏览器逐帧替换，就实现了视频的播放功能。<a href="http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html">RFC1341</a>对Multipart媒体类型进行了详细的描述，有兴趣的朋友可移步参考。</p>
+<h2 id="_4">实现流媒体服务器</h2>
+<p>上面介绍了实现流媒体服务器的理论知识。接下来我们使用这些知识来用Flask搭建一个流媒体服务器。</p>
+<p>有多种方法可以在浏览器里实现流媒体播放，和Flask配合较好的是使用<a href="http://baike.baidu.com/view/4875263.htm">Motion JPEG</a>的方法。简单地讲，就是把视频画面通过JPEG图片的方式，一帧一帧地发送给浏览器。这也是很多IP Camera使用的流媒体播放方式，它实时性很好，但视频效果不是很理想。因为Motion JPEG对视频的压缩效率太低了。</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">flask</span> <span style="color: #AA22FF; font-weight: bold">import</span> Flask, render_template, Response
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">camera</span> <span style="color: #AA22FF; font-weight: bold">import</span> Camera
+
+app <span style="color: #666666">=</span> Flask(__name__)
+
+<span style="color: #AA22FF">@app.route</span>(<span style="color: #BB4444">&#39;/&#39;</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">index</span>():
+    <span style="color: #AA22FF; font-weight: bold">return</span> render_template(<span style="color: #BB4444">&#39;index.html&#39;</span>)
+
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">gen</span>(camera):
+    <span style="color: #AA22FF; font-weight: bold">while</span> <span style="color: #AA22FF">True</span>:
+        frame <span style="color: #666666">=</span> camera<span style="color: #666666">.</span>get_frame()
+        <span style="color: #AA22FF; font-weight: bold">yield</span> (b<span style="color: #BB4444">&#39;--frame</span><span style="color: #BB6622; font-weight: bold">\r\n</span><span style="color: #BB4444">&#39;</span>
+               b<span style="color: #BB4444">&#39;Content-Type: image/jpeg</span><span style="color: #BB6622; font-weight: bold">\r\n\r\n</span><span style="color: #BB4444">&#39;</span> <span style="color: #666666">+</span> frame <span style="color: #666666">+</span> b<span style="color: #BB4444">&#39;</span><span style="color: #BB6622; font-weight: bold">\r\n</span><span style="color: #BB4444">&#39;</span>)
+
+<span style="color: #AA22FF">@app.route</span>(<span style="color: #BB4444">&#39;/video_feed&#39;</span>)
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">video_feed</span>():
+    <span style="color: #AA22FF; font-weight: bold">return</span> Response(gen(Camera()),
+                    mimetype<span style="color: #666666">=</span><span style="color: #BB4444">&#39;multipart/x-mixed-replace; boundary=frame&#39;</span>)
+
+<span style="color: #AA22FF; font-weight: bold">if</span> __name__ <span style="color: #666666">==</span> <span style="color: #BB4444">&#39;__main__&#39;</span>:
+    app<span style="color: #666666">.</span>run(host<span style="color: #666666">=</span><span style="color: #BB4444">&#39;0.0.0.0&#39;</span>, debug<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+</pre></div>
+</td></tr></table>
+
+<p>这个Flask应用程序导入了一个<code>Camera</code>类，这个类是为了持续不断地提供视频的帧数据的类。这个程序提供了两个服务路径，<code>/</code>路径由<code>index.html</code>模板提供服务，下面是它的内容：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;html&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;head&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;title&gt;</span>Video Streaming Demonstration<span style="color: #008000; font-weight: bold">&lt;/title&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;/head&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;body&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;h1&gt;</span>Video Streaming Demonstration<span style="color: #008000; font-weight: bold">&lt;/h1&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;img</span> <span style="color: #BB4444">src=&quot;{{ url_for(&#39;video_feed&#39;) }}&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;/body&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/html&gt;</span>
+</pre></div>
+
+
+<p>这是一个非常简单的HTML网页。其中关键的是<code>img</code>这个标签，它定义了一张图片元素，其URL是<code>/video_feed</code>。从Flask应用程序代码的Line17-20可以知道，<code>/video_feed</code>是由一个<code>video_feed()</code>方法提供服务的，它返回的是一个multipart应答。这个应答的内容是由生成器函数<code>gen()</code>提供的。而<code>gen()</code>函数就是不停地从camera里获取一帧一帧的图片，并通过生成器返回给客户端。客户端浏览器在收到这个流媒体时，会在<code>img</code>标签定义的图片里，逐帧地显示图片，这样一个视频就播放出来的。目前市面上绝大部分浏览器都支持这个功能。</p>
+<h2 id="_5">模拟视频帧数据</h2>
+<p>现在只要实现<code>Camera</code>类，并提供源源不断的视频帧数据即可运行上面的程序了。由于连接摄像头涉及到硬件，我们使用一个简单的模拟器来源源不断地返回数据：</p>
+<table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">time</span> <span style="color: #AA22FF; font-weight: bold">import</span> time
+
+<span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Camera</span>(<span style="color: #AA22FF">object</span>):
+    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">__init__</span>(<span style="color: #AA22FF">self</span>):
+        <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>frames <span style="color: #666666">=</span> [<span style="color: #AA22FF">open</span>(f <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.jpg&#39;</span>, <span style="color: #BB4444">&#39;rb&#39;</span>)<span style="color: #666666">.</span>read() <span style="color: #AA22FF; font-weight: bold">for</span> f <span style="color: #AA22FF; font-weight: bold">in</span> [<span style="color: #BB4444">&#39;1&#39;</span>, <span style="color: #BB4444">&#39;2&#39;</span>, <span style="color: #BB4444">&#39;3&#39;</span>]]
+
+    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">get_frame</span>(<span style="color: #AA22FF">self</span>):
+        <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>frames[<span style="color: #AA22FF">int</span>(time()) <span style="color: #666666">%</span> <span style="color: #666666">3</span>]
+</pre></div>
+</td></tr></table>
+
+<p>这个代码很简单，它从本地读取三个图片，并根据当前时间，每秒返回不同的图片来模拟提供源源不断的视频帧数据。</p>
+<p>大家可以从原作者的GitHub上下载程序的代码来运行。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>git clone https://github.com/miguelgrinberg/flask-video-streaming.git
+</pre></div>
+
+
+<p>或者直接下载<a href="https://github.com/miguelgrinberg/flask-video-streaming/archive/master.zip">ZIP</a>包来运行。</p>
+<p>下载完代码，进入代码根目录，执行<code>python app.py</code>。然后在浏览器里打开<code>http://localhost:5000</code>即可以看到模拟的视频了。</p>
+<div class="admonition note">
+<p class="admonition-title">安装Flask</p>
+<p>要运行上述代码，需要先安装Flask。<a href="http://flask.pocoo.org/">官网</a>上有教程，简单易懂。</p>
+</div>
+<h2 id="_6">连接硬件摄像头</h2>
+<p>下载代码的同学应该可以看到代码里还有一个<code>camera_pi.py</code>的文件，这个是用来实现真正的连接硬件摄像头的代码。原文作者使用的摄像头是<a href="http://baike.baidu.com/view/5730914.htm">Raspberry Pi</a>，这是个类似Arduino的开源的硬件项目。</p>
+<h2 id="_7">一些限制</h2>
+<p>当客户端浏览器打开上述流媒体服务的网址时，它就独占了这个线程。在把Flask应用Deploy到Nginx+uwsgi服务器上时，它能服务的最大客户端数目为应用程序的线程数，一般就是几个到几十个。而如果是在本机使用<code>python app.py</code>运行的测试服务器，则只能服务一个客户端。</p>
+<p>针对这个问题，原文作者提供了一个解决方案。使用<a href="http://www.gevent.org/">gevent</a>来解决。</p>
+<blockquote>
+<p>gevent is a coroutine-based Python networking library that uses greenlet to provide a high-level synchronous API on top of the libev event loop.</p>
+</blockquote>
+<p>有兴趣的同学可以在原代码的基础上，引入gevent来支持多客户端。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.com/category/flask.html">flask</a> on 2014-10-28(Tuesday) 23:25. Tags: <a href="http://kamidox.com/tag/python.html">python</a>, <a href="http://kamidox.com/tag/flask.html">flask</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="http://kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://kamidox.com/category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="http://kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="http://kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="http://kamidox.com/tag/sublime.html">sublime</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="http://kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://kamidox.com/theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
