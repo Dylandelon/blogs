@@ -126,7 +126,9 @@
 <p>打开 <code>YourUserName.github.io/YourRepoName</code> 就可以看到最新的博客内容了。比如 <a href="http://kamidox.github.io/blogs">kamidox.github.io/blogs</a> 就是我使用 Github Pages 的托管的博客了。</p>
 <p>关于如何使用 Pelican 来写博客，可以参阅<a href="http://kamidox.com/build-blog-system-by-pelican.html">这篇文章</a>。</p>
 <h2 id="_1">定制域名</h2>
-<p>关于 Github Pages 定制域名可以参阅<a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/">官方教程</a>。我们使用 Github 强烈推荐的子域名的形式来寶域名，就是在 <code>gh-pages</code> 分支根目录提交一个 <code>CNAME</code> 文件，而 ghp-import 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 <a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips">Pelican 的 Tips</a>。归纳起来，就是先在 <code>content/extra</code> 目录下新建一个叫 <code>CNAME</code> 的文件，其内容就是自定义域名的内容，如 <code>blog.kamidox.com</code>。然后在 Pelican 的配置文件 <code>publishconf.py</code> 下添加如下内容：</p>
+<p>关于 Github Pages 定制域名可以参阅<a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/">官方教程</a>。我们使用 Github 强烈推荐的子域名的形式来定制域名。</p>
+<h3 id="cname">创建 CNAME</h3>
+<p>在 <code>gh-pages</code> 分支根目录提交一个 <code>CNAME</code> 文件，而 <code>ghp-import</code> 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 <a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips">Pelican 的 Tips</a>。归纳起来，就是先在 <code>content/extra</code> 目录下新建一个叫 <code>CNAME</code> 的文件，其内容就是自定义域名的内容，如 <code>blog.kamidox.com</code>。然后在 Pelican 的配置文件 <code>publishconf.py</code> 下添加如下内容：</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">STATIC_PATHS <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;extra&#39;</span>]
 EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
     <span style="color: #BB4444">&#39;extra/CNAME&#39;</span>: {<span style="color: #BB4444">&#39;path&#39;</span>: <span style="color: #BB4444">&#39;CNAME&#39;</span>},   <span style="color: #008800; font-style: italic"># 这是个路径映射，即会把 `content/extra/CNAME` 文件拷贝到 `output/CNAME`</span>
@@ -134,13 +136,10 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 </pre></div>
 
 
-<div class="admonition notes">
-<p class="admonition-title">注意</p>
-<ol>
-<li>留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 <code>content/extra</code> 目录下的内容原封不动的拷贝到 <code>output/extra</code> 目录下。</li>
-<li>另外一个需要注意的是，我们提交 CNAME 子域名文件后后，不需要在域名供应商那边手动添加解析，这个过程中 Github 自动替我们完成的。</li>
-</ol>
-</div>
+<p>留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 <code>content/extra</code> 目录下的内容原封不动的拷贝到 <code>output/extra</code> 目录下。</p>
+<h3 id="dns">修改 DNS 解析</h3>
+<p>添加一条 CNAME 记录，指向 username.github.io。比如，我需要把博客地址定为 blog.kamidox.com，则我添加一条 CNAME 解析为 blog 的记录，指向 kamidox.github.io。</p>
+<p>至此，我们完成了博客迁移工作。</p>
 	<hr/>
 	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/tools.html">tools</a> on 2015-08-22(Saturday) 23:52. Tags: <a href="./tag/github.html">github</a>, <a href="./tag/pelican.html">pelican</a>, </h6>
 </article>
@@ -190,21 +189,21 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
 										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
 										<li class="tag-1"><a href="./tag/android.html">android</a></li>
 										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
 								</ul>
 							</div>
 

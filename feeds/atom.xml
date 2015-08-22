@@ -16,7 +16,9 @@
 &lt;p&gt;打开 &lt;code&gt;YourUserName.github.io/YourRepoName&lt;/code&gt; 就可以看到最新的博客内容了。比如 &lt;a href="http://kamidox.github.io/blogs"&gt;kamidox.github.io/blogs&lt;/a&gt; 就是我使用 Github Pages 的托管的博客了。&lt;/p&gt;
 &lt;p&gt;关于如何使用 Pelican 来写博客，可以参阅&lt;a href="http://kamidox.com/build-blog-system-by-pelican.html"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id="_1"&gt;定制域名&lt;/h2&gt;
-&lt;p&gt;关于 Github Pages 定制域名可以参阅&lt;a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/"&gt;官方教程&lt;/a&gt;。我们使用 Github 强烈推荐的子域名的形式来寶域名，就是在 &lt;code&gt;gh-pages&lt;/code&gt; 分支根目录提交一个 &lt;code&gt;CNAME&lt;/code&gt; 文件，而 ghp-import 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 &lt;a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips"&gt;Pelican 的 Tips&lt;/a&gt;。归纳起来，就是先在 &lt;code&gt;content/extra&lt;/code&gt; 目录下新建一个叫 &lt;code&gt;CNAME&lt;/code&gt; 的文件，其内容就是自定义域名的内容，如 &lt;code&gt;blog.kamidox.com&lt;/code&gt;。然后在 Pelican 的配置文件 &lt;code&gt;publishconf.py&lt;/code&gt; 下添加如下内容：&lt;/p&gt;
+&lt;p&gt;关于 Github Pages 定制域名可以参阅&lt;a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/"&gt;官方教程&lt;/a&gt;。我们使用 Github 强烈推荐的子域名的形式来定制域名。&lt;/p&gt;
+&lt;h3 id="cname"&gt;创建 CNAME&lt;/h3&gt;
+&lt;p&gt;在 &lt;code&gt;gh-pages&lt;/code&gt; 分支根目录提交一个 &lt;code&gt;CNAME&lt;/code&gt; 文件，而 &lt;code&gt;ghp-import&lt;/code&gt; 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 &lt;a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips"&gt;Pelican 的 Tips&lt;/a&gt;。归纳起来，就是先在 &lt;code&gt;content/extra&lt;/code&gt; 目录下新建一个叫 &lt;code&gt;CNAME&lt;/code&gt; 的文件，其内容就是自定义域名的内容，如 &lt;code&gt;blog.kamidox.com&lt;/code&gt;。然后在 Pelican 的配置文件 &lt;code&gt;publishconf.py&lt;/code&gt; 下添加如下内容：&lt;/p&gt;
 &lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;STATIC_PATHS &lt;span style="color: #666666"&gt;=&lt;/span&gt; [&lt;span style="color: #BB4444"&gt;&amp;#39;extra&amp;#39;&lt;/span&gt;]
 EXTRA_PATH_METADATA &lt;span style="color: #666666"&gt;=&lt;/span&gt; {
     &lt;span style="color: #BB4444"&gt;&amp;#39;extra/CNAME&amp;#39;&lt;/span&gt;: {&lt;span style="color: #BB4444"&gt;&amp;#39;path&amp;#39;&lt;/span&gt;: &lt;span style="color: #BB4444"&gt;&amp;#39;CNAME&amp;#39;&lt;/span&gt;},   &lt;span style="color: #008800; font-style: italic"&gt;# 这是个路径映射，即会把 `content/extra/CNAME` 文件拷贝到 `output/CNAME`&lt;/span&gt;
@@ -24,13 +26,10 @@ EXTRA_PATH_METADATA &lt;span style="color: #666666"&gt;=&lt;/span&gt; {
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="admonition notes"&gt;
-&lt;p class="admonition-title"&gt;注意&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 &lt;code&gt;content/extra&lt;/code&gt; 目录下的内容原封不动的拷贝到 &lt;code&gt;output/extra&lt;/code&gt; 目录下。&lt;/li&gt;
-&lt;li&gt;另外一个需要注意的是，我们提交 CNAME 子域名文件后后，不需要在域名供应商那边手动添加解析，这个过程中 Github 自动替我们完成的。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;</summary><category term="github"></category><category term="pelican"></category></entry><entry><title>如何保持工作的激情</title><link href="http://blog.kamidox.com/be-passion.html" rel="alternate"></link><updated>2015-07-27T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-07-27:be-passion.html</id><summary type="html">&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
+&lt;p&gt;留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 &lt;code&gt;content/extra&lt;/code&gt; 目录下的内容原封不动的拷贝到 &lt;code&gt;output/extra&lt;/code&gt; 目录下。&lt;/p&gt;
+&lt;h3 id="dns"&gt;修改 DNS 解析&lt;/h3&gt;
+&lt;p&gt;添加一条 CNAME 记录，指向 username.github.io。比如，我需要把博客地址定为 blog.kamidox.com，则我添加一条 CNAME 解析为 blog 的记录，指向 kamidox.github.io。&lt;/p&gt;
+&lt;p&gt;至此，我们完成了博客迁移工作。&lt;/p&gt;</summary><category term="github"></category><category term="pelican"></category></entry><entry><title>如何保持工作的激情</title><link href="http://blog.kamidox.com/be-passion.html" rel="alternate"></link><updated>2015-07-27T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-07-27:be-passion.html</id><summary type="html">&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
 &lt;h2 id="_1"&gt;建立一个内化的目标&lt;/h2&gt;
 &lt;p&gt;为什么要加上&lt;strong&gt;内化&lt;/strong&gt;这两个字呢？&lt;strong&gt;内化的目标，是我们的信仰，它确保我们在迷雾中航行时不失去方向；确保在迷茫，困难面前能坚定地前行，这是内在驱动力的主要来源。&lt;/strong&gt;创业团队的 CEO 的一个最重要的工作，就是确保把公司的目标内化到团队所有成员身上。让所有人知道我们的目标是什么，并建立起实现目标的信心。&lt;/p&gt;
 &lt;h2 id="_2"&gt;建立即时反馈系统&lt;/h2&gt;
