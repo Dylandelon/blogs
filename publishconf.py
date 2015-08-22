@@ -13,7 +13,7 @@ from pelicanconf import *
 AUTHOR = u'Joey Huang'
 SITENAME = u"kamidox.com"
 #SITEURL = 'http://kamidox.com'
-SITEURL = 'http://kamidox.github.io/blogs'
+SITEURL = 'http://blog.kamidox.com'
 DISQUS_SITENAME = 'kamidox'
 
 PATH = 'content'
