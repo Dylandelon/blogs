@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://kamidox.github.io/blogs/" rel="alternate"></link><link href="http://kamidox.github.io/blogs/feeds/joey-huang.atom.xml" rel="self"></link><id>http://kamidox.github.io/blogs/</id><updated>2015-07-27T20:20:00+08:00</updated><entry><title>如何保持工作的激情</title><link href="http://kamidox.github.io/blogs/be-passion.html" rel="alternate"></link><updated>2015-07-27T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:kamidox.github.io,2015-07-27:blogs/be-passion.html</id><summary type="html">&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://kamidox.github.io/blogs/" rel="alternate"></link><link href="http://kamidox.github.io/blogs/feeds/joey-huang.atom.xml" rel="self"></link><id>http://kamidox.github.io/blogs/</id><updated>2015-08-22T23:52:00+08:00</updated><entry><title>使用 Github Pages 来托管 Pelican 生成的博客</title><link href="http://kamidox.github.io/blogs/serve-pelican-on-github-pages.html" rel="alternate"></link><updated>2015-08-22T23:52:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:kamidox.github.io,2015-08-22:blogs/serve-pelican-on-github-pages.html</id><summary type="html">&lt;h2 id="github-pages"&gt;关于 Github Pages&lt;/h2&gt;
+&lt;p&gt;Github Pages 是 Github 提供的免费的空间来展现静态网页。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Websites for you and your projects. Hosted directly from your GitHub repository. Just edit, push, and your changes are live.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;依照&lt;a href="https://pages.github.com"&gt;官方文档&lt;/a&gt;很容易做出一个 Github Pages 网页。使用 Github Pages 来写博客的主流方法是使用 &lt;a href="http://jekyllrb.com"&gt;Jekyll&lt;/a&gt; 来作为 SSG (Static Site Generator)。&lt;/p&gt;
+&lt;h2 id="pelican-github-pages"&gt;把 Pelican 生成的博客托管在 Github Pages 上&lt;/h2&gt;
+&lt;p&gt;由于历史原因使用了 Pelican 作为 SSG 并托管在 AWS 主机上。切换到 Github Pages + Jekyll 意味着更换 SSG ，这样必须把所有符合 Pelican 规则的 markdown 文件转换为符合 Jekyll 规则的 markdown 文件。于是想到了一个更偷懒的方法：直接用 Pelican 生成的静态网页放在 Github 上作为 Github Pages。最后再绑定我们自己的域名。这样就完成了迁移工作。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/davisp/ghp-import"&gt;ghp-import&lt;/a&gt; 是做这个事情的最佳工具。 &lt;/p&gt;
+&lt;p&gt;发布博客时，输入下面的命令即可：&lt;code&gt;ghp-import -p output&lt;/code&gt;。这个命令做以下几件事情：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;把 Pelican 生成的静态网页所在目录 &lt;code&gt;output&lt;/code&gt; 下的所有文件写入 Git 的 &lt;code&gt;gh-pages&lt;/code&gt; 分支&lt;/li&gt;
+&lt;li&gt;带 &lt;code&gt;-p&lt;/code&gt; 选项会把 &lt;code&gt;gh-pages&lt;/code&gt; 分支上的内容 push 到 Github 上&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;打开 &lt;code&gt;YourUserName.github.io/YourRepoName&lt;/code&gt; 就可以看到最新的博客内容了。比如 &lt;a href="http://kamidox.github.io/blogs"&gt;kamidox.github.io/blogs&lt;/a&gt; 就是我使用 Github Pages 的托管的博客了。&lt;/p&gt;
+&lt;p&gt;关于如何使用 Pelican 来写博客，可以参阅&lt;a href="http://kamidox.com/build-blog-system-by-pelican.html"&gt;这篇文章&lt;/a&gt;。&lt;/p&gt;</summary><category term="github"></category><category term="pelican"></category></entry><entry><title>如何保持工作的激情</title><link href="http://kamidox.github.io/blogs/be-passion.html" rel="alternate"></link><updated>2015-07-27T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:kamidox.github.io,2015-07-27:blogs/be-passion.html</id><summary type="html">&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
 &lt;h2 id="_1"&gt;建立一个内化的目标&lt;/h2&gt;
 &lt;p&gt;为什么要加上&lt;strong&gt;内化&lt;/strong&gt;这两个字呢？&lt;strong&gt;内化的目标，是我们的信仰，它确保我们在迷雾中航行时不失去方向；确保在迷茫，困难面前能坚定地前行，这是内在驱动力的主要来源。&lt;/strong&gt;创业团队的 CEO 的一个最重要的工作，就是确保把公司的目标内化到团队所有成员身上。让所有人知道我们的目标是什么，并建立起实现目标的信心。&lt;/p&gt;
 &lt;h2 id="_2"&gt;建立即时反馈系统&lt;/h2&gt;

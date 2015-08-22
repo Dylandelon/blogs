@@ -59,18 +59,27 @@
 						<li><label>Categories</label></li>
 							<li ><a href="http://kamidox.github.io/blogs/category/android.html">android</a></li>
 							<li ><a href="http://kamidox.github.io/blogs/category/essay.html">essay</a></li>
-							<li class="active"><a href="http://kamidox.github.io/blogs/category/flask.html">flask</a></li>
+							<li ><a href="http://kamidox.github.io/blogs/category/flask.html">flask</a></li>
 							<li ><a href="http://kamidox.github.io/blogs/category/python.html">python</a></li>
-							<li ><a href="http://kamidox.github.io/blogs/category/tools.html">tools</a></li>
+							<li class="active"><a href="http://kamidox.github.io/blogs/category/tools.html">tools</a></li>
 							<li ><a href="http://kamidox.github.io/blogs/category/werkzeug.html">werkzeug</a></li>
 
 
 
 
 						<li><label>Monthly Archives</label></li>
-									<li><a href="/posts/2014/12/index.html">December 2014 (2)</a></li>
-									<li><a href="/posts/2014/11/index.html">November 2014 (2)</a></li>
-									<li><a href="/posts/2014/10/index.html">October 2014 (1)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
 
 
 					</ul>
@@ -98,49 +107,45 @@
 					<div class="row">
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
-							<div class="row">
-								<div class="small-12 columns">
-									<h2>Category: flask</h2>
-								</div>
-							</div>
+<article>
+	<h2>使用 Github Pages 来托管 Pelican 生成的博客</h2>
+	<h2 id="github-pages">关于 Github Pages</h2>
+<p>Github Pages 是 Github 提供的免费的空间来展现静态网页。</p>
+<blockquote>
+<p>Websites for you and your projects. Hosted directly from your GitHub repository. Just edit, push, and your changes are live.</p>
+</blockquote>
+<p>依照<a href="https://pages.github.com">官方文档</a>很容易做出一个 Github Pages 网页。使用 Github Pages 来写博客的主流方法是使用 <a href="http://jekyllrb.com">Jekyll</a> 来作为 SSG (Static Site Generator)。</p>
+<h2 id="pelican-github-pages">把 Pelican 生成的博客托管在 Github Pages 上</h2>
+<p>由于历史原因使用了 Pelican 作为 SSG 并托管在 AWS 主机上。切换到 Github Pages + Jekyll 意味着更换 SSG ，这样必须把所有符合 Pelican 规则的 markdown 文件转换为符合 Jekyll 规则的 markdown 文件。于是想到了一个更偷懒的方法：直接用 Pelican 生成的静态网页放在 Github 上作为 Github Pages。最后再绑定我们自己的域名。这样就完成了迁移工作。</p>
+<p><a href="https://github.com/davisp/ghp-import">ghp-import</a> 是做这个事情的最佳工具。 </p>
+<p>发布博客时，输入下面的命令即可：<code>ghp-import -p output</code>。这个命令做以下几件事情：</p>
+<ol>
+<li>把 Pelican 生成的静态网页所在目录 <code>output</code> 下的所有文件写入 Git 的 <code>gh-pages</code> 分支</li>
+<li>带 <code>-p</code> 选项会把 <code>gh-pages</code> 分支上的内容 push 到 Github 上</li>
+</ol>
+<p>打开 <code>YourUserName.github.io/YourRepoName</code> 就可以看到最新的博客内容了。比如 <a href="http://kamidox.github.io/blogs">kamidox.github.io/blogs</a> 就是我使用 Github Pages 的托管的博客了。</p>
+<p>关于如何使用 Pelican 来写博客，可以参阅<a href="http://kamidox.com/build-blog-system-by-pelican.html">这篇文章</a>。</p>
+	<hr/>
+	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/tools.html">tools</a> on 2015-08-22(Saturday) 23:52. Tags: <a href="http://kamidox.github.io/blogs/tag/github.html">github</a>, <a href="http://kamidox.github.io/blogs/tag/pelican.html">pelican</a>, </h6>
+</article>
 
-<article>
-	<h3><a href="http://kamidox.github.io/blogs/flaskbb-notes-4.html">FlaskBB阅读笔记（四）</a></h3>
-	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/flask.html">flask</a> on 2014-12-21(Sunday) 23:00. Tags: <a href="http://kamidox.github.io/blogs/tag/python.html">python</a>, <a href="http://kamidox.github.io/blogs/tag/flask.html">flask</a>, </h6>
-	<p>FlaskBB 是用 Flask 实现的一个轻量级论坛社区软件。本系列文章通过阅读 FlaskBB 的源代码来深入学习 Flask 框架以及在一个产品级的 Flask 应用里的一些最佳实践规则。本文通过分析 FlaskBB 的自动测试代码，进而介绍 Python 下的自动化测试工具 pytest。</p>
-		<p class="continue"><a href="http://kamidox.github.io/blogs/flaskbb-notes-4.html">阅读全文 &raquo;</a></p>
-</article>
-<hr />
-<article>
-	<h3><a href="http://kamidox.github.io/blogs/flaskbb-notes-3.html">FlaskBB阅读笔记（三）</a></h3>
-	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/flask.html">flask</a> on 2014-12-07(Sunday) 23:00. Tags: <a href="http://kamidox.github.io/blogs/tag/python.html">python</a>, <a href="http://kamidox.github.io/blogs/tag/flask.html">flask</a>, </h6>
-	<p>FlaskBB 是用 Flask 实现的一个轻量级论坛社区软件。本系列文章通过阅读 FlaskBB 的源代码来深入学习 Flask 框架以及在一个产品级的 Flask 应用里的一些最佳实践规则。本文介绍 ORM 基础知识，分析 Flask-SQLAlchemy 及 sqlalchemy ORM 引擎的一些常用方法，进而介绍 FlaskBB MVC 代码结构。</p>
-		<p class="continue"><a href="http://kamidox.github.io/blogs/flaskbb-notes-3.html">阅读全文 &raquo;</a></p>
-</article>
-<hr />
-<article>
-	<h3><a href="http://kamidox.github.io/blogs/flaskbb-notes-2.html">FlaskBB阅读笔记（二）</a></h3>
-	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/flask.html">flask</a> on 2014-11-04(Tuesday) 23:00. Tags: <a href="http://kamidox.github.io/blogs/tag/python.html">python</a>, <a href="http://kamidox.github.io/blogs/tag/flask.html">flask</a>, </h6>
-	<p>FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架以及在一个产品级的Flask应用里的一些最佳实践规则。本文分析了管理模块manage.py的实现，通过它学习Flask-Script扩展模块的用法。</p>
-		<p class="continue"><a href="http://kamidox.github.io/blogs/flaskbb-notes-2.html">阅读全文 &raquo;</a></p>
-</article>
-<hr />
-<article>
-	<h3><a href="http://kamidox.github.io/blogs/flaskbb-notes-1.html">FlaskBB阅读笔记（一）</a></h3>
-	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/flask.html">flask</a> on 2014-11-02(Sunday) 23:25. Tags: <a href="http://kamidox.github.io/blogs/tag/python.html">python</a>, <a href="http://kamidox.github.io/blogs/tag/flask.html">flask</a>, </h6>
-	<p>FlaskBB是用Flask实现的一个轻量级论坛社区软件。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。本文分析Flask程序主文件app.py的源码。进而了解一个产品级Flask应用的主体结构。</p>
-		<p class="continue"><a href="http://kamidox.github.io/blogs/flaskbb-notes-1.html">阅读全文 &raquo;</a></p>
-</article>
-<hr />
-<article>
-	<h3><a href="http://kamidox.github.io/blogs/build-streaming-server-by-flask.html">使用Flask搭建一个流媒体服务器</a></h3>
-	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/flask.html">flask</a> on 2014-10-28(Tuesday) 23:25. Tags: <a href="http://kamidox.github.io/blogs/tag/python.html">python</a>, <a href="http://kamidox.github.io/blogs/tag/flask.html">flask</a>, </h6>
-	<p>本文翻译自PythonWeekly上的一篇文章，介绍了使用Flask来搭建一个流媒体服务器的方法。</p>
-		<p class="continue"><a href="http://kamidox.github.io/blogs/build-streaming-server-by-flask.html">阅读全文 &raquo;</a></p>
-</article>
-<hr />
-
-
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
 						</div>
 						<!-- End Main Content -->
 						<!-- Sidebar -->
@@ -190,9 +195,18 @@
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
-											<li><a href="/posts/2014/12/index.html">December 2014 (2)</a></li>
-											<li><a href="/posts/2014/11/index.html">November 2014 (2)</a></li>
-											<li><a href="/posts/2014/10/index.html">October 2014 (1)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
 								</ul>
 							</div>
 
