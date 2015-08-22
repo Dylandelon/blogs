@@ -8,14 +8,14 @@
 		<meta name="description" content="">
 		<meta name="author" content="Joey Huang">
 
-		<link rel="stylesheet" href="http://kamidox.github.io/blogs/theme/css/foundation.css" />
-		<link rel="stylesheet" href="http://kamidox.github.io/blogs/theme/css/pygment/monokai.css" />
-		<link rel="stylesheet" href="http://kamidox.github.io/blogs/theme/css/custom.css" />
+		<link rel="stylesheet" href="http://blog.kamidox.com/theme/css/foundation.css" />
+		<link rel="stylesheet" href="http://blog.kamidox.com/theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="http://blog.kamidox.com/theme/css/custom.css" />
 
 
-		<link rel="shortcut icon" href="http://kamidox.github.io/blogs/theme/img/favicon.ico">
+		<link rel="shortcut icon" href="http://blog.kamidox.com/theme/img/favicon.ico">
 
-		<script src="http://kamidox.github.io/blogs/theme/js/modernizr.js"></script>
+		<script src="http://blog.kamidox.com/theme/js/modernizr.js"></script>
 
 		<!-- Feeds -->
 
@@ -53,16 +53,16 @@
 				<!-- mobile side bar nav -->
 				<aside class="left-off-canvas-menu">
 					<ul class="off-canvas-list">
-							<li><a href="http://kamidox.github.io/blogs">Home</a></li>
+							<li><a href="http://blog.kamidox.com">Home</a></li>
 							<li><a href="about.html">About</a></li>
 
 						<li><label>Categories</label></li>
-							<li ><a href="http://kamidox.github.io/blogs/category/android.html">android</a></li>
-							<li ><a href="http://kamidox.github.io/blogs/category/essay.html">essay</a></li>
-							<li ><a href="http://kamidox.github.io/blogs/category/flask.html">flask</a></li>
-							<li ><a href="http://kamidox.github.io/blogs/category/python.html">python</a></li>
-							<li class="active"><a href="http://kamidox.github.io/blogs/category/tools.html">tools</a></li>
-							<li ><a href="http://kamidox.github.io/blogs/category/werkzeug.html">werkzeug</a></li>
+							<li ><a href="http://blog.kamidox.com/category/android.html">android</a></li>
+							<li ><a href="http://blog.kamidox.com/category/essay.html">essay</a></li>
+							<li ><a href="http://blog.kamidox.com/category/flask.html">flask</a></li>
+							<li ><a href="http://blog.kamidox.com/category/python.html">python</a></li>
+							<li class="active"><a href="http://blog.kamidox.com/category/tools.html">tools</a></li>
+							<li ><a href="http://blog.kamidox.com/category/werkzeug.html">werkzeug</a></li>
 
 
 
@@ -89,13 +89,13 @@
 				<nav class="top-bar hide-for-small-only" data-topbar>
 					<ul class="title-area">
 						<li class="name">
-							<h1><a href="http://kamidox.github.io/blogs/">kamidox.com</a></h1>
+							<h1><a href="http://blog.kamidox.com/">kamidox.com</a></h1>
 						</li>
 					</ul>
 
 					<section class="top-bar-section">
 						<ul class="left">
-								<li><a href="http://kamidox.github.io/blogs">Home</a></li>
+								<li><a href="http://blog.kamidox.com">Home</a></li>
 								<li><a href="about.html">About</a></li>
 
 						</ul>
@@ -126,7 +126,7 @@
 <p>打开 <code>YourUserName.github.io/YourRepoName</code> 就可以看到最新的博客内容了。比如 <a href="http://kamidox.github.io/blogs">kamidox.github.io/blogs</a> 就是我使用 Github Pages 的托管的博客了。</p>
 <p>关于如何使用 Pelican 来写博客，可以参阅<a href="http://kamidox.com/build-blog-system-by-pelican.html">这篇文章</a>。</p>
 <h2 id="_1">定制域名</h2>
-<p>关于 Github Pages 定制域名可以参阅<a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/">官方教程</a>。简单地说，就是在 <code>gh-pages</code> 分支根目录提交一个 <code>CNAME</code> 文件，而 ghp-import 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 <a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips">Pelican 的 Tips</a>。归纳起来，就是先在 <code>content/extra</code> 目录下新建一个叫 <code>CNAME</code> 的文件，其内容就是自定义域名的内容，如 <code>blog.kamidox.com</code>。然后在 Pelican 的配置文件 <code>publishconf.py</code> 下添加如下内容：</p>
+<p>关于 Github Pages 定制域名可以参阅<a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/">官方教程</a>。我们使用 Github 强烈推荐的子域名的形式来寶域名，就是在 <code>gh-pages</code> 分支根目录提交一个 <code>CNAME</code> 文件，而 ghp-import 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 <a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips">Pelican 的 Tips</a>。归纳起来，就是先在 <code>content/extra</code> 目录下新建一个叫 <code>CNAME</code> 的文件，其内容就是自定义域名的内容，如 <code>blog.kamidox.com</code>。然后在 Pelican 的配置文件 <code>publishconf.py</code> 下添加如下内容：</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">STATIC_PATHS <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;extra&#39;</span>]
 EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
     <span style="color: #BB4444">&#39;extra/CNAME&#39;</span>: {<span style="color: #BB4444">&#39;path&#39;</span>: <span style="color: #BB4444">&#39;CNAME&#39;</span>},   <span style="color: #008800; font-style: italic"># 这是个路径映射，即会把 `content/extra/CNAME` 文件拷贝到 `output/CNAME`</span>
@@ -134,10 +134,15 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 </pre></div>
 
 
-<p>特别注意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 <code>content/extra</code> 目录下的内容原封不动的拷贝到 <code>output/extra</code> 目录下。</p>
-<p>最后，我们添加一条域名解析即可。以我们使用的 <code>blog.kamidox.com</code> 的子域名为例，我们需要添加一个 CNAME 解析，把 <code>blog.kamidox.com</code> 解析到 Github Pages 所在的 <code>kamidox.github.io/blogs</code> 即可。这样我们就完成了迁移工作。</p>
+<div class="admonition notes">
+<p class="admonition-title">注意</p>
+<ol>
+<li>留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 <code>content/extra</code> 目录下的内容原封不动的拷贝到 <code>output/extra</code> 目录下。</li>
+<li>另外一个需要注意的是，我们提交 CNAME 子域名文件后后，不需要在域名供应商那边手动添加解析，这个过程中 Github 自动替我们完成的。</li>
+</ol>
+</div>
 	<hr/>
-	<h6>Post by <a href="http://kamidox.github.io/blogs/author/joey-huang.html">Joey Huang</a> under <a href="http://kamidox.github.io/blogs/category/tools.html">tools</a> on 2015-08-22(Saturday) 23:52. Tags: <a href="http://kamidox.github.io/blogs/tag/github.html">github</a>, <a href="http://kamidox.github.io/blogs/tag/pelican.html">pelican</a>, </h6>
+	<h6>Post by <a href="http://blog.kamidox.com/author/joey-huang.html">Joey Huang</a> under <a href="http://blog.kamidox.com/category/tools.html">tools</a> on 2015-08-22(Saturday) 23:52. Tags: <a href="http://blog.kamidox.com/tag/github.html">github</a>, <a href="http://blog.kamidox.com/tag/pelican.html">pelican</a>, </h6>
 </article>
 
 <hr/>
@@ -164,7 +169,7 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 							<div class="panel">
 								<h5>Places</h5>
 								<ul class="side-nav">
-										<li><a href="http://kamidox.github.io/blogs/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
 
 								</ul>
 							</div>
@@ -173,33 +178,33 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 							<div class="panel">
 								<h5>Categories</h5>
 								<ul class="side-nav">
-										<li><a href="http://kamidox.github.io/blogs/category/android.html">android</a></li>
-										<li><a href="http://kamidox.github.io/blogs/category/essay.html">essay</a></li>
-										<li><a href="http://kamidox.github.io/blogs/category/flask.html">flask</a></li>
-										<li><a href="http://kamidox.github.io/blogs/category/python.html">python</a></li>
-										<li><a href="http://kamidox.github.io/blogs/category/tools.html">tools</a></li>
-										<li><a href="http://kamidox.github.io/blogs/category/werkzeug.html">werkzeug</a></li>
+										<li><a href="http://blog.kamidox.com/category/android.html">android</a></li>
+										<li><a href="http://blog.kamidox.com/category/essay.html">essay</a></li>
+										<li><a href="http://blog.kamidox.com/category/flask.html">flask</a></li>
+										<li><a href="http://blog.kamidox.com/category/python.html">python</a></li>
+										<li><a href="http://blog.kamidox.com/category/tools.html">tools</a></li>
+										<li><a href="http://blog.kamidox.com/category/werkzeug.html">werkzeug</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="http://kamidox.github.io/blogs/tag/thought.html">thought</a></li>
-										<li class="tag-3"><a href="http://kamidox.github.io/blogs/tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-1"><a href="http://kamidox.github.io/blogs/tag/android.html">android</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/patchrom.html">patchrom</a></li>
-										<li class="tag-1"><a href="http://kamidox.github.io/blogs/tag/flask.html">flask</a></li>
-										<li class="tag-1"><a href="http://kamidox.github.io/blogs/tag/python.html">python</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="http://kamidox.github.io/blogs/tag/github.html">github</a></li>
+										<li class="tag-1"><a href="http://blog.kamidox.com/tag/python.html">python</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-3"><a href="http://blog.kamidox.com/tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="http://blog.kamidox.com/tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="http://blog.kamidox.com/tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="http://blog.kamidox.com/tag/android.html">android</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/github.html">github</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="http://blog.kamidox.com/tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 
@@ -240,8 +245,8 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 			</div><!--off-canvas inner-->
 		</div><!--off-canvas wrap-->
 
-		<script src="http://kamidox.github.io/blogs/theme/js/jquery.js"></script>
-		<script src="http://kamidox.github.io/blogs/theme/js/foundation.min.js"></script>
+		<script src="http://blog.kamidox.com/theme/js/jquery.js"></script>
+		<script src="http://blog.kamidox.com/theme/js/foundation.min.js"></script>
 		<script>
 			$(document).foundation();
 		</script>
