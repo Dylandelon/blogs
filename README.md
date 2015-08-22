@@ -1,7 +1,7 @@
 blogs
 =====
 
-Blogs writing by markdown by using static site generator [Pelican][1]. Served by gh-pages on github by using [ghp-import][2]
+Blogs writing by markdown by using static site generator [Pelican][1]. Served by gh-pages on github by using [ghp-import][2].
 
 ## Install
 
