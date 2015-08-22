@@ -11,6 +11,7 @@ PATH = 'content'
 
 TIMEZONE = 'Asia/Shanghai'
 
+LOCALE = 'C'
 DEFAULT_LANG = u'zh_CN'
 DEFAULT_DATE_FORMAT = ('%Y-%m-%d(%A) %H:%M')
 

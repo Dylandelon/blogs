@@ -17,6 +17,7 @@ DISQUS_SITENAME = 'kamidox'
 
 PATH = 'content'
 
+LOCALE = 'C'
 TIMEZONE = 'Asia/Shanghai'
 
 DEFAULT_LANG = u'zh_CN'
