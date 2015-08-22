@@ -68,7 +68,7 @@ THEME = "themes/foundation-default-colours"
 #THEME = "themes/tuxlite_tbs"
 
 # usful setting for publish
-RELATIVE_URLS = False
+RELATIVE_URLS = True
 DELETE_OUTPUT_DIRECTORY = True
 
 # static files and paths

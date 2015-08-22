@@ -31,7 +31,11 @@ Github Pages 是 Github 提供的免费的空间来展现静态网页。
 
 ## 定制域名
 
-关于 Github Pages 定制域名可以参阅[官方教程][6]。我们使用 Github 强烈推荐的子域名的形式来寶域名，就是在 `gh-pages` 分支根目录提交一个 `CNAME` 文件，而 ghp-import 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 [Pelican 的 Tips][7]。归纳起来，就是先在 `content/extra` 目录下新建一个叫 `CNAME` 的文件，其内容就是自定义域名的内容，如 `blog.kamidox.com`。然后在 Pelican 的配置文件 `publishconf.py` 下添加如下内容：
+关于 Github Pages 定制域名可以参阅[官方教程][6]。我们使用 Github 强烈推荐的子域名的形式来定制域名。
+
+### 创建 CNAME
+
+在 `gh-pages` 分支根目录提交一个 `CNAME` 文件，而 `ghp-import` 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 [Pelican 的 Tips][7]。归纳起来，就是先在 `content/extra` 目录下新建一个叫 `CNAME` 的文件，其内容就是自定义域名的内容，如 `blog.kamidox.com`。然后在 Pelican 的配置文件 `publishconf.py` 下添加如下内容：
 
 
 ```python
@@ -41,10 +45,13 @@ EXTRA_PATH_METADATA = {
     }
 ```
 
-!!! notes "注意"
-    1. 留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 `content/extra` 目录下的内容原封不动的拷贝到 `output/extra` 目录下。
-    2. 另外一个需要注意的是，我们提交 CNAME 子域名文件后后，不需要在域名供应商那边手动添加解析，这个过程中 Github 自动替我们完成的。
+留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 `content/extra` 目录下的内容原封不动的拷贝到 `output/extra` 目录下。
 
+### 修改 DNS 解析
+
+添加一条 CNAME 记录，指向 username.github.io。比如，我需要把博客地址定为 blog.kamidox.com，则我添加一条 CNAME 解析为 blog 的记录，指向 kamidox.github.io。
+
+至此，我们完成了博客迁移工作。
 
 [1]: https://pages.github.com
 [2]: http://jekyllrb.com
