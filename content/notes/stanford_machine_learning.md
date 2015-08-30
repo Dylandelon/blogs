@@ -52,7 +52,8 @@ Example: playing checkers.
 
 ### 线性回归算法
 
-* Cost Function: 成本函数，用来测量模型的准确度
+* Cost Function: 成本函数，用来测量模型的准确度。成本函数把把建模问题转换为求成本函数的极小值。
+* Contour plots: 等高线。多参数的成本函数里，有一组参数的值会有相同的成本。这些参数联接起来就是成本函数的等高线。
 * Gradient Descent: 阶梯下降，假设的模型逐步逼近真实数据的过程
 
 REF: 
@@ -62,6 +63,21 @@ REF:
 根据上面两个链接推导出阶梯下降函数。
 
 ### 数学
+
+### TODO
+
+1. 使用 markdown + MathJax 来书写数学公式
+2. 推导出模型参数的梯度下降公式 (Gradient Descent)
+
+### 术语
+
+1. Calculus: 微积分
+2. Partial derivatives: 偏导数
+3. Derivatives: 导数
+4. Gradient Descent: 梯度下降
+5. Cost Function: 成本函数
+6. Contour plots: 等高线
+
 
 * [导函数][5]
 * [线性代数][6]
