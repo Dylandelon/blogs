@@ -29,7 +29,11 @@ EXTRA_PATH_METADATA &lt;span style="color: #666666"&gt;=&lt;/span&gt; {
 &lt;p&gt;留意一下上面的路径映射。如果没有这个映射，则 Pelican 会把 &lt;code&gt;content/extra&lt;/code&gt; 目录下的内容原封不动的拷贝到 &lt;code&gt;output/extra&lt;/code&gt; 目录下。&lt;/p&gt;
 &lt;h3 id="dns"&gt;修改 DNS 解析&lt;/h3&gt;
 &lt;p&gt;添加一条 CNAME 记录，指向 username.github.io。比如，我需要把博客地址定为 blog.kamidox.com，则我添加一条 CNAME 解析为 blog 的记录，指向 kamidox.github.io。&lt;/p&gt;
-&lt;p&gt;至此，我们完成了博客迁移工作。&lt;/p&gt;</summary><category term="github"></category><category term="pelican"></category></entry><entry><title>如何保持工作的激情</title><link href="http://blog.kamidox.com/be-passion.html" rel="alternate"></link><updated>2015-07-27T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-07-27:be-passion.html</id><summary type="html">&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
+&lt;p&gt;至此，我们完成了博客迁移工作。&lt;/p&gt;
+&lt;div class="admonition notes"&gt;
+&lt;p class="admonition-title"&gt;域名是如何解析的&lt;/p&gt;
+&lt;p&gt;域名解析时，我们实际上创建了两个 CNAME 。一个是在域名提供商那边，把 blog.kamidox.com 子域名使用 CNAME 指向了 kamidox.github.io；另外一个是在 Github Pages 里的 &lt;code&gt;gh-pages&lt;/code&gt; 分支的根目录下有个内容为 blog.kamidox.com 的 CNAME 文件。当我们在浏览器里输入 blog.kamidox.com 时，浏览会先进行 DNS 解析，这个 DNS 解析和普通网络 DNS 解析没有区别，由于我们在域名提供商那边设置了 CNAME 跳转，所以这个 DNS 解析就跳转到 kamidox.github.io 上；接着进行第二次解析是在 Github 内部进行的，Github 会搜索用户下面所有的 Repo 的 &lt;code&gt;gh-pages&lt;/code&gt; 分支下的 CNAME，查找和 blog.kamidox.com 匹配的条目，在本文的例子里，Github 找到了 blogs 这个 Repo 的 &lt;code&gt;gh-pages&lt;/code&gt; ，于是最终跳转到了 kamidox.github.io/blogs 上面。这样就完成了域名绑定工作。&lt;/p&gt;
+&lt;/div&gt;</summary><category term="github"></category><category term="pelican"></category></entry><entry><title>如何保持工作的激情</title><link href="http://blog.kamidox.com/be-passion.html" rel="alternate"></link><updated>2015-07-27T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-07-27:be-passion.html</id><summary type="html">&lt;p&gt;不少人都有这样的感觉：工作不停地重复，已经麻木了，工作就是在熬，在杀时间，然后领一份工资。身边不少做做技术的工程师，都比较羡慕硅谷的那种充满激情工作氛围。那么我们的工作为什么会变得无趣呢？&lt;/p&gt;
 &lt;h2 id="_1"&gt;建立一个内化的目标&lt;/h2&gt;
 &lt;p&gt;为什么要加上&lt;strong&gt;内化&lt;/strong&gt;这两个字呢？&lt;strong&gt;内化的目标，是我们的信仰，它确保我们在迷雾中航行时不失去方向；确保在迷茫，困难面前能坚定地前行，这是内在驱动力的主要来源。&lt;/strong&gt;创业团队的 CEO 的一个最重要的工作，就是确保把公司的目标内化到团队所有成员身上。让所有人知道我们的目标是什么，并建立起实现目标的信心。&lt;/p&gt;
 &lt;h2 id="_2"&gt;建立即时反馈系统&lt;/h2&gt;

@@ -140,6 +140,10 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 <h3 id="dns">修改 DNS 解析</h3>
 <p>添加一条 CNAME 记录，指向 username.github.io。比如，我需要把博客地址定为 blog.kamidox.com，则我添加一条 CNAME 解析为 blog 的记录，指向 kamidox.github.io。</p>
 <p>至此，我们完成了博客迁移工作。</p>
+<div class="admonition notes">
+<p class="admonition-title">域名是如何解析的</p>
+<p>域名解析时，我们实际上创建了两个 CNAME 。一个是在域名提供商那边，把 blog.kamidox.com 子域名使用 CNAME 指向了 kamidox.github.io；另外一个是在 Github Pages 里的 <code>gh-pages</code> 分支的根目录下有个内容为 blog.kamidox.com 的 CNAME 文件。当我们在浏览器里输入 blog.kamidox.com 时，浏览会先进行 DNS 解析，这个 DNS 解析和普通网络 DNS 解析没有区别，由于我们在域名提供商那边设置了 CNAME 跳转，所以这个 DNS 解析就跳转到 kamidox.github.io 上；接着进行第二次解析是在 Github 内部进行的，Github 会搜索用户下面所有的 Repo 的 <code>gh-pages</code> 分支下的 CNAME，查找和 blog.kamidox.com 匹配的条目，在本文的例子里，Github 找到了 blogs 这个 Repo 的 <code>gh-pages</code> ，于是最终跳转到了 kamidox.github.io/blogs 上面。这样就完成了域名绑定工作。</p>
+</div>
 	<hr/>
 	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/tools.html">tools</a> on 2015-08-22(Saturday) 23:52. Tags: <a href="./tag/github.html">github</a>, <a href="./tag/pelican.html">pelican</a>, </h6>
 </article>
@@ -189,21 +193,21 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-1"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
 										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
 										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

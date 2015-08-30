@@ -58,7 +58,7 @@
 
 						<li><label>Categories</label></li>
 							<li ><a href="../category/android.html">android</a></li>
-							<li class="active"><a href="../category/essay.html">essay</a></li>
+							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
 							<li ><a href="../category/python.html">python</a></li>
 							<li ><a href="../category/tools.html">tools</a></li>
@@ -108,43 +108,60 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>学习一种新编程语言时，我们到底是要学什么</h2>
-	<h3 id="_1">语言的特性</h3>
-<p>对 Java 程序员而言，Swift 里的 <code>Optional</code> 应该算是一种新的特性。在 The Swift Programming Language 里有这样的描述：</p>
+	<h2>Machine Learning</h2>
+	<h2 id="_1">机器学习</h2>
+<p>课程在 <a href="https://www.coursera.org/learn/machine-learning/home/welcome">Coursera</a> 上, 讲师是 Andrew Ng。PDF 格式的课件在 <a href="http://cs229.stanford.edu/materials.html">Stanford 网站</a>上。课程讨论组在<a href="https://www.coursera.org/learn/machine-learning/discussions?sort=lastActivityAtDesc&amp;page=1">这里</a>可以找到。</p>
+<h2 id="week-1">Week 1</h2>
+<h3 id="what-is-machine-learning">What is Machine Learning?</h3>
+<p>Two definitions of Machine Learning are offered. Arthur Samuel described it as: &ldquo;the field of study that gives computers the ability to learn without being explicitly programmed.&rdquo; This is an older, informal definition.</p>
+<p>Tom Mitchell provides a more modern definition: &ldquo;A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.&rdquo;</p>
+<p>Example: playing checkers.</p>
+<ul>
+<li>E = the experience of playing many games of checkers</li>
+<li>T = the task of playing checkers.</li>
+<li>P = the probability that the program will win the next game.</li>
+</ul>
+<h3 id="supervised-learning">Supervised learning</h3>
 <blockquote>
-<p>Swift also introduces optional types, which handle the absence of a value. Optionals say either “there is a value, and it equals x” or “there isn’t a value at all”. Optionals are similar to using nil with pointers in Objective-C, but they work for any type, not just classes. Optionals are safer and more expressive than nil pointers in Objective-C and are at the heart of many of Swift’s most powerful features.</p>
+<p>In supervised learning, we are given a data set and already know what our correct output should look like, having the idea that there is a relationship between the input and the output.</p>
+<p>Supervised learning problems are categorized into &ldquo;regression&rdquo; and &ldquo;classification&rdquo; problems. In a regression problem, we are trying to predict results within a continuous output, meaning that we are trying to map input variables to some continuous function. In a classification problem, we are instead trying to predict results in a discrete output. In other words, we are trying to map input variables into discrete categories.</p>
 </blockquote>
-<p>看这一句话并不能理解 <code>Optional</code> 的强大威力。但如果翻阅 Cocoa Touch 的 API 文档，你会发现大部分函数返回值都是 <code>Optional</code> 的，连很多类的属性也是 <code>Optional</code>。再深入学习，就会发现 <code>Optional</code> 基本上是 Swift 语言里的<strong>错误处理机制</strong>。至少到目前为止，Swift 还没有类似 try catch 这种错误处理方式。</p>
-<p>类似的概念还有闭包 (Closure)。Java 8 之前是没有闭包的，如果闭包对你而言是个新概念，那么就值得深入去学习它的作用和最佳实践。我们可以在内心保持一种对优秀编程语言的敬畏：设计一种优秀编程语言的人都是一群极客，他们发明了这样的概念一定是为了解决某种编程过程中的痛点的。当然，如果你学习过 Python，可能闭包对你就不是什么新概念，但实际上你会发现 Swift 里的闭包的写法是可以是非常地简洁。因为 Swift 是一种非常年轻的语言，它在设计阶段一定会去参考其他编程语言优缺点。</p>
-<h3 id="_2">语言的陷阱</h3>
-<p>语言的陷阱和特性一样重要。我们看下面一个简单的例子：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">array</span> = <span style="color: #AA22FF">Array</span>&lt;<span style="color: #AA22FF">Int</span>&gt;()
-array.append(<span style="color: #666666">1</span>)
-array.append(<span style="color: #666666">2</span>)
-array.append(<span style="color: #666666">3</span>)
-
-<span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">changeSomeThing</span>(a: <span style="color: #AA22FF">Array</span>&lt;<span style="color: #AA22FF">Int</span>&gt;) {
-    a[<span style="color: #666666">0</span>] = <span style="color: #666666">100</span>
-}
-
-changeSomeThing(array)
-
-<span style="color: #AA22FF">println</span>(<span style="color: #BB4444">&quot;</span><span style="color: #BB6688; font-weight: bold">\(</span>array<span style="color: #BB6688; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span>)
-</pre></div>
-
-
-<p>上面的代码会输出什么内容？实际上，这个代码无法编译通过。第 7 行代码会出错，提示数组是只读的。因为对 Swift 设计者而言，这种陷阱一定会在 Java 程序员身上发生，</p>
-<h3 id="_3">语言的应用场景</h3>
-<p>我们总是可以问这样的问题：为什么要设计这样一种这个语言？他的设计目标是什么？在什么场景下使用？通过搜索资料，我们不难找出这种语言的应用场景。</p>
-<p><strong>编程语言三个要素</strong><br />
-语法；标准库；应用框架。</p>
-<p><strong>今日推荐</strong><br />
-今天推荐一个小工具<a href="http://www.cockos.com/licecap/">LiceCap</a>。它可以把你的屏幕操作录制成 GIF 动画。</p>
+<ol>
+<li>Supervised learning: 结果形式己知的机器学习。比如，从过往销售数据，预测未来三个月的销售数据。</li>
+<li>Classfication learning: 输出结果是离散的。</li>
+<li>Regression learning: 输出结果是连续的。</li>
+</ol>
+<h3 id="unsupervised-learning">Unsupervised learning</h3>
 <blockquote>
-<p>LICEcap can capture an area of your desktop and save it directly to .GIF or .LCF</p>
+<p>Unsupervised learning, on the other hand, allows us to approach problems with little or no idea what our results should look like. We can derive structure from data where we don&rsquo;t necessarily know the effect of the variables.</p>
+<p>With unsupervised learning there is no feedback based on the prediction results, i.e., there is no teacher to correct you. It’s not just about clustering. </p>
 </blockquote>
+<p>数据挖掘，从给定的数据集合里去发现规律，进行模式匹配。结果形式不可知。计算结果无法对数据进行反馈。</p>
+<p><strong>例子：声音处理</strong><br />
+从一个有背景音乐的吵杂的会议中演讲的录音文件中，通过数据挖掘和特征匹配来处理这段录音，最终分离出演讲录音和音乐。</p>
+<ul>
+<li>Supervised learning: Given email labed as spam/not spam; learn a email filter.</li>
+<li>Unsupervised learning: Given as set of news articles found on web, group them as a set of articles about the same story.</li>
+<li>Unsupervised learning: Given a set of customer data, automatically discover the market segment and group customers into different market segment.</li>
+<li>Supervised learning: Given a dataset of patients diagnosed as either having diabets or not, learn to classify new patients as having diabets or not.</li>
+</ul>
+<h3 id="_2">线性回归算法</h3>
+<ul>
+<li>Cost Function: 成本函数，用来测量模型的准确度</li>
+<li>Gradient Descent: 阶梯下降，假设的模型逐步逼近真实数据的过程</li>
+</ul>
+<p>REF: <br />
+1. <a href="https://www.coursera.org/learn/machine-learning/supplement/Mc0tF/linear-regression-with-one-variable">Linear Regression with One Variable</a><br />
+2. <a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">Partial derivative in gradient descent for two variables</a></p>
+<p>根据上面两个链接推导出阶梯下降函数。</p>
+<h3 id="_3">数学</h3>
+<ul>
+<li><a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">导函数</a></li>
+<li><a href="https://www.coursera.org/learn/machine-learning/supplement/NMXXL/linear-algebra-review">线性代数</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Linear_least_squares_%28mathematics%29#Derivation_of_the_normal_equations">最小二阶乘数拟合数据</a></li>
+</ul>
 	<hr/>
-	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/essay.html">essay</a> on 2015-01-08(Thursday) 23:20. Tags: <a href="../tag/thought.html">thought</a>, </h6>
+	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-08-29(Saturday) 20:20.</h6>
 </article>
 
 <hr/>
