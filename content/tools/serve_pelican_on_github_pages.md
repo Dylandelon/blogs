@@ -53,6 +53,9 @@ EXTRA_PATH_METADATA = {
 
 至此，我们完成了博客迁移工作。
 
+!!! notes "域名是如何解析的"
+    域名解析时，我们实际上创建了两个 CNAME 。一个是在域名提供商那边，把 blog.kamidox.com 子域名使用 CNAME 指向了 kamidox.github.io；另外一个是在 Github Pages 里的 `gh-pages` 分支的根目录下有个内容为 blog.kamidox.com 的 CNAME 文件。当我们在浏览器里输入 blog.kamidox.com 时，浏览会先进行 DNS 解析，这个 DNS 解析和普通网络 DNS 解析没有区别，由于我们在域名提供商那边设置了 CNAME 跳转，所以这个 DNS 解析就跳转到 kamidox.github.io 上；接着进行第二次解析是在 Github 内部进行的，Github 会搜索用户下面所有的 Repo 的 `gh-pages` 分支下的 CNAME，查找和 blog.kamidox.com 匹配的条目，在本文的例子里，Github 找到了 blogs 这个 Repo 的 `gh-pages` ，于是最终跳转到了 kamidox.github.io/blogs 上面。这样就完成了域名绑定工作。
+
 [1]: https://pages.github.com
 [2]: http://jekyllrb.com
 [3]: https://github.com/davisp/ghp-import
