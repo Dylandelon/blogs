@@ -64,24 +64,33 @@ REF:
 
 ### 数学
 
+* [微积分][5] 四个最简单的规则
+	* 针对 $F(x) = cx^n$，其导函数是 $F'(x) = cn\times{x^{(n-1)}}$
+	* 常数的导数是 0
+	* 导函数可以穿透累加器，即 $\displaystyle\frac{\partial}{\partial x_0}\sum_{i=0}^nF(x_i) = \sum_{i=0}^n\frac{\partial}{\partial x_0}x_i$
+	* 微分传导机制，即$\displaystyle\frac{\partial}{\partial x}g(f(x)) = g'(f(x))\times f'(x)$
+* [线性代数][6]
+* [最小二阶乘数拟合数据][7]
+* 概率论复习
+
 ### TODO
 
-1. 使用 markdown + MathJax 来书写数学公式
-2. 推导出模型参数的梯度下降公式 (Gradient Descent)
+* 使用 markdown + MathJax 来书写数学公式
+	* [LaTex 教程][8]
+	* [LaTex 支持的所有符号列表][9]
+* 推导出模型参数的梯度下降公式 (Gradient Descent)
+* 推导出 LSM (Widrow-Hoff学习算法)
 
 ### 术语
 
-1. Calculus: 微积分
-2. Partial derivatives: 偏导数
-3. Derivatives: 导数
-4. Gradient Descent: 梯度下降
-5. Cost Function: 成本函数
-6. Contour plots: 等高线
+* Calculus: 微积分
+* Partial derivatives: 偏导数
+* Derivatives: 导数
+* Gradient Descent: 梯度下降
+* Cost Function: 成本函数
+* Contour plots: 等高线
+* Least Mean Squares: LSM, 最小均方
 
-
-* [导函数][5]
-* [线性代数][6]
-* [最小二阶乘数拟合数据][7]
 
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
@@ -90,3 +99,5 @@ REF:
 [5]: http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792
 [6]: https://www.coursera.org/learn/machine-learning/supplement/NMXXL/linear-algebra-review
 [7]: https://en.wikipedia.org/wiki/Linear_least_squares_%28mathematics%29#Derivation_of_the_normal_equations
+[8]: http://www.forkosh.com/mathtextutorial.html
+[9]: http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf
