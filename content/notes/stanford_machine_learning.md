@@ -67,7 +67,7 @@ REF:
 * [微积分][5] 四个最简单的规则
 	* 针对 $F(x) = cx^n$，其导函数是 $F'(x) = cn\times{x^{(n-1)}}$
 	* 常数的导数是 0
-	* 导函数可以穿透累加器，即 $\displaystyle\frac{\partial}{\partial x_0}\sum_{i=0}^nF(x_i) = \sum_{i=0}^n\frac{\partial}{\partial x_0}x_i$
+	* 导函数可以穿透累加器，即 $\displaystyle\frac{\partial}{\partial x_0}\sum_{i=0}^nF(x_i) = \sum_{i=0}^n\frac{\partial}{\partial x_0}F(x_i)$
 	* 微分传导机制，即$\displaystyle\frac{\partial}{\partial x}g(f(x)) = g'(f(x))\times f'(x)$
 * [线性代数][6]
 * [最小二阶乘数拟合数据][7]
