@@ -107,7 +107,7 @@ $$
 &lt;li&gt;这是 &lt;a href="http://www.forkosh.com/mathtextutorial.html"&gt;LaTex 完整教程&lt;/a&gt;，包含完整的 LaTex 数学公式的内容，包括更高级的格式控制等&lt;/li&gt;
 &lt;li&gt;这是一份PDF 格式的 &lt;a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf"&gt;MathJax 支持的数学符号表&lt;/a&gt;，当需要书写复杂数学公式时，一些非常特殊的符号的转义字符可以从这里查到&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;好啦，这样差不多就可以写出优美的数学公式啦。&lt;/p&gt;</summary><category term="markdown"></category><category term="meachine_learning"></category></entry><entry><title>使用 Github Pages 来托管 Pelican 生成的博客</title><link href="http://blog.kamidox.com/serve-pelican-on-github-pages.html" rel="alternate"></link><updated>2015-08-22T23:52:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-08-22:serve-pelican-on-github-pages.html</id><summary type="html">&lt;h2 id="github-pages"&gt;关于 Github Pages&lt;/h2&gt;
+&lt;p&gt;好啦，这样差不多就可以写出优美的数学公式啦。&lt;/p&gt;</summary><category term="markdown"></category><category term="machine-learning"></category></entry><entry><title>使用 Github Pages 来托管 Pelican 生成的博客</title><link href="http://blog.kamidox.com/serve-pelican-on-github-pages.html" rel="alternate"></link><updated>2015-08-22T23:52:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-08-22:serve-pelican-on-github-pages.html</id><summary type="html">&lt;h2 id="github-pages"&gt;关于 Github Pages&lt;/h2&gt;
 &lt;p&gt;Github Pages 是 Github 提供的免费的空间来展现静态网页。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Websites for you and your projects. Hosted directly from your GitHub repository. Just edit, push, and your changes are live.&lt;/p&gt;
