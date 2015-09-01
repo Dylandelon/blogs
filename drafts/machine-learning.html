@@ -68,6 +68,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (1)</a></li>
 									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
 									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
@@ -147,7 +148,8 @@
 </ul>
 <h3 id="_2">线性回归算法</h3>
 <ul>
-<li>Cost Function: 成本函数，用来测量模型的准确度</li>
+<li>Cost Function: 成本函数，用来测量模型的准确度。成本函数把把建模问题转换为求成本函数的极小值。</li>
+<li>Contour plots: 等高线。多参数的成本函数里，有一组参数的值会有相同的成本。这些参数联接起来就是成本函数的等高线。</li>
 <li>Gradient Descent: 阶梯下降，假设的模型逐步逼近真实数据的过程</li>
 </ul>
 <p>REF: <br />
@@ -156,9 +158,36 @@
 <p>根据上面两个链接推导出阶梯下降函数。</p>
 <h3 id="_3">数学</h3>
 <ul>
-<li><a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">导函数</a></li>
+<li><a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">微积分</a> 四个最简单的规则<ul>
+<li>针对 $F(x) = cx^n$，其导函数是 $F&rsquo;(x) = cn\times{x^{(n-1)}}$</li>
+<li>常数的导数是 0</li>
+<li>导函数可以穿透累加器，即 $\displaystyle\frac{\partial}{\partial x_0}\sum_{i=0}^nF(x_i) = \sum_{i=0}^n\frac{\partial}{\partial x_0}F(x_i)$</li>
+<li>微分传导机制，即$\displaystyle\frac{\partial}{\partial x}g(f(x)) = g&rsquo;(f(x))\times f&rsquo;(x)$</li>
+</ul>
+</li>
 <li><a href="https://www.coursera.org/learn/machine-learning/supplement/NMXXL/linear-algebra-review">线性代数</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Linear_least_squares_%28mathematics%29#Derivation_of_the_normal_equations">最小二阶乘数拟合数据</a></li>
+<li>概率论复习</li>
+</ul>
+<h3 id="todo">TODO</h3>
+<ul>
+<li>使用 markdown + MathJax 来书写数学公式<ul>
+<li><a href="http://www.forkosh.com/mathtextutorial.html">LaTex 教程</a></li>
+<li><a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf">LaTex 支持的所有符号列表</a></li>
+</ul>
+</li>
+<li>推导出模型参数的梯度下降公式 (Gradient Descent)</li>
+<li>推导出 LSM (Widrow-Hoff学习算法)</li>
+</ul>
+<h3 id="_4">术语</h3>
+<ul>
+<li>Calculus: 微积分</li>
+<li>Partial derivatives: 偏导数</li>
+<li>Derivatives: 导数</li>
+<li>Gradient Descent: 梯度下降</li>
+<li>Cost Function: 成本函数</li>
+<li>Contour plots: 等高线</li>
+<li>Least Mean Squares: LSM, 最小均方</li>
 </ul>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-08-29(Saturday) 20:20.</h6>
@@ -209,27 +238,29 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
 										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-1"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
 										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
 										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
 										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
 										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/meachine_learning.html">meachine_learning</a></li>
+										<li class="tag-1"><a href="../tag/android.html">android</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
+											<li><a href="/posts/2015/09/index.html">September 2015 (1)</a></li>
 											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
 											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>

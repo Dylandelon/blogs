@@ -1,5 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/joey-huang.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 22 Aug 2015 23:52:00 +0800</lastBuildDate><item><title>使用 Github Pages 来托管 Pelican 生成的博客</title><link>http://blog.kamidox.com/serve-pelican-on-github-pages.html</link><description>&lt;h2 id="github-pages"&gt;关于 Github Pages&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/joey-huang.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 01 Sep 2015 22:52:00 +0800</lastBuildDate><item><title>使用 Markdown + MathJax 在博客里插入数学公式</title><link>http://blog.kamidox.com/write-math-formula-with-mathjax.html</link><description>&lt;p&gt;在书写数值计算类文章，特别是机器学习相关算法时，难免需要插入复杂的数学公式。一种是用图片在网页上展示，另外一种是使用 &lt;a href="https://www.mathjax.org"&gt;MathJax&lt;/a&gt; 来展示复杂的数学公式。它直接使用 Javascript 使用矢量字库或 SVG 文件来显示数学公式。优点是效果好，比如在 Retina 屏幕上也不会变得模糊。并且可以直接把公式写在 Markdown 文章里。本文介绍使用 MathJax 在 Markdown 文件里直接插入数学公式。并且附带一个简单的书写数学公式的 LaTex 教程。&lt;/p&gt;
+&lt;h2 id="_1"&gt;工具&lt;/h2&gt;
+&lt;h3 id="markdown-preview-mathjax"&gt;配置 Markdown Preview 来支持 MathJax&lt;/h3&gt;
+&lt;p&gt;使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -&amp;gt; Markdown Preview -&amp;gt; Setting - User) 里添加如下内容：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #BB4444"&gt;&amp;quot;enable_mathjax&amp;quot;&lt;/span&gt;&lt;span style="color: #666666"&gt;:&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="pelican-mathjax"&gt;配置 Pelican 主题模板来支持 MathJax&lt;/h3&gt;
+&lt;p&gt;我使用的主题是 &lt;code&gt;foundation-default-colours&lt;/code&gt;，它默认是支持 MathJax 的。我们可以在模板 &lt;code&gt;base.html&lt;/code&gt; 找到如下内容：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #008800; font-style: italic"&gt;&amp;lt;!-- mathjax config similar to math.stackexchange --&amp;gt;&lt;/span&gt;
+&lt;span style="color: #008000; font-weight: bold"&gt;&amp;lt;script &lt;/span&gt;&lt;span style="color: #BB4444"&gt;type=&amp;quot;text/x-mathjax-config&amp;quot;&lt;/span&gt;&lt;span style="color: #008000; font-weight: bold"&gt;&amp;gt;&lt;/span&gt;
+MathJax.Hub.Config({
+    jax&lt;span style="color: #666666"&gt;:&lt;/span&gt; [&lt;span style="color: #BB4444"&gt;&amp;quot;input/TeX&amp;quot;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;quot;output/HTML-CSS&amp;quot;&lt;/span&gt;],
+    tex2jax&lt;span style="color: #666666"&gt;:&lt;/span&gt; {
+        inlineMath&lt;span style="color: #666666"&gt;:&lt;/span&gt; [ [&lt;span style="color: #BB4444"&gt;&amp;#39;$&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;$&amp;#39;&lt;/span&gt;] ],
+        displayMath&lt;span style="color: #666666"&gt;:&lt;/span&gt; [ [&lt;span style="color: #BB4444"&gt;&amp;#39;$$&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;$$&amp;#39;&lt;/span&gt;]],
+        processEscapes&lt;span style="color: #666666"&gt;:&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;true&lt;/span&gt;,
+        skipTags&lt;span style="color: #666666"&gt;:&lt;/span&gt; [&lt;span style="color: #BB4444"&gt;&amp;#39;script&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;noscript&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;style&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;textarea&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;pre&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;code&amp;#39;&lt;/span&gt;]
+    },
+    messageStyle&lt;span style="color: #666666"&gt;:&lt;/span&gt; &lt;span style="color: #BB4444"&gt;&amp;quot;none&amp;quot;&lt;/span&gt;,
+    &lt;span style="color: #BB4444"&gt;&amp;quot;HTML-CSS&amp;quot;&lt;/span&gt;&lt;span style="color: #666666"&gt;:&lt;/span&gt; { preferredFont&lt;span style="color: #666666"&gt;:&lt;/span&gt; &lt;span style="color: #BB4444"&gt;&amp;quot;TeX&amp;quot;&lt;/span&gt;, availableFonts&lt;span style="color: #666666"&gt;:&lt;/span&gt; [&lt;span style="color: #BB4444"&gt;&amp;quot;STIX&amp;quot;&lt;/span&gt;,&lt;span style="color: #BB4444"&gt;&amp;quot;TeX&amp;quot;&lt;/span&gt;] }
+});
+&lt;span style="color: #008000; font-weight: bold"&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span style="color: #008000; font-weight: bold"&gt;&amp;lt;script &lt;/span&gt;&lt;span style="color: #BB4444"&gt;type=&amp;quot;text/javascript&amp;quot;&lt;/span&gt; &lt;span style="color: #BB4444"&gt;src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;quot;&lt;/span&gt;&lt;span style="color: #008000; font-weight: bold"&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果模板不支持，也可以直接添加上面的脚本来支持 MathJax。&lt;/p&gt;
+&lt;h2 id="latex"&gt;LaTex 简明教程&lt;/h2&gt;
+&lt;h3 id="_2"&gt;例子&lt;/h3&gt;
+&lt;p&gt;先来看个例子：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;$$
+J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
+$$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面用 LaTex 格式书写的数学公式经过 MathJax 展示后效果如下：&lt;/p&gt;
+&lt;p&gt;$$&lt;br /&gt;
+J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2&lt;br /&gt;
+$$&lt;/p&gt;
+&lt;p&gt;这个公式是线性回归算法里的成本函数。&lt;/p&gt;
+&lt;h3 id="_3"&gt;规则&lt;/h3&gt;
+&lt;p&gt;关于在 Markdown 书写 LaTex 数学公式有几个规则常用规则需要记住：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;行内公式&lt;/strong&gt;&lt;br /&gt;
+行内公式使用 &lt;code&gt;$&lt;/code&gt; 号作为公式的左右边界，如 $h(x) = \theta_0 + \theta_1 x$ 公式的 LaTex 内容如下&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;$h(x) = \theta_0 + \theta_1 x$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;行间公式&lt;/strong&gt;&lt;br /&gt;
+公式需要独立显示一行时，使用 &lt;code&gt;$$&lt;/code&gt; 来作为公式的左右边界，如&lt;/p&gt;
+&lt;p&gt;$$&lt;br /&gt;
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)&lt;br /&gt;
+$$&lt;/p&gt;
+&lt;p&gt;的 LaTex 代码为：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;$$
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+$$
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;常用 LaTex 代码&lt;/strong&gt;&lt;br /&gt;
+需要记住的几个常用的符号，这样书写起来会快一点&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;编码&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;\frac&lt;/td&gt;
+&lt;td&gt;分子分母之间的横线&lt;/td&gt;
+&lt;td&gt;$\frac1x$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;_&lt;/td&gt;
+&lt;td&gt;用下划线来表示下标&lt;/td&gt;
+&lt;td&gt;$x_i$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;^&lt;/td&gt;
+&lt;td&gt;次方运算符来表示上标&lt;/td&gt;
+&lt;td&gt;$x^i$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\sum&lt;/td&gt;
+&lt;td&gt;累加器，上下标用上面介绍的编码来书写&lt;/td&gt;
+&lt;td&gt;$\sum$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\alpha&lt;/td&gt;
+&lt;td&gt;希腊字母 alpha&lt;/td&gt;
+&lt;td&gt;$y := \alpha x$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;记住这几个就差不多了，倒回去看一下线性回归算法的成本函数的公式及其 LaTex 代码，对着练习个10分钟基本就可以掌握常用公式的写法了。要特别注意公式里空格和 &lt;code&gt;{}&lt;/code&gt; 的运用规则。基本原则是，空格可加可不加，但如果会引起歧义，最好加上空格。&lt;code&gt;{}&lt;/code&gt; 是用来组成群组的。比如写一个分式时，分母是一个复杂公式时，可以用 &lt;code&gt;{}&lt;/code&gt; 包含起来，这样整个复杂公式都会变成分母了。&lt;/p&gt;
+&lt;h3 id="_4"&gt;几个非常有用的资源&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Github 上有个&lt;a href="https://kerzol.github.io/markdown-mathjax/editor.html"&gt;在线 Markdown MathJax 编辑器&lt;/a&gt;，可以在这里练习，平时写公式时也可以在这里先写好再拷贝到文章里&lt;/li&gt;
+&lt;li&gt;这是 &lt;a href="http://www.forkosh.com/mathtextutorial.html"&gt;LaTex 完整教程&lt;/a&gt;，包含完整的 LaTex 数学公式的内容，包括更高级的格式控制等&lt;/li&gt;
+&lt;li&gt;这是一份PDF 格式的 &lt;a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf"&gt;MathJax 支持的数学符号表&lt;/a&gt;，当需要书写复杂数学公式时，一些非常特殊的符号的转义字符可以从这里查到&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;好啦，这样差不多就可以写出优美的数学公式啦。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Tue, 01 Sep 2015 22:52:00 +0800</pubDate><guid>tag:blog.kamidox.com,2015-09-01:write-math-formula-with-mathjax.html</guid><category>markdown</category><category>meachine_learning</category></item><item><title>使用 Github Pages 来托管 Pelican 生成的博客</title><link>http://blog.kamidox.com/serve-pelican-on-github-pages.html</link><description>&lt;h2 id="github-pages"&gt;关于 Github Pages&lt;/h2&gt;
 &lt;p&gt;Github Pages 是 Github 提供的免费的空间来展现静态网页。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Websites for you and your projects. Hosted directly from your GitHub repository. Just edit, push, and your changes are live.&lt;/p&gt;

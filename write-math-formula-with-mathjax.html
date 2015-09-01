@@ -60,8 +60,8 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li class="active"><a href="./category/python.html">python</a></li>
-							<li ><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li class="active"><a href="./category/tools.html">tools</a></li>
 							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
 
 
@@ -109,48 +109,118 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>Python特性汇总</h2>
-	<div class="toc">
+	<h2>使用 Markdown + MathJax 在博客里插入数学公式</h2>
+	<p>在书写数值计算类文章，特别是机器学习相关算法时，难免需要插入复杂的数学公式。一种是用图片在网页上展示，另外一种是使用 <a href="https://www.mathjax.org">MathJax</a> 来展示复杂的数学公式。它直接使用 Javascript 使用矢量字库或 SVG 文件来显示数学公式。优点是效果好，比如在 Retina 屏幕上也不会变得模糊。并且可以直接把公式写在 Markdown 文章里。本文介绍使用 MathJax 在 Markdown 文件里直接插入数学公式。并且附带一个简单的书写数学公式的 LaTex 教程。</p>
+<h2 id="_1">工具</h2>
+<h3 id="markdown-preview-mathjax">配置 Markdown Preview 来支持 MathJax</h3>
+<p>使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -&gt; Markdown Preview -&gt; Setting - User) 里添加如下内容：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #BB4444">&quot;enable_mathjax&quot;</span><span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>
+</pre></div>
+
+
+<h3 id="pelican-mathjax">配置 Pelican 主题模板来支持 MathJax</h3>
+<p>我使用的主题是 <code>foundation-default-colours</code>，它默认是支持 MathJax 的。我们可以在模板 <code>base.html</code> 找到如下内容：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">&lt;!-- mathjax config similar to math.stackexchange --&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/x-mathjax-config&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+MathJax.Hub.Config({
+    jax<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;input/TeX&quot;</span>, <span style="color: #BB4444">&quot;output/HTML-CSS&quot;</span>],
+    tex2jax<span style="color: #666666">:</span> {
+        inlineMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$&#39;</span>, <span style="color: #BB4444">&#39;$&#39;</span>] ],
+        displayMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$$&#39;</span>, <span style="color: #BB4444">&#39;$$&#39;</span>]],
+        processEscapes<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>,
+        skipTags<span style="color: #666666">:</span> [<span style="color: #BB4444">&#39;script&#39;</span>, <span style="color: #BB4444">&#39;noscript&#39;</span>, <span style="color: #BB4444">&#39;style&#39;</span>, <span style="color: #BB4444">&#39;textarea&#39;</span>, <span style="color: #BB4444">&#39;pre&#39;</span>, <span style="color: #BB4444">&#39;code&#39;</span>]
+    },
+    messageStyle<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;none&quot;</span>,
+    <span style="color: #BB4444">&quot;HTML-CSS&quot;</span><span style="color: #666666">:</span> { preferredFont<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;TeX&quot;</span>, availableFonts<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;STIX&quot;</span>,<span style="color: #BB4444">&quot;TeX&quot;</span>] }
+});
+<span style="color: #008000; font-weight: bold">&lt;/script&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/javascript&quot;</span> <span style="color: #BB4444">src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span style="color: #008000; font-weight: bold">&gt;&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>如果模板不支持，也可以直接添加上面的脚本来支持 MathJax。</p>
+<h2 id="latex">LaTex 简明教程</h2>
+<h3 id="_2">例子</h3>
+<p>先来看个例子：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">$$
+J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
+$$
+</pre></div>
+
+
+<p>上面用 LaTex 格式书写的数学公式经过 MathJax 展示后效果如下：</p>
+<p>$$<br />
+J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2<br />
+$$</p>
+<p>这个公式是线性回归算法里的成本函数。</p>
+<h3 id="_3">规则</h3>
+<p>关于在 Markdown 书写 LaTex 数学公式有几个规则常用规则需要记住：</p>
+<p><strong>行内公式</strong><br />
+行内公式使用 <code>$</code> 号作为公式的左右边界，如 $h(x) = \theta_0 + \theta_1 x$ 公式的 LaTex 内容如下</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">$h(x) = \theta_0 + \theta_1 x$
+</pre></div>
+
+
+<p><strong>行间公式</strong><br />
+公式需要独立显示一行时，使用 <code>$$</code> 来作为公式的左右边界，如</p>
+<p>$$<br />
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)<br />
+$$</p>
+<p>的 LaTex 代码为：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">$$
+\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
+$$
+</pre></div>
+
+
+<p><strong>常用 LaTex 代码</strong><br />
+需要记住的几个常用的符号，这样书写起来会快一点</p>
+<table>
+<thead>
+<tr>
+<th>编码</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\frac</td>
+<td>分子分母之间的横线</td>
+<td>$\frac1x$</td>
+</tr>
+<tr>
+<td>_</td>
+<td>用下划线来表示下标</td>
+<td>$x_i$</td>
+</tr>
+<tr>
+<td>^</td>
+<td>次方运算符来表示上标</td>
+<td>$x^i$</td>
+</tr>
+<tr>
+<td>\sum</td>
+<td>累加器，上下标用上面介绍的编码来书写</td>
+<td>$\sum$</td>
+</tr>
+<tr>
+<td>\alpha</td>
+<td>希腊字母 alpha</td>
+<td>$y := \alpha x$</td>
+</tr>
+</tbody>
+</table>
+<p>记住这几个就差不多了，倒回去看一下线性回归算法的成本函数的公式及其 LaTex 代码，对着练习个10分钟基本就可以掌握常用公式的写法了。要特别注意公式里空格和 <code>{}</code> 的运用规则。基本原则是，空格可加可不加，但如果会引起歧义，最好加上空格。<code>{}</code> 是用来组成群组的。比如写一个分式时，分母是一个复杂公式时，可以用 <code>{}</code> 包含起来，这样整个复杂公式都会变成分母了。</p>
+<h3 id="_4">几个非常有用的资源</h3>
 <ul>
-<li><a href="#_1">摘要</a></li>
-<li><a href="#python-decorator">Python Decorator</a></li>
-<li><a href="#with">with语句</a></li>
-<li><a href="#python-descriptor">Python Descriptor</a></li>
+<li>Github 上有个<a href="https://kerzol.github.io/markdown-mathjax/editor.html">在线 Markdown MathJax 编辑器</a>，可以在这里练习，平时写公式时也可以在这里先写好再拷贝到文章里</li>
+<li>这是 <a href="http://www.forkosh.com/mathtextutorial.html">LaTex 完整教程</a>，包含完整的 LaTex 数学公式的内容，包括更高级的格式控制等</li>
+<li>这是一份PDF 格式的 <a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf">MathJax 支持的数学符号表</a>，当需要书写复杂数学公式时，一些非常特殊的符号的转义字符可以从这里查到</li>
 </ul>
-</div>
-<h2 id="_1">摘要</h2>
-<p>本文汇总了Python一些重要的特性，并收集了网络上介绍这些特性的优秀的文章。本文将持续更新。</p>
-<h2 id="python-decorator">Python Decorator</h2>
-<p>如果你对代码中出现的<code>@classmethod</code>感到很困惑，则需要了解一下Python装饰器。</p>
-<ul>
-<li>入门文章<br />
-<a href="http://www.cnblogs.com/huxi/archive/2011/03/01/1967600.html">这篇文章</a>是不可多得的装饰器的入门文章，它对内置装饰器和functools包做详细的介绍。<br />
-<a href="http://www.cnblogs.com/rhcad/archive/2011/12/21/2295507.html">这篇文章</a>里对装饰器支持参数传递有一些简单的示例。</li>
-<li>深入阅读<br />
-  如果你对Python Decorator以及开源语言的演进感兴趣，可以深入阅读一些英文的资料。<br />
-<a href="http://legacy.python.org/dev/peps/pep-0318/">PEP318</a>对Python Decorator进行了官方定义。<br />
-<a href="https://wiki.python.org/moin/PythonDecorators">Python Decorator Wiki</a>更详细地描述了Python Decorator演进的历史。看完这篇文章，对开源语言的演进进程会有个相当直观的了解。</li>
-</ul>
-<h2 id="with">with语句</h2>
-<p><code>with</code>语句是从 Python 2.5 开始引入的一种与异常处理相关的功能。它让我们能更加优雅地编写异常处理代码。</p>
-<ul>
-<li>入门文章<br />
-<a href="http://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/">这篇文章</a>深入浅出地介绍了with语句产生的背景以及用法。来自IBM developerWorks。</li>
-<li>深入阅读<br />
-<a href="http://legacy.python.org/dev/peps/pep-0343/">PEP343</a>对<code>with</code>语句进行了官方描述。</li>
-</ul>
-<h2 id="python-descriptor">Python Descriptor</h2>
-<p>如果你对<code>__get__</code>，<code>__set__</code>，<code>__del__</code>等函数的工作机制不了解。那么需要学习一下Python Descriptor协议。</p>
-<ul>
-<li>入门文章<br />
-<a href="http://www.cnblogs.com/btchenguang/archive/2012/09/17/2689146.html">这篇文章</a>对新式类和经典类以及类对象模式进行了较深入全面的介绍。<br />
-<a href="http://www.cnblogs.com/btchenguang/archive/2012/09/18/2690802.html">这篇文章</a>是上一篇文章的续集，正式介绍Python Descriptor。</li>
-<li>深入阅读<br />
-  Python官网关于<a href="https://docs.python.org/2/howto/descriptor.html">Descriptor的教程</a>也是一篇非常不错的文章。不过是英文的。<br />
-<a href="http://www.ibm.com/developerworks/library/os-pythondescriptors/">另外一篇</a>非常不错的英文文章来自向来质量很高的IBM developerWorks。</li>
-</ul>
+<p>好啦，这样差不多就可以写出优美的数学公式啦。</p>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/python.html">python</a> on 2014-10-04(Saturday) 20:20. Tags: <a href="./tag/python.html">python</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/tools.html">tools</a> on 2015-09-01(Tuesday) 22:52. Tags: <a href="./tag/markdown.html">markdown</a>, <a href="./tag/meachine_learning.html">meachine_learning</a>, </h6>
 </article>
 
 <hr/>
