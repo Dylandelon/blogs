@@ -5,7 +5,6 @@ Slug: gradient-descent
 Tags: machine-learning
 Authors: Joey Huang
 Summary: 本文总结了线性回归算法里用到的一些微积分知识，接着根据最小均方差推导出梯度下降算法以及优化后的随机梯度下降算法。
-Status: draft
 
 本文总结了线性回归算法里用到的一些微积分知识，接着根据最小均方差推导出梯度下降算法以及优化后的随机梯度下降算法。
 
