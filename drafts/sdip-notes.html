@@ -1,0 +1,462 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="../theme/css/foundation.css" />
+		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="../theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+
+		<script src="../theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$', '$'] ],
+				displayMath: [ ['$$', '$$']],
+				processEscapes: true,
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+			},
+			messageStyle: "none",
+			"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+		});
+		</script>
+		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="../category/android.html">android</a></li>
+							<li ><a href="../category/essay.html">essay</a></li>
+							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/ml.html">ml</a></li>
+							<li ><a href="../category/python.html">python</a></li>
+							<li ><a href="../category/tools.html">tools</a></li>
+							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (2)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="../">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>SDIP notes</h2>
+	<h2 id="sdip-overview">SDIP Overview</h2>
+<h3 id="project-life-cycle-phases">Project Life Cycle Phases</h3>
+<ol>
+<li>Initiation</li>
+<li>Planning<ul>
+<li>Gathering of Requirements (Major Tasks and activities)</li>
+<li>Analysis of Scope (Major Tasks and activities)</li>
+<li>Create the Test Environment (Entry/Exit criteria)</li>
+</ul>
+</li>
+<li>Execution<ul>
+<li>Alpha (Mainstones)</li>
+<li>Beta (Mainstones)</li>
+<li>Release Candidate (Mainstones)</li>
+<li>Close Sev 1/2 Defects (Entry/Exit criteria)</li>
+</ul>
+</li>
+<li>Closure</li>
+</ol>
+<h3 id="software-development-life-cycle-sdlc">Software Development Life Cycle (SDLC)</h3>
+<ol>
+<li>Planning</li>
+<li>Analysis -&gt; documented product requirements and end user needs</li>
+<li>Design -&gt; documented design document to skilled programmers</li>
+<li>Develop/Implementation -&gt; coding and publish to testing team</li>
+<li>Testing -&gt; software is ready</li>
+<li>Deployment -&gt; software training, support and deployment communications</li>
+<li>Maintaince </li>
+</ol>
+<h3 id="different-main-development-life-cycles">Different Main Development Life Cycles</h3>
+<ol>
+<li>Waterfall</li>
+<li>V-Model</li>
+<li>Agile: Agile with Scrum; Agile with RAD; Agile with XP;</li>
+<li>Prototyping</li>
+<li>Spiral</li>
+</ol>
+<p>Difference: when these activities (Analysis, Design; Implement, Test) occur</p>
+<h3 id="project-release-life-cycles">Project Release Life Cycles</h3>
+<ol>
+<li>System/Product Release</li>
+<li>Component Release</li>
+<li>Standalone/Service Pack Release</li>
+<li>Maintenance Release</li>
+</ol>
+<h3 id="managing-life-cycles-in-projects">Managing Life Cycles in Projects</h3>
+<ol>
+<li>Select Life Cycles</li>
+<li>Combine different Life Cycles</li>
+<li>Work Breakdown Structure (WBS)</li>
+</ol>
+<h2 id="leading-product-development-improvments">Leading Product Development Improvments</h2>
+<h3 id="lesson-1-effective-and-efficient-product-development">Lesson 1: Effective and Efficient Product Development</h3>
+<ul>
+<li>People: </li>
+<li>Process: To connect People</li>
+<li>Technology: To support Process</li>
+</ul>
+<h3 id="lesson-2-leading-change">Lesson 2: Leading Change</h3>
+<p>Change Cycle: http://work911.com/articles/changecycle.htm<br />
+Need for Change + Leadership &amp; Direction + Planning of Communication</p>
+<h3 id="lesson-3-management-responsibilities">Lesson 3: Management Responsibilities</h3>
+<h3 id="lession-5-improvement-cycles">Lession 5: Improvement Cycles</h3>
+<p>Monthly: SDIP Improvement Progress Report<br />
+Quaterly: SDIP Practice Implemention Report</p>
+<p>Yearly re-planning</p>
+<p>Oct: SDIP Information about new practices, tools, etc<br />
+Nov: Define Improvement Goals for BU<br />
+Dec: Define Improvement Plans for BU<br />
+Jan: Approve Goals, Plans, Budget and Resources</p>
+<h2 id="software-architecture">Software Architecture</h2>
+<h3 id="requirements-architecture-define">Requirements Architecture Define</h3>
+<ul>
+<li>Architecture View Point: 视角，从不同的视角看到的系统架构是不一样的。比如用户视角，商业视角，开发者视角等</li>
+<li>Architecture View: 视图，用来描述从不同视角看到的系统架构</li>
+</ul>
+<p><strong>Most common used architectural views:</strong></p>
+<ul>
+<li><strong>Functional/Logic View -&gt; UML Component Diagram</strong><br />
+  从功能和逻辑角度出发，根据数据和分层设计原则来描述系统</li>
+<li><strong>Code/Module View -&gt; UML Package Diagram</strong><br />
+  这是个静态视图，描述服务器/模块之间如何连接</li>
+<li><strong>Development/Implementation View -&gt; UML Package Diagram</strong><br />
+  从开发角度来描述系统，是软件经理关心的视图</li>
+<li><strong>Concurrency/Process View -&gt; UML Component Diagram</strong><br />
+  从动态角度来描述系统，关心系统的运行时指标，包括并发，组件交互等</li>
+<li><strong>Physical/Deployment View -&gt; UML Deployment Diagram</strong><br />
+  从系统工程师的角度来描述系统，从物理层（服务器，硬件组件 etc.）角度来描述系统，关心系统的可靠性，容错性，扩展性</li>
+<li><strong>Data View -&gt; Entity Relationship Model</strong><br />
+  从数据关系的角度来描述系统，描述系统的数据库，数据连接，网络环境等。主要为了描述数据结构，数据关联，数据迁移等方面的问题。</li>
+</ul>
+<p><strong>Quality Properties：</strong></p>
+<ul>
+<li>Availability</li>
+<li>Confidentiality</li>
+<li>Maintainability</li>
+<li>Reliability</li>
+<li>Performance</li>
+<li>Safety</li>
+<li>Security</li>
+<li>Usability</li>
+</ul>
+<h3 id="architecture-processstrategy">Architecture Process/Strategy</h3>
+<p><strong> Architecture Process</strong></p>
+<ul>
+<li><strong>Elicitation</strong><br />
+  识别出系统的所有相关者，引导他们去表达需求和担忧点，以此来完善整体需求，从而在设计阶段把问题考虑全面。可以使用用例图，软件质量指标，原型等方法来达成这个目的。</li>
+<li><strong>Design</strong><ul>
+<li>System Structure -&gt; Topology of components</li>
+<li>Functional behaviour -&gt; Responsibilities of components</li>
+<li>System-Level Interaction -&gt; Flow between components</li>
+<li>Non-Functional Properties -&gt; Quality Properties</li>
+<li>System Implementation -&gt; Technology choices</li>
+</ul>
+</li>
+<li><strong>Documentation</strong><br />
+  从所有相关者的视角来描述系统。可以使用 UML 等。也需要把系统设计的妥协因素写进去。</li>
+<li><strong>Evaluation</strong><br />
+  从完整度，一致性，与现有系统兼容性，是否满足用户需求的角度来评估系统设计</li>
+<li><strong>Enforcement</strong><br />
+  通过代码级别的分析，来发现工程师的实现与系统架构设计相违背的地方。比如层次设计，耦合规则等</li>
+<li><strong>Validation</strong><br />
+  这里主要是进行产品和用户层面的验证，用是否符合用户需求来评价系统设计的优劣性。同时从典型用便场景出发，也可以从其他有经验的专家的角度来评估系统，发现系统的薄弱环节和设计缺陷。</li>
+</ul>
+<p><strong>Architecture Strategy</strong></p>
+<ul>
+<li>Define the objectives of each architecture phase<ul>
+<li>Determine methods and tools to be used</li>
+<li>Determine technologies to be used</li>
+<li>Document architecture design rationale</li>
+</ul>
+</li>
+<li>Prepare the architecture evolution<ul>
+<li>Create a roadmap for future extensions</li>
+<li>Define and evaluate likely future change scenarios</li>
+<li>Assess potential for reuse by adopting a product line approach</li>
+<li>Prepare measures to avoid architectural erosion</li>
+</ul>
+</li>
+</ul>
+<h3 id="using-methods-and-tools-to-improve-architecture">Using Methods and Tools to improve architecture</h3>
+<p><strong>Elicitation</strong></p>
+<ul>
+<li>ATAM (Architecture TrAde-off Method): 通过评估架构决策的结果来发现质量和系统架构之间的妥协和平衡。<ul>
+<li>输入<ul>
+<li>系统概要需求和商业模型</li>
+<li>各个视角的系统架构图</li>
+<li>至少包含非正式的系统的关键质量要求</li>
+</ul>
+</li>
+<li>输出<ul>
+<li>系统与商业目标的连接点</li>
+<li>从各个典型场景收集的系统质量要求</li>
+<li>把架构决策和质量要求对应起来</li>
+<li>系统薄弱环节和妥协平衡点</li>
+<li>风险列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>QAW (Quality Attribute Workshop): 通过分析系统的非功能性关键质量指标来找出系统潜在的需求点。<ul>
+<li>输入<ul>
+<li>系统概要需求和商业模型</li>
+<li>各个视角的系统架构图</li>
+<li>至少包含非正式的系统的关键质量要求</li>
+</ul>
+</li>
+<li>输出<ul>
+<li>系统与商业目标的连接点</li>
+<li>从各个典型场景收集的系统质量要求</li>
+<li>把架构决策和质量要求对应起来</li>
+<li>系统薄弱环节和妥协平衡点</li>
+<li>风险列表</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Design</strong></p>
+<ul>
+<li>ADD (Attribute-Driven Design): 把系统解构成不同的组件<br />
+  从 质量要求，设计限制，功能要求 出发来解构</li>
+<li>Styles: 系统模型<ul>
+<li>分层设计</li>
+<li>发布/订阅模型</li>
+<li>MVC 模型</li>
+<li>客户端/服务器模型</li>
+<li>点对点通讯模型</li>
+<li>etc. etc.</li>
+</ul>
+</li>
+<li>Pattern: 设计模式<ul>
+<li>Composite 组合模式</li>
+<li>Builder 构建模式</li>
+<li>Decorator 装饰模式</li>
+<li>etc. etc.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Documentation</strong></p>
+<ul>
+<li>UML: 用来描述不同视角的系统框架图</li>
+<li>SysML: 是 UML 的一个扩展子集</li>
+</ul>
+<p><strong>Evaluation</strong></p>
+<ul>
+<li>ARID (Active Reviews for Intermidiate Design)<ul>
+<li>会前准备<ul>
+<li>确认参加评审的人员列表</li>
+<li>准备设计演示文稿</li>
+<li>准备典型需求场景文档</li>
+<li>评审会议准备</li>
+</ul>
+</li>
+<li>评审会议<ul>
+<li>演示 ARID 方法</li>
+<li>演示设计文档</li>
+<li>头脑风暴/确认场景优先级和重要性</li>
+<li>进行评审</li>
+<li>展示评审结论</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Enforcement</strong></p>
+<ul>
+<li>DSM (Dependency Struct Matrix)<br />
+  通过分析代码来检查系统实现是否违背系统架构的分层设计。使用 LDM （<a href="http://lattix.com/">Lattix</a> 公司的一个软件架构管理解决方案，这里有一个<a href="http://edageek.com/2007/01/04/lattix-ldm-dependency-structure-matrix/">介绍文档</a>）工具来对代码进行静态分析，以发现一些非法的跨层引用。</li>
+</ul>
+<p><strong>Validation</strong></p>
+<ul>
+<li>通过 ARID 方法来验证架构</li>
+<li>通过 ATAM 方法来验证架构</li>
+</ul>
+	<hr/>
+	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-09-01(Tuesday) 09:36.</h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="../category/android.html">android</a></li>
+										<li><a href="../category/essay.html">essay</a></li>
+										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/ml.html">ml</a></li>
+										<li><a href="../category/python.html">python</a></li>
+										<li><a href="../category/tools.html">tools</a></li>
+										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="../tag/android.html">android</a></li>
+										<li class="tag-3"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/09/index.html">September 2015 (2)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="../theme/js/jquery.js"></script>
+		<script src="../theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
