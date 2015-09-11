@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/joey-huang.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 03 Sep 2015 20:20:00 +0800</lastBuildDate><item><title>线性回归算法</title><link>http://blog.kamidox.com/gradient-descent.html</link><description>&lt;p&gt;本文总结了线性回归算法里用到的一些微积分知识，接着根据最小均方差推导出梯度下降算法以及优化后的随机梯度下降算法。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/joey-huang.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 11 Sep 2015 20:20:00 +0800</lastBuildDate><item><title>机器学习入门指南</title><link>http://blog.kamidox.com/ml-getting-started.html</link><description>&lt;p&gt;前段时间微软的年龄识别网站风靡全球，它的核心算法就是机器学习领域的内容。机器学习看起来高深莫测，学习曲线比较陡，实际上优秀的入门资料不但可以降低学习门槛，还可以激发学习乐趣。&lt;/p&gt;
+&lt;h2 id="_1"&gt;机器学习算法&lt;/h2&gt;
+&lt;p&gt;Coursera 上面 Stanford 的 &lt;a href="https://zh.coursera.org/learn/machine-learning"&gt;机器学习&lt;/a&gt; 课程是优质的算法相关入门课程。Andrew Ng 是 Coursera 的创始人，也是 Stanford 的老师。这个课程最大的特点是对机器学习算法的推导和介绍，从数学层面去推导一些经典的机器学习算法。如果你微积分，矩阵运算，概率论等大学数学都还给老师了也没关系。课程中会介绍用到的最基础的数学知识，包括微积分，矩阵运算，概率论等。真正做到了深入浅出以及零基础。&lt;/p&gt;
+&lt;p&gt;算法是理解机器学习原理的非常基础的知识，在实践中我们可能根本不用去推导或实现这些算法，但不代表我们不需要理解这些算法。理解这些算法对我们选择机器学习的模型以及对数据进行分析都有非常有益的。&lt;/p&gt;
+&lt;h2 id="_2"&gt;编程语言&lt;/h2&gt;
+&lt;p&gt;适合机器学习的编程语言不少，这里推荐使用 Python。Python 是免费开源的语言，并且有非常丰富的库，而且学习 Python 语言的门槛比较低，是全民编程运动的推荐语言。&lt;a href="http://scipy-lectures.github.io/intro/intro.html#why-python"&gt;这篇文章&lt;/a&gt;罗列了目前主流的机器学习语言以及各自的优劣。&lt;/p&gt;
+&lt;p&gt;学习 Python 除了官方的教程之外，推荐一本书 &lt;a href="http://www.diveintopython.net/"&gt;Dive Into Python&lt;/a&gt; 有中文版，也有英文版。中文版翻译质量也很高。当然，&lt;a href="http://learnpythonthehardway.org/book/"&gt;Learn Python The Hard Way&lt;/a&gt; 也不错。不过建议选择一本照着练习，一个月掌握这个语言的基础特性问题不大。&lt;/p&gt;
+&lt;h2 id="python"&gt;Python 机器学习工具箱&lt;/h2&gt;
+&lt;p&gt;Python 用来实现科学计算的软件包是 scipy, numpy, matplotlib，其中 numpy 提供高性能的数值去处；scipy 实现机器学习的算法；matplotlib 提供数据可视化。&lt;/p&gt;
+&lt;p&gt;这三个库都挺大的，内容也比较多。这里重点推荐一个非常优质地适合入门的网站：&lt;a href="http://scipy-lectures.github.io/"&gt;Python Scientific Lecture Notes&lt;/a&gt;。一个网站把机器学习想着的 Python 工具全部搞定，并且内容易懂，很适合初学者。&lt;/p&gt;
+&lt;h2 id="_3"&gt;机器学习入门书籍&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.ituring.com.cn/book/1192"&gt;《机器学习系统设计》&lt;/a&gt;是图灵社区翻译引进的机器学习入门书籍。书中使用 Python 作为机器学习算法的编程语言，从易到难，从实际问题出发，去探索怎么样用机器学习算法去解决实际问题。当然，如果需要自己实现书中的案例，需要掌握 Python 语言以及 Python 机器学习工具箱的几个库的用法。&lt;/p&gt;
+&lt;p&gt;这本书的最大特点是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;简单易懂，从易到难&lt;/li&gt;
+&lt;li&gt;内容比较精简&lt;/li&gt;
+&lt;li&gt;让你跳出机器学习的算法，真正从工程角度去理解机器学习，包括数据清洗，模型筛选，模型验证等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_4"&gt;总结&lt;/h2&gt;
+&lt;p&gt;建议 Coursera 上的算法课程和《机器学习系统设计》结合起来，并行来看，这样即了解了工程应用的方法，又理解了背后的算法原理。这里介绍了不少英文资料，学习机器学习的过程中还学了英文，一举两得。再花个几十美刀从 Coursera 上弄个课程证书（ Coursera 上课程都是免费学的，但如果要证书则需要交几十美刀不等），瞬间高大上有没有，喝洋墨水有没有。去美帝读书也不就是这样的体验嘛。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Fri, 11 Sep 2015 20:20:00 +0800</pubDate><guid>tag:blog.kamidox.com,2015-09-11:ml-getting-started.html</guid><category>machine-learning</category></item><item><title>线性回归算法</title><link>http://blog.kamidox.com/gradient-descent.html</link><description>&lt;p&gt;本文总结了线性回归算法里用到的一些微积分知识，接着根据最小均方差推导出梯度下降算法以及优化后的随机梯度下降算法。&lt;/p&gt;
 &lt;h2 id="_1"&gt;微积分基本运算法则&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;法则一&lt;/strong&gt;：对 $y(x)=cx^n$ ，其针对 x 的偏导数为 $\frac{\partial}{\partial x}f(x)=cnx^{n-1}$&lt;/li&gt;
