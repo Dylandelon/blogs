@@ -152,6 +152,79 @@ $$
 推导过程可参阅 [cs229-notes1.pdf][10]。推导过程会用到大量的矩阵运算知识。其中 X 是训练数据集，y 是结果数据向量。这样我们就可以通过直接计算的方式，而不是线性回归的方式来求得参数 $\theta$ 的值。
 
 
+### Octave 教程
+
+#### Octave 基本教程
+
+可以和 numpy, scipy 等结合起来学习。实际上接口较为类似。
+
+#### 向量化
+
+向量化可以让代码运算更简洁，效率更高。比如，我们的预测函数的普通形式可以写成：
+
+$$
+h_\theta(x) = \sum_{i=0}^{n} \theta_ix^{(i)}
+$$
+
+那么其 Octave 代码如下：
+
+```matlab
+prediction = 0.0
+for i=1:n+1,
+    prediction = predicition + theta(i) * x(i)
+end;
+```
+
+我们也可以把预测函数向量化：
+
+$$
+h_\theta(x) = \theta^T x
+$$
+
+这样，我们的预测函数可以实现如下：
+
+```matlab
+prediction = theta' * x
+```
+
+另外一个例子是梯度下降算法里的参数迭代函数：
+
+$$
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\
+theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}
+$$
+
+我们可以向量化为：
+
+$$
+\theta = \theta - \alpha \delta
+$$
+
+其中，$\theta$ 是个 n + 1 维向量；$\alpha$ 是一个标量；$\delta$ 是一个 n + 1 维向量。$\delta$ 可以向量化为：
+
+$$
+\delta = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x^{(i)}
+$$
+
+其中，$\left( h_\theta(x^{(i)}) - y^{(i)} \right)$ 是个标量；$x^{(i)}$ 是个 n + 1 维向量，其行元素为 $x^{(i)}_0, x^{(i)}_1, x^{(i)}_2 ... x^{(i)}_n$，其上标为第 i 项训练样例数据，下标为第 j 项变量；而 m 项求和，实际上可以看成是一个线性方程组的表达形式。
+
+#### 通用方程和奇异矩阵
+
+$$
+\theta = (X^T X)^{-1} X^T y
+$$
+
+这是我们的通用方程，当训练数据集较少时，利用矩阵运算可以较快的算出参数 $\theta$ 的值。但如果 $X^T X$ 是奇异矩阵的话，它就没有逆矩阵存在，这个时候通用方程的解是什么呢？答案是，在 octave 里用 `pinv` 来代替 `inv` 来计算逆矩阵。这样即使 $X^T X$ 是奇异矩阵，`pinv` 也能算出其"伪"逆矩阵，从而顺利算出通用方向的解。
+
+那么，物理上讲，$X^T X$ 如果为奇异矩阵的话，到底代表什么意思呢？
+
+* 模型变量之间线性相关
+  比如，在房价预测模型里，$x_1$ 代表房子的长度，$x_2$ 代表房子的宽度，而 $x_3$ 代表房子的面积，这里假设房子是方形的，那么实际上 $x_3$ 和 $x_1, x_2$ 是线性相关的。
+* 训练样例少于变量个数，即 m < n
+  这种情况下，需要减少变量个数来解决问题
+
+
+
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
 [3]: https://www.coursera.org/learn/machine-learning/discussions?sort=lastActivityAtDesc&page=1
