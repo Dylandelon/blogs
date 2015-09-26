@@ -14,7 +14,7 @@ Summary: 本文介绍如何使用 Markdown + MathJax 书写数学公式
 ### 配置 Markdown Preview 来支持 MathJax
 
 使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -> Markdown Preview -> Setting - User) 里添加如下内容：
-	
+
 ```javascript
 "enable_mathjax": true
 ```
@@ -104,6 +104,7 @@ _        | 用下划线来表示下标                   | $x_i$
 
 ### 几个非常有用的资源
 
+* 这是一篇质量很高的[介绍 MathJax 的中文博客文章][5]，需要注意的是如果是用 markdown 编写 MathJax 公式，当公式里需要两个斜杠 \\ 时要写四个斜杠 \\。因为 \\ 会被 markdown 转义一次。
 * Github 上有个[在线 Markdown MathJax 编辑器][2]，可以在这里练习，平时写公式时也可以在这里先写好再拷贝到文章里
 * 这是 [LaTex 完整教程][3]，包含完整的 LaTex 数学公式的内容，包括更高级的格式控制等
 * 这是一份PDF 格式的 [MathJax 支持的数学符号表][4]，当需要书写复杂数学公式时，一些非常特殊的符号的转义字符可以从这里查到
@@ -115,3 +116,4 @@ _        | 用下划线来表示下标                   | $x_i$
 [2]: https://kerzol.github.io/markdown-mathjax/editor.html
 [3]: http://www.forkosh.com/mathtextutorial.html
 [4]: http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf
+[5]: http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/

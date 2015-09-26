@@ -6,6 +6,8 @@ Authors: Joey Huang
 Summary: Notes of Stanford Machine Learning, by Andrew Ng, on www.coursera.org
 Status: draft
 
+[TOC]
+
 ## 机器学习
 
 课程在 [Coursera][1] 上, 讲师是 Andrew Ng。PDF 格式的课件在 [Stanford 网站][2]上。课程讨论组在[这里][3]可以找到。
@@ -73,14 +75,6 @@ REF:
 * [最小二阶乘数拟合数据][7]
 * 概率论复习
 
-### TODO
-
-* 使用 markdown + MathJax 来书写数学公式
-	* [LaTex 教程][8]
-	* [LaTex 支持的所有符号列表][9]
-* 推导出模型参数的梯度下降公式 (Gradient Descent)
-* 推导出 LSM (Widrow-Hoff学习算法)
-
 ### 术语
 
 * Calculus: 微积分
@@ -90,6 +84,15 @@ REF:
 * Cost Function: 成本函数
 * Contour plots: 等高线
 * Least Mean Squares: LSM, 最小均方
+
+### TODO
+
+* 使用 markdown + MathJax 来书写数学公式
+    * [MathJax 简明中文教程][13] 这是一个质量很高的博客文章
+    * [LaTex 教程][8]
+    * [LaTex 支持的所有符号列表][9]
+* 推导出模型参数的梯度下降公式 (Gradient Descent)
+* 推导出 LSM (Widrow-Hoff学习算法)
 
 ## Week 2 多变量梯度下降算法
 
@@ -123,18 +126,10 @@ $$
 
 经过这样的转换，变量的范围全部落在 [-0.5, 0.5] 之间。
 
-#### TODO
-
-1. 如何从数学上证明变量绽放后能较快收敛？
-2. 可以使用 `pylab` 的等高线在二维平面上画出成本函数和两个参数的关系图
-
 ### 学习率
 
 使用 $\alpha$ 来表示学习率，值太高会导致无法收敛，太低收敛又太慢。一个好的办法是画出成本函数 $J(\theta)$ 随着迭代次数不断变化的曲线。这样可以直观地观察到随着迭代地不断进行，成本函数的值的变化情况。在实际情况中，可以从几个经验值里去偿试，比如 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1。
 
-#### TODO
-
-1. 找一个数据集，选择不同的学习率来实现，画出不同学习率时的成本函数随着迭代次数的变化情况
 
 ### 标准方程 Normal Equalation
 
@@ -223,6 +218,86 @@ $$
 * 训练样例少于变量个数，即 m < n
   这种情况下，需要减少变量个数来解决问题
 
+### TODO
+
+1. 如何从数学上证明变量绽放后能较快收敛？
+2. 可以使用 `pylab` 的等高线在二维平面上画出成本函数和两个参数的关系图
+3. 找一个数据集，选择不同的学习率来实现，画出不同学习率时的成本函数随着迭代次数的变化情况
+4. 总结 matlab/octave 和 scipy/numpy 在数值计算上的差异和优缺点
+
+## Week 3 分类回归算法 Logistic Regression
+
+### 分类及其表现形式 Classification and Representation
+
+#### 引言 为什么需要分类回归算法
+
+分类问题的值是离散的，如果考虑二元分类总是，则其值是 0 或 1。如果用 linear regresstion 来作为分类问题的预测函数是不合理的。因为因为预测出来的数值可能远小于 0 或远大于 1。我们需要找出一个预测函数模型，使其值的输出在 [0, 1] 之间。
+
+#### 逻辑回归预测函数的表现形式 Hypothesis Representation
+
+**逻辑回归预测函数**
+
+线性回归算法的预测函数是 $h_\theta(x) = \theta^T x$，为了让预测函数的输出值在 [0, 1] 之间，我们给定逻辑回归模型 (Logistic Regression Model) $g(z) = \frac{1}{1 + e^{-z}}$，则我们的逻辑回归模型的预测函数如下：
+
+$$
+h_\theta(x) = g(\theta^T x) = \frac{1}{1 + e^{-\theta^T x}}
+$$
+
+**解读逻辑回归预测函数的输出值**
+
+$h_\theta(x)$ 表示针对输入值 $x$ 以及参数 $\theta$ 的前提条件下，$y=1$ 的概率。用概率论的公式可以写成：
+
+$$
+h_\theta(x) = P(y=1 \vert x; \theta)
+$$
+
+上面的概率公式可以读成：**在输入 $x$ 及参数 $\theta$ 条件下 $y=1$ 的概率**。由概率论的知识可以推导出，
+
+$$
+P(y=1 \vert x; \theta) + P(y=0 \vert x; \theta) = 1
+$$
+
+#### 判定边界 Decision Boundary
+
+**从逻辑回归公式说起**
+
+逻辑回归预测函数由下面两个公式给出的：
+
+$$
+h_\theta(x) = g(\theta^T x)
+$$
+
+$$
+g(z) = \frac{1}{1 + e^{-z}}
+$$
+
+假定 $y=1$ 的判定条件是 $h_\theta(x) \geq 0.5$，$y=0$ 的判定条件是 $h_\theta(x) < 0.5$，则我们可以推导出 $y=1$ 的判定条件就是 $\theta^T x \geq 0$，$y=0$ 的判定条件就是 $\theta^T x < 0$。所以，$\theta^T x = 0$ 即是我们的判定边界。
+
+**判定边界**
+
+假定我们有两个变量 $x_1, x_2$，其逻辑回归预测函数是 $h_\theta(x) = g(\theta_0 + \theta_1 x_1 + \theta_2 x_2)$。假设我们给定参数
+
+$$
+\theta = \begin{bmatrix} -3 \\\\ 1 \\\\ 1 \end{bmatrix}
+$$
+
+那么我们可以得到判定边界 $-3 + x_1 + x_2 = 0$，即 $x_1 + x_2 = 3$，如果以 $x_1$ 为横坐标，$x_2$ 为纵坐标，这个函数画出来就是一个通过 (0, 3) 和 (3, 0) 两个点的斜线。这条线就是我们的判定边界。
+
+**非线性判定边界**
+
+如果预测函数是多项式 $h_\theta(x) = g(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \theta_3 x_1^2 + \theta_4 x_2^2)$，且给定 $\theta^T = \left[ -1 0 0 1 1\right]$，则可以得到判定边界函数
+
+$$
+x_1^2 + x_2^2 = 1
+$$
+
+还是以 $x_1$ 为横坐标，$x_2$ 为纵坐标，则这是一个半径为 1 的圆。这是二阶多项式的情况，更一般的多阶多项式可以表达出更复杂的判定边界。
+
+### TODO
+
+1. 使用 pylab 画出 逻辑回归预测函数的图形
+2. 是否有类似 MathJax 类似的，使用 JavaScript 来在网页上画图的库呢？[这里][12]有个相似的问题。
+3. 复习[概率论][11]基础知识
 
 
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
@@ -235,4 +310,6 @@ $$
 [8]: http://www.forkosh.com/mathtextutorial.html
 [9]: http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf
 [10]: http://cs229.stanford.edu/notes/cs229-notes1.pdf
-
+[11]: http://cs229.stanford.edu/section/cs229-prob.pdf
+[12]: http://stackoverflow.com/questions/119969/javascript-chart-library
+[13]: http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/
