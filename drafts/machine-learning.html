@@ -69,7 +69,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
-									<li><a href="/posts/2015/09/index.html">September 2015 (3)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (4)</a></li>
 									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
 									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
@@ -111,9 +111,48 @@
 						<div class="medium-9 small-12 columns" role="content">
 <article>
 	<h2>Machine Learning</h2>
-	<h2 id="_1">机器学习</h2>
+	<div class="toc">
+<ul>
+<li><a href="#_1">机器学习</a></li>
+<li><a href="#week-1">Week 1 机器学习介绍</a><ul>
+<li><a href="#what-is-machine-learning">What is Machine Learning?</a></li>
+<li><a href="#supervised-learning">Supervised learning</a></li>
+<li><a href="#unsupervised-learning">Unsupervised learning</a></li>
+<li><a href="#_2">线性回归算法</a></li>
+<li><a href="#_3">数学</a></li>
+<li><a href="#_4">术语</a></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+</li>
+<li><a href="#week-2">Week 2 多变量梯度下降算法</a><ul>
+<li><a href="#_5">多变量梯度下降算法</a></li>
+<li><a href="#feature-scaling">变量缩放 Feature Scaling</a></li>
+<li><a href="#_6">学习率</a></li>
+<li><a href="#normal-equalation">标准方程 Normal Equalation</a></li>
+<li><a href="#octave">Octave 教程</a><ul>
+<li><a href="#octave_1">Octave 基本教程</a></li>
+<li><a href="#_7">向量化</a></li>
+<li><a href="#_8">通用方程和奇异矩阵</a></li>
+</ul>
+</li>
+<li><a href="#todo_1">TODO</a></li>
+</ul>
+</li>
+<li><a href="#week-3-logistic-regression">Week 3 分类回归算法 Logistic Regression</a><ul>
+<li><a href="#classification-and-representation">分类及其表现形式 Classification and Representation</a><ul>
+<li><a href="#_9">引言 为什么需要分类回归算法</a></li>
+<li><a href="#hypothesis-representation">逻辑回归预测函数的表现形式 Hypothesis Representation</a></li>
+<li><a href="#decision-boundary">判定边界 Decision Boundary</a></li>
+</ul>
+</li>
+<li><a href="#todo_2">TODO</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1">机器学习</h2>
 <p>课程在 <a href="https://www.coursera.org/learn/machine-learning/home/welcome">Coursera</a> 上, 讲师是 Andrew Ng。PDF 格式的课件在 <a href="http://cs229.stanford.edu/materials.html">Stanford 网站</a>上。课程讨论组在<a href="https://www.coursera.org/learn/machine-learning/discussions?sort=lastActivityAtDesc&amp;page=1">这里</a>可以找到。</p>
-<h2 id="week-1">Week 1</h2>
+<h2 id="week-1">Week 1 机器学习介绍</h2>
 <h3 id="what-is-machine-learning">What is Machine Learning?</h3>
 <p>Two definitions of Machine Learning are offered. Arthur Samuel described it as: &ldquo;the field of study that gives computers the ability to learn without being explicitly programmed.&rdquo; This is an older, informal definition.</p>
 <p>Tom Mitchell provides a more modern definition: &ldquo;A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.&rdquo;</p>
@@ -136,7 +175,7 @@
 <h3 id="unsupervised-learning">Unsupervised learning</h3>
 <blockquote>
 <p>Unsupervised learning, on the other hand, allows us to approach problems with little or no idea what our results should look like. We can derive structure from data where we don&rsquo;t necessarily know the effect of the variables.</p>
-<p>With unsupervised learning there is no feedback based on the prediction results, i.e., there is no teacher to correct you. It’s not just about clustering. </p>
+<p>With unsupervised learning there is no feedback based on the prediction results, i.e., there is no teacher to correct you. It’s not just about clustering.</p>
 </blockquote>
 <p>数据挖掘，从给定的数据集合里去发现规律，进行模式匹配。结果形式不可知。计算结果无法对数据进行反馈。</p>
 <p><strong>例子：声音处理</strong><br />
@@ -153,7 +192,7 @@
 <li>Contour plots: 等高线。多参数的成本函数里，有一组参数的值会有相同的成本。这些参数联接起来就是成本函数的等高线。</li>
 <li>Gradient Descent: 阶梯下降，假设的模型逐步逼近真实数据的过程</li>
 </ul>
-<p>REF: <br />
+<p>REF:<br />
 1. <a href="https://www.coursera.org/learn/machine-learning/supplement/Mc0tF/linear-regression-with-one-variable">Linear Regression with One Variable</a><br />
 2. <a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">Partial derivative in gradient descent for two variables</a></p>
 <p>根据上面两个链接推导出阶梯下降函数。</p>
@@ -170,16 +209,6 @@
 <li><a href="https://en.wikipedia.org/wiki/Linear_least_squares_%28mathematics%29#Derivation_of_the_normal_equations">最小二阶乘数拟合数据</a></li>
 <li>概率论复习</li>
 </ul>
-<h3 id="todo">TODO</h3>
-<ul>
-<li>使用 markdown + MathJax 来书写数学公式<ul>
-<li><a href="http://www.forkosh.com/mathtextutorial.html">LaTex 教程</a></li>
-<li><a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf">LaTex 支持的所有符号列表</a></li>
-</ul>
-</li>
-<li>推导出模型参数的梯度下降公式 (Gradient Descent)</li>
-<li>推导出 LSM (Widrow-Hoff学习算法)</li>
-</ul>
 <h3 id="_4">术语</h3>
 <ul>
 <li>Calculus: 微积分</li>
@@ -190,6 +219,156 @@
 <li>Contour plots: 等高线</li>
 <li>Least Mean Squares: LSM, 最小均方</li>
 </ul>
+<h3 id="todo">TODO</h3>
+<ul>
+<li>使用 markdown + MathJax 来书写数学公式<ul>
+<li><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/">MathJax 简明中文教程</a> 这是一个质量很高的博客文章</li>
+<li><a href="http://www.forkosh.com/mathtextutorial.html">LaTex 教程</a></li>
+<li><a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf">LaTex 支持的所有符号列表</a></li>
+</ul>
+</li>
+<li>推导出模型参数的梯度下降公式 (Gradient Descent)</li>
+<li>推导出 LSM (Widrow-Hoff学习算法)</li>
+</ul>
+<h2 id="week-2">Week 2 多变量梯度下降算法</h2>
+<h3 id="_5">多变量梯度下降算法</h3>
+<p>预测函数：<br />
+$$<br />
+h(\theta) = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + &hellip; + \theta_n + x_n = \theta^T x^{(i)}<br />
+$$<br />
+其中，$x_0 = 1$，$x^{(i)}$ 是训练数据集里的第 i 个数据。$\theta_T$ 是 n + 1 维列向量；$x^{(i)}$ 是 n + 1 维行向量。</p>
+<p>成本函数：<br />
+$$<br />
+J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h(\theta) - y^{(i)} \right)^2<br />
+$$</p>
+<p>迭代函数：<br />
+$$<br />
+\theta_j = \theta_j - \alpha \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+$$</p>
+<h3 id="feature-scaling">变量缩放 Feature Scaling</h3>
+<p>当变量在 [-1, 1] 这个范围内时，梯度下降算法能较快地收敛。可以使用下面的公式来缩放变量，以让变量在快速收敛的范围内：</p>
+<p>$$<br />
+x_i := \frac{x_i - \mu_i}{s_i}<br />
+$$</p>
+<p>其中，$\mu_i$ 是 $x_i$ 的平均值，即 $\mu_i = \frac{1}{n} \sum_{i=1}^n x_i$， $s_i$ 是 $x_i$ 的范围，即 $s_i = max(x_i) - min(x_i)$。</p>
+<p>经过这样的转换，变量的范围全部落在 [-0.5, 0.5] 之间。</p>
+<h3 id="_6">学习率</h3>
+<p>使用 $\alpha$ 来表示学习率，值太高会导致无法收敛，太低收敛又太慢。一个好的办法是画出成本函数 $J(\theta)$ 随着迭代次数不断变化的曲线。这样可以直观地观察到随着迭代地不断进行，成本函数的值的变化情况。在实际情况中，可以从几个经验值里去偿试，比如 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1。</p>
+<h3 id="normal-equalation">标准方程 Normal Equalation</h3>
+<p>通过微分公式可以知道，我们要求成本函数 $J(\theta)$ 的最小值，只需要令其偏导数为零，即：<br />
+$$<br />
+\frac\partial{\partial{\theta_j}}J(\theta) := 0<br />
+$$</p>
+<p>把 $J(\theta)$ 用矩阵来表示，并根据矩阵运算定律最终可以推导出下面的方程式：</p>
+<p>$$<br />
+\theta = \left( X^T X \right)^{-1} X^T y<br />
+$$</p>
+<p>推导过程可参阅 <a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf">cs229-notes1.pdf</a>。推导过程会用到大量的矩阵运算知识。其中 X 是训练数据集，y 是结果数据向量。这样我们就可以通过直接计算的方式，而不是线性回归的方式来求得参数 $\theta$ 的值。</p>
+<h3 id="octave">Octave 教程</h3>
+<h4 id="octave_1">Octave 基本教程</h4>
+<p>可以和 numpy, scipy 等结合起来学习。实际上接口较为类似。</p>
+<h4 id="_7">向量化</h4>
+<p>向量化可以让代码运算更简洁，效率更高。比如，我们的预测函数的普通形式可以写成：</p>
+<p>$$<br />
+h_\theta(x) = \sum_{i=0}^{n} \theta_ix^{(i)}<br />
+$$</p>
+<p>那么其 Octave 代码如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">prediction = <span style="color: #666666">0.0</span>
+<span style="color: #AA22FF; font-weight: bold">for</span> <span style="color: #AA22FF">i</span>=<span style="color: #666666">1</span>:n<span style="color: #666666">+1</span>,
+    prediction = predicition <span style="color: #666666">+</span> theta(<span style="color: #AA22FF">i</span>) <span style="color: #666666">*</span> x(<span style="color: #AA22FF">i</span>)
+<span style="color: #AA22FF; font-weight: bold">end</span>;
+</pre></div>
+
+
+<p>我们也可以把预测函数向量化：</p>
+<p>$$<br />
+h_\theta(x) = \theta^T x<br />
+$$</p>
+<p>这样，我们的预测函数可以实现如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">prediction = theta<span style="color: #666666">&#39;</span> <span style="color: #666666">*</span> x
+</pre></div>
+
+
+<p>另外一个例子是梯度下降算法里的参数迭代函数：</p>
+<p>$$<br />
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\<br />
+theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}<br />
+$$</p>
+<p>我们可以向量化为：</p>
+<p>$$<br />
+\theta = \theta - \alpha \delta<br />
+$$</p>
+<p>其中，$\theta$ 是个 n + 1 维向量；$\alpha$ 是一个标量；$\delta$ 是一个 n + 1 维向量。$\delta$ 可以向量化为：</p>
+<p>$$<br />
+\delta = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x^{(i)}<br />
+$$</p>
+<p>其中，$\left( h_\theta(x^{(i)}) - y^{(i)} \right)$ 是个标量；$x^{(i)}$ 是个 n + 1 维向量，其行元素为 $x^{(i)}_0, x^{(i)}_1, x^{(i)}_2 &hellip; x^{(i)}_n$，其上标为第 i 项训练样例数据，下标为第 j 项变量；而 m 项求和，实际上可以看成是一个线性方程组的表达形式。</p>
+<h4 id="_8">通用方程和奇异矩阵</h4>
+<p>$$<br />
+\theta = (X^T X)^{-1} X^T y<br />
+$$</p>
+<p>这是我们的通用方程，当训练数据集较少时，利用矩阵运算可以较快的算出参数 $\theta$ 的值。但如果 $X^T X$ 是奇异矩阵的话，它就没有逆矩阵存在，这个时候通用方程的解是什么呢？答案是，在 octave 里用 <code>pinv</code> 来代替 <code>inv</code> 来计算逆矩阵。这样即使 $X^T X$ 是奇异矩阵，<code>pinv</code> 也能算出其&rdquo;伪&rdquo;逆矩阵，从而顺利算出通用方向的解。</p>
+<p>那么，物理上讲，$X^T X$ 如果为奇异矩阵的话，到底代表什么意思呢？</p>
+<ul>
+<li>模型变量之间线性相关<br />
+  比如，在房价预测模型里，$x_1$ 代表房子的长度，$x_2$ 代表房子的宽度，而 $x_3$ 代表房子的面积，这里假设房子是方形的，那么实际上 $x_3$ 和 $x_1, x_2$ 是线性相关的。</li>
+<li>训练样例少于变量个数，即 m &lt; n<br />
+  这种情况下，需要减少变量个数来解决问题</li>
+</ul>
+<h3 id="todo_1">TODO</h3>
+<ol>
+<li>如何从数学上证明变量绽放后能较快收敛？</li>
+<li>可以使用 <code>pylab</code> 的等高线在二维平面上画出成本函数和两个参数的关系图</li>
+<li>找一个数据集，选择不同的学习率来实现，画出不同学习率时的成本函数随着迭代次数的变化情况</li>
+<li>总结 matlab/octave 和 scipy/numpy 在数值计算上的差异和优缺点</li>
+</ol>
+<h2 id="week-3-logistic-regression">Week 3 分类回归算法 Logistic Regression</h2>
+<h3 id="classification-and-representation">分类及其表现形式 Classification and Representation</h3>
+<h4 id="_9">引言 为什么需要分类回归算法</h4>
+<p>分类问题的值是离散的，如果考虑二元分类总是，则其值是 0 或 1。如果用 linear regresstion 来作为分类问题的预测函数是不合理的。因为因为预测出来的数值可能远小于 0 或远大于 1。我们需要找出一个预测函数模型，使其值的输出在 [0, 1] 之间。</p>
+<h4 id="hypothesis-representation">逻辑回归预测函数的表现形式 Hypothesis Representation</h4>
+<p><strong>逻辑回归预测函数</strong></p>
+<p>线性回归算法的预测函数是 $h_\theta(x) = \theta^T x$，为了让预测函数的输出值在 [0, 1] 之间，我们给定逻辑回归模型 (Logistic Regression Model) $g(z) = \frac{1}{1 + e^{-z}}$，则我们的逻辑回归模型的预测函数如下：</p>
+<p>$$<br />
+h_\theta(x) = g(\theta^T x) = \frac{1}{1 + e^{-\theta^T x}}<br />
+$$</p>
+<p><strong>解读逻辑回归预测函数的输出值</strong></p>
+<p>$h_\theta(x)$ 表示针对输入值 $x$ 以及参数 $\theta$ 的前提条件下，$y=1$ 的概率。用概率论的公式可以写成：</p>
+<p>$$<br />
+h_\theta(x) = P(y=1 \vert x; \theta)<br />
+$$</p>
+<p>上面的概率公式可以读成：<strong>在输入 $x$ 及参数 $\theta$ 条件下 $y=1$ 的概率</strong>。由概率论的知识可以推导出，</p>
+<p>$$<br />
+P(y=1 \vert x; \theta) + P(y=0 \vert x; \theta) = 1<br />
+$$</p>
+<h4 id="decision-boundary">判定边界 Decision Boundary</h4>
+<p><strong>从逻辑回归公式说起</strong></p>
+<p>逻辑回归预测函数由下面两个公式给出的：</p>
+<p>$$<br />
+h_\theta(x) = g(\theta^T x)<br />
+$$</p>
+<p>$$<br />
+g(z) = \frac{1}{1 + e^{-z}}<br />
+$$</p>
+<p>假定 $y=1$ 的判定条件是 $h_\theta(x) \geq 0.5$，$y=0$ 的判定条件是 $h_\theta(x) &lt; 0.5$，则我们可以推导出 $y=1$ 的判定条件就是 $\theta^T x \geq 0$，$y=0$ 的判定条件就是 $\theta^T x &lt; 0$。所以，$\theta^T x = 0$ 即是我们的判定边界。</p>
+<p><strong>判定边界</strong></p>
+<p>假定我们有两个变量 $x_1, x_2$，其逻辑回归预测函数是 $h_\theta(x) = g(\theta_0 + \theta_1 x_1 + \theta_2 x_2)$。假设我们给定参数</p>
+<p>$$<br />
+\theta = \begin{bmatrix} -3 \\ 1 \\ 1 \end{bmatrix}<br />
+$$</p>
+<p>那么我们可以得到判定边界 $-3 + x_1 + x_2 = 0$，即 $x_1 + x_2 = 3$，如果以 $x_1$ 为横坐标，$x_2$ 为纵坐标，这个函数画出来就是一个通过 (0, 3) 和 (3, 0) 两个点的斜线。这条线就是我们的判定边界。</p>
+<p><strong>非线性判定边界</strong></p>
+<p>如果预测函数是多项式 $h_\theta(x) = g(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \theta_3 x_1^2 + \theta_4 x_2^2)$，且给定 $\theta^T = \left[ -1 0 0 1 1\right]$，则可以得到判定边界函数</p>
+<p>$$<br />
+x_1^2 + x_2^2 = 1<br />
+$$</p>
+<p>还是以 $x_1$ 为横坐标，$x_2$ 为纵坐标，则这是一个半径为 1 的圆。这是二阶多项式的情况，更一般的多阶多项式可以表达出更复杂的判定边界。</p>
+<h3 id="todo_2">TODO</h3>
+<ol>
+<li>使用 pylab 画出 逻辑回归预测函数的图形</li>
+<li>是否有类似 MathJax 类似的，使用 JavaScript 来在网页上画图的库呢？<a href="http://stackoverflow.com/questions/119969/javascript-chart-library">这里</a>有个相似的问题。</li>
+<li>复习<a href="http://cs229.stanford.edu/section/cs229-prob.pdf">概率论</a>基础知识</li>
+</ol>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-08-29(Saturday) 20:20.</h6>
 </article>
@@ -240,29 +419,29 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
 										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
 										<li class="tag-2"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
 										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-1"><a href="../tag/android.html">android</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
-											<li><a href="/posts/2015/09/index.html">September 2015 (3)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (4)</a></li>
 											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
 											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>

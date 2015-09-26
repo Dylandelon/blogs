@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-09-11T20:20:00+08:00</updated><entry><title>机器学习入门指南</title><link href="http://blog.kamidox.com/ml-getting-started.html" rel="alternate"></link><updated>2015-09-11T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-11:ml-getting-started.html</id><summary type="html">&lt;p&gt;前段时间微软的年龄识别网站风靡全球，它的核心算法就是机器学习领域的内容。机器学习看起来高深莫测，学习曲线比较陡，实际上优秀的入门资料不但可以降低学习门槛，还可以激发学习乐趣。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-09-11T20:20:00+08:00</updated><entry><title>numpy 矩阵运算的陷阱</title><link href="http://blog.kamidox.com/trap-of-numpy.html" rel="alternate"></link><updated>2015-09-11T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-23:trap-of-numpy.html</id><summary type="html">&lt;h2 id="_1"&gt;陷阱&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;次方运算符 ** 与 numpy.power 的区别&lt;/li&gt;
+&lt;li&gt;numpy.hstack 与 numpy.column_stack 的区别&lt;/li&gt;
+&lt;li&gt;向量，行向量，列向量，N x 1 维矩阵，1 x N 维矩阵的区别&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="machine-learning"></category></entry><entry><title>机器学习入门指南</title><link href="http://blog.kamidox.com/ml-getting-started.html" rel="alternate"></link><updated>2015-09-11T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-11:ml-getting-started.html</id><summary type="html">&lt;p&gt;前段时间微软的年龄识别网站风靡全球，它的核心算法就是机器学习领域的内容。机器学习看起来高深莫测，学习曲线比较陡，实际上优秀的入门资料不但可以降低学习门槛，还可以激发学习乐趣。&lt;/p&gt;
 &lt;h2 id="_1"&gt;机器学习算法&lt;/h2&gt;
 &lt;p&gt;Coursera 上面 Stanford 的 &lt;a href="https://zh.coursera.org/learn/machine-learning"&gt;机器学习&lt;/a&gt; 课程是优质的算法相关入门课程。Andrew Ng 是 Coursera 的创始人，也是 Stanford 的老师。这个课程最大的特点是对机器学习算法的推导和介绍，从数学层面去推导一些经典的机器学习算法。如果你微积分，矩阵运算，概率论等大学数学都还给老师了也没关系。课程中会介绍用到的最基础的数学知识，包括微积分，矩阵运算，概率论等。真正做到了深入浅出以及零基础。&lt;/p&gt;
 &lt;p&gt;算法是理解机器学习原理的非常基础的知识，在实践中我们可能根本不用去推导或实现这些算法，但不代表我们不需要理解这些算法。理解这些算法对我们选择机器学习的模型以及对数据进行分析都有非常有益的。&lt;/p&gt;
@@ -215,6 +220,7 @@ $$
 &lt;p&gt;记住这几个就差不多了，倒回去看一下线性回归算法的成本函数的公式及其 LaTex 代码，对着练习个10分钟基本就可以掌握常用公式的写法了。要特别注意公式里空格和 &lt;code&gt;{}&lt;/code&gt; 的运用规则。基本原则是，空格可加可不加，但如果会引起歧义，最好加上空格。&lt;code&gt;{}&lt;/code&gt; 是用来组成群组的。比如写一个分式时，分母是一个复杂公式时，可以用 &lt;code&gt;{}&lt;/code&gt; 包含起来，这样整个复杂公式都会变成分母了。&lt;/p&gt;
 &lt;h3 id="_4"&gt;几个非常有用的资源&lt;/h3&gt;
 &lt;ul&gt;
+&lt;li&gt;这是一篇质量很高的&lt;a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/"&gt;介绍 MathJax 的中文博客文章&lt;/a&gt;，需要注意的是如果是用 markdown 编写 MathJax 公式，当公式里需要两个斜杠 \ 时要写四个斜杠 \。因为 \ 会被 markdown 转义一次。&lt;/li&gt;
 &lt;li&gt;Github 上有个&lt;a href="https://kerzol.github.io/markdown-mathjax/editor.html"&gt;在线 Markdown MathJax 编辑器&lt;/a&gt;，可以在这里练习，平时写公式时也可以在这里先写好再拷贝到文章里&lt;/li&gt;
 &lt;li&gt;这是 &lt;a href="http://www.forkosh.com/mathtextutorial.html"&gt;LaTex 完整教程&lt;/a&gt;，包含完整的 LaTex 数学公式的内容，包括更高级的格式控制等&lt;/li&gt;
 &lt;li&gt;这是一份PDF 格式的 &lt;a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf"&gt;MathJax 支持的数学符号表&lt;/a&gt;，当需要书写复杂数学公式时，一些非常特殊的符号的转义字符可以从这里查到&lt;/li&gt;
