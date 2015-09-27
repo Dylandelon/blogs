@@ -106,12 +106,12 @@ $$
 
 成本函数：
 $$
-J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h(\theta) - y^{(i)} \right)^2
+J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2
 $$
 
 迭代函数：
 $$
-\theta_j = \theta_j - \alpha \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)
 $$
 
 ### 变量缩放 Feature Scaling
@@ -185,8 +185,7 @@ prediction = theta' * x
 另外一个例子是梯度下降算法里的参数迭代函数：
 
 $$
-\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\
-theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}
 $$
 
 我们可以向量化为：
@@ -227,7 +226,7 @@ $$
 
 ## Week 3 分类回归算法 Logistic Regression
 
-### 分类及其表现形式 Classification and Representation
+### 分类预测函数及其表现形式 Classification and Representation
 
 #### 引言 为什么需要分类回归算法
 
@@ -293,12 +292,157 @@ $$
 
 还是以 $x_1$ 为横坐标，$x_2$ 为纵坐标，则这是一个半径为 1 的圆。这是二阶多项式的情况，更一般的多阶多项式可以表达出更复杂的判定边界。
 
+### 逻辑回归的成本函数
+
+线性回归的成本函数是 $J(\theta) = \frac{1}{m} \sum_{i=1}^m \frac{1}{2} \left (h_\theta(x^{(i)}) - y^{(i)} \right)^2 $，如果我们按照线性回归的成本函数来计算逻辑回归的成本函数，那么我们最终会很可能会得到一个非凸函数 (non-convex function)，这样我们就无法通过梯度下降算法算出成本函数的最低值。
+
+为了让成本函数是个凸函数 (convex function)，以便容易求出成本函数的最小值，我们定义逻辑回归的成本函数如下：
+
+$$
+Cost(h_\theta(x), y) = \begin{cases}
+    -log(h_\theta(x)), & \text{if $y$ = 1} \\\\
+    -log(1 - h_\theta(x)), & \text{if $y$ = 0} \\\\
+\end{cases}
+$$
+
+**成本函数的解读**
+如果 $y = 1, h_\theta(x) = 1$，那么成本为 $Cost = 0$；如果 $y = 1, h_\theta(x) \rightarrow 0$，那么成本将是无穷大 $Cost \rightarrow \infty$。
+如果 $y = 0, h_\theta(x) = 0$，那么成本为 $Cost = 0$；如果 $y = 0, h_\theta(x) \rightarrow 1$，那么成本将是无穷大 $Cost \rightarrow \infty$。
+
+#### 逻辑回归成本函数定义
+
+由于 $y \in [0, 1]$ 的离散值，可以把两个成本函数合并起来：
+
+$$
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]
+$$
+
+把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。使用梯度下降算法进行参数迭代的公式如下：
+
+$$
+\begin{align}
+\theta_j & = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\\\
+& =  \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}
+\end{align}
+$$
+
+这个公式的形式和母性回归算法的参数迭代公式是一样的。当然，由于这里 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$，而线性回归算法里 $h_\theta(x) = \theta^T x$。所以，两者的形式一样，但数值计算完全不同。
+
+### 算法优化
+
+梯度下降算法的效率是比较低，优化的梯度下降算法有 Conjugate Gradient, BFGS, L-BFGS 等。这些算法比较复杂，实现这些算法是数值计算专家的工作，一般工程人员只需要大概知道这些算法是怎么优化的以及怎么使用这些算法即可。
+
+octave 里提供了 `fminunc` 函数，可以查阅文档来学习函数用法，从而学会使用优化过的梯度下降算法，以提高计算效率。
+
+### 多元分类算法
+
+除了二元分类算法外，还有多元分类问题，比如需要给邮件打标签，则可能有多个标签需要考虑。这个时候需要使用 one-vs-all (one-vs-rest) 的方法。即把要分类的一种类别和其他所有类别区分开来的，这样就把多元分类问题转化为二元分类问题，这样就可以使用上文总结的所有二元分类问题的算法。
+
+针对 $y = i$，求解针对 i 的预测函数 $h_\theta^{(i)}(x)$。如果有 n 个类别，则需要求解 n 个预测函数。
+
+### 正则化 Regularization
+
+#### 线性回归里的欠拟合和过拟合
+
+* 欠拟合 (underfitting)
+  使用的变量过少导致成本函数过高。
+* 过拟合 (overfitting)
+  使用多个变量建模的预测函数非常完美地拟合了数据，其成本函数的值接近于零，但无法对新的实例进行良好的预测。
+
+**变量太多，而训练样本数据太少，则很可能出现过拟合**。下面是一些解决过拟合问题的方法：
+
+* 减少变量个数
+    * 手动减少变量个数
+    * 模型选择算法
+* 正则化
+    * 保留所有的变量，去所有变量的权重 $\theta_j$ 的值
+    * 当每个变量 $x_i$ 对预测值 $y$ 都有少量的贡献时，这样的模型可以良好地工作
+
+这就是正则化的目的，为了解决变量过多时的过拟合问题。
+
+#### 正则化
+
+$$
+J(\theta) = \frac{1}{2m} \left[ \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^n \theta_j^2 \right]
+$$
+
+其中 $\lambda$ 的值有两个目的，即要维持对训练样本的拟合，又避免对训练样本的过拟合。如果 $\lambda$ 太大，则能确保不出现过拟合，但可能会导致对现有训练样本出现欠拟合。
+
+利用正则化的成本函数，可以推导出参数迭代函数：
+
+$$
+\begin{align}
+\theta_j & = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left[ \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right) + \frac{\lambda}{m} \theta_j \right] \\\\
+& = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)
+\end{align}
+$$
+
+$(1 - \alpha \frac{\lambda}{m})$ 因子在每次迭代时都将把 $\theta_j$ 收缩。因为 $\alpha$ 和 $\lambda$ 是正数，而 m 是训练样例的个数，是个比较大的正整数。
+
+#### 通用方程的正则化
+
+$$
+\theta = (X^T X)^{-1} X^T y
+$$
+
+这是还没有正则化的通用方程，我们用它来快速求解。
+
+$$
+\theta = (X^T X + \lambda Z)^{-1} X^T y
+$$
+
+其中，Z 是 (n + 1) x (n + 1) 矩阵
+
+$$
+Z =
+\begin{bmatrix}
+0 \\\\
+& 1 \\\\
+& & 1 \\\\
+& & & \ddots \\\\
+& & & & 1
+\end{bmatrix}
+$$
+
+正则化的通用方程实际上解决了两个问题。一个是确保不发生过拟合，另外一个也解决了 $X^T X$ 的奇异矩阵问题。当 m < n 时，$X^T X$ 将是一个奇异矩阵，使用 octave 里的 `pinv` 函数我们可以求出近似逆矩阵的值，但如果在其他编程语言里，是没有办法求出奇异矩阵的逆矩阵的。而从数学上可以证明，加上 $\lambda Z$ 后，结果将是一个非奇异矩阵。
+
+通用方程的正则化公式推导过程复杂，过程从略。
+
+#### 逻辑回归成本函数的正则化
+
+$$
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2
+$$
+
+相应地，正则化后的参数迭代公式
+
+
+$$
+\begin{align}
+\theta_j & = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\\\
+& = \theta_j - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)} + \frac{\lambda}{m} \theta_j \right] \\\\
+& = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)
+\end{align}
+$$
+
+需要注意的是，上式中 $j \geq 1$，因为 $\theta_0$ 没有参与正则化。另外需要留意，逻辑回归和线性回归的参数迭代算法看起来形式是一样的，即公式 (4) 和公式 (7) 形式一样，但其实他们的算法是不一样的，因为两个式子的预测函数 $h_\theta(x)$ 是不一样的。针对线性回归，$h_\theta(x) = \theta^T x$，而针对逻辑回归 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$。
+
+根据正则化的，新的成本函数的参数迭代函数来实现 CostFunction，然后利用 octave 里的 `fminunc` 函数来求解，这样可以达到最高的运算效率。因为 `fminunc` 会使用优化过的梯度下降算法 Conjugate Gradient, BFGS, L-BFGS 等来提高运算效率。
+
+> 学到这里，你基本上可以使用线性回归逻辑回归解决一些现实问题了。我看到硅谷有大量的公司使用机器算法来构建伟大的产品，那些机器学习工程师在这些公司获得了很好的职业发展并且赚了不少钱。--- Andrew Ng
+
+老师除了教得好，还要会鼓励，让学生保持学习的热情和兴趣。学完三周，瞬间高大上了，可以走上硅谷机器学习工程师的职业道路了~~。我的看法是，学到了不少知识，但依然任重道远。
+
 ### TODO
 
-1. 使用 pylab 画出 逻辑回归预测函数的图形
+1. 使用 pylab/octave 画出逻辑回归预测函数的图形
 2. 是否有类似 MathJax 类似的，使用 JavaScript 来在网页上画图的库呢？[这里][12]有个相似的问题。
 3. 复习[概率论][11]基础知识
-
+4. 使用 pylab/octave 画出逻辑回归成本函数的图形
+5. 复习微积分知识，推导出逻辑回归算法的参数迭代函数
+6. 理解 Conjugate Gradient, BFGS, L-BFGS 的原理
+7. 查阅 octave 文档学习 `fminunc` 函数以及 scipy 里对应的函数
+8. 通用方程的正则化的数学推导过程
 
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
