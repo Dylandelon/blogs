@@ -5,6 +5,7 @@ Slug: trap-of-numpy
 Tags: machine-learning
 Authors: Joey Huang
 Summary: numpy 的矩阵运算有不少陷阱，一不小心踩进去就出不来了
+Status: draft
 
 ## 陷阱
 
