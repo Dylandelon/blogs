@@ -52,12 +52,36 @@ $$
 
 $$
 \begin{align}
-f'(g(x)) & = \left( \frac{1}{g(x)} \right)' = \frac{1' g(x) - 1 g'(x)}{g^2(x)} \\\\
-& = - \frac{g'(x)}{g^2(x)}
+f'(g(x)) & = \left( \frac{1}{g(x)} \right)' = \frac{1' g(x) - 1 g'(x)}{g(x)^2} \\\\
+& = - \frac{g'(x)}{g(x)^2}
 \end{align}
 $$
 
 其中 (17) 是根据除法法则得出的结论，除数是常数函数 1，被除数是 $g(x)$。(18) 是根据常数法则得出的结论。
+
+另一方面，$f(g(x)) = \frac{1}{g(x)} = 1 + e^{-x}$，直接指数法则直接计算微分得到
+
+$$
+\begin{align}
+f'(g(x)) & = \frac{d}{dx} (1 + e^{-x}) \\\\
+& = -e^{-x} \\\\
+& = 1 - \frac{1}{g(x)} \\\\
+& = \frac{g(x) - 1}{g(x)}
+\end{align}
+$$
+
+(18) 和 (22) 两式是相等的，即
+
+$$
+\begin{align}
+- \frac{g'(x)}{g(x)^2} & = \frac{g(x) - 1}{g(x)} \\\\
+g'(x) & = g(x)(1 - g(x))
+\end{align}
+$$
+
+这样就得到了我们的结果。
+
+
 
 ## 参考资料
 
