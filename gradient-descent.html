@@ -125,7 +125,7 @@
 <p>假设我们<strong>训练数据集 (training data set)</strong> 有 m 个数据 $(x_0, y_0), (x_1, y_1), &hellip; (x_m, y_m)$ ，我们用线性方程 $h(x) = \theta_0 + \theta_1 x$ 来拟合这组数据，怎么样来选取参数 $\theta_0$ 和 $\theta_1$ 来最优拟合这组数据呢？</p>
 <p>我们可以把这 m 个点画在二维坐标系里，然后计算这 m 个点到我们的线性方程所描述的直线的最短距离，当这些点到我们的拟合直线的距离总和最小时，那么我们就找到了最优的拟合方案了。所以，问题转化为求下面函数的最小值：</p>
 <p>$$<br />
-J(\theta) = J(\theta_0, \theta_1) = \frac12\sum_{i=0}^m(h(x^{(i)}) - y^{(i)})^2<br />
+J(\theta) = J(\theta_0, \theta_1) = \frac{1}{2m}\sum_{i=1}^m(h(x^{(i)}) - y^{(i)})^2<br />
 $$</p>
 <p>上面的公式叫<strong>成本函数 (Cost Function)</strong>，其中 $h(x_i)$ 是我们的拟合函数针对 $x_i$ 这个点预测出来的值。乘以 $\frac12$ 是为了计算方便，后文我们会看到。</p>
 <p>上面我们只考虑了一个变量 $x$ ，即决定这组数据 $y$ 值的只有一个变量。考虑更一般的情况，有 n 个变量 $x_1, x_2, x_3, &hellip; x_n$ 决定 $y$ 的值，那么我们的预测函数模型可以改写如下：</p>
@@ -151,28 +151,22 @@ $$</p>
 <p>在这个公式里，可以简单地把偏导数理解为斜率。我们要让 $\theta_j$ 不停地迭代，则根据当前 $\theta_j$ 的值，我们算出 $J(\theta)$ 在 $\theta_j$ 上的斜率，然后再乘以我们的学习率 $\alpha$ 就让我们的 $\theta_j$ 往前迈了一小步。</p>
 </div>
 <p>现在问题转化为求 $J(\theta)$ 的偏导数，这个推导过程会用到文章开头部分介绍的几个微积分运算基本法则。</p>
-<p>根据成本函数的定义</p>
+<p>根据成本函数的定义，以及文章开头的几个微积分基本运算法则，我们可以求解参数迭代公式里偏微分算子。</p>
 <p>$$<br />
-\frac\partial{\partial{\theta_j}}J(\theta) = \frac\partial{\partial{\theta_j}} \frac12\sum_{i=0}^m(h(x^{(i)}) - y^{(i)})^2<br />
+\begin{align}<br />
+\frac\partial{\partial{\theta_j}}J(\theta) &amp; = \frac\partial{\partial{\theta_j}} \frac{1}{2m}\sum_{i=1}^m(h(x^{(i)}) - y^{(i)})^2 \\<br />
+&amp; = \frac{1}{2m}\sum_{i=1}^m \frac\partial{\partial{\theta_j}} (h(x^{(i)}) - y^{(i)})^2 \\<br />
+&amp; = 2 \frac{1}{2m} \sum_{i=1}^m \left((h(x^{(i)}) - y^{(i)}) \frac\partial{\partial{\theta_j}} \left(h(x^{(i)}) - y^{(i)}\right)\right) \\<br />
+&amp; = \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) \frac\partial{\partial{\theta_j}} \left(\sum_{j=0}^n \theta_j x_j^{(i)} - y^{(i)}\right)\right) \\<br />
+&amp; = \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right) \\<br />
+\end{align}<br />
 $$</p>
-<p>根据上文的法则三</p>
-<p>$$<br />
-\frac\partial{\partial{\theta_j}}J(\theta) = \frac12\sum_{i=0}^m \frac\partial{\partial{\theta_j}} (h(x^{(i)}) - y^{(i)})^2<br />
-$$</p>
-<p>根据上文的法则四，这里也可以看到之前除以 2 的目的是为了抵消计算偏导数时乘以 2。</p>
-<p>$$<br />
-\frac\partial{\partial{\theta_j}}J(\theta) = 2 \frac12 \sum_{i=0}^m \left((h(x^{(i)}) - y^{(i)}) \frac\partial{\partial{\theta_j}} \left(h(x^{(i)}) - y^{(i)}\right)\right)<br />
-$$</p>
-<p>$$<br />
-\frac\partial{\partial{\theta_j}}J(\theta) = \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) \frac\partial{\partial{\theta_j}} \left(\sum_{j=0}^n \theta_j x_j^{(i)} - y^{(i)}\right)\right)<br />
-$$</p>
-<p>根据法则五</p>
-<p>$$<br />
-\frac\partial{\partial{\theta_j}}J(\theta) = \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
-$$</p>
+<p>式子 (2) 是根据上文的法则三得到的。式子 (3) 是根据上文的法则四得到的，这里也可以看到之前除以 2 的目的是为了抵消计算偏导数时乘以 2。式子 (5) 是根据上文的法则五得到的。</p>
 <p>最后得出我们的参数迭代函数</p>
 <p>$$<br />
-\theta_j = \theta_j - \alpha \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \frac{\alpha}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
 $$</p>
 <p>这个就是 <strong>LSM</strong> (Least Mean Squares) 迭代算法，也叫 <strong>Widrow-Hoff</strong> 学习算法。</p>
 <p>解析一下这个公式几个关键部分的含义</p>
@@ -180,7 +174,7 @@ $$</p>
 <li>$h(x^{(i)})$: 这个是按照我们的给定的参数的预测值，只要 $\theta$ 确定了，我们就可以根据预测函数算出这个值</li>
 <li>$y^{(i)}$: 这个是<strong>训练数据集 (training data set)</strong> 的目标值</li>
 <li>$x_j^{(i)}$: 这个是训练数据集里第 j 个变量的值</li>
-<li>$\sum_{i=0}^m$: 这个是对所有训练数据集求和。从这个也可以看到每迭代一次就要遍历一次全部训练数据集。所以这个算法也称为<strong>批量梯度下降算法 (Batch Gradient Descent) </strong>。对训练数据集比较大的场景下，计算成本是很高的。后面我们会介绍另外一个提高运算效率的算法。</li>
+<li>$\sum_{i=1}^m$: 这个是对所有训练数据集求和。从这个也可以看到每迭代一次就要遍历一次全部训练数据集。所以这个算法也称为<strong>批量梯度下降算法 (Batch Gradient Descent) </strong>。对训练数据集比较大的场景下，计算成本是很高的。后面我们会介绍另外一个提高运算效率的算法。</li>
 </ul>
 <p>这个公式有些符合直觉的地方，比如 $\left(h(x^{(i)}) - y^{(i)}\right)$ 表示的是预测值与真实值的误差，当误差比较大时，经过一轮的迭代，$\theta_j$ 的步幅就迈得比较大。即当我们的参数 $\theta$ 离我们的目标值很远的时候，迭代一次的值变化比较大，可以快速地收敛，而当 $\theta$ 离目标值比较近的时候，迭代一次的值变化比较小，即慢慢地收敛到目标值。</p>
 <p>这个公式怎么样用编程语言来实现呢？在编写机器学习算法的时候，一般步骤如下：</p>
@@ -188,7 +182,7 @@ $$</p>
 <li><strong>确定学习率 $\alpha$ </strong><br />
   $\alpha$ 太大可能会使成本函数无法收敛，太小计算太多，机器学习算法效率就比较低。</li>
 <li><strong>确定参数起始点</strong><br />
-  比如让所有的参数都为 1 作为起点，即 $\theta_0 := 1, \theta_1 := 1, &hellip; \theta_n := 1$。这样就得到了我们的预测函数：$h_\theta(x) = \sum_{i=0}^m x^{(i)}$。根据预测值和我们的成本函数，就可以算出我们在参数起始位置的成本。需要注意的是，参数起始点可以根据实际情况灵活选择，以便让机器学习算法的性能更高，比如选择比较靠近极点的位置。</li>
+  比如让所有的参数都为 1 作为起点，即 $\theta_0 := 1, \theta_1 := 1, &hellip; \theta_n := 1$。这样就得到了我们的预测函数：$h_\theta(x) = \sum_{i=1}^m x^{(i)}$。根据预测值和我们的成本函数，就可以算出我们在参数起始位置的成本。需要注意的是，参数起始点可以根据实际情况灵活选择，以便让机器学习算法的性能更高，比如选择比较靠近极点的位置。</li>
 <li><strong>计算参数的下一组值</strong><br />
   根据 LSM 算法，<strong>分别同时算出</strong>新的 $\theta_j$ 的值。然后用新的 $\theta$ 值得到新的预测函数 $h_\theta(x)$，再根据新的预测函数，代入成本函数就可以算出新的成本。</li>
 <li><strong>确认成本函数是否收敛</strong><br />
@@ -197,12 +191,12 @@ $$</p>
 <h2 id="_3">随机梯度下降算法</h2>
 <p>批量梯度下降算法对参数进行一次迭代运算，就需要遍历所有的训练数据集。当训练数据集比较大时，这个算法的效率会很低。考虑另外一个算法：</p>
 <p>$$<br />
-\theta_j = \theta_j - \alpha \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\theta_j = \theta_j - \frac{\alpha}{m} \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
 $$</p>
 <p>这就是 <strong>随机梯度下降算法</strong> (stochastic gradient descent)。这个算法的关键点是不去遍历所有的训练数据集，而是改成每次随机地从训练数据集里取一个数据进行参数迭代计算。</p>
 <div class="admonition hint">
 <p class="admonition-title">怎么理解随机</p>
-<p>为什么这么神奇呢？为什么随机从训练数据集里选取一个数据来迭代，不但不影响最终计算结果，还大大地提高了效率。看数学时最怕的就是 <strong>我们考虑 bla bla bla</strong>，作者说出 “我们考虑 bla bla bla” 时背后的过程是怎么样的？坦白讲，怎么样从数学上证明随机梯度下降算法和批量梯度下降算法是等价的，我也不知道。不过我有个直观的可以帮助理解的解释。回到成本函数的定义：$J(\theta) = \frac12 \sum_{i=0}^m \left(h(x^{(i)}) - y^{(i)}\right)^2$。我们说过，这里累加后除以 2 是为了计算方便，那么我们除以 m 是什么意思呢？答案是平均值，即所有训练数据集上的点到我们预测函数的距离的<strong>平均值</strong>。因为 m 是正整数，$J(\theta)$ 除以 m 不影响它的最小值的属性。再回到<strong>随机选取训练数据集里的一个数据</strong>这个做法来看，如果计算次数足够多，并且是真正随机，那么随机选取出来的这组数据从概率的角度来看，和<strong>平均值</strong>是相当的。打个比方，有一个储钱罐里有 1 角的硬币 10 枚，5 角的硬币 2 枚，1 元的硬币 1 枚，总计 3 元，13 枚硬币。你随机从里面取 1000 次，每次取出来的硬币把币值记录下来，然后放回储钱罐里。这样最后去算这 1000 次取出来的钱的平均值 (1000 次取出来的币值总和除以 1000) 和储钱罐里每枚硬币的平均值 (3/13 元) 应该是近似相等的。我数学太水，概率论还没复习，哪位概率论高人给证明一下啊。</p>
+<p>为什么这么神奇呢？为什么随机从训练数据集里选取一个数据来迭代，不但不影响最终计算结果，还大大地提高了效率。看数学时最怕的就是 <strong>我们考虑 bla bla bla</strong>，作者说出 “我们考虑 bla bla bla” 时背后的过程是怎么样的？坦白讲，怎么样从数学上证明随机梯度下降算法和批量梯度下降算法是等价的，我也不知道。不过我有个直观的可以帮助理解的解释。回到成本函数的定义：$J(\theta) = \frac{1}{2m} \sum_{i=1}^m \left(h(x^{(i)}) - y^{(i)}\right)^2$。我们说过，这里累加后除以 2 是为了计算方便，那么我们除以 m 是什么意思呢？答案是平均值，即所有训练数据集上的点到我们预测函数的距离的<strong>平均值</strong>。因为 m 是正整数，$J(\theta)$ 除以 m 不影响它的最小值的属性。再回到<strong>随机选取训练数据集里的一个数据</strong>这个做法来看，如果计算次数足够多，并且是真正随机，那么随机选取出来的这组数据从概率的角度来看，和<strong>平均值</strong>是相当的。打个比方，有一个储钱罐里有 1 角的硬币 10 枚，5 角的硬币 2 枚，1 元的硬币 1 枚，总计 3 元，13 枚硬币。你随机从里面取 1000 次，每次取出来的硬币把币值记录下来，然后放回储钱罐里。这样最后去算这 1000 次取出来的钱的平均值 (1000 次取出来的币值总和除以 1000) 和储钱罐里每枚硬币的平均值 (3/13 元) 应该是近似相等的。我数学太水，概率论还没复习，哪位概率论高人给证明一下啊。</p>
 </div>
 <p>这样，我们基本上把梯度下降算法，最小均方差，随机梯度下降算法的来龙去脉理了一遍。</p>
 	<hr/>
@@ -255,22 +249,22 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
 										<li class="tag-4"><a href="./tag/github.html">github</a></li>
 										<li class="tag-1"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-2"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
 								</ul>
 							</div>
 

@@ -110,15 +110,108 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>numpy 矩阵运算的陷阱</h2>
-	<h2 id="_1">陷阱</h2>
+	<h2>常用的微分运算法则</h2>
+	<p>机器学习涉及到较多的数学知识，在工程应用领域，这些数学知识不是必要的，其实很多算法都是数值运算专家写好了的。然而知其然知其所以然，了解这些数学公式的来龙去脉是帮助理解算法的关键。本文直接给出常用的微分运算法则，并运用这些法则来计算分类回归算法 (Logistic Regression) 预测模型 Sigmoid Function 的微分公式。</p>
+<h2 id="_1">基础函数的微分运算法则</h2>
 <ul>
-<li>次方运算符 ** 与 numpy.power 的区别</li>
-<li>numpy.hstack 与 numpy.column_stack 的区别</li>
-<li>向量，行向量，列向量，N x 1 维矩阵，1 x N 维矩阵的区别</li>
+<li>幂函数法则<br />
+  $$\begin{align} \frac{d}{dx} x^n = nx^{n-1} \end{align}$$</li>
+<li>指数函数法则<br />
+  $$\begin{align} \frac{d}{dx} e^x = e^x \end{align}$$<br />
+  $$\begin{align} \frac{d}{dx} a^x = ln(a)a^x \end{align}$$</li>
+<li>对数函数法则<br />
+  $$\begin{align} \frac{d}{dx} ln(x) = \frac{1}{x} \end{align}$$<br />
+  $$\begin{align} \frac{d}{dx} log_a(x) = \frac{1}{xln(a)} \end{align}$$</li>
+<li>三角函数法则<br />
+  $$\begin{align} \frac{d}{dx} sin(x) = cos(x) \end{align}$$<br />
+  $$\begin{align} \frac{d}{dx} cos(x) = -sin(x) \end{align}$$<br />
+  $$\begin{align} \frac{d}{dx} tan(x) = sin^2(x) = \frac{1}{cos^2(x)} = 1 + tan^2(x) \end{align}$$</li>
+<li>反三角函数法则<br />
+  $$\begin{align} \frac{d}{dx} arcsin(x) = \frac{1}{\sqrt{1-x^2}}, -1 &lt; x &lt; 1 \end{align}$$<br />
+  $$\begin{align} \frac{d}{dx} arccos(x) = -\frac{1}{\sqrt{1-x^2}}, -1 &lt; x &lt; 1 \end{align}$$<br />
+  $$\begin{align} \frac{d}{dx} arctan(x) = \frac{1}{1+x^2} \end{align}$$</li>
+</ul>
+<h2 id="_2">组合函数的微分运算法则</h2>
+<ul>
+<li>常数法则：如果 $f(x) = n$，n 是常数，则<br />
+  $$\begin{align} f&rsquo; = 0 \end{align}$$</li>
+<li>加法法则<br />
+  $$\begin{align} (\alpha f + \beta g)&rsquo; = \alpha f&rsquo; + \beta g&rsquo; \end{align}$$</li>
+<li>乘法法则<br />
+  $$\begin{align} (fg)&rsquo; = f&rsquo;g + fg&rsquo; \end{align}$$</li>
+<li>除法法则<br />
+  $$\begin{align} \left( \frac{f}{g} \right)&rsquo; = \frac{f&rsquo;g - fg&rsquo;}{g^2} \end{align}$$<br />
+  根据除法法则和指数法则，可以得出推论<br />
+  $$\frac{d}{dx} e^{-x} = \frac{d}{dx} \frac{1}{e^x} = \frac{0-e^x}{e^{2x}} = -\frac{1}{e^x} = -e^{-x}$$</li>
+<li>链接法则：如果 $f(x) = h(g(x))$，则<br />
+  $$\begin{align} f&rsquo;(x) = h&rsquo;(g(x)) g&rsquo;(x) \end{align}$$</li>
+</ul>
+<h2 id="sigmoid-function">计算 Sigmoid Function 的微分</h2>
+<p>$g(x) = \frac{1}{1+e^{-x}}$ 是分类算法的预测函数，也称为 Sigmoid Function 或 Logistic Function。我们利用上文介绍的微分运算法则来证明 Sigmoid Function 的一个特性：</p>
+<p>$$<br />
+\frac{d}{dx} g(x) = g(x) (1 - g(x))<br />
+$$</p>
+<h3 id="_3">方法一</h3>
+<p>假设 $f(x) = \frac{1}{x}$，则 $f(g(x)) = \frac{1}{g(x)}$，根据除法法则得到</p>
+<p>$$<br />
+\begin{align}<br />
+f&rsquo;(g(x)) &amp; = \left( \frac{1}{g(x)} \right)&rsquo; = \frac{1&rsquo; g(x) - 1 g&rsquo;(x)}{g(x)^2} \\<br />
+&amp; = - \frac{g&rsquo;(x)}{g(x)^2}<br />
+\end{align}<br />
+$$</p>
+<p>其中 (17) 是根据除法法则得出的结论，除数是常数函数 1，被除数是 $g(x)$。(18) 是根据常数法则得出的结论。</p>
+<p>另一方面，$f(g(x)) = \frac{1}{g(x)} = 1 + e^{-x}$，根据指数法则直接计算微分得到</p>
+<p>$$<br />
+\begin{align}<br />
+f&rsquo;(g(x)) &amp; = \frac{d}{dx} (1 + e^{-x}) \\<br />
+&amp; = -e^{-x} \\<br />
+&amp; = 1 - \frac{1}{g(x)} \\<br />
+&amp; = \frac{g(x) - 1}{g(x)}<br />
+\end{align}<br />
+$$</p>
+<p>(18) 和 (22) 两式是相等的，即</p>
+<p>$$<br />
+\begin{align}<br />
+- \frac{g&rsquo;(x)}{g(x)^2} &amp; = \frac{g(x) - 1}{g(x)} \\<br />
+g&rsquo;(x) &amp; = g(x)(1 - g(x))<br />
+\end{align}<br />
+$$</p>
+<p>这样就得到了我们的结果。</p>
+<h3 id="_4">方法二</h3>
+<p>由 $g(x) = \frac{1}{1+e^{-x}}$ 的定义可知</p>
+<p>$$<br />
+\begin{align}<br />
+&amp; (1+e^{-x})g(x) = 1 \\<br />
+\Rightarrow &amp; \frac{d}{dx} \left( (1+e^{-x})g(x) \right) = 0  \\<br />
+\Rightarrow &amp; -e^{-x}g(x) + (1+e^{-x})\frac{d}{dx}g(x) = 0    \\<br />
+\Rightarrow &amp; \frac{d}{dx}g(x) = g(x) \frac{e^{-x}}{1+e^{-x}} \\<br />
+\Rightarrow &amp; \frac{d}{dx}g(x) = g(x) \frac{(1 + e^{-x}) - 1}{1+e^{-x}} \\<br />
+\Rightarrow &amp; \frac{d}{dx}g(x) = g(x) \left[ 1 - \frac{1}{1+e^{-x}}\right] \\<br />
+\Rightarrow &amp; \frac{d}{dx}g(x) = g(x) (1 - g(x)) \\<br />
+\end{align}<br />
+$$</p>
+<p>(26) 两边取微分；(27) 根据微分的乘法法则。</p>
+<h3 id="_5">方法三</h3>
+<p>根据除法法则直接计算微分：</p>
+<p>$$<br />
+\begin{align}<br />
+\frac{d}{dx} g(x) &amp; = \frac{d}{dx} \left( \frac{1}{1 + e^{-x}} \right) \\<br />
+&amp; = \frac{0 - (- e^{-x})}{(1 + e^{-x})^2} \\<br />
+&amp; = \frac{e^{-x}}{(1 + e^{-x})^2} \\<br />
+&amp; = \frac{1}{(1 + e^{-x})} \frac{e^{-x}}{(1 + e^{-x})} \\<br />
+&amp; = \frac{1}{(1 + e^{-x})} \frac{(1 + e^{-x}) - 1}{(1 + e^{-x})} \\<br />
+&amp; = \frac{1}{(1 + e^{-x})} \left[1 - \frac{1}{(1 + e^{-x})} \right] \\<br />
+&amp; = g(x) (1 - g(x)) \\<br />
+\end{align}<br />
+$$</p>
+<p>(33) 是根据除法法则得出的，其中除数是常数 1，被除数是 $1 + e^{-x}$。</p>
+<h2 id="_6">参考资料</h2>
+<ul>
+<li>StackExchange 上有个 <a href="http://math.stackexchange.com/questions/78575/derivative-of-sigmoid-function-sigma-x-frac11e-x">Sigmoid Function 微分计算的问题及答案</a></li>
+<li>WikiPedia 上有关<a href="https://en.wikipedia.org/wiki/Derivative#Rules_of_computation">微分运算法则</a>的资料</li>
 </ul>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-09-23(Wednesday) 20:20. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-09-28(Monday) 23:20. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
 
 <hr/>
@@ -167,22 +260,22 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
 										<li class="tag-4"><a href="./tag/github.html">github</a></li>
 										<li class="tag-1"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-2"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
 								</ul>
 							</div>
 

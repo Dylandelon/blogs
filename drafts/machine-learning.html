@@ -139,10 +139,23 @@
 </ul>
 </li>
 <li><a href="#week-3-logistic-regression">Week 3 分类回归算法 Logistic Regression</a><ul>
-<li><a href="#classification-and-representation">分类及其表现形式 Classification and Representation</a><ul>
+<li><a href="#classification-and-representation">分类预测函数及其表现形式 Classification and Representation</a><ul>
 <li><a href="#_9">引言 为什么需要分类回归算法</a></li>
 <li><a href="#hypothesis-representation">逻辑回归预测函数的表现形式 Hypothesis Representation</a></li>
 <li><a href="#decision-boundary">判定边界 Decision Boundary</a></li>
+</ul>
+</li>
+<li><a href="#_10">逻辑回归的成本函数</a><ul>
+<li><a href="#_11">逻辑回归成本函数定义</a></li>
+</ul>
+</li>
+<li><a href="#_12">算法优化</a></li>
+<li><a href="#_13">多元分类算法</a></li>
+<li><a href="#regularization">正则化 Regularization</a><ul>
+<li><a href="#_14">线性回归里的欠拟合和过拟合</a></li>
+<li><a href="#_15">正则化</a></li>
+<li><a href="#_16">通用方程的正则化</a></li>
+<li><a href="#_17">逻辑回归成本函数的正则化</a></li>
 </ul>
 </li>
 <li><a href="#todo_2">TODO</a></li>
@@ -239,11 +252,11 @@ $$<br />
 其中，$x_0 = 1$，$x^{(i)}$ 是训练数据集里的第 i 个数据。$\theta_T$ 是 n + 1 维列向量；$x^{(i)}$ 是 n + 1 维行向量。</p>
 <p>成本函数：<br />
 $$<br />
-J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h(\theta) - y^{(i)} \right)^2<br />
+J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2<br />
 $$</p>
 <p>迭代函数：<br />
 $$<br />
-\theta_j = \theta_j - \alpha \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
 $$</p>
 <h3 id="feature-scaling">变量缩放 Feature Scaling</h3>
 <p>当变量在 [-1, 1] 这个范围内时，梯度下降算法能较快地收敛。可以使用下面的公式来缩放变量，以让变量在快速收敛的范围内：</p>
@@ -291,8 +304,7 @@ $$</p>
 
 <p>另外一个例子是梯度下降算法里的参数迭代函数：</p>
 <p>$$<br />
-\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\<br />
-theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}<br />
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}<br />
 $$</p>
 <p>我们可以向量化为：</p>
 <p>$$<br />
@@ -323,7 +335,7 @@ $$</p>
 <li>总结 matlab/octave 和 scipy/numpy 在数值计算上的差异和优缺点</li>
 </ol>
 <h2 id="week-3-logistic-regression">Week 3 分类回归算法 Logistic Regression</h2>
-<h3 id="classification-and-representation">分类及其表现形式 Classification and Representation</h3>
+<h3 id="classification-and-representation">分类预测函数及其表现形式 Classification and Representation</h3>
 <h4 id="_9">引言 为什么需要分类回归算法</h4>
 <p>分类问题的值是离散的，如果考虑二元分类总是，则其值是 0 或 1。如果用 linear regresstion 来作为分类问题的预测函数是不合理的。因为因为预测出来的数值可能远小于 0 或远大于 1。我们需要找出一个预测函数模型，使其值的输出在 [0, 1] 之间。</p>
 <h4 id="hypothesis-representation">逻辑回归预测函数的表现形式 Hypothesis Representation</h4>
@@ -363,11 +375,121 @@ $$</p>
 x_1^2 + x_2^2 = 1<br />
 $$</p>
 <p>还是以 $x_1$ 为横坐标，$x_2$ 为纵坐标，则这是一个半径为 1 的圆。这是二阶多项式的情况，更一般的多阶多项式可以表达出更复杂的判定边界。</p>
+<h3 id="_10">逻辑回归的成本函数</h3>
+<p>线性回归的成本函数是 $J(\theta) = \frac{1}{m} \sum_{i=1}^m \frac{1}{2} \left (h_\theta(x^{(i)}) - y^{(i)} \right)^2 $，如果我们按照线性回归的成本函数来计算逻辑回归的成本函数，那么我们最终会很可能会得到一个非凸函数 (non-convex function)，这样我们就无法通过梯度下降算法算出成本函数的最低值。</p>
+<p>为了让成本函数是个凸函数 (convex function)，以便容易求出成本函数的最小值，我们定义逻辑回归的成本函数如下：</p>
+<p>$$<br />
+Cost(h_\theta(x), y) = \begin{cases}<br />
+    -log(h_\theta(x)), &amp; \text{if $y$ = 1} \\<br />
+    -log(1 - h_\theta(x)), &amp; \text{if $y$ = 0} \\<br />
+\end{cases}<br />
+$$</p>
+<p><strong>成本函数的解读</strong><br />
+如果 $y = 1, h_\theta(x) = 1$，那么成本为 $Cost = 0$；如果 $y = 1, h_\theta(x) \rightarrow 0$，那么成本将是无穷大 $Cost \rightarrow \infty$。<br />
+如果 $y = 0, h_\theta(x) = 0$，那么成本为 $Cost = 0$；如果 $y = 0, h_\theta(x) \rightarrow 1$，那么成本将是无穷大 $Cost \rightarrow \infty$。</p>
+<h4 id="_11">逻辑回归成本函数定义</h4>
+<p>由于 $y \in [0, 1]$ 的离散值，可以把两个成本函数合并起来：</p>
+<p>$$<br />
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]<br />
+$$</p>
+<p>把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。使用梯度下降算法进行参数迭代的公式如下：</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\<br />
+&amp; =  \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}<br />
+\end{align}<br />
+$$</p>
+<p>这个公式的形式和母性回归算法的参数迭代公式是一样的。当然，由于这里 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$，而线性回归算法里 $h_\theta(x) = \theta^T x$。所以，两者的形式一样，但数值计算完全不同。</p>
+<h3 id="_12">算法优化</h3>
+<p>梯度下降算法的效率是比较低，优化的梯度下降算法有 Conjugate Gradient, BFGS, L-BFGS 等。这些算法比较复杂，实现这些算法是数值计算专家的工作，一般工程人员只需要大概知道这些算法是怎么优化的以及怎么使用这些算法即可。</p>
+<p>octave 里提供了 <code>fminunc</code> 函数，可以查阅文档来学习函数用法，从而学会使用优化过的梯度下降算法，以提高计算效率。</p>
+<h3 id="_13">多元分类算法</h3>
+<p>除了二元分类算法外，还有多元分类问题，比如需要给邮件打标签，则可能有多个标签需要考虑。这个时候需要使用 one-vs-all (one-vs-rest) 的方法。即把要分类的一种类别和其他所有类别区分开来的，这样就把多元分类问题转化为二元分类问题，这样就可以使用上文总结的所有二元分类问题的算法。</p>
+<p>针对 $y = i$，求解针对 i 的预测函数 $h_\theta^{(i)}(x)$。如果有 n 个类别，则需要求解 n 个预测函数。</p>
+<h3 id="regularization">正则化 Regularization</h3>
+<h4 id="_14">线性回归里的欠拟合和过拟合</h4>
+<ul>
+<li>欠拟合 (underfitting)<br />
+  使用的变量过少导致成本函数过高。</li>
+<li>过拟合 (overfitting)<br />
+  使用多个变量建模的预测函数非常完美地拟合了数据，其成本函数的值接近于零，但无法对新的实例进行良好的预测。</li>
+</ul>
+<p><strong>变量太多，而训练样本数据太少，则很可能出现过拟合</strong>。下面是一些解决过拟合问题的方法：</p>
+<ul>
+<li>减少变量个数<ul>
+<li>手动减少变量个数</li>
+<li>模型选择算法</li>
+</ul>
+</li>
+<li>正则化<ul>
+<li>保留所有的变量，去所有变量的权重 $\theta_j$ 的值</li>
+<li>当每个变量 $x_i$ 对预测值 $y$ 都有少量的贡献时，这样的模型可以良好地工作</li>
+</ul>
+</li>
+</ul>
+<p>这就是正则化的目的，为了解决变量过多时的过拟合问题。</p>
+<h4 id="_15">正则化</h4>
+<p>$$<br />
+J(\theta) = \frac{1}{2m} \left[ \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^n \theta_j^2 \right]<br />
+$$</p>
+<p>其中 $\lambda$ 的值有两个目的，即要维持对训练样本的拟合，又避免对训练样本的过拟合。如果 $\lambda$ 太大，则能确保不出现过拟合，但可能会导致对现有训练样本出现欠拟合。</p>
+<p>利用正则化的成本函数，可以推导出参数迭代函数：</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left[ \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right) + \frac{\lambda}{m} \theta_j \right] \\<br />
+&amp; = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
+$$</p>
+<p>$(1 - \alpha \frac{\lambda}{m})$ 因子在每次迭代时都将把 $\theta_j$ 收缩。因为 $\alpha$ 和 $\lambda$ 是正数，而 m 是训练样例的个数，是个比较大的正整数。</p>
+<h4 id="_16">通用方程的正则化</h4>
+<p>$$<br />
+\theta = (X^T X)^{-1} X^T y<br />
+$$</p>
+<p>这是还没有正则化的通用方程，我们用它来快速求解。</p>
+<p>$$<br />
+\theta = (X^T X + \lambda Z)^{-1} X^T y<br />
+$$</p>
+<p>其中，Z 是 (n + 1) x (n + 1) 矩阵</p>
+<p>$$<br />
+Z =<br />
+\begin{bmatrix}<br />
+0 \\<br />
+&amp; 1 \\<br />
+&amp; &amp; 1 \\<br />
+&amp; &amp; &amp; \ddots \\<br />
+&amp; &amp; &amp; &amp; 1<br />
+\end{bmatrix}<br />
+$$</p>
+<p>正则化的通用方程实际上解决了两个问题。一个是确保不发生过拟合，另外一个也解决了 $X^T X$ 的奇异矩阵问题。当 m &lt; n 时，$X^T X$ 将是一个奇异矩阵，使用 octave 里的 <code>pinv</code> 函数我们可以求出近似逆矩阵的值，但如果在其他编程语言里，是没有办法求出奇异矩阵的逆矩阵的。而从数学上可以证明，加上 $\lambda Z$ 后，结果将是一个非奇异矩阵。</p>
+<p>通用方程的正则化公式推导过程复杂，过程从略。</p>
+<h4 id="_17">逻辑回归成本函数的正则化</h4>
+<p>$$<br />
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2<br />
+$$</p>
+<p>相应地，正则化后的参数迭代公式</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\<br />
+&amp; = \theta_j - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)} + \frac{\lambda}{m} \theta_j \right] \\<br />
+&amp; = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
+$$</p>
+<p>需要注意的是，上式中 $j \geq 1$，因为 $\theta_0$ 没有参与正则化。另外需要留意，逻辑回归和线性回归的参数迭代算法看起来形式是一样的，即公式 (4) 和公式 (7) 形式一样，但其实他们的算法是不一样的，因为两个式子的预测函数 $h_\theta(x)$ 是不一样的。针对线性回归，$h_\theta(x) = \theta^T x$，而针对逻辑回归 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$。</p>
+<p>根据正则化的，新的成本函数的参数迭代函数来实现 CostFunction，然后利用 octave 里的 <code>fminunc</code> 函数来求解，这样可以达到最高的运算效率。因为 <code>fminunc</code> 会使用优化过的梯度下降算法 Conjugate Gradient, BFGS, L-BFGS 等来提高运算效率。</p>
+<blockquote>
+<p>学到这里，你基本上可以使用线性回归逻辑回归解决一些现实问题了。我看到硅谷有大量的公司使用机器算法来构建伟大的产品，那些机器学习工程师在这些公司获得了很好的职业发展并且赚了不少钱。&mdash; Andrew Ng</p>
+</blockquote>
+<p>老师除了教得好，还要会鼓励，让学生保持学习的热情和兴趣。学完三周，瞬间高大上了，可以走上硅谷机器学习工程师的职业道路了~~。我的看法是，学到了不少知识，但依然任重道远。</p>
 <h3 id="todo_2">TODO</h3>
 <ol>
-<li>使用 pylab 画出 逻辑回归预测函数的图形</li>
+<li>使用 pylab/octave 画出逻辑回归预测函数的图形</li>
 <li>是否有类似 MathJax 类似的，使用 JavaScript 来在网页上画图的库呢？<a href="http://stackoverflow.com/questions/119969/javascript-chart-library">这里</a>有个相似的问题。</li>
 <li>复习<a href="http://cs229.stanford.edu/section/cs229-prob.pdf">概率论</a>基础知识</li>
+<li>使用 pylab/octave 画出逻辑回归成本函数的图形</li>
+<li>复习微积分知识，推导出逻辑回归算法的参数迭代函数</li>
+<li>理解 Conjugate Gradient, BFGS, L-BFGS 的原理</li>
+<li>查阅 octave 文档学习 <code>fminunc</code> 函数以及 scipy 里对应的函数</li>
+<li>通用方程的正则化的数学推导过程</li>
 </ol>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-08-29(Saturday) 20:20.</h6>
@@ -419,22 +541,22 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
 										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
 										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
 										<li class="tag-4"><a href="../tag/github.html">github</a></li>
 										<li class="tag-1"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-2"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
 								</ul>
 							</div>
 
