@@ -1,4 +1,4 @@
-Title: 几个常用的微分运算法则
+Title: 常用的微分运算法则
 Date: 2015-09-28 23:20
 Modified: 2015-09-28 23:20
 Slug: computation-rules-for-derivative
