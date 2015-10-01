@@ -1,5 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-09-29T00:13:00+08:00</updated><entry><title>习得性无助与自信心的建立</title><link href="http://blog.kamidox.com/helpless.html" rel="alternate"></link><updated>2015-09-29T00:13:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-29:helpless.html</id><summary type="html">&lt;p&gt;女儿将近四周半了，给她报了个舞蹈班。有一次课程老师是教小朋友做前滚翻。看着小家伙在课堂上非常努力地偿试，总是翻不好，要嘛翻不过去，要嘛勉强翻过去了，但是翻歪了。由于一个班级小朋友太多，老师也没有精力一个个小朋友耐心指导。只能叫家长回家教小朋友练习。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-09-30T20:20:00+08:00</updated><entry><title>numpy 矩阵运算的陷阱</title><link href="http://blog.kamidox.com/trap-of-numpy.html" rel="alternate"></link><updated>2015-09-30T20:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-30:trap-of-numpy.html</id><summary type="html">&lt;h2 id="_1"&gt;陷阱一：数据结构混乱&lt;/h2&gt;
+&lt;p&gt;array 和 matrix 都可以用来表示多维矩阵&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;98&lt;/span&gt;]: a &lt;span style="color: #666666"&gt;=&lt;/span&gt; np&lt;span style="color: #666666"&gt;.&lt;/span&gt;array([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;2&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;], [&lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;5&lt;/span&gt;, &lt;span style="color: #666666"&gt;6&lt;/span&gt;], [&lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #666666"&gt;8&lt;/span&gt;, &lt;span style="color: #666666"&gt;9&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;99&lt;/span&gt;]: a
+Out[&lt;span style="color: #666666"&gt;99&lt;/span&gt;]:
+array([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;2&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;],
+       [&lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;5&lt;/span&gt;, &lt;span style="color: #666666"&gt;6&lt;/span&gt;],
+       [&lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #666666"&gt;8&lt;/span&gt;, &lt;span style="color: #666666"&gt;9&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;100&lt;/span&gt;]: A &lt;span style="color: #666666"&gt;=&lt;/span&gt; np&lt;span style="color: #666666"&gt;.&lt;/span&gt;matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;2&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;], [&lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;5&lt;/span&gt;, &lt;span style="color: #666666"&gt;6&lt;/span&gt;], [&lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #666666"&gt;8&lt;/span&gt;, &lt;span style="color: #666666"&gt;9&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;101&lt;/span&gt;]: A
+Out[&lt;span style="color: #666666"&gt;101&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;2&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;5&lt;/span&gt;, &lt;span style="color: #666666"&gt;6&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #666666"&gt;8&lt;/span&gt;, &lt;span style="color: #666666"&gt;9&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;102&lt;/span&gt;]: a&lt;span style="color: #666666"&gt;.&lt;/span&gt;shape
+Out[&lt;span style="color: #666666"&gt;102&lt;/span&gt;]: (&lt;span style="color: #666666"&gt;3&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;)
+
+In [&lt;span style="color: #666666"&gt;103&lt;/span&gt;]: A&lt;span style="color: #666666"&gt;.&lt;/span&gt;shape
+Out[&lt;span style="color: #666666"&gt;103&lt;/span&gt;]: (&lt;span style="color: #666666"&gt;3&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;看起来效果不错。假设我们要对数据进行筛选，取第 1 列的第 1 行和第 3 行数据构成一个 2 x 1 的列向量。先看对 array 的做法&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;99&lt;/span&gt;]: a
+Out[&lt;span style="color: #666666"&gt;99&lt;/span&gt;]:
+array([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;2&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;],
+       [&lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;5&lt;/span&gt;, &lt;span style="color: #666666"&gt;6&lt;/span&gt;],
+       [&lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #666666"&gt;8&lt;/span&gt;, &lt;span style="color: #666666"&gt;9&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;100&lt;/span&gt;]: y
+Out[&lt;span style="color: #666666"&gt;100&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;0&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;1&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;101&lt;/span&gt;]: a[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;101&lt;/span&gt;]: array([&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;7&lt;/span&gt;])
+
+In [&lt;span style="color: #666666"&gt;102&lt;/span&gt;]: a[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;]&lt;span style="color: #666666"&gt;.&lt;/span&gt;shape
+Out[&lt;span style="color: #666666"&gt;102&lt;/span&gt;]: (&lt;span style="color: #666666"&gt;3&lt;/span&gt;,)
+
+In [&lt;span style="color: #666666"&gt;110&lt;/span&gt;]: a[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;][y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt;]
+&lt;span style="color: #666666"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span style="color: #D2413A; font-weight: bold"&gt;IndexError&lt;/span&gt;                                Traceback (most recent call last)
+&lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;ipython&lt;span style="color: #666666"&gt;-&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;input&lt;/span&gt;&lt;span style="color: #666666"&gt;-110-&lt;/span&gt;f32ed63aa2a8&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;()
+&lt;span style="color: #666666"&gt;----&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt; a[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;][y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt;]
+
+&lt;span style="color: #D2413A; font-weight: bold"&gt;IndexError&lt;/span&gt;: too many indices &lt;span style="color: #AA22FF; font-weight: bold"&gt;for&lt;/span&gt; array
+
+In [&lt;span style="color: #666666"&gt;111&lt;/span&gt;]: a[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;]&lt;span style="color: #666666"&gt;.&lt;/span&gt;reshape(&lt;span style="color: #666666"&gt;3&lt;/span&gt;, &lt;span style="color: #666666"&gt;1&lt;/span&gt;)[y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;111&lt;/span&gt;]: array([&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;7&lt;/span&gt;])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;从 Out[101] 可以看到一个陷阱，&lt;code&gt;a[:, 0]&lt;/code&gt; 过滤完应该是一个 3 x 1 的列向量，可是它变成了行向量。其实也不是真正意义上的行向量，因为行向量 shape 应该是 3 x 1，可是他的 shape 是 (3,) ，这其实已经退化为一个数组了。所以，导致最后 In [110] 出错。只有像 In [111] 那样 reshape 一下才可以。我不知道大家晕了没有，我是已经快晕了。&lt;/p&gt;
+&lt;p&gt;相比之下，matrix 可以确保运算结果全部是二维的，结果相对好一点。为什么只是相对好一点呢？呆会儿我们再来吐吐 matrix 的槽点。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;101&lt;/span&gt;]: A
+Out[&lt;span style="color: #666666"&gt;101&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;2&lt;/span&gt;, &lt;span style="color: #666666"&gt;3&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;4&lt;/span&gt;, &lt;span style="color: #666666"&gt;5&lt;/span&gt;, &lt;span style="color: #666666"&gt;6&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #666666"&gt;8&lt;/span&gt;, &lt;span style="color: #666666"&gt;9&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;112&lt;/span&gt;]: y
+Out[&lt;span style="color: #666666"&gt;112&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;0&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;1&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;113&lt;/span&gt;]: A[:,&lt;span style="color: #666666"&gt;0&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;113&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;4&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;7&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;102&lt;/span&gt;]: A[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;]&lt;span style="color: #666666"&gt;.&lt;/span&gt;shape
+Out[&lt;span style="color: #666666"&gt;102&lt;/span&gt;]: (&lt;span style="color: #666666"&gt;3&lt;/span&gt;,&lt;span style="color: #666666"&gt;1&lt;/span&gt;)
+
+In [&lt;span style="color: #666666"&gt;114&lt;/span&gt;]: A[:,&lt;span style="color: #666666"&gt;0&lt;/span&gt;][y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;114&lt;/span&gt;]: matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;, &lt;span style="color: #666666"&gt;7&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;114&lt;/span&gt;]: A[:,&lt;span style="color: #666666"&gt;0&lt;/span&gt;][y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt;]&lt;span style="color: #666666"&gt;.&lt;/span&gt;shape
+Out[&lt;span style="color: #666666"&gt;114&lt;/span&gt;]: (&lt;span style="color: #666666"&gt;1&lt;/span&gt;,&lt;span style="color: #666666"&gt;2&lt;/span&gt;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;看起来还不错。不过槽点就来了。Out [114] 我们预期的输入结果应该是一个 2 x 1 的列向量，可是这里变成了 1 x 2 的行向量！&lt;/p&gt;
+&lt;p&gt;为什么我会在意行向量和列向量？在矩阵运算里，行向量和列向量是不同的。比如一个 m x 3 的矩阵可以和 3 x 1 的列向量叉乘，结果是 m x 1 的列向量。而如果一个 m x 3 的矩阵和 1 x 3 的行向量叉乘是会报错的。&lt;/p&gt;
+&lt;h2 id="_2"&gt;陷阱二：数据处理能力不足，语言效率低&lt;/h2&gt;
+&lt;p&gt;我们再看个例子。假设 X 是 5 x 2 的矩阵，Y 是 5 X 1 的 bool 矩阵，我们想用 Y 来过滤 X ，即取出 Y 值为 True 的项的索引，拿这些索引去 X 里找出对应的行，再组合成一个新矩阵。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;79&lt;/span&gt;]: X
+Out[&lt;span style="color: #666666"&gt;79&lt;/span&gt;]:
+matrix([[ &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;30.28671077&lt;/span&gt;,  &lt;span style="color: #666666"&gt;43.89499752&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;72.90219803&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;,  &lt;span style="color: #666666"&gt;86.3085521&lt;/span&gt; ],
+        [ &lt;span style="color: #666666"&gt;79.03273605&lt;/span&gt;,  &lt;span style="color: #666666"&gt;75.34437644&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;80&lt;/span&gt;]: Y
+Out[&lt;span style="color: #666666"&gt;80&lt;/span&gt;]:
+matrix([[ &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;],
+        [&lt;span style="color: #AA22FF"&gt;False&lt;/span&gt;],
+        [ &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;],
+        [ &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;],
+        [&lt;span style="color: #AA22FF"&gt;False&lt;/span&gt;]], dtype&lt;span style="color: #666666"&gt;=&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;bool&lt;/span&gt;)
+
+In [&lt;span style="color: #666666"&gt;81&lt;/span&gt;]: X[Y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;81&lt;/span&gt;]: matrix([[ &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;85&lt;/span&gt;]: X[Y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;, :]
+&lt;span style="color: #666666"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span style="color: #D2413A; font-weight: bold"&gt;IndexError&lt;/span&gt;                                Traceback (most recent call last)
+&lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;ipython&lt;span style="color: #666666"&gt;-&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;input&lt;/span&gt;&lt;span style="color: #666666"&gt;-85-2&lt;/span&gt;aeabbc2bcc5&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;()
+&lt;span style="color: #666666"&gt;----&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt; X[Y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;, :]
+
+C:\Python27\lib\site&lt;span style="color: #666666"&gt;-&lt;/span&gt;packages\numpy\matrixlib\defmatrix&lt;span style="color: #666666"&gt;.&lt;/span&gt;pyc &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; __getitem__(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, index)
+    &lt;span style="color: #666666"&gt;314&lt;/span&gt;
+    &lt;span style="color: #666666"&gt;315&lt;/span&gt;         &lt;span style="color: #AA22FF; font-weight: bold"&gt;try&lt;/span&gt;:
+&lt;span style="color: #666666"&gt;--&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;316&lt;/span&gt;             out &lt;span style="color: #666666"&gt;=&lt;/span&gt; N&lt;span style="color: #666666"&gt;.&lt;/span&gt;ndarray&lt;span style="color: #666666"&gt;.&lt;/span&gt;__getitem__(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, index)
+    &lt;span style="color: #666666"&gt;317&lt;/span&gt;         &lt;span style="color: #AA22FF; font-weight: bold"&gt;finally&lt;/span&gt;:
+    &lt;span style="color: #666666"&gt;318&lt;/span&gt;             &lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;&lt;span style="color: #666666"&gt;.&lt;/span&gt;_getitem &lt;span style="color: #666666"&gt;=&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;False&lt;/span&gt;
+
+&lt;span style="color: #D2413A; font-weight: bold"&gt;IndexError&lt;/span&gt;: too many indices &lt;span style="color: #AA22FF; font-weight: bold"&gt;for&lt;/span&gt; array
+
+In [&lt;span style="color: #666666"&gt;86&lt;/span&gt;]: X[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;][Y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;86&lt;/span&gt;]: matrix([[ &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;87&lt;/span&gt;]: X[:, &lt;span style="color: #666666"&gt;1&lt;/span&gt;][Y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;]
+Out[&lt;span style="color: #666666"&gt;87&lt;/span&gt;]: matrix([[ &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;,  &lt;span style="color: #666666"&gt;72.90219803&lt;/span&gt;,  &lt;span style="color: #666666"&gt;86.3085521&lt;/span&gt; ]])
+
+In [&lt;span style="color: #666666"&gt;88&lt;/span&gt;]: np&lt;span style="color: #666666"&gt;.&lt;/span&gt;column_stack((x[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;][y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;]&lt;span style="color: #666666"&gt;.&lt;/span&gt;reshape(&lt;span style="color: #666666"&gt;3&lt;/span&gt;,&lt;span style="color: #666666"&gt;1&lt;/span&gt;), x[:, &lt;span style="color: #666666"&gt;1&lt;/span&gt;][y &lt;span style="color: #666666"&gt;==&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;True&lt;/span&gt;]&lt;span style="color: #666666"&gt;.&lt;/span&gt;reshape(&lt;span style="color: #666666"&gt;3&lt;/span&gt;,&lt;span style="color: #666666"&gt;1&lt;/span&gt;)))
+Out[&lt;span style="color: #666666"&gt;88&lt;/span&gt;]:
+matrix([[ &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;72.90219803&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;,  &lt;span style="color: #666666"&gt;86.3085521&lt;/span&gt; ]])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们预期 X 过滤完是 3 x 2 列的矩阵，但不幸的是从 Out[81] 来看 numpy 这样过滤完只会保留第一列的数据，且把它转化成了行向量，即变成了 1 x 3 的行向量。不知道你有没有抓狂的感觉。如果按照 In [85] 的写法，还会报错。如果要正确地过滤不同的列，需要写成 In [86] 和 In [87] 的形式。但是即使写成 In [86] 和 In [87] 的样式，还是一样把列向量转化成了行向量。所以，要实现这个目的，得复杂到按照 In [88] 那样才能达到目的。实际上，这个还达不到目的，因为那里面写了好多硬编码的数字，要处理通用的过滤情况，还需要写个函数来实现。而这个任务在 matlab/octave 里只需要写成 &lt;code&gt;X(Y==1, :)&lt;/code&gt; 即可完美达成目的。&lt;/p&gt;
+&lt;h2 id="_3"&gt;陷阱三：数值运算句法混乱&lt;/h2&gt;
+&lt;p&gt;在机器学习算法里，经常要做一些矩阵运算。有时候要做叉乘，有时候要做点乘。我们看一下 numpy 是如何满足这个需求的。&lt;/p&gt;
+&lt;p&gt;假设 x, y, theta 的值如下，我们要先让 x 和 y 点乘，再让结果与 theta 叉乘，最后的结果我们期望的是一个 5 x 1 的列向量。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;22&lt;/span&gt;]: x
+Out[&lt;span style="color: #666666"&gt;22&lt;/span&gt;]:
+matrix([[  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;30.28671077&lt;/span&gt;,  &lt;span style="color: #666666"&gt;43.89499752&lt;/span&gt;],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;72.90219803&lt;/span&gt;],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;,  &lt;span style="color: #666666"&gt;86.3085521&lt;/span&gt; ],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;79.03273605&lt;/span&gt;,  &lt;span style="color: #666666"&gt;75.34437644&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;23&lt;/span&gt;]: y
+Out[&lt;span style="color: #666666"&gt;23&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;1&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;2&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;3&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;2&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;2&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;24&lt;/span&gt;]: theta
+Out[&lt;span style="color: #666666"&gt;24&lt;/span&gt;]:
+matrix([[&lt;span style="color: #666666"&gt;2&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;2&lt;/span&gt;],
+        [&lt;span style="color: #666666"&gt;2&lt;/span&gt;]])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;直观地讲，我们应该会想这样做：(x 点乘 y) 叉乘 theta。但很不幸，当你输入 &lt;code&gt;x * y&lt;/code&gt; 时妥妥地报错。那好吧，我们这样做总行了吧，&lt;code&gt;x[:, 0] * y&lt;/code&gt; 这样两个列向量就可以点乘了吧，不幸的还是不行，因为 numpy 认为这是 matrix，所以执行的是矩阵相乘（叉乘），要做点乘，必须转为 array 。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;37&lt;/span&gt;]: x &lt;span style="color: #666666"&gt;*&lt;/span&gt; y
+&lt;span style="color: #666666"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ValueError&lt;/span&gt;                                Traceback (most recent call last)
+&lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;ipython&lt;span style="color: #666666"&gt;-&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;input&lt;/span&gt;&lt;span style="color: #666666"&gt;-37-&lt;/span&gt;ae1a0a4af750&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;()
+&lt;span style="color: #666666"&gt;----&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt; x &lt;span style="color: #666666"&gt;*&lt;/span&gt; y
+
+&lt;span style="color: #666666"&gt;/&lt;/span&gt;System&lt;span style="color: #666666"&gt;/&lt;/span&gt;Library&lt;span style="color: #666666"&gt;/&lt;/span&gt;Frameworks&lt;span style="color: #666666"&gt;/&lt;/span&gt;Python&lt;span style="color: #666666"&gt;.&lt;/span&gt;framework&lt;span style="color: #666666"&gt;/&lt;/span&gt;Versions&lt;span style="color: #666666"&gt;/2.7/&lt;/span&gt;Extras&lt;span style="color: #666666"&gt;/&lt;/span&gt;lib&lt;span style="color: #666666"&gt;/&lt;/span&gt;python&lt;span style="color: #666666"&gt;/&lt;/span&gt;numpy&lt;span style="color: #666666"&gt;/&lt;/span&gt;matrixlib&lt;span style="color: #666666"&gt;/&lt;/span&gt;defmatrix&lt;span style="color: #666666"&gt;.&lt;/span&gt;pyc &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; __mul__(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, other)
+    &lt;span style="color: #666666"&gt;339&lt;/span&gt;         &lt;span style="color: #AA22FF; font-weight: bold"&gt;if&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;isinstance&lt;/span&gt;(other, (N&lt;span style="color: #666666"&gt;.&lt;/span&gt;ndarray, &lt;span style="color: #AA22FF"&gt;list&lt;/span&gt;, &lt;span style="color: #AA22FF"&gt;tuple&lt;/span&gt;)) :
+    &lt;span style="color: #666666"&gt;340&lt;/span&gt;             &lt;span style="color: #008800; font-style: italic"&gt;# This promotes 1-D vectors to row vectors&lt;/span&gt;
+&lt;span style="color: #666666"&gt;--&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;341&lt;/span&gt;             &lt;span style="color: #AA22FF; font-weight: bold"&gt;return&lt;/span&gt; N&lt;span style="color: #666666"&gt;.&lt;/span&gt;dot(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, asmatrix(other))
+    &lt;span style="color: #666666"&gt;342&lt;/span&gt;         &lt;span style="color: #AA22FF; font-weight: bold"&gt;if&lt;/span&gt; isscalar(other) &lt;span style="color: #AA22FF; font-weight: bold"&gt;or&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;not&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;hasattr&lt;/span&gt;(other, &lt;span style="color: #BB4444"&gt;&amp;#39;__rmul__&amp;#39;&lt;/span&gt;) :
+    &lt;span style="color: #666666"&gt;343&lt;/span&gt;             &lt;span style="color: #AA22FF; font-weight: bold"&gt;return&lt;/span&gt; N&lt;span style="color: #666666"&gt;.&lt;/span&gt;dot(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, other)
+
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ValueError&lt;/span&gt;: matrices are &lt;span style="color: #AA22FF; font-weight: bold"&gt;not&lt;/span&gt; aligned
+
+In [&lt;span style="color: #666666"&gt;38&lt;/span&gt;]: x[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;] &lt;span style="color: #666666"&gt;*&lt;/span&gt; y
+&lt;span style="color: #666666"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ValueError&lt;/span&gt;                                Traceback (most recent call last)
+&lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;ipython&lt;span style="color: #666666"&gt;-&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;input&lt;/span&gt;&lt;span style="color: #666666"&gt;-38-&lt;/span&gt;d55ad841fa29&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;()
+&lt;span style="color: #666666"&gt;----&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt; x[:, &lt;span style="color: #666666"&gt;0&lt;/span&gt;] &lt;span style="color: #666666"&gt;*&lt;/span&gt; y
+
+&lt;span style="color: #666666"&gt;/&lt;/span&gt;System&lt;span style="color: #666666"&gt;/&lt;/span&gt;Library&lt;span style="color: #666666"&gt;/&lt;/span&gt;Frameworks&lt;span style="color: #666666"&gt;/&lt;/span&gt;Python&lt;span style="color: #666666"&gt;.&lt;/span&gt;framework&lt;span style="color: #666666"&gt;/&lt;/span&gt;Versions&lt;span style="color: #666666"&gt;/2.7/&lt;/span&gt;Extras&lt;span style="color: #666666"&gt;/&lt;/span&gt;lib&lt;span style="color: #666666"&gt;/&lt;/span&gt;python&lt;span style="color: #666666"&gt;/&lt;/span&gt;numpy&lt;span style="color: #666666"&gt;/&lt;/span&gt;matrixlib&lt;span style="color: #666666"&gt;/&lt;/span&gt;defmatrix&lt;span style="color: #666666"&gt;.&lt;/span&gt;pyc &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; __mul__(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, other)
+    &lt;span style="color: #666666"&gt;339&lt;/span&gt;         &lt;span style="color: #AA22FF; font-weight: bold"&gt;if&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;isinstance&lt;/span&gt;(other, (N&lt;span style="color: #666666"&gt;.&lt;/span&gt;ndarray, &lt;span style="color: #AA22FF"&gt;list&lt;/span&gt;, &lt;span style="color: #AA22FF"&gt;tuple&lt;/span&gt;)) :
+    &lt;span style="color: #666666"&gt;340&lt;/span&gt;             &lt;span style="color: #008800; font-style: italic"&gt;# This promotes 1-D vectors to row vectors&lt;/span&gt;
+&lt;span style="color: #666666"&gt;--&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;341&lt;/span&gt;             &lt;span style="color: #AA22FF; font-weight: bold"&gt;return&lt;/span&gt; N&lt;span style="color: #666666"&gt;.&lt;/span&gt;dot(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, asmatrix(other))
+    &lt;span style="color: #666666"&gt;342&lt;/span&gt;         &lt;span style="color: #AA22FF; font-weight: bold"&gt;if&lt;/span&gt; isscalar(other) &lt;span style="color: #AA22FF; font-weight: bold"&gt;or&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;not&lt;/span&gt; &lt;span style="color: #AA22FF"&gt;hasattr&lt;/span&gt;(other, &lt;span style="color: #BB4444"&gt;&amp;#39;__rmul__&amp;#39;&lt;/span&gt;) :
+    &lt;span style="color: #666666"&gt;343&lt;/span&gt;             &lt;span style="color: #AA22FF; font-weight: bold"&gt;return&lt;/span&gt; N&lt;span style="color: #666666"&gt;.&lt;/span&gt;dot(&lt;span style="color: #AA22FF"&gt;self&lt;/span&gt;, other)
+
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ValueError&lt;/span&gt;: matrices are &lt;span style="color: #AA22FF; font-weight: bold"&gt;not&lt;/span&gt; aligned
+
+In [&lt;span style="color: #666666"&gt;39&lt;/span&gt;]: sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(x[:,&lt;span style="color: #666666"&gt;0&lt;/span&gt;]) &lt;span style="color: #666666"&gt;*&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(y)
+Out[&lt;span style="color: #666666"&gt;39&lt;/span&gt;]:
+array([[ &lt;span style="color: #666666"&gt;1.&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;2.&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;3.&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;2.&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;2.&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;42&lt;/span&gt;]: xy &lt;span style="color: #666666"&gt;=&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;column_stack(((sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(x[:,&lt;span style="color: #666666"&gt;0&lt;/span&gt;]) &lt;span style="color: #666666"&gt;*&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(y)), (sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(x[:,&lt;span style="color: #666666"&gt;1&lt;/span&gt;]) &lt;span style="color: #666666"&gt;*&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(y)), (sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(x[:,&lt;span style="color: #666666"&gt;2&lt;/span&gt;]) &lt;span style="color: #666666"&gt;*&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(y))))
+
+In [&lt;span style="color: #666666"&gt;43&lt;/span&gt;]: xy
+Out[&lt;span style="color: #666666"&gt;43&lt;/span&gt;]:
+array([[   &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,   &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,   &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;],
+       [   &lt;span style="color: #666666"&gt;2.&lt;/span&gt;        ,   &lt;span style="color: #666666"&gt;60.57342154&lt;/span&gt;,   &lt;span style="color: #666666"&gt;87.78999504&lt;/span&gt;],
+       [   &lt;span style="color: #666666"&gt;3.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;107.54222631&lt;/span&gt;,  &lt;span style="color: #666666"&gt;218.70659409&lt;/span&gt;],
+       [   &lt;span style="color: #666666"&gt;2.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;120.36519878&lt;/span&gt;,  &lt;span style="color: #666666"&gt;172.6171042&lt;/span&gt; ],
+       [   &lt;span style="color: #666666"&gt;2.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;158.0654721&lt;/span&gt; ,  &lt;span style="color: #666666"&gt;150.68875288&lt;/span&gt;]])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;所以，我们需要象 In [39] 那样一列列转为 array 和 y 执行点乘，然后再组合回 5 x 3 的矩阵。好不容易算出了 x 和 y 的点乘了，终于可以和 theta 叉乘了。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;44&lt;/span&gt;]: xy &lt;span style="color: #666666"&gt;*&lt;/span&gt; theta
+Out[&lt;span style="color: #666666"&gt;44&lt;/span&gt;]:
+matrix([[ &lt;span style="color: #666666"&gt;227.29670488&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;300.72683316&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;658.4976408&lt;/span&gt; ],
+        [ &lt;span style="color: #666666"&gt;589.96460596&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;621.50844996&lt;/span&gt;]])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;看起来结果还不错，但实际上这里面也是陷阱重重。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;45&lt;/span&gt;]: xy &lt;span style="color: #666666"&gt;*&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(theta)
+&lt;span style="color: #666666"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ValueError&lt;/span&gt;                                Traceback (most recent call last)
+&lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;ipython&lt;span style="color: #666666"&gt;-&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;input&lt;/span&gt;&lt;span style="color: #666666"&gt;-45-5&lt;/span&gt;ea2f7324fbe&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;()
+&lt;span style="color: #666666"&gt;----&amp;gt;&lt;/span&gt; &lt;span style="color: #666666"&gt;1&lt;/span&gt; xy &lt;span style="color: #666666"&gt;*&lt;/span&gt; sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(theta)
+
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ValueError&lt;/span&gt;: operands could &lt;span style="color: #AA22FF; font-weight: bold"&gt;not&lt;/span&gt; be broadcast together &lt;span style="color: #AA22FF; font-weight: bold"&gt;with&lt;/span&gt; shapes (&lt;span style="color: #666666"&gt;5&lt;/span&gt;,&lt;span style="color: #666666"&gt;3&lt;/span&gt;) (&lt;span style="color: #666666"&gt;3&lt;/span&gt;,&lt;span style="color: #666666"&gt;1&lt;/span&gt;)
+
+In [&lt;span style="color: #666666"&gt;46&lt;/span&gt;]: sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;dot(xy, sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;array(theta))
+Out[&lt;span style="color: #666666"&gt;46&lt;/span&gt;]:
+array([[ &lt;span style="color: #666666"&gt;227.29670488&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;300.72683316&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;658.4976408&lt;/span&gt; ],
+       [ &lt;span style="color: #666666"&gt;589.96460596&lt;/span&gt;],
+       [ &lt;span style="color: #666666"&gt;621.50844996&lt;/span&gt;]])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In [45] 会报错，因为在 array 里 &lt;code&gt;*&lt;/code&gt; 运算符是点乘，而在 matrix 里 &lt;code&gt;*&lt;/code&gt; 运算符是叉乘。如果要在 array 里算叉乘，需要用 &lt;code&gt;dot&lt;/code&gt; 方法。看起来提供了灵活性，实际上增加了使用者的大脑负担。而我们的需求在 matlab/octave 里只需要写成 &lt;code&gt;x .* y * theta&lt;/code&gt; ，直观优雅。&lt;/p&gt;
+&lt;h2 id="_4"&gt;陷阱三：语法复杂，不自然&lt;/h2&gt;
+&lt;p&gt;比如，我们要在一个 5 x 2 的矩阵的前面加一列全部是 1 的数据，变成一个 5 x 3 的矩阵，我们必须这样写&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;In [&lt;span style="color: #666666"&gt;11&lt;/span&gt;]: x
+Out[&lt;span style="color: #666666"&gt;11&lt;/span&gt;]:
+matrix([[ &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;30.28671077&lt;/span&gt;,  &lt;span style="color: #666666"&gt;43.89499752&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;72.90219803&lt;/span&gt;],
+        [ &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;,  &lt;span style="color: #666666"&gt;86.3085521&lt;/span&gt; ],
+        [ &lt;span style="color: #666666"&gt;79.03273605&lt;/span&gt;,  &lt;span style="color: #666666"&gt;75.34437644&lt;/span&gt;]])
+
+In [&lt;span style="color: #666666"&gt;18&lt;/span&gt;]: sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;column_stack(((sp&lt;span style="color: #666666"&gt;.&lt;/span&gt;ones((&lt;span style="color: #666666"&gt;5&lt;/span&gt;,&lt;span style="color: #666666"&gt;1&lt;/span&gt;)), x)))
+Out[&lt;span style="color: #666666"&gt;18&lt;/span&gt;]:
+matrix([[  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;34.62365962&lt;/span&gt;,  &lt;span style="color: #666666"&gt;78.02469282&lt;/span&gt;],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;30.28671077&lt;/span&gt;,  &lt;span style="color: #666666"&gt;43.89499752&lt;/span&gt;],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;35.84740877&lt;/span&gt;,  &lt;span style="color: #666666"&gt;72.90219803&lt;/span&gt;],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;60.18259939&lt;/span&gt;,  &lt;span style="color: #666666"&gt;86.3085521&lt;/span&gt; ],
+        [  &lt;span style="color: #666666"&gt;1.&lt;/span&gt;        ,  &lt;span style="color: #666666"&gt;79.03273605&lt;/span&gt;,  &lt;span style="color: #666666"&gt;75.34437644&lt;/span&gt;]])
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;有兴趣的人可以数数 In [18] 里有多少个括号，还别不服，括号写少了妥妥地报错。而这个需求在 matlab/octave 里面只需要写成 &lt;code&gt;[ones(5,1) x]&lt;/code&gt; ，瞬间脑袋不短路了，直观优雅又回来了。&lt;/p&gt;
+&lt;h2 id="_5"&gt;结论&lt;/h2&gt;
+&lt;p&gt;有人说 python 是机器学习和数据分析的新贵，但和专门的领域语言 matlab/octave 相比，用起来确实还是比较别扭的。当然有些槽点是因为语言本身的缺陷，比如 python 不支持自定义操作符，导致 numpy 的一些设计不够优雅和直观，但默认把列向量转化为行向量的做法只能说是 numpy 本身的设计问题了。这或许就是 Andrew Ng 在他的 Machine Learning 课程里用 matlab/octave ，而不用 python 或其他的语言的原因吧。&lt;/p&gt;</summary><category term="machine-learning"></category></entry><entry><title>标准方程 Normal Equations</title><link href="http://blog.kamidox.com/normal-equations.html" rel="alternate"></link><updated>2015-09-29T23:20:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-29:normal-equations.html</id><summary type="html">&lt;h2 id="_1"&gt;标准方程&lt;/h2&gt;
+&lt;p&gt;线性回归里的梯度下降算法，通过不停地迭代求参数，从而不停地逼近成本函数的最小值来求解。另外一个方法是直接计算成本函数的微分，令微分算子为零，求解这个方程，即可得到线性回归的解。&lt;/p&gt;
+&lt;p&gt;回忆一下线性回归算法的成本函数：&lt;/p&gt;
+&lt;p&gt;$$&lt;br /&gt;
+J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2&lt;br /&gt;
+$$&lt;/p&gt;
+&lt;p&gt;我们让 $\frac{\delta}{\delta \theta} J(\theta) = 0$，求解这个方程最终可以得到：&lt;/p&gt;
+&lt;p&gt;$$&lt;br /&gt;
+\theta = \left( X^T X \right)^{-1} X^T y&lt;br /&gt;
+$$&lt;/p&gt;
+&lt;p&gt;这个就是我们的标准方程。它通过矩阵运算，直接从训练样本里求出参数 $\theta$ 的值。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从成本函数的微分方程推导出标准议程的过程比较复杂，涉及到较多的矩阵运算和矩阵微分运算。感兴趣的可以参考 &lt;a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf"&gt;cs229-notes1.pdf&lt;/a&gt;。另外 &lt;a href="http://cs229.stanford.edu/section/cs229-linalg.pdf"&gt;&lt;/a&gt; 里面有线性代数的复习资料。&lt;/li&gt;
+&lt;li&gt;$X$ 是训练样本的变量，它是个 m x n 矩阵。其中 m 是训练样本的个数，n 是变量个数。&lt;/li&gt;
+&lt;li&gt;$y$ 是训练样本的结果数据，它是个 m x 1 的列向量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_2"&gt;奇异矩阵&lt;/h2&gt;
+&lt;p&gt;当训练数据集较少时，利用矩阵运算可以较快的算出参数 $\theta$ 的值。但如果 $X^T X$ 是奇异矩阵的话，它就没有逆矩阵存在，这个时候通用方程的解是什么呢？答案是，在 octave 里用 &lt;code&gt;pinv&lt;/code&gt; 来代替 &lt;code&gt;inv&lt;/code&gt; 来计算逆矩阵。这样即使 $X^T X$ 是奇异矩阵，&lt;code&gt;pinv&lt;/code&gt; 也能算出其&amp;rdquo;伪&amp;rdquo;逆矩阵，从而顺利算出通用方向的解。&lt;/p&gt;
+&lt;p&gt;那么，物理上讲，$X^T X$ 如果为奇异矩阵的话，到底代表什么意思呢？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模型变量之间线性相关&lt;br /&gt;
+  比如，在房价预测模型里，$x_1$ 代表房子的长度，$x_2$ 代表房子的宽度，而 $x_3$ 代表房子的面积，这里假设房子是方形的，那么实际上 $x_3$ 和 $x_1, x_2$ 是线性相关的。&lt;/li&gt;
+&lt;li&gt;训练样例少于变量个数，即 m &amp;lt; n&lt;br /&gt;
+  这种情况下，需要减少变量个数来解决问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;然后，如果 $\left( X^T X \right)$ 是奇异矩阵的话，在其他编程语言里是没有办法逆的。所以需要其他的办法来解决这个问题。在逻辑回归算法里，使用了另外一个方法来解决奇异矩阵的问题，即正则化 (Regularization) 。有关正则化的信息后文写到逻辑回归算法时再来详细介绍。&lt;/p&gt;</summary><category term="machine-learning"></category></entry><entry><title>习得性无助与自信心的建立</title><link href="http://blog.kamidox.com/helpless.html" rel="alternate"></link><updated>2015-09-29T00:13:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-09-29:helpless.html</id><summary type="html">&lt;p&gt;女儿将近四周半了，给她报了个舞蹈班。有一次课程老师是教小朋友做前滚翻。看着小家伙在课堂上非常努力地偿试，总是翻不好，要嘛翻不过去，要嘛勉强翻过去了，但是翻歪了。由于一个班级小朋友太多，老师也没有精力一个个小朋友耐心指导。只能叫家长回家教小朋友练习。&lt;/p&gt;
 &lt;p&gt;一天晚上闲来无事，就想教小家伙练习前滚翻。可无论怎么鼓励，小家伙总是不愿意偿试。甚至用她最喜欢的早教机诱惑她：“你只要翻五次，就给你看半小时早教机。”小家伙嘟着嘴说：“可是五次太多了。我会翻歪掉。”最后我自己翻了几次给她看，然后再很认真地对她说：“你看，很容易翻的，你跟着爸爸练习肯定不会再翻歪了，如果歪了，爸爸扶一下你就不会歪了。”小家伙将信将疑地答应了我的要求。&lt;/p&gt;
 &lt;p&gt;我先把技巧告诉她，弯腰准备翻时，手离脚要尽量近，头要夹在两只手中间，然后脚用力蹬一下就翻过去了，还示范了一次给她看。小家伙第一次翻的时候，还是有点歪，但我扶着她的腰确保她能较规范地翻过去。小家伙感受到自己的进步，主动要求再翻一次，这次她把动作做得很规范，我基本不用扶着就能很漂亮地翻了。小家伙高兴地手舞足蹈，连连要求再翻，还主动跟说：“爸爸，我们翻二十次吧。”结果后面越翻动作越麻利，再后面基本手都不用怎么用力撑都能很轻松地翻过去。整个晚上，都开心地要翻给外婆看，翻给妈妈看。&lt;/p&gt;
 &lt;p&gt;塞利格曼早期研究习得性无助时做过实验，分别电击两组老鼠，第一组无论做什么，都无法逃避电击。另外一组只要跑到一条细长的管道里把开关关掉就不会被电击了。实验发现，第一组在刚开始时也会偿试各种方法逃避电击，但都无济于事，最后只要电击一开始，就无精打采地缩在角落里，不愿意再做任何的偿试了。而第二组老鼠刚开始时不断地偿试去逃避电击，偿试多次后终于找到逃避电击的方法，到最后，只要电击一开始，就会很快地穿过细长的管道用脚去按压开关，从而逃避电击。&lt;/p&gt;

@@ -8,14 +8,14 @@
 		<meta name="description" content="">
 		<meta name="author" content="Joey Huang">
 
-		<link rel="stylesheet" href="../theme/css/foundation.css" />
-		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
-		<link rel="stylesheet" href="../theme/css/custom.css" />
+		<link rel="stylesheet" href="./theme/css/foundation.css" />
+		<link rel="stylesheet" href="./theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="./theme/css/custom.css" />
 
 
-		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+		<link rel="shortcut icon" href="./theme/img/favicon.ico">
 
-		<script src="../theme/js/modernizr.js"></script>
+		<script src="./theme/js/modernizr.js"></script>
 
 		<!-- Feeds -->
 
@@ -69,19 +69,19 @@
 							<li><a href="about.html">About</a></li>
 
 						<li><label>Categories</label></li>
-							<li ><a href="../category/android.html">android</a></li>
-							<li ><a href="../category/essay.html">essay</a></li>
-							<li ><a href="../category/flask.html">flask</a></li>
-							<li class="active"><a href="../category/ml.html">ml</a></li>
-							<li ><a href="../category/python.html">python</a></li>
-							<li ><a href="../category/tools.html">tools</a></li>
-							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+							<li ><a href="./category/android.html">android</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/flask.html">flask</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
 
 
 
 
 						<li><label>Monthly Archives</label></li>
-									<li><a href="/posts/2015/09/index.html">September 2015 (5)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
 									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
 									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
@@ -103,7 +103,7 @@
 				<nav class="top-bar hide-for-small-only" data-topbar>
 					<ul class="title-area">
 						<li class="name">
-							<h1><a href="../">kamidox.com</a></h1>
+							<h1><a href="./">kamidox.com</a></h1>
 						</li>
 					</ul>
 
@@ -122,15 +122,35 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>numpy 矩阵运算的陷阱</h2>
-	<h2 id="_1">陷阱</h2>
+	<h2>标准方程 Normal Equations</h2>
+	<h2 id="_1">标准方程</h2>
+<p>线性回归里的梯度下降算法，通过不停地迭代求参数，从而不停地逼近成本函数的最小值来求解。另外一个方法是直接计算成本函数的微分，令微分算子为零，求解这个方程，即可得到线性回归的解。</p>
+<p>回忆一下线性回归算法的成本函数：</p>
+<p>$$<br />
+J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2<br />
+$$</p>
+<p>我们让 $\frac{\delta}{\delta \theta} J(\theta) = 0$，求解这个方程最终可以得到：</p>
+<p>$$<br />
+\theta = \left( X^T X \right)^{-1} X^T y<br />
+$$</p>
+<p>这个就是我们的标准方程。它通过矩阵运算，直接从训练样本里求出参数 $\theta$ 的值。</p>
 <ul>
-<li>次方运算符 ** 与 numpy.power 的区别</li>
-<li>numpy.hstack 与 numpy.column_stack 的区别</li>
-<li>向量，行向量，列向量，N x 1 维矩阵，1 x N 维矩阵的区别</li>
+<li>从成本函数的微分方程推导出标准议程的过程比较复杂，涉及到较多的矩阵运算和矩阵微分运算。感兴趣的可以参考 <a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf">cs229-notes1.pdf</a>。另外 <a href="http://cs229.stanford.edu/section/cs229-linalg.pdf"></a> 里面有线性代数的复习资料。</li>
+<li>$X$ 是训练样本的变量，它是个 m x n 矩阵。其中 m 是训练样本的个数，n 是变量个数。</li>
+<li>$y$ 是训练样本的结果数据，它是个 m x 1 的列向量。</li>
 </ul>
+<h2 id="_2">奇异矩阵</h2>
+<p>当训练数据集较少时，利用矩阵运算可以较快的算出参数 $\theta$ 的值。但如果 $X^T X$ 是奇异矩阵的话，它就没有逆矩阵存在，这个时候通用方程的解是什么呢？答案是，在 octave 里用 <code>pinv</code> 来代替 <code>inv</code> 来计算逆矩阵。这样即使 $X^T X$ 是奇异矩阵，<code>pinv</code> 也能算出其&rdquo;伪&rdquo;逆矩阵，从而顺利算出通用方向的解。</p>
+<p>那么，物理上讲，$X^T X$ 如果为奇异矩阵的话，到底代表什么意思呢？</p>
+<ul>
+<li>模型变量之间线性相关<br />
+  比如，在房价预测模型里，$x_1$ 代表房子的长度，$x_2$ 代表房子的宽度，而 $x_3$ 代表房子的面积，这里假设房子是方形的，那么实际上 $x_3$ 和 $x_1, x_2$ 是线性相关的。</li>
+<li>训练样例少于变量个数，即 m &lt; n<br />
+  这种情况下，需要减少变量个数来解决问题</li>
+</ul>
+<p>然后，如果 $\left( X^T X \right)$ 是奇异矩阵的话，在其他编程语言里是没有办法逆的。所以需要其他的办法来解决这个问题。在逻辑回归算法里，使用了另外一个方法来解决奇异矩阵的问题，即正则化 (Regularization) 。有关正则化的信息后文写到逻辑回归算法时再来详细介绍。</p>
 	<hr/>
-	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/ml.html">ml</a> on 2015-09-23(Wednesday) 20:20. Tags: <a href="../tag/machine-learning.html">machine-learning</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-09-29(Tuesday) 23:20. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
 
 <hr/>
@@ -166,42 +186,42 @@
 							<div class="panel">
 								<h5>Categories</h5>
 								<ul class="side-nav">
-										<li><a href="../category/android.html">android</a></li>
-										<li><a href="../category/essay.html">essay</a></li>
-										<li><a href="../category/flask.html">flask</a></li>
-										<li><a href="../category/ml.html">ml</a></li>
-										<li><a href="../category/python.html">python</a></li>
-										<li><a href="../category/tools.html">tools</a></li>
-										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+										<li><a href="./category/android.html">android</a></li>
+										<li><a href="./category/essay.html">essay</a></li>
+										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/ml.html">ml</a></li>
+										<li><a href="./category/python.html">python</a></li>
+										<li><a href="./category/tools.html">tools</a></li>
+										<li><a href="./category/werkzeug.html">werkzeug</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-2"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-1"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-1"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
-											<li><a href="/posts/2015/09/index.html">September 2015 (5)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
 											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
 											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
@@ -236,8 +256,8 @@
 			</div><!--off-canvas inner-->
 		</div><!--off-canvas wrap-->
 
-		<script src="../theme/js/jquery.js"></script>
-		<script src="../theme/js/foundation.min.js"></script>
+		<script src="./theme/js/jquery.js"></script>
+		<script src="./theme/js/foundation.min.js"></script>
 		<script>
 			$(document).foundation();
 		</script>
