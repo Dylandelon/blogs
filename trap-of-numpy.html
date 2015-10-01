@@ -81,6 +81,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (1)</a></li>
 									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
 									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
@@ -374,7 +375,7 @@ array([[ <span style="color: #666666">227.29670488</span>],
 
 
 <p>In [45] 会报错，因为在 array 里 <code>*</code> 运算符是点乘，而在 matrix 里 <code>*</code> 运算符是叉乘。如果要在 array 里算叉乘，需要用 <code>dot</code> 方法。看起来提供了灵活性，实际上增加了使用者的大脑负担。而我们的需求在 matlab/octave 里只需要写成 <code>x .* y * theta</code> ，直观优雅。</p>
-<h2 id="_4">陷阱三：语法复杂，不自然</h2>
+<h2 id="_4">陷阱四：语法复杂，不自然</h2>
 <p>比如，我们要在一个 5 x 2 的矩阵的前面加一列全部是 1 的数据，变成一个 5 x 3 的矩阵，我们必须这样写</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">11</span>]: x
 Out[<span style="color: #666666">11</span>]:
@@ -396,7 +397,7 @@ matrix([[  <span style="color: #666666">1.</span>        ,  <span style="color: 
 
 <p>有兴趣的人可以数数 In [18] 里有多少个括号，还别不服，括号写少了妥妥地报错。而这个需求在 matlab/octave 里面只需要写成 <code>[ones(5,1) x]</code> ，瞬间脑袋不短路了，直观优雅又回来了。</p>
 <h2 id="_5">结论</h2>
-<p>有人说 python 是机器学习和数据分析的新贵，但和专门的领域语言 matlab/octave 相比，用起来确实还是比较别扭的。当然有些槽点是因为语言本身的缺陷，比如 python 不支持自定义操作符，导致 numpy 的一些设计不够优雅和直观，但默认把列向量转化为行向量的做法只能说是 numpy 本身的设计问题了。这或许就是 Andrew Ng 在他的 Machine Learning 课程里用 matlab/octave ，而不用 python 或其他的语言的原因吧。</p>
+<p>有人说 python 是机器学习和数据分析的新贵，但和专门的领域语言 matlab/octave 相比，用起来确实还是比较别扭的。当然有些槽点是因为语言本身的限制，比如 python 不支持自定义操作符，导致 numpy 的一些设计不够优雅和直观，但默认把列向量转化为行向量的做法只能说是 numpy 本身的设计问题了。这或许就是 Andrew Ng 在他的 Machine Learning 课程里用 matlab/octave ，而不用 python 或其他的语言的原因吧。</p>
 	<hr/>
 	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-09-30(Wednesday) 20:20. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
@@ -447,28 +448,30 @@ matrix([[  <span style="color: #666666">1.</span>        ,  <span style="color: 
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-1"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
 										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
 										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="./tag/android.html">android</a></li>
 										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
+											<li><a href="/posts/2015/10/index.html">October 2015 (1)</a></li>
 											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
 											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
 											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
