@@ -6,6 +6,9 @@ Tags: tools
 Authors: Joey Huang
 Summary: 访问 StackOverflow 奇慢无比？跟着我搭建一个本地 cdn 加速服务器解决掉它吧。
 
+> **安全预警**：最近的 xcode ghost 事件让大家的安全意识提高了不少。本文介绍的方法可能存在一些安全隐患。当然，解决方案也是有的，就是可以把本地 cdn 加速的文件和官网发布的正式版本做 md5 检验，这样确保本地文件没有被修改。由于时间紧迫，目前还没有实现 md5 检验。请自己负责你的计算机安全。
+
+
 ## 问题
 
 访问 StackOverflow 时奇慢无比有没有？其实原因不是因为 StackOverflow 不能访问，而是因为 StackOverflow 网站引用了 Google 的 CDN 加速服务器来下载 jqeury 脚本。[知乎上有个话题][1]讨论了这个问题。
