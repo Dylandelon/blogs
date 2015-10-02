@@ -1,0 +1,32 @@
+@startuml
+
+title Neural Networks
+scale 2
+
+() "x1"
+() "x2"
+() "x3"
+
+() "a1"
+() "a2"
+() "a3"
+
+() "h(x)" as hx
+
+x1 --> a1
+x2 --> a1
+x3 --> a1
+
+x1 --> a2
+x2 --> a2
+x3 --> a2
+
+x1 --> a3
+x2 --> a3
+x3 --> a3
+
+a1 --> hx
+a2 --> hx
+a3 --> hx
+
+@enduml

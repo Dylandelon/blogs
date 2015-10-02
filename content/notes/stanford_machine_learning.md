@@ -444,6 +444,71 @@ $$
 7. 查阅 octave 文档学习 `fminunc` 函数以及 scipy 里对应的函数
 8. 通用方程的正则化的数学推导过程
 
+
+## Week 4 神经网络 Neural Networks
+
+### 动机 Motivations
+
+为什么我们需要神经网络？
+
+对非线性分类问题，当特征的个数很大的时候，计算量将会非常大。比如对有 100 个特征（$x_1, x_2, \cdots, x_100$）的问题，如果我们只算二阶多项多项式，我们将得到大概 5000 个特征 ($O(n^2)$)。而如果按照三阶多项式来模拟，将得到将近 300,000 个特征 ($O(n^3)$)。再比如，针对一个 100 x 100 分辨率的图片，我们假设每个象素点只用黑白来表示，那么将得到 100,000 个特征值。这个时候如果用二阶多项式来拟合，我们将得到 50,000,000,000 个特征值组合。这是非常巨大的计算量。
+
+显然，用线性回归和逻辑回归来解决这类问题是不现实的。
+
+### 神经网络模型
+
+神经网络模型是依照大脑的神经网络的结构建模的。即多个神经元构成一个层，这些神经元是输入，层的目标值为输出。一个神经网络包含多个层。神经元是神经网络中的运算单位。
+
+#### 神经元
+
+神经元是神经网络中的最小运算单位，多个神经元构成一个层。神经网络依然使用概率回归里介绍的 Sigmoid Function 作为基本模型。
+
+$$
+g(z) = \frac{1}{1 + e^{-z}} \\\\
+z = \theta^T x \\\\
+h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}
+$$
+
+其中，$x$ 称作神经元的输入 (input wires or Dendrite)，是个列向量 $[x_1, x_2, ... x_n]$。$\theta$ 称为权重 (weights)，也可以类似逻辑回归里称为参数 (parameters)。$h_\theta(x)$ 称为输出 (output wires or Axon)。这个是神经网络模型中的基本运算单元。
+
+类似逻辑回归，我们也会增加一个输入 $x_0$，在这里称作偏置单元 (bias unit)。
+
+#### 神经网络
+
+神经网络可以划分成多个层，每个层有一定数量的神经元。其中第一层叫输入层，最后一层叫输出层，一个或多个中间层叫隐藏层。
+
+![neural networks](https://raw.githubusercontent.com/kamidox/blogs/master/images/neural_networks.png)
+
+**几个索引的含义**
+
+$a_i^{(j)}$: 表示第 j 层的第 i 个神经元 unit i in layer j
+$\Theta^{(j)}$: 控制神经元网络中从第 j 层转化到第 j + 1 层的权重矩阵。这个矩阵里的元素经常写成 $\Theta_{jk}^{(j)}$ 其中 j 表示第 j 层，k 表示第 j 层神经元的输入个数。
+
+$$
+a_1^{(2)} = g(\Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3) \\\\
+a_2^{(2)} = g(\Theta_{20}^{(1)} x_0 + \Theta_{21}^{(1)} x_1 + \Theta_{22}^{(1)} x_2 + \Theta_{23}^{(1)} x_3) \\\\
+a_3^{(2)} = g(\Theta_{30}^{(1)} x_0 + \Theta_{31}^{(1)} x_1 + \Theta_{32}^{(1)} x_2 + \Theta_{33}^{(1)} x_3) \\\\
+h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)} a_0 + \Theta_{11}^{(2)} a_1 + \Theta_{12}^{(2)} a_2 + \Theta_{13}^{(2)} a_3)
+$$
+
+假设 j 层有 $s_j$ 个单元，j + 1 层有 $s_{j+1}$ 个单元。那么 $\Theta^{(j)}$ 将是一个 $s_{j+1}$ x $(s_j + 1)$ 的矩阵。
+
+#### 向量化实现 Forward Propagation: Vectorized Implementation
+
+$$
+let: z_1^{(2)} = \Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3 = \Theta^{(1)} x \\\\
+\Rightarrow a_1^{(2)} = g\left( z_1^{(2)} \right) \\\\
+a_2^{(2)} = g\left( z_2^{(2)} \right) \\\\
+a_3^{(2)} = g\left( z_3^{(2)} \right) \\\\
+\Rightarrow a^{(2)} = g\left( z^{(2)} \right) \\\\
+z^{(3)} = \Theta^{(2)} a^{(2)} \\\\
+\Rightarrow h_\Theta(x) = a^{(3)} = g\left( z^{(3)} \right)
+$$
+
+**神经网络通过学习来决定其特征**
+
+单单从 $h_\Theta(x) = g\left(\Theta^{(2)} a^{(2)}\right)$ 式子来看，神经网络的输出就是由特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 的逻辑回归模型表述的。但这里的每个特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 都是分别由 $x_1, x_2, x_3$ 的逻辑回归模型学习出来的。这就是神经网络的精髓所在。
+
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
 [3]: https://www.coursera.org/learn/machine-learning/discussions?sort=lastActivityAtDesc&page=1
