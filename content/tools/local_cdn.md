@@ -27,31 +27,34 @@ Summary: 访问 StackOverflow 奇慢无比？跟着我搭建一个本地 cdn 加
 
 **设置 nginx 开机启动**
 
-把下面文件内容保存到 `/Library/LaunchDaemons/com.nginx.plist`。然后运行 `launchctl load -w /Library/LaunchDaemons/com.nginx.plist`。
+把下面文件内容保存到 `/Library/LaunchAgents/com.nginx.plist`。然后运行 `launchctl load -w /Library/LaunchAgents/com.nginx.plist`。
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-        <key>Label</key>
-        <string>com.nginx.plist</string>
-        <key>ProgramArguments</key>
-        <array>
-                <string>/usr/local/nginx/sbin/nginx</string>
-        </array>
-        <key>KeepAlive</key>
-        <false/>
-        <key>RunAtLoad</key>
-        <true/>
-        <key>StandardErrorPath</key>
-        <string>/usr/local/var/log/nginx/error.log</string>
-        <key>StandardOutPath</key>
-        <string>/usr/local/var/log/nginx/access.log</string>
-</dict>
+  <dict>
+    <key>Label</key>
+    <string>homebrew.mxcl.nginx</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/opt/nginx/bin/nginx</string>
+        <string>-g</string>
+        <string>daemon off;</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/usr/local</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/nginx/error.log</string>
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/nginx/access.log</string>
+  </dict>
 </plist>
 ```
+
 
 **修改 nginx 运行权限**
 
