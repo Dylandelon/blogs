@@ -509,6 +509,38 @@ $$
 
 单单从 $h_\Theta(x) = g\left(\Theta^{(2)} a^{(2)}\right)$ 式子来看，神经网络的输出就是由特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 的逻辑回归模型表述的。但这里的每个特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 都是分别由 $x_1, x_2, x_3$ 的逻辑回归模型学习出来的。这就是神经网络的精髓所在。
 
+### 神经网络的应用实例
+
+#### 运用神经网络来模拟逻辑运算
+
+假设 $\Theta = [-30, 20, 20]$，
+
+$$
+h_\Theta(x) = g(\Theta^T x) = g(-30 + 20x_1 + 20x_2)
+$$
+
+$g(z)$ 是 Sigmoid Function，其图形近似于 S 形。假设 $x_1, x_2 \exists {0, 1}$ 是逻辑值。当 $x_1 = 0, x_2 = 0$ 时，$h_\Theta(x) = g(-30) \approx 0$。同理可以写出下面的真值表：
+
+x_1  | x_2 | h(x)
+-----|-----|-----
+0    | 0   | 0
+1    | 0   | 0
+0    | 1   | 0
+1    | 1   | 1
+
+这样就模拟了逻辑 AND 的运算，即 h(x) = x1 AND x2。同理可以推算出当 $\Theta = [-10, 20, 20]$ 时，h(x) = x1 OR x2。还可以推断出当 $\Theta = [10, -20, -20]$ 时，h(x) = (NOT x1) AND (NOT x2)。当需要计算 x1 NXOR x2 时，可以用神经网络模型，即 x1 NXOR x2 = (x1 AND x2) OR ((NOT x1) AND (NOT x2))。我们把 x1, x2 当作输入，a1 = (x1 AND x2), a2 = (NOT x1) AND (NOT x2) 当作隐藏层，而最终的输出由 a1 OR a2 来计算得来了。
+
+#### 运用神经网络来处理多类别的分类问题
+
+上文介绍的神经网络只能输出入 0, 1 二元问题。扩展到多个类别时，我们输出一个向量，比如针对最终结果是四种类别的问题时，输出 [1, 0, 0, 0] 表示第一种类别，输出 [0, 1, 0, 0] 表示是第二种类别，依此类推。
+
+问题：为什么不用 1, 2, 3, 4 四个不同的值来表示四种类别，而要用一个四维的向量来表示？
+
+### TODO
+
+1. 实现手写数字识别程序
+
+
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
 [3]: https://www.coursera.org/learn/machine-learning/discussions?sort=lastActivityAtDesc&page=1
