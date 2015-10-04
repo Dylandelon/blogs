@@ -130,7 +130,7 @@
 <h2 id="_1">问题</h2>
 <p>访问 StackOverflow 时奇慢无比有没有？其实原因不是因为 StackOverflow 不能访问，而是因为 StackOverflow 网站引用了 Google 的 CDN 加速服务器来下载 jqeury 脚本。<a href="http://www.zhihu.com/question/22909851">知乎上有个话题</a>讨论了这个问题。</p>
 <h2 id="_2">解决方案</h2>
-<p>在本地搭建一个 web 服务器，然后下载好 jquery 脚本，放在本地 web 服务器上。再个性 hosts 文件，把 ajax.googleapis.com 重定向到本地 127.0.0.1 。这样浏览器就会从本地下载脚本，而不再从 ajax.googleapis.com 下载了。</p>
+<p>在本地搭建一个 web 服务器，然后下载好 jquery 脚本，放在本地 web 服务器上。再修改 hosts 文件，把 ajax.googleapis.com 重定向到本地 127.0.0.1 。这样浏览器就会从本地下载脚本，而不再从 ajax.googleapis.com 下载了。</p>
 <h2 id="_3">详细步骤</h2>
 <p>这里将介绍详细的安装和配置过程，需要注意的是所有的目录和命令以我的 mac 下的环境为例。如果你用的是不同的版本或不同的操作系统，根据你的情况完成相应的配置即可。</p>
 <h3 id="nginx">安装 nginx 服务器</h3>
@@ -257,22 +257,22 @@ git clone https://github.com/kamidox/local-cdn.git
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
 										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
 										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
 										<li class="tag-1"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
 										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 								</ul>
 							</div>

@@ -5,7 +5,7 @@
 &lt;h2 id="_1"&gt;问题&lt;/h2&gt;
 &lt;p&gt;访问 StackOverflow 时奇慢无比有没有？其实原因不是因为 StackOverflow 不能访问，而是因为 StackOverflow 网站引用了 Google 的 CDN 加速服务器来下载 jqeury 脚本。&lt;a href="http://www.zhihu.com/question/22909851"&gt;知乎上有个话题&lt;/a&gt;讨论了这个问题。&lt;/p&gt;
 &lt;h2 id="_2"&gt;解决方案&lt;/h2&gt;
-&lt;p&gt;在本地搭建一个 web 服务器，然后下载好 jquery 脚本，放在本地 web 服务器上。再个性 hosts 文件，把 ajax.googleapis.com 重定向到本地 127.0.0.1 。这样浏览器就会从本地下载脚本，而不再从 ajax.googleapis.com 下载了。&lt;/p&gt;
+&lt;p&gt;在本地搭建一个 web 服务器，然后下载好 jquery 脚本，放在本地 web 服务器上。再修改 hosts 文件，把 ajax.googleapis.com 重定向到本地 127.0.0.1 。这样浏览器就会从本地下载脚本，而不再从 ajax.googleapis.com 下载了。&lt;/p&gt;
 &lt;h2 id="_3"&gt;详细步骤&lt;/h2&gt;
 &lt;p&gt;这里将介绍详细的安装和配置过程，需要注意的是所有的目录和命令以我的 mac 下的环境为例。如果你用的是不同的版本或不同的操作系统，根据你的情况完成相应的配置即可。&lt;/p&gt;
 &lt;h3 id="nginx"&gt;安装 nginx 服务器&lt;/h3&gt;
