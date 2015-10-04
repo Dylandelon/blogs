@@ -15,7 +15,7 @@ Summary: 访问 StackOverflow 奇慢无比？跟着我搭建一个本地 cdn 加
 
 ## 解决方案
 
-在本地搭建一个 web 服务器，然后下载好 jquery 脚本，放在本地 web 服务器上。再个性 hosts 文件，把 ajax.googleapis.com 重定向到本地 127.0.0.1 。这样浏览器就会从本地下载脚本，而不再从 ajax.googleapis.com 下载了。
+在本地搭建一个 web 服务器，然后下载好 jquery 脚本，放在本地 web 服务器上。再修改 hosts 文件，把 ajax.googleapis.com 重定向到本地 127.0.0.1 。这样浏览器就会从本地下载脚本，而不再从 ajax.googleapis.com 下载了。
 
 ## 详细步骤
 
