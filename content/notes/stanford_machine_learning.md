@@ -445,7 +445,7 @@ $$
 8. 通用方程的正则化的数学推导过程
 
 
-## Week 4 神经网络 Neural Networks
+## Week 4 神经网络表示 Neural Networks: Presentation
 
 ### 动机 Motivations
 
@@ -493,7 +493,7 @@ $$
 
 假设 j 层有 $s_j$ 个单元，j + 1 层有 $s_{j+1}$ 个单元。那么 $\Theta^{(j)}$ 将是一个 $s_{j+1}$ x $(s_j + 1)$ 的矩阵。
 
-#### 向量化实现 Forward Propagation: Vectorized Implementation
+#### 向前传播算法的向量化实现 Forward Propagation: Vectorized Implementation
 
 $$
 let: z_1^{(2)} = \Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3 = \Theta^{(1)} x \\\\
@@ -550,10 +550,88 @@ x_1  | x_2 | h(x)
 
 问题：为什么不用 1, 2, 3, 4 四个不同的值来表示四种类别，而要用一个四维的向量来表示？
 
+## Week 5 神经网络学习 Neural Networks: Learning
+
+### 成本函数
+
+针对分类问题的神经网络的输出层
+
+$$
+h_\Theta(x) \in R^K; \left( h_\Theta(x) \right)_k = k^{th} output
+$$
+
+其中 K 是输出层的的单元个数，K >= 3。因为如果 K < 3 则可以直接用一个单元表示。其成本函数是：
+
+$$
+J(\Theta) = - \frac{1}{m} \left[ \sum_{i=1}^m \sum_{k=1}^K y_k^{(i)} log(h_k^{(i)}) + (1 - y_k^{(i)}) log(1 - h_k^{(i)}) \right] + \frac{\lambda}{2m} \sum_{l=1}^{L-1} \sum_{i=1}^{s_l} \sum_{j=1}^{s_{l+1}} (\Theta_{ji}^l)^2
+$$
+
+其中 $h_k^{(i)} = {h_\Theta(x^{(i)})}_k$ 是 $k^{th}$ 层针对 $i^{th}$ 训练样本的预测值。$L$ 是神经网络的层数，$s_l$ 是指第 $l$ 层的单元个数。公式的前半部分是未与正则化的成本函数，后半部分是正则项，加起来就是正则化的成本公式。注意正则项部分求和时是从 $i=1$ 开始的，即我们不把偏置变量正则化。
+
+!!! warnning "MathJax 的缺陷"
+    这个公式我写了 20 分钟。它已经复杂到我不得不把 $h_k^{(i)}$ 独立写出来了，如果全部写一个公式里，公式将无法正确显示。不服的可以自己试看看。
+
+### 向后传播算法
+
+我们把 $\delta_j^{(l)}$ 记作神经网络中第 $l$ 层，第 $j$ 个节点的误差。针对输出层，我们有
+
+$$
+\delta_j^{(L)} = a_j^{(L)} - y_j
+$$
+
+按照向量化写法，我们得到
+
+$$
+\delta^{(L)} = a^{(L)} - y
+$$
+
+针对第 $L-1$ 层，我们把误差定义为
+
+$$
+\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g'(z^{(L-1)})
+$$
+
+可以从数学上证明 $g'(z^{(L-1)}) = a^{(L-1)} .* (1 - a^{(L-1)})$ 成立。这样我们算出输出层的误差，然后一层层往前推导，算出各层的误差，就是我们向后传播算法名字的由来。需要注意的是，不存在 $\delta^{(1)}$，因为神经网络的第 1 层是我们的输入项，不存在误差问题。
+
+从数学上可以证明，如果忽略正则项，即 $\lambda = 0$时
+
+$$
+\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = a_j^{(l)} \delta_i^{(l+1)}
+$$
+
+最后，针对训练样本 ${ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), ... (x^{(m)}, y^{(m)}),}$，我们可以把向后传播算法用伪代码描述如下：
+
+set $\Delta_{ij}^{(l)} = 0$, for all $l, i, j$
+for i = 1 to m
+  set $a^{(1)} = x^{(1)}$
+  perform forward propagation to compute $a^{(l)}$ for $l = 2, 3, ... , L$
+  using $y^{(i)}$, compute $\delta^{(L)} = a^{(L)} - y^{(i)}$
+  compute $\delta^{(L-1)}, \delta^{(L-2)}, ..., \delta^{(2)}$ by using back propagation of error term
+  $\Delta_{ij}^{(l)} = \Delta_{ij}^{(l)} + a_j^{(l)} \delta_i^{(l+1)}$
+end for
+
+加入正则项后，我们有
+
+$$
+D_{ij}^{(l)} = \frac{1}{m} \Delta_{ij}^{(l)} + \lambda \Theta_{ij}^{(l)}, if j \ne 0 \\\\
+D_{ij}^{(l)} = \frac{1}{m} \Delta_{ij}^{(l)}, if j = 0
+$$
+
+从数学上可以证明
+
+$$
+\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}
+$$
+
+这样我们就算出来了神经网络模型的成本函数微分项。有了成本函数和成本函数微分项，我们就可以使用线性回归或其他高级算法来计算神经网络成本函数的最小值，从而求解神经网络中各层激励的参数。
+
+
 ### TODO
 
-1. 实现手写数字识别程序
-
+1. 使用 scipy 实现手写数字识别程序
+2. 从数学上证明 $g'(z^{(L-1)}) = a^{(L-1)} .* (1 - a^{(L-1)})$
+3. 从数学上证明 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = a_j^{(l)} \delta_i^{(l+1)}$
+4. 从数学上证明 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}$
 
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
