@@ -1,0 +1,1697 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="status" content="draft">
+<meta name="modified" content="2015-08-29 20:20">
+<meta name="summary" content="Notes of Stanford Machine Learning, by Andrew Ng, on www.coursera.org">
+<meta name="authors" content="Joey Huang">
+<meta name="date" content="2015-08-29 20:20">
+<meta name="slug" content="machine-learning"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: false
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  showProcessingMessages: false
+});
+</script>
+<title>Machine Learning</title></head><body><article class="markdown-body"><div class="toc">
+<ul>
+<li><a href="#_1">机器学习</a></li>
+<li><a href="#week-1">Week 1 机器学习介绍</a><ul>
+<li><a href="#what-is-machine-learning">What is Machine Learning?</a></li>
+<li><a href="#supervised-learning">Supervised learning</a></li>
+<li><a href="#unsupervised-learning">Unsupervised learning</a></li>
+<li><a href="#_2">线性回归算法</a></li>
+<li><a href="#_3">数学</a></li>
+<li><a href="#_4">术语</a></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+</li>
+<li><a href="#week-2">Week 2 多变量梯度下降算法</a><ul>
+<li><a href="#_5">多变量梯度下降算法</a></li>
+<li><a href="#feature-scaling">变量缩放 Feature Scaling</a></li>
+<li><a href="#_6">学习率</a></li>
+<li><a href="#normal-equalation">标准方程 Normal Equalation</a></li>
+<li><a href="#octave">Octave 教程</a><ul>
+<li><a href="#octave_1">Octave 基本教程</a></li>
+<li><a href="#_7">向量化</a></li>
+<li><a href="#_8">标准方程和奇异矩阵</a></li>
+</ul>
+</li>
+<li><a href="#todo_1">TODO</a></li>
+</ul>
+</li>
+<li><a href="#week-3-logistic-regression">Week 3 分类回归算法 Logistic Regression</a><ul>
+<li><a href="#classification-and-representation">分类预测函数及其表现形式 Classification and Representation</a><ul>
+<li><a href="#_9">引言 为什么需要分类回归算法</a></li>
+<li><a href="#hypothesis-representation">逻辑回归预测函数的表现形式 Hypothesis Representation</a></li>
+<li><a href="#decision-boundary">判定边界 Decision Boundary</a></li>
+</ul>
+</li>
+<li><a href="#_10">逻辑回归的成本函数</a><ul>
+<li><a href="#_11">逻辑回归成本函数定义</a></li>
+</ul>
+</li>
+<li><a href="#_12">算法优化</a></li>
+<li><a href="#_13">多元分类算法</a></li>
+<li><a href="#regularization">正则化 Regularization</a><ul>
+<li><a href="#_14">线性回归里的欠拟合和过拟合</a></li>
+<li><a href="#_15">正则化</a></li>
+<li><a href="#_16">通用方程的正则化</a></li>
+<li><a href="#_17">逻辑回归成本函数的正则化</a></li>
+</ul>
+</li>
+<li><a href="#todo_2">TODO</a></li>
+</ul>
+</li>
+<li><a href="#week-4-neural-networks-presentation">Week 4 神经网络表示 Neural Networks: Presentation</a><ul>
+<li><a href="#motivations">动机 Motivations</a></li>
+<li><a href="#_18">神经网络模型</a><ul>
+<li><a href="#_19">神经元</a></li>
+<li><a href="#_20">神经网络</a></li>
+<li><a href="#forward-propagation-vectorized-implementation">向前传播算法的向量化实现 Forward Propagation: Vectorized Implementation</a></li>
+</ul>
+</li>
+<li><a href="#_21">神经网络的应用实例</a><ul>
+<li><a href="#_22">运用神经网络来模拟逻辑运算</a></li>
+<li><a href="#_23">运用神经网络来处理多类别的分类问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#week-5-neural-networks-learning">Week 5 神经网络学习 Neural Networks: Learning</a><ul>
+<li><a href="#_24">成本函数</a></li>
+<li><a href="#_25">向后传播算法</a></li>
+<li><a href="#backpropagation-in-practice">实践中的向后传播算法 Backpropagation in Practice</a><ul>
+<li><a href="#_26">参数折叠</a></li>
+<li><a href="#_27">微分项检验</a></li>
+<li><a href="#_28">用随机数初始化参数</a></li>
+</ul>
+</li>
+<li><a href="#_29">总结</a><ul>
+<li><a href="#_30">神经网络架构</a></li>
+<li><a href="#_31">神经网络训练</a></li>
+</ul>
+</li>
+<li><a href="#todo_3">TODO</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1"><a name="user-content-_1" href="#_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>机器学习</h2>
+<p>课程在 <a href="https://www.coursera.org/learn/machine-learning/home/welcome">Coursera</a> 上, 讲师是 Andrew Ng。PDF 格式的课件在 <a href="http://cs229.stanford.edu/materials.html">Stanford 网站</a>上。课程讨论组在<a href="https://www.coursera.org/learn/machine-learning/discussions?sort=lastActivityAtDesc&amp;page=1">这里</a>可以找到。</p>
+<h2 id="week-1"><a name="user-content-week-1" href="#week-1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Week 1 机器学习介绍</h2>
+<h3 id="what-is-machine-learning"><a name="user-content-what-is-machine-learning" href="#what-is-machine-learning" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>What is Machine Learning?</h3>
+<p>Two definitions of Machine Learning are offered. Arthur Samuel described it as: &ldquo;the field of study that gives computers the ability to learn without being explicitly programmed.&rdquo; This is an older, informal definition.</p>
+<p>Tom Mitchell provides a more modern definition: &ldquo;A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.&rdquo;</p>
+<p>Example: playing checkers.</p>
+<ul>
+<li>E = the experience of playing many games of checkers</li>
+<li>T = the task of playing checkers.</li>
+<li>P = the probability that the program will win the next game.</li>
+</ul>
+<h3 id="supervised-learning"><a name="user-content-supervised-learning" href="#supervised-learning" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Supervised learning</h3>
+<blockquote>
+<p>In supervised learning, we are given a data set and already know what our correct output should look like, having the idea that there is a relationship between the input and the output.</p>
+<p>Supervised learning problems are categorized into &ldquo;regression&rdquo; and &ldquo;classification&rdquo; problems. In a regression problem, we are trying to predict results within a continuous output, meaning that we are trying to map input variables to some continuous function. In a classification problem, we are instead trying to predict results in a discrete output. In other words, we are trying to map input variables into discrete categories.</p>
+</blockquote>
+<ol>
+<li>Supervised learning: 结果形式己知的机器学习。比如，从过往销售数据，预测未来三个月的销售数据。</li>
+<li>Classfication learning: 输出结果是离散的。</li>
+<li>Regression learning: 输出结果是连续的。</li>
+</ol>
+<h3 id="unsupervised-learning"><a name="user-content-unsupervised-learning" href="#unsupervised-learning" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Unsupervised learning</h3>
+<blockquote>
+<p>Unsupervised learning, on the other hand, allows us to approach problems with little or no idea what our results should look like. We can derive structure from data where we don&rsquo;t necessarily know the effect of the variables.</p>
+<p>With unsupervised learning there is no feedback based on the prediction results, i.e., there is no teacher to correct you. It’s not just about clustering.</p>
+</blockquote>
+<p>数据挖掘，从给定的数据集合里去发现规律，进行模式匹配。结果形式不可知。计算结果无法对数据进行反馈。</p>
+<p><strong>例子：声音处理</strong><br />
+从一个有背景音乐的吵杂的会议中演讲的录音文件中，通过数据挖掘和特征匹配来处理这段录音，最终分离出演讲录音和音乐。</p>
+<ul>
+<li>Supervised learning: Given email labed as spam/not spam; learn a email filter.</li>
+<li>Unsupervised learning: Given as set of news articles found on web, group them as a set of articles about the same story.</li>
+<li>Unsupervised learning: Given a set of customer data, automatically discover the market segment and group customers into different market segment.</li>
+<li>Supervised learning: Given a dataset of patients diagnosed as either having diabets or not, learn to classify new patients as having diabets or not.</li>
+</ul>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>线性回归算法</h3>
+<ul>
+<li>Cost Function: 成本函数，用来测量模型的准确度。成本函数把把建模问题转换为求成本函数的极小值。</li>
+<li>Contour plots: 等高线。多参数的成本函数里，有一组参数的值会有相同的成本。这些参数联接起来就是成本函数的等高线。</li>
+<li>Gradient Descent: 阶梯下降，假设的模型逐步逼近真实数据的过程</li>
+</ul>
+<p>REF:<br />
+1. <a href="https://www.coursera.org/learn/machine-learning/supplement/Mc0tF/linear-regression-with-one-variable">Linear Regression with One Variable</a><br />
+2. <a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">Partial derivative in gradient descent for two variables</a></p>
+<p>根据上面两个链接推导出阶梯下降函数。</p>
+<h3 id="_3"><a name="user-content-_3" href="#_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>数学</h3>
+<ul>
+<li><a href="http://math.stackexchange.com/questions/70728/partial-derivative-in-gradient-descent-for-two-variables/189792#189792">微积分</a> 四个最简单的规则<ul>
+<li>针对 $F(x) = cx^n$，其导函数是 $F&rsquo;(x) = cn\times{x^{(n-1)}}$</li>
+<li>常数的导数是 0</li>
+<li>导函数可以穿透累加器，即 $\displaystyle\frac{\partial}{\partial x_0}\sum_{i=0}^nF(x_i) = \sum_{i=0}^n\frac{\partial}{\partial x_0}F(x_i)$</li>
+<li>微分传导机制，即$\displaystyle\frac{\partial}{\partial x}g(f(x)) = g&rsquo;(f(x))\times f&rsquo;(x)$</li>
+</ul>
+</li>
+<li><a href="https://www.coursera.org/learn/machine-learning/supplement/NMXXL/linear-algebra-review">线性代数</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Linear_least_squares_%28mathematics%29#Derivation_of_the_normal_equations">最小二阶乘数拟合数据</a></li>
+<li>概率论复习</li>
+</ul>
+<h3 id="_4"><a name="user-content-_4" href="#_4" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>术语</h3>
+<ul>
+<li>Calculus: 微积分</li>
+<li>Partial derivatives: 偏导数</li>
+<li>Derivatives: 导数</li>
+<li>Gradient Descent: 梯度下降</li>
+<li>Cost Function: 成本函数</li>
+<li>Contour plots: 等高线</li>
+<li>Least Mean Squares: LSM, 最小均方</li>
+</ul>
+<h3 id="todo"><a name="user-content-todo" href="#todo" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>TODO</h3>
+<ul>
+<li>使用 markdown + MathJax 来书写数学公式<ul>
+<li><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/">MathJax 简明中文教程</a> 这是一个质量很高的博客文章</li>
+<li><a href="http://www.forkosh.com/mathtextutorial.html">LaTex 教程</a></li>
+<li><a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf">LaTex 支持的所有符号列表</a></li>
+</ul>
+</li>
+<li>推导出模型参数的梯度下降公式 (Gradient Descent)</li>
+<li>推导出 LSM (Widrow-Hoff学习算法)</li>
+</ul>
+<h2 id="week-2"><a name="user-content-week-2" href="#week-2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Week 2 多变量梯度下降算法</h2>
+<h3 id="_5"><a name="user-content-_5" href="#_5" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>多变量梯度下降算法</h3>
+<p>预测函数：<br />
+$$<br />
+h(\theta) = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + &hellip; + \theta_n + x_n = \theta^T x^{(i)}<br />
+$$<br />
+其中，$x_0 = 1$，$x^{(i)}$ 是训练数据集里的第 i 个数据。$\theta_T$ 是 n + 1 维列向量；$x^{(i)}$ 是 n + 1 维行向量。</p>
+<p>成本函数：<br />
+$$<br />
+J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2<br />
+$$</p>
+<p>迭代函数：<br />
+$$<br />
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=0}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+$$</p>
+<h3 id="feature-scaling"><a name="user-content-feature-scaling" href="#feature-scaling" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>变量缩放 Feature Scaling</h3>
+<p>当变量在 [-1, 1] 这个范围内时，梯度下降算法能较快地收敛。可以使用下面的公式来缩放变量，以让变量在快速收敛的范围内：</p>
+<p>$$<br />
+x_i := \frac{x_i - \mu_i}{s_i}<br />
+$$</p>
+<p>其中，$\mu_i$ 是 $x_i$ 的平均值，即 $\mu_i = \frac{1}{n} \sum_{i=1}^n x_i$， $s_i$ 是 $x_i$ 的范围，即 $s_i = max(x_i) - min(x_i)$。</p>
+<p>经过这样的转换，变量的范围全部落在 [-0.5, 0.5] 之间。</p>
+<h3 id="_6"><a name="user-content-_6" href="#_6" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>学习率</h3>
+<p>使用 $\alpha$ 来表示学习率，值太高会导致无法收敛，太低收敛又太慢。一个好的办法是画出成本函数 $J(\theta)$ 随着迭代次数不断变化的曲线。这样可以直观地观察到随着迭代地不断进行，成本函数的值的变化情况。在实际情况中，可以从几个经验值里去偿试，比如 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1。</p>
+<h3 id="normal-equalation"><a name="user-content-normal-equalation" href="#normal-equalation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>标准方程 Normal Equalation</h3>
+<p>通过微分公式可以知道，我们要求成本函数 $J(\theta)$ 的最小值，只需要令其偏导数为零，即：<br />
+$$<br />
+\frac\partial{\partial{\theta_j}}J(\theta) := 0<br />
+$$</p>
+<p>把 $J(\theta)$ 用矩阵来表示，并根据矩阵运算定律最终可以推导出下面的方程式：</p>
+<p>$$<br />
+\theta = \left( X^T X \right)^{-1} X^T y<br />
+$$</p>
+<p>推导过程可参阅 <a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf">cs229-notes1.pdf</a>。推导过程会用到大量的矩阵运算知识。其中 X 是训练数据集，y 是结果数据向量。这样我们就可以通过直接计算的方式，而不是线性回归的方式来求得参数 $\theta$ 的值。</p>
+<h3 id="octave"><a name="user-content-octave" href="#octave" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Octave 教程</h3>
+<h4 id="octave_1"><a name="user-content-octave_1" href="#octave_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Octave 基本教程</h4>
+<p>可以和 numpy, scipy 等结合起来学习。实际上接口较为类似。</p>
+<h4 id="_7"><a name="user-content-_7" href="#_7" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>向量化</h4>
+<p>向量化可以让代码运算更简洁，效率更高。比如，我们的预测函数的普通形式可以写成：</p>
+<p>$$<br />
+h_\theta(x) = \sum_{i=0}^{n} \theta_ix^{(i)}<br />
+$$</p>
+<p>那么其 Octave 代码如下：</p>
+<pre><code class="matlab">prediction = 0.0
+for i=1:n+1,
+    prediction = predicition + theta(i) * x(i)
+end;
+</code></pre>
+
+<p>我们也可以把预测函数向量化：</p>
+<p>$$<br />
+h_\theta(x) = \theta^T x<br />
+$$</p>
+<p>这样，我们的预测函数可以实现如下：</p>
+<pre><code class="matlab">prediction = theta' * x
+</code></pre>
+
+<p>另外一个例子是梯度下降算法里的参数迭代函数：</p>
+<p>$$<br />
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) -y^{(i)} \right) x_j^{(i)}<br />
+$$</p>
+<p>我们可以向量化为：</p>
+<p>$$<br />
+\theta = \theta - \alpha \delta<br />
+$$</p>
+<p>其中，$\theta$ 是个 n + 1 维向量；$\alpha$ 是一个标量；$\delta$ 是一个 n + 1 维向量。$\delta$ 可以向量化为：</p>
+<p>$$<br />
+\delta = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x^{(i)}<br />
+$$</p>
+<p>其中，$\left( h_\theta(x^{(i)}) - y^{(i)} \right)$ 是个标量；$x^{(i)}$ 是个 n + 1 维向量，其行元素为 $x^{(i)}_0, x^{(i)}_1, x^{(i)}_2 &hellip; x^{(i)}_n$，其上标为第 i 项训练样例数据，下标为第 j 项变量；而 m 项求和，实际上可以看成是一个线性方程组的表达形式。</p>
+<h4 id="_8"><a name="user-content-_8" href="#_8" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>标准方程和奇异矩阵</h4>
+<p>$$<br />
+\theta = (X^T X)^{-1} X^T y<br />
+$$</p>
+<p>这是我们的通用方程，当训练数据集较少时，利用矩阵运算可以较快的算出参数 $\theta$ 的值。但如果 $X^T X$ 是奇异矩阵的话，它就没有逆矩阵存在，这个时候通用方程的解是什么呢？答案是，在 octave 里用 <code>pinv</code> 来代替 <code>inv</code> 来计算逆矩阵。这样即使 $X^T X$ 是奇异矩阵，<code>pinv</code> 也能算出其&rdquo;伪&rdquo;逆矩阵，从而顺利算出通用方向的解。</p>
+<p>那么，物理上讲，$X^T X$ 如果为奇异矩阵的话，到底代表什么意思呢？</p>
+<ul>
+<li>模型变量之间线性相关<br />
+  比如，在房价预测模型里，$x_1$ 代表房子的长度，$x_2$ 代表房子的宽度，而 $x_3$ 代表房子的面积，这里假设房子是方形的，那么实际上 $x_3$ 和 $x_1, x_2$ 是线性相关的。</li>
+<li>训练样例少于变量个数，即 m &lt; n<br />
+  这种情况下，需要减少变量个数来解决问题</li>
+</ul>
+<h3 id="todo_1"><a name="user-content-todo_1" href="#todo_1" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>TODO</h3>
+<ol>
+<li>如何从数学上证明变量绽放后能较快收敛？</li>
+<li>可以使用 <code>pylab</code> 的等高线在二维平面上画出成本函数和两个参数的关系图</li>
+<li>找一个数据集，选择不同的学习率来实现，画出不同学习率时的成本函数随着迭代次数的变化情况</li>
+<li>总结 matlab/octave 和 scipy/numpy 在数值计算上的差异和优缺点</li>
+</ol>
+<h2 id="week-3-logistic-regression"><a name="user-content-week-3-logistic-regression" href="#week-3-logistic-regression" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Week 3 分类回归算法 Logistic Regression</h2>
+<h3 id="classification-and-representation"><a name="user-content-classification-and-representation" href="#classification-and-representation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>分类预测函数及其表现形式 Classification and Representation</h3>
+<h4 id="_9"><a name="user-content-_9" href="#_9" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>引言 为什么需要分类回归算法</h4>
+<p>分类问题的值是离散的，如果考虑二元分类总是，则其值是 0 或 1。如果用 linear regresstion 来作为分类问题的预测函数是不合理的。因为因为预测出来的数值可能远小于 0 或远大于 1。我们需要找出一个预测函数模型，使其值的输出在 [0, 1] 之间。</p>
+<h4 id="hypothesis-representation"><a name="user-content-hypothesis-representation" href="#hypothesis-representation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>逻辑回归预测函数的表现形式 Hypothesis Representation</h4>
+<p><strong>逻辑回归预测函数</strong></p>
+<p>线性回归算法的预测函数是 $h_\theta(x) = \theta^T x$，为了让预测函数的输出值在 [0, 1] 之间，我们给定逻辑回归模型 (Logistic Regression Model) $g(z) = \frac{1}{1 + e^{-z}}$，则我们的逻辑回归模型的预测函数如下：</p>
+<p>$$<br />
+h_\theta(x) = g(\theta^T x) = \frac{1}{1 + e^{-\theta^T x}}<br />
+$$</p>
+<p><strong>解读逻辑回归预测函数的输出值</strong></p>
+<p>$h_\theta(x)$ 表示针对输入值 $x$ 以及参数 $\theta$ 的前提条件下，$y=1$ 的概率。用概率论的公式可以写成：</p>
+<p>$$<br />
+h_\theta(x) = P(y=1 \vert x; \theta)<br />
+$$</p>
+<p>上面的概率公式可以读成：<strong>在输入 $x$ 及参数 $\theta$ 条件下 $y=1$ 的概率</strong>。由概率论的知识可以推导出，</p>
+<p>$$<br />
+P(y=1 \vert x; \theta) + P(y=0 \vert x; \theta) = 1<br />
+$$</p>
+<h4 id="decision-boundary"><a name="user-content-decision-boundary" href="#decision-boundary" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>判定边界 Decision Boundary</h4>
+<p><strong>从逻辑回归公式说起</strong></p>
+<p>逻辑回归预测函数由下面两个公式给出的：</p>
+<p>$$<br />
+h_\theta(x) = g(\theta^T x)<br />
+$$</p>
+<p>$$<br />
+g(z) = \frac{1}{1 + e^{-z}}<br />
+$$</p>
+<p>假定 $y=1$ 的判定条件是 $h_\theta(x) \geq 0.5$，$y=0$ 的判定条件是 $h_\theta(x) &lt; 0.5$，则我们可以推导出 $y=1$ 的判定条件就是 $\theta^T x \geq 0$，$y=0$ 的判定条件就是 $\theta^T x &lt; 0$。所以，$\theta^T x = 0$ 即是我们的判定边界。</p>
+<p><strong>判定边界</strong></p>
+<p>假定我们有两个变量 $x_1, x_2$，其逻辑回归预测函数是 $h_\theta(x) = g(\theta_0 + \theta_1 x_1 + \theta_2 x_2)$。假设我们给定参数</p>
+<p>$$<br />
+\theta = \begin{bmatrix} -3 \\ 1 \\ 1 \end{bmatrix}<br />
+$$</p>
+<p>那么我们可以得到判定边界 $-3 + x_1 + x_2 = 0$，即 $x_1 + x_2 = 3$，如果以 $x_1$ 为横坐标，$x_2$ 为纵坐标，这个函数画出来就是一个通过 (0, 3) 和 (3, 0) 两个点的斜线。这条线就是我们的判定边界。</p>
+<p><strong>非线性判定边界</strong></p>
+<p>如果预测函数是多项式 $h_\theta(x) = g(\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \theta_3 x_1^2 + \theta_4 x_2^2)$，且给定 $\theta^T = \left[ -1 0 0 1 1\right]$，则可以得到判定边界函数</p>
+<p>$$<br />
+x_1^2 + x_2^2 = 1<br />
+$$</p>
+<p>还是以 $x_1$ 为横坐标，$x_2$ 为纵坐标，则这是一个半径为 1 的圆。这是二阶多项式的情况，更一般的多阶多项式可以表达出更复杂的判定边界。</p>
+<h3 id="_10"><a name="user-content-_10" href="#_10" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>逻辑回归的成本函数</h3>
+<p>线性回归的成本函数是 $J(\theta) = \frac{1}{m} \sum_{i=1}^m \frac{1}{2} \left (h_\theta(x^{(i)}) - y^{(i)} \right)^2 $，如果我们按照线性回归的成本函数来计算逻辑回归的成本函数，那么我们最终会很可能会得到一个非凸函数 (non-convex function)，这样我们就无法通过梯度下降算法算出成本函数的最低值。</p>
+<p>为了让成本函数是个凸函数 (convex function)，以便容易求出成本函数的最小值，我们定义逻辑回归的成本函数如下：</p>
+<p>$$<br />
+Cost(h_\theta(x), y) = \begin{cases}<br />
+    -log(h_\theta(x)), &amp; \text{if $y$ = 1} \\<br />
+    -log(1 - h_\theta(x)), &amp; \text{if $y$ = 0} \\<br />
+\end{cases}<br />
+$$</p>
+<p><strong>成本函数的解读</strong><br />
+如果 $y = 1, h_\theta(x) = 1$，那么成本为 $Cost = 0$；如果 $y = 1, h_\theta(x) \rightarrow 0$，那么成本将是无穷大 $Cost \rightarrow \infty$。<br />
+如果 $y = 0, h_\theta(x) = 0$，那么成本为 $Cost = 0$；如果 $y = 0, h_\theta(x) \rightarrow 1$，那么成本将是无穷大 $Cost \rightarrow \infty$。</p>
+<h4 id="_11"><a name="user-content-_11" href="#_11" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>逻辑回归成本函数定义</h4>
+<p>由于 $y \in [0, 1]$ 的离散值，可以把两个成本函数合并起来：</p>
+<p>$$<br />
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]<br />
+$$</p>
+<p>把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。使用梯度下降算法进行参数迭代的公式如下：</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\<br />
+&amp; =  \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}<br />
+\end{align}<br />
+$$</p>
+<p>这个公式的形式和母性回归算法的参数迭代公式是一样的。当然，由于这里 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$，而线性回归算法里 $h_\theta(x) = \theta^T x$。所以，两者的形式一样，但数值计算完全不同。</p>
+<h3 id="_12"><a name="user-content-_12" href="#_12" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>算法优化</h3>
+<p>梯度下降算法的效率是比较低，优化的梯度下降算法有 Conjugate Gradient, BFGS, L-BFGS 等。这些算法比较复杂，实现这些算法是数值计算专家的工作，一般工程人员只需要大概知道这些算法是怎么优化的以及怎么使用这些算法即可。</p>
+<p>octave 里提供了 <code>fminunc</code> 函数，可以查阅文档来学习函数用法，从而学会使用优化过的梯度下降算法，以提高计算效率。</p>
+<h3 id="_13"><a name="user-content-_13" href="#_13" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>多元分类算法</h3>
+<p>除了二元分类算法外，还有多元分类问题，比如需要给邮件打标签，则可能有多个标签需要考虑。这个时候需要使用 one-vs-all (one-vs-rest) 的方法。即把要分类的一种类别和其他所有类别区分开来的，这样就把多元分类问题转化为二元分类问题，这样就可以使用上文总结的所有二元分类问题的算法。</p>
+<p>针对 $y = i$，求解针对 i 的预测函数 $h_\theta^{(i)}(x)$。如果有 n 个类别，则需要求解 n 个预测函数。</p>
+<h3 id="regularization"><a name="user-content-regularization" href="#regularization" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>正则化 Regularization</h3>
+<h4 id="_14"><a name="user-content-_14" href="#_14" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>线性回归里的欠拟合和过拟合</h4>
+<ul>
+<li>欠拟合 (underfitting)<br />
+  使用的变量过少导致成本函数过高。</li>
+<li>过拟合 (overfitting)<br />
+  使用多个变量建模的预测函数非常完美地拟合了数据，其成本函数的值接近于零，但无法对新的实例进行良好的预测。</li>
+</ul>
+<p><strong>变量太多，而训练样本数据太少，则很可能出现过拟合</strong>。下面是一些解决过拟合问题的方法：</p>
+<ul>
+<li>减少变量个数<ul>
+<li>手动减少变量个数</li>
+<li>模型选择算法</li>
+</ul>
+</li>
+<li>正则化<ul>
+<li>保留所有的变量，去所有变量的权重 $\theta_j$ 的值</li>
+<li>当每个变量 $x_i$ 对预测值 $y$ 都有少量的贡献时，这样的模型可以良好地工作</li>
+</ul>
+</li>
+</ul>
+<p>这就是正则化的目的，为了解决变量过多时的过拟合问题。</p>
+<h4 id="_15"><a name="user-content-_15" href="#_15" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>正则化</h4>
+<p>$$<br />
+J(\theta) = \frac{1}{2m} \left[ \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^n \theta_j^2 \right]<br />
+$$</p>
+<p>其中 $\lambda$ 的值有两个目的，即要维持对训练样本的拟合，又避免对训练样本的过拟合。如果 $\lambda$ 太大，则能确保不出现过拟合，但可能会导致对现有训练样本出现欠拟合。</p>
+<p>利用正则化的成本函数，可以推导出参数迭代函数：</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left[ \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right) + \frac{\lambda}{m} \theta_j \right] \\<br />
+&amp; = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
+$$</p>
+<p>$(1 - \alpha \frac{\lambda}{m})$ 因子在每次迭代时都将把 $\theta_j$ 收缩。因为 $\alpha$ 和 $\lambda$ 是正数，而 m 是训练样例的个数，是个比较大的正整数。</p>
+<h4 id="_16"><a name="user-content-_16" href="#_16" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>通用方程的正则化</h4>
+<p>$$<br />
+\theta = (X^T X)^{-1} X^T y<br />
+$$</p>
+<p>这是还没有正则化的通用方程，我们用它来快速求解。</p>
+<p>$$<br />
+\theta = (X^T X + \lambda Z)^{-1} X^T y<br />
+$$</p>
+<p>其中，Z 是 (n + 1) x (n + 1) 矩阵</p>
+<p>$$<br />
+Z =<br />
+\begin{bmatrix}<br />
+0 \\<br />
+&amp; 1 \\<br />
+&amp; &amp; 1 \\<br />
+&amp; &amp; &amp; \ddots \\<br />
+&amp; &amp; &amp; &amp; 1<br />
+\end{bmatrix}<br />
+$$</p>
+<p>正则化的通用方程实际上解决了两个问题。一个是确保不发生过拟合，另外一个也解决了 $X^T X$ 的奇异矩阵问题。当 m &lt; n 时，$X^T X$ 将是一个奇异矩阵，使用 octave 里的 <code>pinv</code> 函数我们可以求出近似逆矩阵的值，但如果在其他编程语言里，是没有办法求出奇异矩阵的逆矩阵的。而从数学上可以证明，加上 $\lambda Z$ 后，结果将是一个非奇异矩阵。</p>
+<p>通用方程的正则化公式推导过程复杂，过程从略。</p>
+<h4 id="_17"><a name="user-content-_17" href="#_17" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>逻辑回归成本函数的正则化</h4>
+<p>$$<br />
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2<br />
+$$</p>
+<p>相应地，正则化后的参数迭代公式</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\<br />
+&amp; = \theta_j - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)} + \frac{\lambda}{m} \theta_j \right] \\<br />
+&amp; = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
+$$</p>
+<p>需要注意的是，上式中 $j \geq 1$，因为 $\theta_0$ 没有参与正则化。另外需要留意，逻辑回归和线性回归的参数迭代算法看起来形式是一样的，即公式 (4) 和公式 (7) 形式一样，但其实他们的算法是不一样的，因为两个式子的预测函数 $h_\theta(x)$ 是不一样的。针对线性回归，$h_\theta(x) = \theta^T x$，而针对逻辑回归 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$。</p>
+<p>根据正则化的，新的成本函数的参数迭代函数来实现 CostFunction，然后利用 octave 里的 <code>fminunc</code> 函数来求解，这样可以达到最高的运算效率。因为 <code>fminunc</code> 会使用优化过的梯度下降算法 Conjugate Gradient, BFGS, L-BFGS 等来提高运算效率。</p>
+<blockquote>
+<p>学到这里，你基本上可以使用线性回归逻辑回归解决一些现实问题了。我看到硅谷有大量的公司使用机器算法来构建伟大的产品，那些机器学习工程师在这些公司获得了很好的职业发展并且赚了不少钱。&mdash; Andrew Ng</p>
+</blockquote>
+<p>老师除了教得好，还要会鼓励，让学生保持学习的热情和兴趣。学完三周，瞬间高大上了，可以走上硅谷机器学习工程师的职业道路了~~。我的看法是，学到了不少知识，但依然任重道远。</p>
+<h3 id="todo_2"><a name="user-content-todo_2" href="#todo_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>TODO</h3>
+<ol>
+<li>使用 pylab/octave 画出逻辑回归预测函数的图形</li>
+<li>是否有类似 MathJax 类似的，使用 JavaScript 来在网页上画图的库呢？<a href="http://stackoverflow.com/questions/119969/javascript-chart-library">这里</a>有个相似的问题。</li>
+<li>复习<a href="http://cs229.stanford.edu/section/cs229-prob.pdf">概率论</a>基础知识</li>
+<li>使用 pylab/octave 画出逻辑回归成本函数的图形</li>
+<li>复习微积分知识，推导出逻辑回归算法的参数迭代函数</li>
+<li>理解 Conjugate Gradient, BFGS, L-BFGS 的原理</li>
+<li>查阅 octave 文档学习 <code>fminunc</code> 函数以及 scipy 里对应的函数</li>
+<li>通用方程的正则化的数学推导过程</li>
+</ol>
+<h2 id="week-4-neural-networks-presentation"><a name="user-content-week-4-neural-networks-presentation" href="#week-4-neural-networks-presentation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Week 4 神经网络表示 Neural Networks: Presentation</h2>
+<h3 id="motivations"><a name="user-content-motivations" href="#motivations" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>动机 Motivations</h3>
+<p>为什么我们需要神经网络？</p>
+<p>对非线性分类问题，当特征的个数很大的时候，计算量将会非常大。比如对有 100 个特征（$x_1, x_2, \cdots, x_100$）的问题，如果我们只算二阶多项多项式，我们将得到大概 5000 个特征 ($O(n^2)$)。而如果按照三阶多项式来模拟，将得到将近 300,000 个特征 ($O(n^3)$)。再比如，针对一个 100 x 100 分辨率的图片，我们假设每个象素点只用黑白来表示，那么将得到 100,000 个特征值。这个时候如果用二阶多项式来拟合，我们将得到 50,000,000,000 个特征值组合。这是非常巨大的计算量。</p>
+<p>显然，用线性回归和逻辑回归来解决这类问题是不现实的。</p>
+<h3 id="_18"><a name="user-content-_18" href="#_18" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>神经网络模型</h3>
+<p>神经网络模型是依照大脑的神经网络的结构建模的。即多个神经元构成一个层，这些神经元是输入，层的目标值为输出。一个神经网络包含多个层。神经元是神经网络中的运算单位。</p>
+<h4 id="_19"><a name="user-content-_19" href="#_19" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>神经元</h4>
+<p>神经元是神经网络中的最小运算单位，多个神经元构成一个层。神经网络依然使用概率回归里介绍的 Sigmoid Function 作为基本模型。</p>
+<p>$$<br />
+g(z) = \frac{1}{1 + e^{-z}} \\<br />
+z = \theta^T x \\<br />
+h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}<br />
+$$</p>
+<p>其中，$x$ 称作神经元的输入 (input wires or Dendrite)，是个列向量 $[x_1, x_2, &hellip; x_n]$。$\theta$ 称为权重 (weights)，也可以类似逻辑回归里称为参数 (parameters)。$h_\theta(x)$ 称为输出 (output wires or Axon)。这个是神经网络模型中的基本运算单元。</p>
+<p>类似逻辑回归，我们也会增加一个输入 $x_0$，在这里称作偏置单元 (bias unit)。</p>
+<h4 id="_20"><a name="user-content-_20" href="#_20" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>神经网络</h4>
+<p>神经网络可以划分成多个层，每个层有一定数量的神经元。其中第一层叫输入层，最后一层叫输出层，一个或多个中间层叫隐藏层。</p>
+<p><img alt="neural networks" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/neural_networks.png" /></p>
+<p><strong>几个索引的含义</strong></p>
+<p>$a_i^{(j)}$: 表示第 j 层的第 i 个神经元 unit i in layer j<br />
+$\Theta^{(j)}$: 控制神经元网络中从第 j 层转化到第 j + 1 层的权重矩阵。这个矩阵里的元素经常写成 $\Theta_{ik}^{(j)}$ 其中 j 表示第 j 层，i 表示第 j 层神经元的单元索引值，k 表示第 j 层第 i 个神经元的输入项索引值。</p>
+<p>$$<br />
+a_1^{(2)} = g(\Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3) \\<br />
+a_2^{(2)} = g(\Theta_{20}^{(1)} x_0 + \Theta_{21}^{(1)} x_1 + \Theta_{22}^{(1)} x_2 + \Theta_{23}^{(1)} x_3) \\<br />
+a_3^{(2)} = g(\Theta_{30}^{(1)} x_0 + \Theta_{31}^{(1)} x_1 + \Theta_{32}^{(1)} x_2 + \Theta_{33}^{(1)} x_3) \\<br />
+h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)} a_0 + \Theta_{11}^{(2)} a_1 + \Theta_{12}^{(2)} a_2 + \Theta_{13}^{(2)} a_3)<br />
+$$</p>
+<p>假设 j 层有 $s_j$ 个单元，j + 1 层有 $s_{j+1}$ 个单元。那么 $\Theta^{(j)}$ 将是一个 $s_{j+1}$ x $(s_j + 1)$ 的矩阵。</p>
+<h4 id="forward-propagation-vectorized-implementation"><a name="user-content-forward-propagation-vectorized-implementation" href="#forward-propagation-vectorized-implementation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>向前传播算法的向量化实现 Forward Propagation: Vectorized Implementation</h4>
+<p>$$<br />
+let: z_1^{(2)} = \Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3 = \Theta^{(1)} x \\<br />
+\Rightarrow a_1^{(2)} = g\left( z_1^{(2)} \right) \\<br />
+a_2^{(2)} = g\left( z_2^{(2)} \right) \\<br />
+a_3^{(2)} = g\left( z_3^{(2)} \right) \\<br />
+\Rightarrow a^{(2)} = g\left( z^{(2)} \right) \\<br />
+z^{(3)} = \Theta^{(2)} a^{(2)} \\<br />
+\Rightarrow h_\Theta(x) = a^{(3)} = g\left( z^{(3)} \right)<br />
+$$</p>
+<p>更一般的情况，假设待训练的数据集 $X$ 是 m x n 矩阵，记作 $X \in R^{m,n}$，其中 m 是数据集个数，n 是一个数据组的特征数，此处假设 $X$ 里已经加入了偏置单元 (bias unit)。假设隐藏层有 s2 个单元，$\Theta^{(1)}$ 为输入层到隐藏层的转换参数。则 $\Theta^{(1)} \in R^{s2, n}$。输出层有 s3 个单元，$\Theta^{(2)}$ 为隐藏层到输出层的转换参数。则 $\Theta^{(2)} \in R^{s3, s2 + 1}$。我们记 $a^{(2)}$ 为隐藏层，$a^{(3)}$ 为输出层，则：</p>
+<p>$$<br />
+a^{(2)} = g\left( X * \left( \Theta^{(1)} \right)^T \right)<br />
+$$</p>
+<p>算出后，给 $a^{(2)}$ 加上偏置单元。为了书写方便，此处我们仍然将加上偏置单元后的隐藏层记作 $a^{(2)}$。则：</p>
+<p>$$<br />
+a^{(3)} = g\left( a^{(2)} * \left( \Theta^{(2)} \right)^T \right)<br />
+$$</p>
+<p>这几个公式就是神经网络向量化运算的重要规则。其中 $g(z) = \frac{1}{1 + e^{-z}}$ 是 Sigmoid Function。</p>
+<p><strong>神经网络通过学习来决定其特征</strong></p>
+<p>单单从 $h_\Theta(x) = g\left(\Theta^{(2)} a^{(2)}\right)$ 式子来看，神经网络的输出就是由特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 的逻辑回归模型表述的。但这里的每个特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 都是分别由 $x_1, x_2, x_3$ 的逻辑回归模型学习出来的。这就是神经网络的精髓所在。</p>
+<h3 id="_21"><a name="user-content-_21" href="#_21" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>神经网络的应用实例</h3>
+<h4 id="_22"><a name="user-content-_22" href="#_22" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>运用神经网络来模拟逻辑运算</h4>
+<p>假设 $\Theta = [-30, 20, 20]$，</p>
+<p>$$<br />
+h_\Theta(x) = g(\Theta^T x) = g(-30 + 20x_1 + 20x_2)<br />
+$$</p>
+<p>$g(z)$ 是 Sigmoid Function，其图形近似于 S 形。假设 $x_1, x_2 \exists {0, 1}$ 是逻辑值。当 $x_1 = 0, x_2 = 0$ 时，$h_\Theta(x) = g(-30) \approx 0$。同理可以写出下面的真值表：</p>
+<table>
+<thead>
+<tr>
+<th>x_1</th>
+<th>x_2</th>
+<th>h(x)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>这样就模拟了逻辑 AND 的运算，即 h(x) = x1 AND x2。同理可以推算出当 $\Theta = [-10, 20, 20]$ 时，h(x) = x1 OR x2。还可以推断出当 $\Theta = [10, -20, -20]$ 时，h(x) = (NOT x1) AND (NOT x2)。当需要计算 x1 NXOR x2 时，可以用神经网络模型，即 x1 NXOR x2 = (x1 AND x2) OR ((NOT x1) AND (NOT x2))。我们把 x1, x2 当作输入，a1 = (x1 AND x2), a2 = (NOT x1) AND (NOT x2) 当作隐藏层，而最终的输出由 a1 OR a2 来计算得来了。</p>
+<h4 id="_23"><a name="user-content-_23" href="#_23" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>运用神经网络来处理多类别的分类问题</h4>
+<p>上文介绍的神经网络只能输出入 0, 1 二元问题。扩展到多个类别时，我们输出一个向量，比如针对最终结果是四种类别的问题时，输出 [1, 0, 0, 0] 表示第一种类别，输出 [0, 1, 0, 0] 表示是第二种类别，依此类推。</p>
+<p>问题：为什么不用 1, 2, 3, 4 四个不同的值来表示四种类别，而要用一个四维的向量来表示？</p>
+<h2 id="week-5-neural-networks-learning"><a name="user-content-week-5-neural-networks-learning" href="#week-5-neural-networks-learning" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Week 5 神经网络学习 Neural Networks: Learning</h2>
+<h3 id="_24"><a name="user-content-_24" href="#_24" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>成本函数</h3>
+<p>针对分类问题的神经网络的输出层</p>
+<p>$$<br />
+h_\Theta(x) \in R^K; \left( h_\Theta(x) \right)_k = k^{th} output<br />
+$$</p>
+<p>其中 K 是输出层的的单元个数，K &gt;= 3。因为如果 K &lt; 3 则可以直接用一个单元表示。其成本函数是：</p>
+<p>$$<br />
+J(\Theta) = - \frac{1}{m} \left[ \sum_{i=1}^m \sum_{k=1}^K y_k^{(i)} log(h_k^{(i)}) + (1 - y_k^{(i)}) log(1 - h_k^{(i)}) \right] + \frac{\lambda}{2m} \sum_{l=1}^{L-1} \sum_{i=1}^{s_l} \sum_{j=1}^{s_{l+1}} (\Theta_{ji}^{(l)})^2<br />
+$$</p>
+<p>其中 $h_k^{(i)} = {h_\Theta(x^{(i)})}_k$ 是 $k^{th}$ 层针对 $i^{th}$ 训练样本的预测值。$L$ 是神经网络的层数，$s_l$ 是指第 $l$ 层的单元个数。公式的前半部分是未正则化的成本函数，后半部分是正则项，加起来就是正则化的成本公式。注意正则项部分求和时是从 $i=1$ 开始的，即我们不把偏置变量正则化。</p>
+<div class="admonition warnning">
+<p class="admonition-title">MathJax 的缺陷</p>
+<p>这个公式我写了 20 分钟。它已经复杂到我不得不把 $h_k^{(i)}$ 独立写出来了，如果全部写一个公式里，公式将无法正确显示。不服的可以自己试看看。</p>
+</div>
+<p><strong>编程时怎么解读正则项呢？</strong></p>
+<p>正则项有三个累加器，最前面那个是层累加器，典型地，对 3 层神经网络模型 $L=3$。所以正则项简化为：</p>
+<p>$$<br />
+reg = \frac{\lambda}{2m} \left( \sum_{i=1}^{s_1} \sum_{j=1}^{s_2} \left( \Theta_{ji}^{(1)} \right)^2 + \sum_{i=1}^{s_2} \sum_{j=1}^{s_3} \left( \Theta_{ji}^{(2)} \right)^2 \right)<br />
+$$</p>
+<h3 id="_25"><a name="user-content-_25" href="#_25" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>向后传播算法</h3>
+<p>我们把 $\delta_j^{(l)}$ 记作神经网络中第 $l$ 层，第 $j$ 个节点的误差。针对输出层，我们有</p>
+<p>$$<br />
+\delta_j^{(L)} = a_j^{(L)} - y_j<br />
+$$</p>
+<p>按照向量化写法，我们得到</p>
+<p>$$<br />
+\delta^{(L)} = a^{(L)} - y<br />
+$$</p>
+<p>此由可见，$\delta^{(L)}$ 是和 $y$ 一样维度的向量。针对第 $L-1$ 层，我们把误差定义为</p>
+<p>$$<br />
+\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g&rsquo;(z^{(L-1)})<br />
+$$</p>
+<p>可以从数学上证明 $g&rsquo;(z^{(L-1)}) = a^{(L-1)} .* (1 - a^{(L-1)})$ 成立。这样我们算出输出层的误差，然后一层层往前推导，算出各层的误差，就是我们向后传播算法名字的由来。需要注意的是，不存在 $\delta^{(1)}$，因为神经网络的第 1 层是我们的输入项，不存在误差问题。</p>
+<p>从数学上可以证明，如果忽略正则项，即 $\lambda = 0$时</p>
+<p>$$<br />
+\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = a_j^{(l)} \delta_i^{(l+1)}<br />
+$$</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>计算微分项时，只需要计算 1, 2, &hellip;, l+1 层的微分项</li>
+<li>微分项 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta)$ 是个和 $\Theta^{(l)}$ 尺寸相同的矩阵</li>
+</ol>
+<p>最后，针对训练样本 ${ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), &hellip; (x^{(m)}, y^{(m)}),}$，我们可以把向后传播算法用伪代码描述如下：</p>
+<ul>
+<li>初始化误差累加值 set $\Delta_{ij}^{(l)} = 0$, for all $l, i, j$</li>
+<li>遍历所有的训练样本 for i = 1 to m<ul>
+<li>设置输入层的激励为第 $i$ 个训练样本的输入值 set $a^{(1)} = x^{(i)}$</li>
+<li>使用向前扩散公式 $a^{(l+1)} = g\left( a^{(l)} * \left( \Theta^{(l)} \right)^T \right)$，算出所有层的激励 $a^{(l)}$ for $l = 2, 3, &hellip; , L$</li>
+<li>使用输出层的激励，计算输出层的误差 $\delta^{(L)} = a^{(L)} - y^{(i)}$</li>
+<li>使用反向扩散的方法 $\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g&rsquo;(z^{(L-1)})$ 计算每一层的误差 $\delta^{(L-1)}, \delta^{(L-2)}, &hellip;, \delta^{(2)}$。</li>
+<li>累加 $(x^{(i)}, y^{(i)})$ 训练样本的误差 $\Delta_{ij}^{(l)} = \Delta_{ij}^{(l)} + a_j^{(l)} \delta_i^{(l+1)}$。</li>
+</ul>
+</li>
+<li>endfor</li>
+<li>累加的值除以 m 即得到无正则化的微分项 $\frac{\Delta_{ij}^{(l)}}{m}$</li>
+</ul>
+<p>最后一项可以用向量化的写法：</p>
+<p>$$<br />
+\Delta^{(l)} = \Delta^{(l)} + \delta^{(l+1)} \left( a^{(l)} \right)^T<br />
+$$</p>
+<p><strong>注意</strong>:<br />
+<strong>计算过程中，需要注意偏置单元。根据惯例，累加时不计算偏置单元。针对反向扩散公式 $\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g&rsquo;(z^{(L-1)})$，需要特别注意矩阵运算时的维度需要匹配。</strong></p>
+<p>加入正则项后，我们有</p>
+<p>$$<br />
+D_{ij}^{(l)} = \frac{1}{m} \Delta_{ij}^{(l)} + \frac{\lambda}{m} \Theta_{ij}^{(l)}, if j \ne 0<br />
+$$<br />
+$$<br />
+D_{ij}^{(l)} = \frac{1}{m} \Delta_{ij}^{(l)}, if j = 0<br />
+$$</p>
+<p>从数学上可以证明</p>
+<p>$$<br />
+\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}<br />
+$$</p>
+<p>这样我们就算出来了神经网络模型的成本函数微分项。有了成本函数和成本函数微分项，我们就可以使用线性回归或其他高级算法来计算神经网络成本函数的最小值，从而求解神经网络中各层激励的参数。</p>
+<h3 id="backpropagation-in-practice"><a name="user-content-backpropagation-in-practice" href="#backpropagation-in-practice" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>实践中的向后传播算法 Backpropagation in Practice</h3>
+<h4 id="_26"><a name="user-content-_26" href="#_26" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>参数折叠</h4>
+<p>在线性回归或逻辑回归算法里，我们的参数是向量，我们使用的 <code>fminunc</code> 等函数也只接受向量作为参数。而神经网络算法里，参数是个向量，$\Theta^{(l)} \in R^{s_{l+1}, s_l + 1}$。所以，在训练神经网络算法时，需要对参数进行折叠，即把矩阵转换为大向量，而在使用时，可以再转换回为矩阵。</p>
+<p>假设 Theta1 是 10x11 的矩阵，它是第一层的参数； Theta2 是 10x11 的矩阵，它是第二层的参数。可以使用下面的 matlab/octave 来转换：</p>
+<pre><code class="matlab">ThetaVec = [Theta1(:); Theta2(:)];
+</code></pre>
+
+<p>在成本函数函数里，我们需要转换为矩阵进行计算：</p>
+<pre><code class="mablab">Theta1 = reshape(ThetaVec(1:110), 10, 11);
+Theta2 = reshape(ThetaVec(111:220), 10, 11);
+</code></pre>
+
+<p>同理，针对成本函数的微分项，$D^{(1)} \in R^{10x11}, D^{(2)} \in R^{10x11}$，我们的成本函数返回这个微分项时，也需要把矩阵转换为向量：</p>
+<pre><code class="mablab">DVec = [D1(:); D2(:)]
+</code></pre>
+
+<h4 id="_27"><a name="user-content-_27" href="#_27" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>微分项检验</h4>
+<p>神经网络的微分项特别复杂，有时候一些小的错误可能不会导致算法失败，这样就很难发现问题。这里介绍一个方法来验证微分项算法是否正确。我们使用的是微分的数值估算方法。</p>
+<p>$$<br />
+\frac{d}{d\theta} J(\theta) \approx \frac{J(\theta + \varepsilon) + J(\theta - \varepsilon)}{2 \varepsilon}<br />
+$$</p>
+<p>这里只要 $\varepsilon$ 足够小，则可以近似地计算出微分项的值。实际计算时，我们一般取 $varepsilon = 0.0001$。这样算出来的值和微分项算出来的值应该非常近似，用这个方法我们可以验证微分项计算是否准确。<strong>需要特别注意的是，在验证完微分项计算的正确性后，数值近似计算必须关闭掉。否则会使算法效率严重降低。</strong>因为数值计算的成本是很高的。</p>
+<p><strong>编程时需要注意</strong></p>
+<p>微分项检查实际上是一种纯数学的做法。主要是检查我们使用 backpropagation 方法算出来的微分和用数值计算算出来的微分是否相同。它适用于其他算法，如线性回归或逻辑回归算法。有几点需要特别注意。</p>
+<ul>
+<li>由于计算很费时间，实际检查时，$\theta$ 可以选小一点的矩阵，比如 3 x 5，而不需要使用真正的机器学习时的 theta。因为 $\theta$ 太大不但费时间，还不利于观察。</li>
+<li>实际计算时，$\theta$ 往往是个列向量。这个时候我们需要让 $\varepsilon$ 也是一个和 $\theta$ 维度相同的向量，其值你还记得吗为 0 。当检查 $\theta(i)$ 元素的偏微分项时，让 $\varepsilon$ 的的第 i 项的值为 0.0001，其他项都为 0 。这样进行矩阵来进行数值微分计算。</li>
+</ul>
+<h4 id="_28"><a name="user-content-_28" href="#_28" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>用随机数初始化参数</h4>
+<p>在进行线性回归和逻辑回归计算时，我们把参数全部初始化为零。但这个做法在神经网络里是不可行的，如果我们把参数全部初始化为零，那么隐藏层的神经单元的激励 $a_i^{(l)}$ 将是相同的，其误差 $\delta_i^{(l)}$ 也将是相同的，即我们计算的全部是相同的特征，这样神经网络就失去了其特征的覆盖度和丰富性。</p>
+<p>所以，我们需要把神经网络的每个参数 $\Theta_{ij}^{(l)}$ 初始化为 $[-\varepsilon, \varepsilon]$ 之间的一个随机数。例如：</p>
+<pre><code class="matlab">Theta1 = rand(10, 11) .* (2 .* INIT_VAREPSILON) - INIT_VAREPSILON;
+Theta2 = rand(10, 11) .* (2 .* INIT_VAREPSILON) - INIT_VAREPSILON;
+Theta3 = rand(1, 11) .* (2 .* INIT_VAREPSILON) - INIT_VAREPSILON;
+</code></pre>
+
+<p>$\varepsilon$ 应该选择小一点，这样神经网络的学习最有效率。一个经验做法是</p>
+<p>$$<br />
+\varepsilon^{(l)} = \frac{\sqrt{6}}{\sqrt{s_l} + \sqrt{s_{l+1}}}<br />
+$$</p>
+<p>$s_l, s_{l+1}$ 分别表示 $l$ 层和 $l+1$ 层的神经单元个数。即每层的参数范围根据这层的神经单元个数及下一层的神经单元个数。</p>
+<h3 id="_29"><a name="user-content-_29" href="#_29" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>总结</h3>
+<p>使用神经网络解决问题时，需要经过两个步骤。一是设计神经网络的架构；二是训练出对应的神经网络参数。</p>
+<h4 id="_30"><a name="user-content-_30" href="#_30" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>神经网络架构</h4>
+<p>在进行神经网络计算时，需要先进行神经网络的架构设计。架构设计时需要考虑以下三个事情：</p>
+<ol>
+<li>输入层的特征数量 number of input unit</li>
+<li>输出层的单元个数 number of output unit，针对多类别的分类问题，可以把输出层设计成一个向量</li>
+<li>隐藏层的个数以及每个隐藏层的单元数目。一般来讲，隐藏层的个数越多越好，但会增加计算的工作量。另外，多个隐藏层的单元数目一般是相同的。</li>
+</ol>
+<h4 id="_31"><a name="user-content-_31" href="#_31" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>神经网络训练</h4>
+<p>神经网络训练总共有六个步骤</p>
+<ul>
+<li>按照随机数对初始权重 (参数) 进行初始化</li>
+<li>实现向前传播算法，以便针对任何的输入 $x^{(i)}$ 都能算出相应的 $h_\Theta(x^{(i)})$</li>
+<li>实现神经网络成本函数 $J(\Theta)$ 来计算成本</li>
+<li>实现向后传播算法，计算成本函数针对每个参数的偏微分 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta)$<ul>
+<li>需要遍历每个训练样本，即有个从 1 到 m 的循环</li>
+<li>针对每个训练样本 $(x^{(i)}, y^{(i)})$ 执行向前传播算法和向后传播算法，以便算出 $l$ 层的激励 (Activations) $a^{(l)}$ 和误差 $\delta^{(l)}$</li>
+<li>需要针对神经网络的每层算出*的值，这些层是 2, 3, &hellip; , L</li>
+<li>最后，在循环外，算出成本函数的偏微分</li>
+</ul>
+</li>
+<li>使用数值估计算法来验证神经网络成本函数的偏微分是否正确。验证通过后，关闭数值估计算法。</li>
+<li>使用梯度下降或其他优化过的高级算法来对成本函数 $J(\Theta)$ 进行最小化运算</li>
+</ul>
+<h3 id="todo_3"><a name="user-content-todo_3" href="#todo_3" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>TODO</h3>
+<ol>
+<li>使用 scipy 实现手写数字识别程序</li>
+<li>从数学上证明 $g&rsquo;(z^{(L-1)}) = a^{(L-1)} .* (1 - a^{(L-1)})$</li>
+<li>从数学上证明 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = a_j^{(l)} \delta_i^{(l+1)}$</li>
+<li>从数学上证明 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}$</li>
+</ol></article></body></html>
