@@ -11,11 +11,15 @@
 &lt;p&gt;这个功能在有些场景下确实比较方便。iTerm 这种应用程序本身就支持这种分屏模式(Command + D)，用来提高效率。&lt;a href="http://help.apple.com/osx-elcapitan/from-yosemite/#/split-view"&gt;点击这里&lt;/a&gt;可以体验一下。&lt;/p&gt;
 &lt;h3 id="_2"&gt;找鼠标&lt;/h3&gt;
 &lt;p&gt;快速摇一摇鼠标会变大，帮助快速找到鼠标的位置。这个感觉还是人性化的。&lt;/p&gt;
-&lt;h3 id="_3"&gt;性能&lt;/h3&gt;
+&lt;h3 id="_3"&gt;词典&lt;/h3&gt;
+&lt;p&gt;Mac 上最方便的词典还是自带的 Dictionary，三个手指在触摸板上对着单词点击即可出现释义。升级后的 Dictionary 中文翻译明显变好了，也更全了。&lt;/p&gt;
+&lt;h3 id="_4"&gt;静音单个网页&lt;/h3&gt;
+&lt;p&gt;你一边听着歌，一边浏览网页，某个网页突然播放一段声音打扰到你听音乐了有没有？不急，Safari 9.0 提供了静音单个网页的功能。当然，这个功能只需要把 Safari 升级到 9.0 就能体验，不一定要升级整个系统。&lt;/p&gt;
+&lt;h3 id="_5"&gt;性能&lt;/h3&gt;
 &lt;p&gt;苹果把这个版本作为性能提升的重要版本，数字说出来确实很漂亮，但坦白讲用起来没有感觉，反而开机后，输入用户名密码后登录到桌面感觉变慢了。&lt;/p&gt;
-&lt;h3 id="_4"&gt;兼容性&lt;/h3&gt;
+&lt;h3 id="_6"&gt;兼容性&lt;/h3&gt;
 &lt;p&gt;兼容性不错，没遇到什么大问题。唯一的问题是升级完运行 octave 时提示 Java 1.6 没安装。按照提示到苹果官网下载安装一下就好了。&lt;/p&gt;
-&lt;h3 id="_5"&gt;参考信息&lt;/h3&gt;
+&lt;h3 id="_7"&gt;参考信息&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="http://www.apple.com/osx/whats-new/"&gt;whats-new&lt;/a&gt; 是官方的介绍文档，基本包含了所有的新功能介绍。&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://help.apple.com/osx-elcapitan/from-yosemite/"&gt;osx-elcapitan-from-yosemite&lt;/a&gt; 是官方做的几大功能变化点的动画演示，升级前可以看看。&lt;/li&gt;
