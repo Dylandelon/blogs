@@ -1,0 +1,209 @@
+diagrams for i-jia
+
+----------------------------------------------------------
+
+Component i-jia system topology
+
+@startuml
+
+[红外转发器] as IRRouter
+[调光开关] as Dimmer
+[摇控器] as RController
+[摇控插座] as Socket
+[开关] as Swither
+[窗帘] as Curtain
+[情景面板] as ScenePanel
+[空调] as AirCondition
+[哈曼音响] as Harman
+
+package "Gateway" {
+    [STM32] -- [CC2530] : UART
+}
+
+[App] -- [Web Server] : TCP (remote control)
+[App] -- [STM32] : UDP (local control)
+[Web Server] -- [STM32] : TCP (remote control)
+[App] <--> [HUE] : Philips HUE SDK
+
+[CC2530] .. IRRouter : ZIGBEE
+[CC2530] .. Dimmer
+[CC2530] .. RController : ZIGBEE
+[CC2530] .. Socket
+[CC2530] .. Swither : ZIGBEE
+[CC2530] .. Curtain
+[CC2530] .. ScenePanel : ZIGBEE
+
+IRRouter .. AirCondition : IrDA
+IRRouter .. Harman : IrDA
+RController .. AirCondition : IrDA
+RController .. Harman : IrDA
+
+@enduml
+
+----------------------------------------------------------
+
+Component Gateway Discovery
+
+@startuml
+App -> App : 扫描二维码获得网关 ID
+App --> Gateway : UDP 广播发送 qp 指令，参数为网关 ID
+Gateway --> App : 网关信息(网关别名，型号，是否是新网关)
+App -> App : 把网关添加到网关列表，根据网关状态显示相应的信息
+@enduml
+
+----------------------------------------------------------
+
+Component Local Login
+
+@startuml
+App -> Gateway : UDP 单播发送 qp 指令，查询网关是否在线
+Gateway -> App : 网关信息(网关别名，型号，是否是新网关)
+App -> App : 把流程设置为本地登录
+App -> Gateway : UDP 单播发送 cl 命令
+Gateway -> App : UDP 单播应答 cl 命令，网关会对登录信息进行验证
+App -> App : 清除内存中的设备列表，并启动 3 分钟每次的心跳指令。InitTableEvent -> HeartBeatStartEvent
+App -> Gateway : 读取表 14 的数据，这个是个版本号表
+Gateway -> App : 返回表 14 的数据
+App -> App : 判断哪些表版本号有更新，发送 TableVerUpdatedEvent 事件
+App -> Gateway : 读取 n 号数据表
+Gateway -> App : 返回 n 号数据表。上述两个步骤可能会持续多次
+App -> App : 数据全部更新完成，发送 TableRefreshedEvent 事件
+App -> App : 进入主界面
+@enduml
+
+----------------------------------------------------------
+Component Remote Login
+
+@startuml
+App -> App : 发送 RemoteEnabler 事件，建立到服务器 801 端口的长连接
+App -> WebServer : TCP 发送 cl 命令进行服务器登录（网关 id 和服务器密码)
+WebServer -> App : TCP 应答 cl 命令，服务器会对服务器登录信息进行验证
+App -> WebServer : TCP 发送 cl 命令进行网关登录（网关 id 和网关密码)
+WebServer -> Gateway : TCP 转发 cl 命令给网关进行鉴权
+Gateway -> WebServer : TCP 返回鉴权信息
+WebServer -> App : TCP 转发网关的 cl 命令应答
+App -> App : 清除内存中的设备列表，并启动 3 分钟每次的心跳指令。InitTableEvent -> HeartBeatStartEvent
+App -> WebServer : 读取表 14 的数据，这个是个版本号表
+WebServer -> Gateway : 转发请求给网关
+Gateway -> WebServer : 应答数据通过 TCP 发送给 WebServer
+WebServer -> App : 转发应答给 App，返回表 14 的数据
+App -> App : 判断哪些表版本号有更新，发送 TableVerUpdatedEvent 事件
+App -> WebServer : 读取 n 号数据表
+WebServer -> Gateway : 转发请求给网关
+Gateway -> WebServer : 应答数据通过 TCP 发送给 WebServer
+WebServer -> App : 返回 n 号数据表。上述读表操作步骤可能会持续多次
+App -> App : 数据全部更新完成，发送 TableRefreshedEvent 事件
+App -> App : 进入主界面
+@enduml
+
+----------------------------------------------------------
+Component Login State
+
+@startuml
+[*] --> LocalLogin : 用户点击登录
+
+state LocalLogin {
+    [*] --> qg: 开始本地登录
+    qg: Query Gateway
+    qg: 查询网关是否在线
+    qg -> cl
+    cl: Client Login
+    cl: 登录网关，网关对登录进行认证
+    cl -> rt
+    rt -> rt
+    rt: 先读取表 14 ，获得要更新的数据表
+    rt: 持续读取需要更新的数据表，直到读出所有的数据表
+    rt -> LocalSucess
+    LocalSucess: 登录成功，进入主界面
+    LocalSucess -> [*]
+    qg --> LocalFailed
+    cl --> LocalFailed
+    rt --> LocalFailed
+    LocalFailed --> RemoteLogin
+    LocalFailed: 登录失败，偿试远程登录
+}
+
+state RemoteLogin {
+    [*] --> clServer : 开始远程登录
+    clServer: Client Login
+    clServer: 使用服务器密码登录服务器
+    clServer -> clGateway
+    clGateway: Client Login
+    clGateway: 登录网关，网关对登录进行认证
+    clGateway -> rtRemote
+    rtRemote -> rtRemote
+    rtRemote: 先读取表 14 ，获得要更新的数据表
+    rtRemote: 持续读取需要更新的数据表，直到读出所有的数据表
+    rtRemote -> RemoteSucess
+    RemoteSucess: 登录成功，进入主界面
+    RemoteSucess -> [*]
+    clServer --> RemoteFailed
+    clGateway --> RemoteFailed
+    rtRemote --> RemoteFailed
+    RemoteFailed: 登录失败，提示用户
+}
+
+state HeartBeat {
+    [*] --> hb
+    hb: 心跳命令 Heart Beat
+    hb: 每隔 3 分钟发送一次
+    hb -> hbResponse
+    hbResponse: 心跳应答；6 秒内需要收到应答，否则就会引发超时错误
+    hbResponse --> hb
+}
+
+RemoteLogin --> [*]
+
+LocalLogin --> HeartBeat
+RemoteLogin --> HeartBeat
+
+HeartBeat --> LocalLogin : 心跳包没有应答
+@enduml
+
+----------------------------------------------------------
+Component Gateway Login
+
+@startuml
+Gateway -> WebServer : 通过 TCP 和服务器建立长连接
+Gateway -> WebServer : 发送 cl 命令登录服务器
+
+== 网关心跳 ==
+
+Gateway -> WebServer : 每隔 150 秒发送一次心跳包
+WebServer -> Gateway : 心跳应答
+
+== 网关就绪，处于待命状态，等待来自服务器的请求 ==
+
+== 处理 App 远程登录请求 ==
+
+WebServer -> Gateway : 接收服务器转发过来的 App 远程登录请求
+Gateway -> WebServer : 应答登录请求
+
+== 读表请求 ==
+
+WebServer -> Gateway : 读表请求
+Gateway -> WebServer : 返回相应数据
+
+== 设备控制请求 ==
+
+WebServer -> Gateway : 控制请求
+Gateway -> WebServer : 控制结果
+
+== 功耗查询 ==
+
+WebServer -> Gateway : 查询功耗
+Gateway -> WebServer : 返回功耗结果
+
+== 表数据管理，包括新增，删除，修改 ==
+
+WebServer -> Gateway : 表数据管理请求
+Gateway -> WebServer : 表数据管理结果
+
+== 网关固件升级 ==
+
+WebServer -> Gateway : 网关固件升级请求
+Gateway -> WebServer : 网关固件升级结果
+
+@enduml
+
+----------------------------------------------------------
