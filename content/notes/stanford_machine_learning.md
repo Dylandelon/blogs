@@ -411,7 +411,7 @@ $$
 #### 逻辑回归成本函数的正则化
 
 $$
-J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2
 $$
 
 相应地，正则化后的参数迭代公式
@@ -947,6 +947,103 @@ Michele Banko and Eric Brill 在 2011 年用四种算法进行了一个自然语
 然后这个结论是些前提：**有足够的特征进行机器学习**。怎么样判断是否有足够的特征呢？我们可以让这个领域的专家来人工预测。比如给出一个房子的面积，让房产经纪人预测其房价，他肯定无法正确地预测。因为特征不足。
 
 怎么样从理论上证明这个结论呢？我们知道，如果我们有足够的特征来进行预测，意味着我们可以构建足够复杂的模型（比如神经网络）来让我们的预测函数有比较低的偏差 (Low Bais)，即让 $J_{train}(\theta)$ 的值很小。如果我们有足够多的数据，就可以确保我们可以训练出一个低方差 (Low Variance) 的算法，即我们可以让 $J_{cv}(\theta)$ 接近 $J_{train}(\theta)$ 。这样最终我们的测试数据成本值  $J_{test}(\theta)$ 也会靠近  $J_{train}(\theta)$ 。
+
+## Week 7 支持向量机算法 SVM (Support Vector Machine)
+
+支持向量机算法是工业和学术界都有广泛应用的强大的算法。
+
+### 大间距分类算法
+
+支持向量机也称为大间距分类算法。大间距的意思是，用 SVM 算法计算出来的分界线会保留对类别最大的间距，即有足够的余量。
+
+#### 支持向量机算法的成本函数
+
+回顾之前的知识，逻辑回归算法的成本函数如下
+
+$$
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2
+$$
+
+从数学的角度，可以改写成下面的公式
+
+$$
+J(\theta) = C \left[ \sum_{i=1}^m y^{(i)} cost_1(\theta^T x^{(i)}) + (1 - y^{(i)}) cost_0(\theta^T x^{(i)}) \right] + \frac{1}{2} \sum_{j=1}^n \theta_j^2
+$$
+
+这就是用在支持向量机算法里的成本函数。
+
+其中 $cost_1(\theta^T x^{(i)})$ 表示预测值为 1 的时候的成本的贡献；$cost_0(\theta^T x^{(i)})$ 表示预测值为 0 的时候对成本的贡献。
+
+实际上 $cost_1(\theta^T x^{(i)})$ 是 $log(h_\theta(x^{(i)}))$ 的简化版。由于 $h_\theta(x)$ 是 Sigmoid Function。我们可以把 $log(\frac{1}{1 + e^{-z}})$ 函数在二维坐标上画出来，然后以 x 轴的 1 作为分界线，把函数曲线简化为两条直线构成的折线。当 $\theta^T x <= 1$ 时，$cost_1(\theta^T x)$ 逐渐下降到 0 ，当 $\theta^T x > 1$ 时，$cost_1(\theta^T x)$ 为 0。
+
+使用可以相同的方法简化 $cost_0(\theta^T x)$。当 $\theta^T x <= -1$ 时，$cost_0(\theta^T x)$ 为 0 ，当 $\theta^T x > -1$ 时，$cost_0(\theta^T x)$ 是一条固定斜率的直线。
+
+#### 支持向量机的数学原理
+
+**向量内积的几何含义**
+
+假设 u, v 是一个二维列向量，那么 $u^Tv$ 表示向量 v 在 向量 u 上的投影的长度。可以通过在二维平面上画出向量 u 和向量 v 来更清楚地看这个关系。
+
+$$
+u^T v = u_1 v_1 + u_2 v_2 = p \|u\|
+$$
+
+其中 p 就是 v 在 u 上的投影的长度；$\|u\|$ 是向量 u 的秩，即向量 u 的长度。
+
+**从数学上理解为什么支持向量机会把类别边界的间距做到最大**
+
+从成本函数的正则项 $\frac{1}{2} \sum_{j=1}^n \theta_j^2$ 在算法求解的过程中会试图让参数最小。按照数学上的理解，就是让参数的秩，即 $\|\theta\|$ 最小。
+
+### 核
+
+#### 核函数
+
+选择地标点 (landmark) $l^{(i)}$，针对给定的 $x$ ，使用相似性函数来定义新的特征：
+
+$$
+\begin{align}
+f_i &= similarity(x, l^{(i)}) \\\\
+&= exp \left( - \frac{\| x - l^{(i)} \|^2}{2\sigma^2} \right) \\\\
+&= exp \left( - \frac{\sum_{j=1}^n (x_j - l_j^{(i)})^2}{2\sigma^2} \right) \\\\
+\end{align}
+$$
+
+针对新特征 $f_i$，我们的核函数 (高斯核函数) 为
+
+$$
+kernel = \sum_{i=0}^n \theta_i f_i = \theta^T f
+$$
+
+其中 $f_0 = 1$。则当 $kernel >= 0$ 时，预测值为 1，当 $kernel < 0$ 时，预测值为 0。
+
+#### 使用核函数来解决支持向量机算法
+
+定义地标点 (landmark) 的一个很自然的方法是直接把 landmark 定义在训练数据集的训练样例上，即 $l^{(i)}=x^{(i)}$。那么给定一个新的交叉验证数据集或测试数据集里的样例 $x$，它与 landmark 的相似性函数，即高斯核函数如下
+
+$$
+f_i = similarity(x, l^{(i)}) = = exp \left( - \frac{\| x - l^{(i)} \|^2}{2\sigma^2} \right)
+$$
+
+针对训练样例，也满足上述核函数。由于我们选择 landmark 与训练样例重合，所以针对训练样例，$f_i=1$。
+
+**计算预测值**
+
+假如我们已经算出了 $\theta$，那么当 $\theta^Tf >= 0$ 时，预测值为 1，反之为 0。
+
+**计算参数**
+
+根据 SVM 的成本函数，由于我们把 $f$ 代替 $x$ 作为新的特征，所以我们可以通过最小化下面的函数来计算得出参数 $\theta$
+
+$$
+J(\theta) = C \left[ \sum_{i=1}^m y^{(i)} cost_1(\theta^T f^{(i)}) + (1 - y^{(i)}) cost_0(\theta^T f^{(i)}) \right] + \frac{1}{2} \sum_{j=1}^n \theta_j^2
+$$
+
+针对上述公式，实际上 $m=n$，因为 $f$ 是由训练数据集 $x^{(i)}$ 定义，即 $f$ 是一个 m 维的向量。
+
+**支持向量机算法的参数**
+
+1. C 值越大，越容易造成过拟合，即 lower bias, higher variance. 当 C 值越小，越容易造成欠拟合，即 higher bias, lower variance。
+2. $\sigma^2$ 越大，高斯核函数的变化越平缓，会导致 higher bias, lower variance。当 $\sigma^2$ 越小，高斯核函数变化越快，会导致 lower bias, higher variance。
 
 [1]: https://www.coursera.org/learn/machine-learning/home/welcome
 [2]: http://cs229.stanford.edu/materials.html
