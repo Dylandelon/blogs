@@ -1,0 +1,65 @@
+diagrams for zigbee
+
+----------------------------------------------------------
+
+Component form network
+
+@startuml
+
+title ZigBee 组网流程
+
+participant "Coordinate\nAPL Layer" as APL
+participant "ZigBee\nNWK Layer" as NWK
+participant "802.15.4\nMAC Layer" as MAC
+
+APL -> NWK: NLME-NETWORK-FORMATION.request
+note left: 应用层发起组网流程
+
+NWK -> MAC: MLME-SCAN.request
+note right: 信号强度扫描
+MAC -> NWK: MLME-SCAN.confirm
+
+NWK -> MAC: MLME-SCAN.request
+note right: 活动网络扫描
+MAC -> NWK: MLME-SCAN.confirm
+
+NWK -> MAC: MLME-START.request
+note left: 选择合适信道和 PAN ID
+MAC -> NWK: MLME-START.confirm
+
+NWK -> APL: NLME-NETWORK-FORMATION.confirm
+
+@enduml
+
+----------------------------------------------------------
+Component join network
+
+@startuml
+
+title ZigBee 入网流程
+
+participant "Router\nAPL Layer" as APL
+participant "ZigBee\nNWK Layer" as NWK
+participant "802.15.4\nMAC Layer" as MAC
+
+APL -> NWK: NLME-NETWORK-DISCOVERY.request
+NWK -> MAC: MLME-SCAN.request
+note right: 活动网络扫描
+MAC -> NWK: MLME-SCAN.confirm
+NWK -> APL: NLME-NETWORK-DISCOVERY.confirm
+
+APL -> NWK: NLME-JOIN.request
+note left: 选择合适信道和 PAN ID
+NWK -> MAC: MLME-ASSOCIATE.request
+MAC -> NWK: MLME-ASSOCIATE.confirm
+MAC -> NWK: NLME-JOIN.confirm
+
+APL -> NWK: NLME-START-ROUTER.request
+note left: 鉴权流程
+NWK -> MAC: MLME-START.request
+MAC -> NWK: MLME-START.confirm
+NWK -> APL: NLME-START-ROUTER.confirm
+
+@enduml
+
+----------------------------------------------------------
