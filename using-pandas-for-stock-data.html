@@ -1,0 +1,619 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="./theme/css/foundation.css" />
+		<link rel="stylesheet" href="./theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="./theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="./theme/img/favicon.ico">
+
+		<script src="./theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="./category/android.html">android</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/flask.html">flask</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (2)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="./">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>使用 pandas 玩转股票数据</h2>
+	<p>pandas 是数据分析的瑞士军刀。我们今天使用 pandas 来玩一下股票数据，看看能从数据里得到哪些有意思的信息。</p>
+<h2 id="pandas">pandas 教程</h2>
+<p>如果你熟悉 Python 的话，官网上的 <a href="http://pandas.pydata.org/pandas-docs/stable/10min.html">10 Minutes to pandas</a> 可以让你在短时间内了解 pandas 能干什么事以及是怎么干的。针对每个主题，都可以横向查到大量的资料和例子。</p>
+<p>如果你 Python 不熟，但又想用 pandas 玩转数据分析的话，<a href="http://book.douban.com/subject/25717197/">Python for Data Analysis</a> 是本不错的书。书里作者使用美国新生儿的名字得出了一些很有意思的结论。还分析了 movielen 的电影评分数据。熟悉 SQL 的同学应该对这些分析会深有感触，相信这些人用 SQL 写出过这些分析过程类似的代码。这本书的缺点是有点啰嗦，如果你熟悉 Python 又想快速学习的话，看第二章就够了。但这本书很适合不熟悉 Python 的人，书的最后一章还附了 Python 的教程，即如果只玩 pandas 的话，掌握这些 Python 知识就够了，真够贴心。而且本书的作者就是 pandas 的作者。</p>
+<p>另外补充一点，最好使用 <a href="http://ipython.org">ipython</a> 环境来玩转数据分析。特别是 ipython notebook ，熟悉快捷键后，用起来会很顺手。本文玩转的股票数据就是使用 ipython notebook。</p>
+<h2 id="_1">股票数据下载</h2>
+<p>搜索 ghancn 可以免费下载 2009 年之前的 5 分钟数据和 1 分钟数据。坦白讲，数据质量不高，里面有不少错误。但不影响我们玩这些数据。数据是以年为单位分不同的文件夹保存的。</p>
+<p>我们先看一下某个股票的数据长什么样：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pandas</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">pd</span>
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+
+
+names <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;date&#39;</span>,
+         <span style="color: #BB4444">&#39;time&#39;</span>,
+         <span style="color: #BB4444">&#39;opening_price&#39;</span>,
+         <span style="color: #BB4444">&#39;ceiling_price&#39;</span>,
+         <span style="color: #BB4444">&#39;floor_price&#39;</span>,
+         <span style="color: #BB4444">&#39;closing_price&#39;</span>,
+         <span style="color: #BB4444">&#39;volume&#39;</span>,
+         <span style="color: #BB4444">&#39;amount&#39;</span>]
+<span style="color: #008800; font-style: italic"># 读取数据时，我们以日期为索引，并解析成日期格式</span>
+raw <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;raw/2008/SH600690.csv&#39;</span>, names<span style="color: #666666">=</span>names, header<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+raw<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">             time  opening_price  ceiling_price  floor_price  closing_price   volume    amount
+date
+2008-01-02  09:35          22.50          22.63        22.50          22.51   2042.50   4604723
+2008-01-02  09:40          22.51          22.51        22.29          22.37   1545.17   3460503
+2008-01-02  09:45          22.39          22.62        22.38          22.62   1744.76   3921443
+2008-01-02  09:50          22.60          23.00        22.60          22.95   5339.00   12225939
+2008-01-02  09:55          22.98          23.20        22.89          23.20   12577.73  28947824
+</pre></div>
+
+
+<p><strong>转化为日交易数据</strong></p>
+<p>我们使用 2007 年和 2008 年的数据来作为示例。因为我们更关心是一些长期的趋势，分钟级别的交易数据太细了，我们转换为日数据。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 股票涨跌幅检查，不能超过 10% ，过滤掉一些不合法的数据</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_valid_price</span>(g):
+    <span style="color: #AA22FF; font-weight: bold">return</span> (((g<span style="color: #666666">.</span>max() <span style="color: #666666">-</span> g<span style="color: #666666">.</span>min()) <span style="color: #666666">/</span> g<span style="color: #666666">.</span>min()) <span style="color: #666666">&lt;</span> <span style="color: #666666">0.223</span>)<span style="color: #666666">.</span>all()
+
+<span style="color: #008800; font-style: italic"># 按照日期分组</span>
+days <span style="color: #666666">=</span> raw<span style="color: #666666">.</span>groupby(level<span style="color: #666666">=0</span>)<span style="color: #666666">.</span>agg(
+    {<span style="color: #BB4444">&#39;opening_price&#39;</span>: <span style="color: #AA22FF; font-weight: bold">lambda</span> g: _valid_price(g) <span style="color: #AA22FF; font-weight: bold">and</span> g[<span style="color: #666666">0</span>] <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">0</span>,
+     <span style="color: #BB4444">&#39;ceiling_price&#39;</span>: <span style="color: #AA22FF; font-weight: bold">lambda</span> g: _valid_price(g) <span style="color: #AA22FF; font-weight: bold">and</span> np<span style="color: #666666">.</span>max(g) <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">0</span>,
+     <span style="color: #BB4444">&#39;floor_price&#39;</span>: <span style="color: #AA22FF; font-weight: bold">lambda</span> g: _valid_price(g) <span style="color: #AA22FF; font-weight: bold">and</span> np<span style="color: #666666">.</span>min(g) <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">0</span>,
+     <span style="color: #BB4444">&#39;closing_price&#39;</span>: <span style="color: #AA22FF; font-weight: bold">lambda</span> g: _valid_price(g) <span style="color: #AA22FF; font-weight: bold">and</span> g[<span style="color: #666666">-1</span>] <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">0</span>,
+     <span style="color: #BB4444">&#39;volume&#39;</span>: <span style="color: #BB4444">&#39;sum&#39;</span>,
+     <span style="color: #BB4444">&#39;amount&#39;</span>: <span style="color: #BB4444">&#39;sum&#39;</span>})
+days<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price opening_price   ceiling_price   volume      amount      closing_price
+date
+2008-01-02  22.29       22.50           24.50           200809.34   476179680   24.03
+2008-01-03  23.81       24.03           25.20           166037.98   406906304   24.54
+2008-01-04  23.68       24.53           24.76           149078.64   358418560   24.17
+2008-01-07  23.75       24.03           24.75           93950.43    227289136   24.38
+2008-01-08  23.49       24.38           24.38           149056.24   355752416   23.53
+</pre></div>
+
+
+<p>这里只是为了玩这些数据，如果你真的需要股票日数据，雅虎财经网站上有质量非常高的日交易数据可供下载。</p>
+<p>按照上述方法，可以把一个股票几年的数据合并起来，生成一个包含所有年份的历史日交易数据。具体可以参阅 <a href="https://github.com/kamidox/stock-data/blob/master/stock.py">stock.py</a> 里的 <code>minutes_to_days_batch</code> 函数。</p>
+<h2 id="_2">股票波动率</h2>
+<p>什么股票是好股票？要回答这个问题，先要把最简单的问题说清楚。炒股就是<strong>低买高卖，实现获利</strong>。那么好股票的标准就是在你的持股周期内，波动最大的股票。这很好理解吧，波动最大，我们才有可能在相对低点买入，在相对高点卖出，获利最大。</p>
+<p>在一定的时间周期内，衡量股票波动的指标定义为 最高价/最低价。以我们表格中的数据，就是 ceiling_price/floor_price。这个比率最大的股票就是好股票。关于时间周期，这个和炒股策略有关。有些人喜欢做短线，可能就持股几天，或一两周。有些人习惯做长线，可能持股几个月甚至几年。也有些人本来打算做短线，做着做着变成长线，再做着做着，变成了股东。</p>
+<p>为了简单起见，我们拿波动周期为 30 个自然日来计算，即如果某个股票停牌，那么他的价格就一直没有变化，则波动为 0。<br />
+这里，我们直接使用 600690 这个股票来作为示例。我们直接读取已经合并过日交易的数据。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">qdhr <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SH600690.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+qdhr<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                floor_price     opening_price   ceiling_price   volume      amount      closing_price
+date
+2007-01-04      9.28            9.30            10.14           259264.75   254734000   9.80
+2007-01-05      9.53            9.70            10.15           171169.97   170154432   9.90
+2007-01-08      9.93            9.93            10.78           159340.58   164954896   10.60
+2007-01-09      10.08           10.68           11.15           227163.31   246309216   10.55
+2007-01-10      10.26           10.49           11.13           232858.18   246221520   11.10
+</pre></div>
+
+
+<p>我们发现数据中间有空洞，即周末和停牌时间里是没有数据的。我们把这些数据填充完整，我们看看 pandas 如何处理 missing data 。</p>
+<h3 id="_3">填充数据</h3>
+<p>我们先生成一段连续的日期数据作为索引：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 填充数据：生成日期索引</span>
+l <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(qdhr)
+start <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>iloc[<span style="color: #666666">0</span>:<span style="color: #666666">1</span>]<span style="color: #666666">.</span>index<span style="color: #666666">.</span>tolist()[<span style="color: #666666">0</span>]
+end <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>iloc[l <span style="color: #666666">-</span> <span style="color: #666666">1</span>: l]<span style="color: #666666">.</span>index<span style="color: #666666">.</span>tolist()[<span style="color: #666666">0</span>]
+idx <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>date_range(start<span style="color: #666666">=</span>start, end<span style="color: #666666">=</span>end)
+idx
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">DatetimeIndex([&#39;2007-01-04&#39;, &#39;2007-01-05&#39;, &#39;2007-01-06&#39;, &#39;2007-01-07&#39;,
+               &#39;2007-01-08&#39;, &#39;2007-01-09&#39;, &#39;2007-01-10&#39;, &#39;2007-01-11&#39;,
+               &#39;2007-01-12&#39;, &#39;2007-01-13&#39;,
+               ...
+               &#39;2008-12-22&#39;, &#39;2008-12-23&#39;, &#39;2008-12-24&#39;, &#39;2008-12-25&#39;,
+               &#39;2008-12-26&#39;, &#39;2008-12-27&#39;, &#39;2008-12-28&#39;, &#39;2008-12-29&#39;,
+               &#39;2008-12-30&#39;, &#39;2008-12-31&#39;],
+               dtype=&#39;datetime64[ns]&#39;, length=728, freq=&#39;D&#39;)
+</pre></div>
+
+
+<p>接着使用 <code>reindex</code> 函数缺失的数据被全。填充股票数据时有个要求，我们把缺失的价格数据用前一个交易日的数据来填充，但交易量需要填充为 0。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">data <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>reindex(idx)
+zvalues <span style="color: #666666">=</span> data<span style="color: #666666">.</span>loc[<span style="color: #666666">~</span>(data<span style="color: #666666">.</span>volume <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)]<span style="color: #666666">.</span>loc[:, [<span style="color: #BB4444">&#39;volume&#39;</span>, <span style="color: #BB4444">&#39;amount&#39;</span>]]
+data<span style="color: #666666">.</span>update(zvalues<span style="color: #666666">.</span>fillna(<span style="color: #666666">0</span>))
+data<span style="color: #666666">.</span>fillna(method<span style="color: #666666">=</span><span style="color: #BB4444">&#39;ffill&#39;</span>, inplace<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+data<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price opening_price   ceiling_price   volume      amount      closing_price
+2007-01-04  9.28        9.30            10.14           259264.75   254734000   9.8
+2007-01-05  9.53        9.70            10.15           171169.97   170154432   9.9
+2007-01-06  9.53        9.70            10.15           0.00        0           9.9
+2007-01-07  9.53        9.70            10.15           0.00        0           9.9
+2007-01-08  9.93        9.93            10.78           159340.58   164954896   10.6
+</pre></div>
+
+
+<p>我们可以看到，06， 07 两天的数据被正确地填充了。</p>
+<h3 id="_4">分组计算</h3>
+<p>我们需要计算 30 个自然日里的股票平均波动周期。这样，我们必须以 30 天为单位，对所有的历史数据进行分组。然后逐个分组计算其波动率。</p>
+<p><strong>生成分组索引</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 定义产生分组索引的函数，比如我们要计算的周期是 20 天，则按照日期，20 个交易日一组</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">gen_item_group_index</span>(total, group_len):
+    <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot; generate an item group index array</span>
+
+<span style="color: #BB4444; font-style: italic">    suppose total = 10, unitlen = 2, then we will return array [0 0 1 1 2 2 3 3 4 4]</span>
+<span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
+
+    group_count <span style="color: #666666">=</span> total <span style="color: #666666">/</span> group_len
+    group_index <span style="color: #666666">=</span> np<span style="color: #666666">.</span>arange(total)
+    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(group_count):
+        group_index[i <span style="color: #666666">*</span> group_len: (i <span style="color: #666666">+</span> <span style="color: #666666">1</span>) <span style="color: #666666">*</span> group_len] <span style="color: #666666">=</span> i
+    group_index[(i <span style="color: #666666">+</span> <span style="color: #666666">1</span>) <span style="color: #666666">*</span> group_len : total] <span style="color: #666666">=</span> i <span style="color: #666666">+</span> <span style="color: #666666">1</span>
+    <span style="color: #AA22FF; font-weight: bold">return</span> group_index<span style="color: #666666">.</span>tolist()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">7</span>]: gen_item_group_index(<span style="color: #666666">10</span>, <span style="color: #666666">3</span>)
+Out [<span style="color: #666666">7</span>]: [<span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #666666">1</span>, <span style="color: #666666">1</span>, <span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">2</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>]
+</pre></div>
+
+
+<p><strong>根据分组索引来分组</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">period <span style="color: #666666">=</span> <span style="color: #666666">30</span>
+
+group_index <span style="color: #666666">=</span> gen_item_group_index(<span style="color: #AA22FF">len</span>(data), period)
+<span style="color: #008800; font-style: italic"># 把分组索引数据添加到股票数据里</span>
+data[<span style="color: #BB4444">&#39;group_index&#39;</span>] <span style="color: #666666">=</span> group_index
+<span style="color: #AA22FF; font-weight: bold">print</span> <span style="color: #AA22FF">len</span>(data)
+data<span style="color: #666666">.</span>head()<span style="color: #666666">.</span>append(data<span style="color: #666666">.</span>tail())
+</pre></div>
+
+
+<p>我们看一下添加了分组索引后的数据最前面 5 个和最后 5 个数据，注意 <code>group_index</code> 的值。我们接下来就是根据这个值进行分组。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price opening_price   ceiling_price   volume      amount      closing_price   group_index
+2007-01-04  9.28        9.30            10.14           259264.75   254734000   9.80            0
+2007-01-05  9.53        9.70            10.15           171169.97   170154432   9.90            0
+2007-01-06  9.53        9.70            10.15           0.00        0           9.90            0
+2007-01-07  9.53        9.70            10.15           0.00        0           9.90            0
+2007-01-08  9.93        9.93            10.78           159340.58   164954896   10.60           0
+2008-12-27  8.97        9.15            9.23            0.00        0           9.08            24
+2008-12-28  8.97        9.15            9.23            0.00        0           9.08            24
+2008-12-29  8.73        9.04            9.15            38576.07    34625144    9.11            24
+2008-12-30  8.95        9.14            9.14            62983.38    56876600    8.96            24
+2008-12-31  8.95        9.00            9.11            32829.30    29620508    8.99            24
+</pre></div>
+
+
+<p><strong>分组计算最高价和最低价</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 针对下跌的波动，我们把最高价设置为负数。什么是下跌的波动？就是先出现最高价，再出现最低价</span>
+<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_ceiling_price</span>(g):
+    <span style="color: #AA22FF; font-weight: bold">return</span> g<span style="color: #666666">.</span>idxmin() <span style="color: #666666">&lt;</span> g<span style="color: #666666">.</span>idxmax() <span style="color: #AA22FF; font-weight: bold">and</span> np<span style="color: #666666">.</span>max(g) <span style="color: #AA22FF; font-weight: bold">or</span> (<span style="color: #666666">-</span>np<span style="color: #666666">.</span>max(g))
+
+
+<span style="color: #008800; font-style: italic"># 根据索引分组计算</span>
+group <span style="color: #666666">=</span> data<span style="color: #666666">.</span>groupby(<span style="color: #BB4444">&#39;group_index&#39;</span>)<span style="color: #666666">.</span>agg({
+                                        <span style="color: #BB4444">&#39;volume&#39;</span>: <span style="color: #BB4444">&#39;sum&#39;</span>,
+                                        <span style="color: #BB4444">&#39;floor_price&#39;</span>: <span style="color: #BB4444">&#39;min&#39;</span>,
+                                        <span style="color: #BB4444">&#39;ceiling_price&#39;</span>: _ceiling_price})
+group<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                volume      ceiling_price   floor_price
+group_index
+0               1271711.00  22.33           16.21
+1               1831018.01  24.75           18.98
+2               2038944.01  -27.20          20.08
+3               477219.16   23.49           21.40
+4               203932.07   -22.48          20.10
+</pre></div>
+
+
+<p><strong>给每个分组添加起始日期</strong></p>
+<p>有时我们看到某个周期内下跌了很多，或上涨了很多，我们想知道是什么时候发生的，所以需要给每个分组添加起始日期。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 添加每个分组的起始日期</span>
+date_col <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>DataFrame({<span style="color: #BB4444">&quot;group_index&quot;</span>: group_index, <span style="color: #BB4444">&quot;date&quot;</span>: idx})
+group[<span style="color: #BB4444">&#39;date&#39;</span>] <span style="color: #666666">=</span> date_col<span style="color: #666666">.</span>groupby(<span style="color: #BB4444">&#39;group_index&#39;</span>)<span style="color: #666666">.</span>agg(<span style="color: #BB4444">&#39;first&#39;</span>)
+group<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<p>idx 是我们在上面代码里生成的连续的日期索引数据。添加日期数据后的样子：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                volume      ceiling_price   floor_price     date
+group_index
+0               4634226.68  -12.38          9.02            2007-01-04
+1               3499001.47  11.64           8.80            2007-02-03
+2               6061972.34  12.79           9.41            2007-03-05
+3               6086797.19  15.50           12.00           2007-04-04
+4               5687407.73  17.15           13.49           2007-05-04
+</pre></div>
+
+
+<p><strong>添加波动率</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 添加我们的波动指标 股票波动系数 = 最高价/最低价</span>
+group[<span style="color: #BB4444">&#39;ripples_radio&#39;</span>] <span style="color: #666666">=</span> group<span style="color: #666666">.</span>ceiling_price <span style="color: #666666">/</span> group<span style="color: #666666">.</span>floor_price
+group<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                volume          ceiling_price   floor_price     date            ripples_radio
+group_index
+0               4634226.68      -12.38          9.02            2007-01-04      -1.372506
+1               3499001.47      11.64           8.80            2007-02-03      1.322727
+2               6061972.34      12.79           9.41            2007-03-05      1.359192
+3               6086797.19      15.50           12.00           2007-04-04      1.291667
+4               5687407.73      17.15           13.49           2007-05-04      1.271312
+</pre></div>
+
+
+<p><strong>排序</strong></p>
+<p>按照波动率排序，可以看到某段时间内波动最大的一些时间段。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 降序排列。我们把分组的起始日期，交易量总和都列出来，也可以观察一下交易量和股票波动比的关系</span>
+ripples <span style="color: #666666">=</span> group<span style="color: #666666">.</span>sort_values(<span style="color: #BB4444">&#39;ripples_radio&#39;</span>, ascending<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
+ripples<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            volume          ceiling_price   floor_price     date            ripples_radio
+group_index
+101         4352881.31      14.85           9.18            2008-04-21      1.617647
+90          5703121.25      18.89           11.85           2007-05-27      1.594093
+92          4545365.71      23.96           16.42           2007-07-26      1.459196
+85          4126972.83      12.38           8.58            2006-12-28      1.442890
+84          2952951.46      9.20            6.40            2006-11-28      1.437500
+</pre></div>
+
+
+<p>从数据可以看出来，波动最大的在 30 个自然日内上涨了 61.76%。发生在 2008-04-21 开始的 30 天内。</p>
+<p>当然，我们也可以计算前 10 大上涨波动的平均值。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ripples<span style="color: #666666">.</span>head(<span style="color: #666666">10</span>)<span style="color: #666666">.</span>ripples_radio<span style="color: #666666">.</span>mean()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">1.3657990069195818
+</pre></div>
+
+
+<p>也可以计算前 10 大下跌波动的平均值。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ripples<span style="color: #666666">.</span>tail(<span style="color: #666666">10</span>)<span style="color: #666666">.</span>ripples_radio<span style="color: #666666">.</span>mean()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">-1.4124407127785106
+</pre></div>
+
+
+<p>看来下跌的平均值比上涨的还大呀。</p>
+<p>我们针对每个股票都使用上述方法计算其平均波动，这样我们就可以从一系列股票里找出那些波动最大的股票了。当然，上涨波动越大，下跌波动也越大，正所谓风险和机遇并存嘛。具体可参阅 <a href="https://github.com/kamidox/stock-data/blob/master/stock.py">stock.py</a> 里的 <code>stock_ripples_batch</code> 函数。</p>
+<h2 id="_5">其他玩法</h2>
+<h3 id="_6">计算涨跌幅</h3>
+<p>我们注意到原始数据里没有涨跌幅的数据。涨跌幅定义为今日收盘价减去昨日收盘价。我们换个股票，取出原始数据。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">data <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SZ000565.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+data<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price     opening_price   ceiling_price   volume      amount          closing_price
+date
+2007-01-04  4.16            4.22            4.27            17877.88    7477370.52      4.19
+2007-01-05  4.15            4.16            4.27            10857.66    4588246.02      4.24
+2007-01-08  4.27            4.27            4.45            30770.01    13467986.00     4.44
+2007-01-09  4.42            4.48            4.54            26276.89    11726492.00     4.45
+2007-01-10  4.36            4.45            4.90            80840.76    37866240.01     4.90
+</pre></div>
+
+
+<p>利用 <code>diff</code> 函数快速计算涨跌幅。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">rise <span style="color: #666666">=</span> data<span style="color: #666666">.</span>closing_price<span style="color: #666666">.</span>diff()
+data[<span style="color: #BB4444">&#39;rise&#39;</span>] <span style="color: #666666">=</span> rise
+data<span style="color: #666666">.</span>head()
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    floor_price opening_price   ceiling_price   volume  amount  closing_price   rise
+date
+2007-01-04  4.16    4.22    4.27    17877.88    7477370.52  4.19    NaN
+2007-01-05  4.15    4.16    4.27    10857.66    4588246.02  4.24    0.05
+2007-01-08  4.27    4.27    4.45    30770.01    13467986.00 4.44    0.20
+2007-01-09  4.42    4.48    4.54    26276.89    11726492.00 4.45    0.01
+2007-01-10  4.36    4.45    4.90    80840.76    37866240.01 4.90    0.45
+</pre></div>
+
+
+<p>注意到第一条记录的涨跌幅为 <code>NaN</code>，因为第一条记录的昨日是没有数据的。感兴趣的同学可以再计算一下涨跌百分比，其定义为当日的涨跌幅除以昨日的收盘价。</p>
+<h3 id="_7">计算指定时间点之前的一段时间内波动最大的股票</h3>
+<p>有时我们关心某个时间点之前的一段时间变化最剧烈的股票。比如最近一周涨幅最大的，最近一周跌幅最大的，或者最近一个月交易量变化最大的等等。</p>
+<p>我们看一下 000565 这个股票在 2008-12-31 之前 30 个自然日里的波动率。</p>
+<p><strong>选定数据</strong></p>
+<p>这里涉及到用日期对数据进行分片的技术，我们需要选择指定日期及之前一段时间内的数据。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">end_date <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;2008-12-31&#39;</span>
+period <span style="color: #666666">=</span> <span style="color: #666666">30</span>
+
+end_date <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>Timestamp(end_date)
+start_date <span style="color: #666666">=</span> end_date <span style="color: #666666">-</span> pd<span style="color: #666666">.</span>Timedelta(days<span style="color: #666666">=</span>period)
+
+data <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SZ000565.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+data <span style="color: #666666">=</span> data<span style="color: #666666">.</span>loc[start_date:end_date]
+data
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price     opening_price   ceiling_price   volume          amount          closing_price
+date
+2008-12-01  7.40            7.58            7.90            41747.12        3.214610e+07    7.88
+2008-12-02  7.55            7.56            8.38            74552.15        6.029661e+07    8.32
+2008-12-03  8.40            8.40            8.93            85361.64        7.420082e+07    8.82
+2008-12-04  8.42            8.88            9.08            110410.46       9.740610e+07    8.50
+2008-12-05  8.33            8.40            9.35            126479.91       1.133572e+08    9.35
+2008-12-08  9.35            9.40            9.99            149491.39       1.436038e+08    9.69
+2008-12-09  9.10            9.73            9.73            89871.90        8.405230e+07    9.15
+2008-12-10  9.09            9.11            9.55            70036.94        6.571389e+07    9.46
+2008-12-11  9.06            9.40            9.47            57735.24        5.328468e+07    9.06
+2008-12-12  8.15            8.80            9.00            59210.49        5.038026e+07    8.29
+2008-12-15  8.30            8.33            8.72            41758.27        3.534860e+07    8.50
+2008-12-16  8.02            8.48            8.60            38808.62        3.220561e+07    8.60
+2008-12-17  8.58            8.67            8.89            46993.48        4.114008e+07    8.65
+2008-12-18  8.50            8.62            8.81            34061.97        2.965074e+07    8.78
+2008-12-19  8.79            8.79            9.39            70327.47        6.435001e+07    9.18
+2008-12-22  8.95            9.19            9.39            50195.75        4.592311e+07    9.11
+2008-12-23  8.20            9.17            9.17            75732.72        6.507140e+07    8.20
+2008-12-24  7.59            8.03            8.18            61498.16        4.823624e+07    7.82
+2008-12-25  7.40            7.90            7.93            34791.00        2.672370e+07    7.52
+2008-12-29  6.96            7.50            7.55            31694.04        2.274100e+07    7.26
+2008-12-30  7.11            7.29            7.48            25533.01        1.865500e+07    7.15
+2008-12-31  6.94            7.16            7.25            22324.32        1.577828e+07    6.95
+</pre></div>
+
+
+<p>选出数据后，计算波动率就简单了。我们按照老办法，上涨的波动率为正数，下跌的波动率为负数。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 计算波动值</span>
+_ripple_radio <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">lambda</span> data: data<span style="color: #666666">.</span>ceiling_price<span style="color: #666666">.</span>max() <span style="color: #666666">/</span> data<span style="color: #666666">.</span>floor_price<span style="color: #666666">.</span>min()
+ripple_radio <span style="color: #666666">=</span> data<span style="color: #666666">.</span>floor_price<span style="color: #666666">.</span>idxmin() <span style="color: #666666">&lt;</span> data<span style="color: #666666">.</span>ceiling_price<span style="color: #666666">.</span>idxmax() <span style="color: #AA22FF; font-weight: bold">and</span> _ripple_radio(data) <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">-</span>_ripple_radio(data)
+ripple_radio
+</pre></div>
+
+
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">-1.4394812680115274
+</pre></div>
+
+
+<p>最后，遍历所有的股票，计算其指定日期之前的一段时间的波动值，选出波动最大的股票，即是我们关注的股票。比如，经历股票大跌，我们判断会反弹，我们想抢反弹，抢哪个股票呢？答案是抢大跌中下跌最多的，因为下跌最多的股票往往反弹也最多。这部分代码可参阅 <a href="https://github.com/kamidox/stock-data/blob/master/stock.py">stock.py</a> 里的 <code>recent_ripples</code> 函数。</p>
+<h2 id="pandas_1">为什么要用 pandas 玩转股票数据</h2>
+<p>答案应该已经比较明显了，虽然很多数据股票软件里都有。但一些高级的数据筛选方式其实这些股票软件都不支持的。最后，需要补充一句，大家都是成年人，文章里的任何策略是个人的思路，不构成投资建议啊，后果自负啊。</p>
+<p>最最后，感兴趣的可以看一下 <a href="https://github.com/kamidox/stock-data/blob/master/stock.ipynb">stock.ipynb</a>，这个是本文在 ipython notebook 环境下的所有代码。</p>
+	<hr/>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-11-17(Tuesday) 23:16. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="./category/android.html">android</a></li>
+										<li><a href="./category/essay.html">essay</a></li>
+										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/ml.html">ml</a></li>
+										<li><a href="./category/python.html">python</a></li>
+										<li><a href="./category/tools.html">tools</a></li>
+										<li><a href="./category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/11/index.html">November 2015 (2)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="./theme/js/jquery.js"></script>
+		<script src="./theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
