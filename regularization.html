@@ -70,9 +70,9 @@
 
 						<li><label>Categories</label></li>
 							<li ><a href="./category/android.html">android</a></li>
-							<li class="active"><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/ml.html">ml</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/python.html">python</a></li>
 							<li ><a href="./category/tools.html">tools</a></li>
 							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
@@ -124,33 +124,90 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>学习开源代码的三个层次</h2>
-	<p>网络上有很多优秀的开源代码，学习这些代码是提高自己编程水平的最佳途径。我们在实际项目开发的过程中也会使用很多优秀的开源代码来加快开发速度，避免重复造轮子。优秀开源代码至少可以给我们提供三个层次的学习资料。</p>
-<p><strong>第一层次：使用开源代码</strong><br />
-这一步相对简单，也是大部分人在项目开发过程中最常用的方式。优秀的开源代码一般文档齐全，示例代码丰富。通过简单地学习这些资料，可以较容易地掌握开源代码的用法。</p>
-<p><strong>第二层次：阅读开源代码，理解其实现原理</strong><br />
-做到这一步的人就比较少了。这一步需要花很多时间，而且还需要一些必要的基础知识储备。但如果能达到这个层次，能掌握的技能也会比较多，不单单是开源代码本身的核心逻辑及其架构设计，还能掌握软件开发过程中的一些最佳实践法则。比如单元测试，利用<a href="https://travis-ci.org">travis</a>进行自动编译测试等等。</p>
-<p><strong>第三个层次：吸收并应用开源代码的设计理念到自己的软件开发过程中去</strong><br />
-看得懂和懂得灵活应用是两个层次的东西。从看得懂到会灵活应用中间还需要大量的时间去思考，去实践。面试过不少人，讲起来头头是道，真要让他写出来时，却卡壳了。要么类名方法名忘记了（IDE惹的祸），要么写出来的完全变味。要真正掌握一个技能，除了多看，还要多写，更要多总结，多思考。大道至简，总结多了，无非都是那些模式。面向测试的编程，面向对象编程，设计模式，函数式编程，宏等等这些抽象的概念，通过一些优秀的开源代码去总结思考，才能真正地理解这些抽象概念，最终把这些设计理念应用到自己的代码中去。</p>
-<p><strong>今日推荐</strong></p>
-<p>今天推荐一个Android开源库<a href="https://github.com/greenrobot/EventBus">EventBus</a>。</p>
+	<h2>正则化</h2>
+	<h2 id="_1">线性回归里的欠拟合和过拟合</h2>
+<ul>
+<li>欠拟合 (underfitting)<br />
+  也叫做高偏差 (high bias) 。使用的特征过少导致成本函数过高。模型不能很好地拟合训练数据。</li>
+<li>过拟合 (overfitting)<br />
+  也叫高方差 (high variance) 。使用多个特征建模的预测函数非常完美地拟合了训练数据，其成本函数的值接近于零，但对新的数据预测时效果很差。</li>
+</ul>
+<p><strong>线性回归算法的欠拟合和过拟合</strong></p>
+<p><img alt="Linear Regression Overfit" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_linear_reg_overfit.png" /></p>
+<p>针对房价预测模型，左边是欠拟合的情况，右边是过拟合的情况。中间表示模型比较好的拟合了训练数据集。</p>
+<p><strong>逻辑回归算法的欠拟合和过拟合</strong></p>
+<p><img alt="Logistic Regression Overfit" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_logistic_reg_overfit.png" /></p>
+<p>针对分类算法，左边是欠拟合，右边是过拟合，中间的模型比较好地拟合了训练数据集。</p>
+<p><strong>特征太多，而训练样本数据太少，则很可能出现过拟合</strong>。下面是一些解决过拟合问题的方法：</p>
+<ul>
+<li>减少特征个数<ul>
+<li>手动减少特征个数</li>
+<li>模型选择算法，比如主成份分析法 (PCA) 。主要原理就是把特征的重要性拿来排序，然后只选择前面几个权重比较大的特征，忽略排在后面的权重比较小的特征。</li>
+</ul>
+</li>
+<li>正则化<ul>
+<li>保留所有的特征，减小特征的权重 $\theta_j$ 的值。确保所有的特征对预测值都有少量的贡献。</li>
+<li>当每个特征 $x_i$ 对预测值 $y$ 都有少量的贡献时，这样的模型可以良好地工作</li>
+</ul>
+</li>
+</ul>
+<p>这就是正则化的目的，为了解决特征过多时的过拟合问题。</p>
+<h2 id="_2">正则化</h2>
+<p>$$<br />
+J(\theta) = \frac{1}{2m} \left[ \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2 + \lambda \sum_{j=1}^n \theta_j^2 \right]<br />
+$$</p>
+<p>其中 $\lambda$ 的值有两个目的，即要维持对训练样本的拟合，又避免对训练样本的过拟合。如果 $\lambda$ 太大，则能确保不出现过拟合，但可能会导致对现有训练样本出现欠拟合。</p>
+<p><strong>怎么样从数学上理解正则化后的逻辑回归算法的成本函数解决了过拟合问题呢？</strong></p>
+<p>从数学角度来看，成本函数增加了一个正则项 $\lambda \sum_{j=1}^n \theta_j^2$ 后，成本函数不再唯一地与<strong>预测值与真实值的差距</strong>决定，还和参数 $\theta$ 的大小有关。有了这个限制之后，要实现成本函数最小的目的，$\theta$ 就不能随便取值了，比如某个比较大的 $\theta$ 值可能会让预测值与真实值的差距 $\left( h_\theta(x^{(i)}) - y^{(i)} \right)^2$ 值很小，但会导致  $\theta_j^2$ 很大，最终的结果是成本函数太大。这样，通过调节参数 $\lambda$ 就可以控制正则项的权重。从而避免线性回归算法过拟合。</p>
+<p>利用正则化的成本函数，可以推导出参数迭代函数 (推导过程会用到一些微分运算法则)：</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left[ \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right) + \frac{\lambda}{m} \theta_j \right] \\<br />
+&amp; = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
+$$</p>
+<p>$(1 - \alpha \frac{\lambda}{m})$ 因子在每次迭代时都将把 $\theta_j$ 收缩一点点。因为 $\alpha$ 和 $\lambda$ 是正数，而 m 是训练样例的个数，是个比较大的正整数。<strong>为什么要对 $\theta_j$ 进行收缩呢</strong>？因为加入正则项的成本函数和 $\theta_j^2$ 成正比，所以迭代时需要不断地试图减小 $\theta_j$ 的值。</p>
+<h2 id="_3">通用方程的正则化</h2>
+<p>$$<br />
+\theta = (X^T X)^{-1} X^T y<br />
+$$</p>
+<p>这是还没有正则化的通用方程，我们用它来快速求解线性回归算法。下面是正则化的通用方程：</p>
+<p>$$<br />
+\theta = (X^T X + \lambda Z)^{-1} X^T y<br />
+$$</p>
+<p>其中，Z 是 (n + 1) x (n + 1) 矩阵</p>
+<p>$$<br />
+Z =<br />
+\begin{bmatrix}<br />
+0 \\<br />
+&amp; 1 \\<br />
+&amp; &amp; 1 \\<br />
+&amp; &amp; &amp; \ddots \\<br />
+&amp; &amp; &amp; &amp; 1<br />
+\end{bmatrix}<br />
+$$</p>
+<p>正则化的通用方程实际上解决了两个问题。一个是确保不发生过拟合，另外一个也解决了 $X^T X$ 的奇异矩阵问题。当 m &lt; n 时，$X^T X$ 将是一个奇异矩阵，使用 octave 里的 <code>pinv</code> 函数我们可以求出近似逆矩阵的值，但如果在其他编程语言里，是没有办法求出奇异矩阵的逆矩阵的。而从数学上可以证明，加上 $\lambda Z$ 后，结果将是一个非奇异矩阵。</p>
+<p>通用方程的正则化公式推导过程极其复杂，过程从略。</p>
+<h2 id="_4">逻辑回归成本函数的正则化</h2>
+<p>$$<br />
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right] + \frac{\lambda}{2m} \sum_{j=1}^n \theta_j^2<br />
+$$</p>
+<p>相应地，正则化后的参数迭代公式</p>
+<p>$$<br />
+\begin{align}<br />
+\theta_j &amp; = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\<br />
+&amp; = \theta_j - \alpha \left[ \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)} + \frac{\lambda}{m} \theta_j \right] \\<br />
+&amp; = \theta_j (1 - \alpha \frac{\lambda}{m}) - \alpha \frac{1}{m} \sum_{i=1}^m \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\end{align}<br />
+$$</p>
+<p>需要注意的是，上式中 $j \geq 1$，因为 $\theta_0$ 没有参与正则化。另外需要留意，逻辑回归和线性回归的参数迭代算法看起来形式是一样的，即公式 (4) 和公式 (7) 形式一样，但其实他们的算法是不一样的，因为两个式子的预测函数 $h_\theta(x)$ 是不一样的。针对线性回归，$h_\theta(x) = \theta^T x$，而针对逻辑回归 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$。</p>
+<p>根据正则化的，新的成本函数的参数迭代函数来实现 CostFunction，然后利用 octave 里的 <code>fminunc</code> 函数来求解，这样可以达到最高的运算效率。因为 <code>fminunc</code> 会使用优化过的梯度下降算法 Conjugate Gradient, BFGS, L-BFGS 等来提高运算效率。</p>
 <blockquote>
-<p>EventBus is publish/subscribe event bus optimized for Android.</p>
+<p>学到这里，你基本上可以使用线性回归逻辑回归解决一些现实问题了。我看到硅谷有大量的公司使用机器算法来构建伟大的产品，那些机器学习工程师在这些公司获得了很好的职业发展并且赚了不少钱。&mdash; Andrew Ng</p>
 </blockquote>
-<ol>
-<li>它和Android的广播通信方式有什么区别？</li>
-<li>它和另外一个开源库<a href="https://github.com/square/otto">Otto</a>有什么区别？</li>
-</ol>
-<p>答案都在其官方文档里。关于这个库，还有两个很好的学习资源：</p>
-<ol>
-<li><a href="https://github.com/android-cn/android-open-project-demo/tree/master/event-bus-demo">event-bus-demo</a><br />
-   这是一个DEMO程序。</li>
-<li><a href="https://github.com/android-cn/android-open-project-analysis/tree/master/event-bus">EventBus 源码解析</a><br />
-   这个分析了其原理和实现。</li>
-</ol>
-<p>网络上的那些XXX源码解析，XXX源码情景分析之类的文章质量还是比较高的，但这些文档不能代替对源码的阅读。这些文档的作用是帮助初学者更好的理解源码，降低学习成本。需要深刻理解设计精髓，还是需要通过阅读源码去深刻领会。阅读一些设计优秀的源码和青春期时阅读汪国真的蒙珑诗一样美。与其走马观花，不如花一些时间深入去学习几个开源代码，自己偿试通过阅读代码总结出其架构和设计的精髓。通过这样的训练，几个月后就会发现编程水平会有长足的进步。</p>
+<p>老师除了教得好，还要会鼓励，让学生保持学习的热情和兴趣。学完三周，热情可能会被消耗得差不多了，特别是第一次接触这些复杂数学公式的同学，听了老师的这个鼓励，瞬间满血复活有没有。仿佛走上硅谷机器学习工程师的职业道路了~~，等一下，先别叫醒我，让我的梦想飞一会儿。</p>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/essay.html">essay</a> on 2015-01-16(Friday) 23:20. Tags: <a href="./tag/thought.html">thought</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-11-20(Friday) 22:52. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
 
 <hr/>

@@ -81,7 +81,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
-									<li><a href="/posts/2015/11/index.html">November 2015 (3)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (4)</a></li>
 									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
 									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
 									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
@@ -135,7 +135,7 @@
 <li><strong>法则五</strong>：计算偏导数时，把求导变量当作变量，其他的变量当作常数，比如对方程 $f(x, y) = ax^n + by^m$，则 $$\frac{\partial}{\partial x}f(x, y) = na x^{n-1}$$ 因为是对 x 求导，所以可以把 y 当成常数，即 $by^m$ 整个算子就是一个常数，根据第二个法则，常数的导数为 0。同理，$$\frac{\partial}{\partial y}f(x, y) = mby^{m-1}$$</li>
 </ul>
 <p>维基百科上有教程可以参考，比如 <a href="https://en.wikipedia.org/wiki/Chain_rule">Chain Rule</a> 和 <a href="https://en.wikipedia.org/wiki/Partial_derivatives">Partial Derivatives</a>。</p>
-<h2 id="_2">梯度下降算法</h2>
+<h2 id="_2">线性回归算法</h2>
 <p>假设我们<strong>训练数据集 (training data set)</strong> 有 m 个数据 $(x_0, y_0), (x_1, y_1), &hellip; (x_m, y_m)$ ，我们用线性方程 $h(x) = \theta_0 + \theta_1 x$ 来拟合这组数据，怎么样来选取参数 $\theta_0$ 和 $\theta_1$ 来最优拟合这组数据呢？</p>
 <p>我们可以把这 m 个点画在二维坐标系里，然后计算这 m 个点到我们的线性方程所描述的直线的最短距离，当这些点到我们的拟合直线的距离总和最小时，那么我们就找到了最优的拟合方案了。所以，问题转化为求下面函数的最小值：</p>
 <p>$$<br />
@@ -212,7 +212,7 @@ $$</p>
 <p class="admonition-title">怎么理解随机</p>
 <p>为什么这么神奇呢？为什么随机从训练数据集里选取一个数据来迭代，不但不影响最终计算结果，还大大地提高了效率。看数学时最怕的就是 <strong>我们考虑 bla bla bla</strong>，作者说出 “我们考虑 bla bla bla” 时背后的过程是怎么样的？坦白讲，怎么样从数学上证明随机梯度下降算法和批量梯度下降算法是等价的，我也不知道。不过我有个直观的可以帮助理解的解释。回到成本函数的定义：$J(\theta) = \frac{1}{2m} \sum_{i=1}^m \left(h(x^{(i)}) - y^{(i)}\right)^2$。我们说过，这里累加后除以 2 是为了计算方便，那么我们除以 m 是什么意思呢？答案是平均值，即所有训练数据集上的点到我们预测函数的距离的<strong>平均值</strong>。因为 m 是正整数，$J(\theta)$ 除以 m 不影响它的最小值的属性。再回到<strong>随机选取训练数据集里的一个数据</strong>这个做法来看，如果计算次数足够多，并且是真正随机，那么随机选取出来的这组数据从概率的角度来看，和<strong>平均值</strong>是相当的。打个比方，有一个储钱罐里有 1 角的硬币 10 枚，5 角的硬币 2 枚，1 元的硬币 1 枚，总计 3 元，13 枚硬币。你随机从里面取 1000 次，每次取出来的硬币把币值记录下来，然后放回储钱罐里。这样最后去算这 1000 次取出来的钱的平均值 (1000 次取出来的币值总和除以 1000) 和储钱罐里每枚硬币的平均值 (3/13 元) 应该是近似相等的。我数学太水，概率论还没复习，哪位概率论高人给证明一下啊。</p>
 </div>
-<p>这样，我们基本上把梯度下降算法，最小均方差，随机梯度下降算法的来龙去脉理了一遍。</p>
+<p>这样，我们基本上把线性回归算法，最小均方差，随机梯度下降算法的来龙去脉理了一遍。</p>
 	<hr/>
 	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-09-03(Thursday) 20:20. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
@@ -263,30 +263,30 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
 										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-1"><a href="./tag/android.html">android</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
 										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
 										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
 										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-1"><a href="./tag/android.html">android</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
-											<li><a href="/posts/2015/11/index.html">November 2015 (3)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (4)</a></li>
 											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
 											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
 											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
