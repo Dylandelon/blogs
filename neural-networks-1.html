@@ -72,9 +72,9 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/ml.html">ml</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/python.html">python</a></li>
-							<li class="active"><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
 							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
 
 
@@ -124,119 +124,104 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>使用 Markdown + MathJax 在博客里插入数学公式</h2>
-	<p>在书写数值计算类文章，特别是机器学习相关算法时，难免需要插入复杂的数学公式。一种是用图片在网页上展示，另外一种是使用 <a href="https://www.mathjax.org">MathJax</a> 来展示复杂的数学公式。它直接使用 Javascript 使用矢量字库或 SVG 文件来显示数学公式。优点是效果好，比如在 Retina 屏幕上也不会变得模糊。并且可以直接把公式写在 Markdown 文章里。本文介绍使用 MathJax 在 Markdown 文件里直接插入数学公式。并且附带一个简单的书写数学公式的 LaTex 教程。</p>
-<h2 id="_1">工具</h2>
-<h3 id="markdown-preview-mathjax">配置 Markdown Preview 来支持 MathJax</h3>
-<p>使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -&gt; Markdown Preview -&gt; Setting - User) 里添加如下内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #BB4444">&quot;enable_mathjax&quot;</span><span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>
-</pre></div>
-
-
-<h3 id="pelican-mathjax">配置 Pelican 主题模板来支持 MathJax</h3>
-<p>我使用的主题是 <code>foundation-default-colours</code>，它默认是支持 MathJax 的。我们可以在模板 <code>base.html</code> 找到如下内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">&lt;!-- mathjax config similar to math.stackexchange --&gt;</span>
-<span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/x-mathjax-config&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
-MathJax.Hub.Config({
-    jax<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;input/TeX&quot;</span>, <span style="color: #BB4444">&quot;output/HTML-CSS&quot;</span>],
-    tex2jax<span style="color: #666666">:</span> {
-        inlineMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$&#39;</span>, <span style="color: #BB4444">&#39;$&#39;</span>] ],
-        displayMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$$&#39;</span>, <span style="color: #BB4444">&#39;$$&#39;</span>]],
-        processEscapes<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>,
-        skipTags<span style="color: #666666">:</span> [<span style="color: #BB4444">&#39;script&#39;</span>, <span style="color: #BB4444">&#39;noscript&#39;</span>, <span style="color: #BB4444">&#39;style&#39;</span>, <span style="color: #BB4444">&#39;textarea&#39;</span>, <span style="color: #BB4444">&#39;pre&#39;</span>, <span style="color: #BB4444">&#39;code&#39;</span>]
-    },
-    messageStyle<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;none&quot;</span>,
-    <span style="color: #BB4444">&quot;HTML-CSS&quot;</span><span style="color: #666666">:</span> { preferredFont<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;TeX&quot;</span>, availableFonts<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;STIX&quot;</span>,<span style="color: #BB4444">&quot;TeX&quot;</span>] }
-});
-<span style="color: #008000; font-weight: bold">&lt;/script&gt;</span>
-<span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/javascript&quot;</span> <span style="color: #BB4444">src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span style="color: #008000; font-weight: bold">&gt;&lt;/script&gt;</span>
-</pre></div>
-
-
-<p>如果模板不支持，也可以直接添加上面的脚本来支持 MathJax。</p>
-<h2 id="latex">LaTex 简明教程</h2>
-<h3 id="_2">例子</h3>
-<p>先来看个例子：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">$$
-J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2
-$$
-</pre></div>
-
-
-<p>上面用 LaTex 格式书写的数学公式经过 MathJax 展示后效果如下：</p>
+	<h2>神经网络（一）</h2>
+	<h2 id="_1">动机</h2>
+<p>为什么我们需要神经网络？</p>
+<p>对非线性分类问题，当特征的个数很大的时候，计算量将会非常大。比如对有 100 个特征（$x_1, x_2, \cdots, x_100$）的问题，如果我们只算二阶多项多项式，我们将得到大概 5000 个特征 ($O(n^2)$)。而如果按照三阶多项式来模拟，将得到将近 300,000 个特征 ($O(n^3)$)。再比如，针对一个 100 x 100 分辨率的图片，我们假设每个象素点只用黑白来表示，那么将得到 100,000 个特征值。这个时候如果用二阶多项式来拟合，我们将得到 50,000,000,000 个特征值组合。这是非常巨大的计算量。</p>
+<p>显然，用线性回归和逻辑回归来解决这类问题是不现实的。</p>
+<h2 id="_2">神经网络模型</h2>
+<p>神经网络模型是依照大脑的神经网络的结构建模的。即多个神经元构成一个层，这些神经元是输入，层的目标值为输出。一个神经网络包含多个层。神经元是神经网络中的运算单位。</p>
+<h3 id="_3">神经元</h3>
+<p>神经元是神经网络中的最小运算单位，多个神经元构成一个层。神经网络依然使用逻辑回归算法里介绍的 Sigmoid Function 作为基本模型。</p>
 <p>$$<br />
-J(\theta) = \frac 1 2 \sum_{i=1}^m (h_\theta(x^{(i)})-y^{(i)})^2<br />
+g(z) = \frac{1}{1 + e^{-z}} \\<br />
+z = \theta^T x \\<br />
+h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}<br />
 $$</p>
-<p>这个公式是线性回归算法里的成本函数。</p>
-<h3 id="_3">规则</h3>
-<p>关于在 Markdown 书写 LaTex 数学公式有几个规则常用规则需要记住：</p>
-<p><strong>行内公式</strong><br />
-行内公式使用 <code>$</code> 号作为公式的左右边界，如 $h(x) = \theta_0 + \theta_1 x$ 公式的 LaTex 内容如下</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">$h(x) = \theta_0 + \theta_1 x$
-</pre></div>
-
-
-<p><strong>行间公式</strong><br />
-公式需要独立显示一行时，使用 <code>$$</code> 来作为公式的左右边界，如</p>
+<p>其中，$x$ 称作神经元的输入 (input wires or Dendrite)，是个列向量 $[x_1, x_2, &hellip; x_n]$。$\theta$ 称为权重 (weights)，也可以按照逻辑回归算法里的叫法，称为参数 (parameters)。$h_\theta(x)$ 称为输出 (output wires or Axon)。这个是神经网络模型中的基本运算单元。</p>
+<p>类似逻辑回归，我们也会增加一个输入 $x_0=1$，在这里称作偏置单元 (bias unit)。</p>
+<h3 id="_4">神经网络</h3>
+<p>神经网络可以划分成多个层，每个层有一定数量的神经元。其中第一层叫输入层，最后一层叫输出层，一个或多个中间层叫隐藏层。</p>
+<p><img alt="neural networks" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/neural_networks.png" /></p>
+<p><strong>几个索引的含义</strong></p>
+<p>$a_i^{(j)}$: 表示第 j 层的第 i 个神经元 (unit i in layer j)<br />
+$\Theta^{(j)}$: 控制神经元网络中从第 j 层转化到第 j + 1 层的权重矩阵。这个矩阵里的元素经常写成 $\Theta_{ik}^{(j)}$ 其中 j 表示第 j 层，i 表示第 j 层神经元的单元索引值，k 表示第 j 层第 i 个神经元的输入项索引值。</p>
+<p>这段索引的描述很抽像。看一下上图的神经网络，他们的元素满足如下关系。从下面的关系中去正确地理解各个变量的索引值的含义。其中 $g(z) = \frac{1}{1 + e^{-z}}$ 就是 Sigmoid Function。</p>
 <p>$$<br />
-\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)<br />
+a_1^{(2)} = g(\Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3) \\<br />
+a_2^{(2)} = g(\Theta_{20}^{(1)} x_0 + \Theta_{21}^{(1)} x_1 + \Theta_{22}^{(1)} x_2 + \Theta_{23}^{(1)} x_3) \\<br />
+a_3^{(2)} = g(\Theta_{30}^{(1)} x_0 + \Theta_{31}^{(1)} x_1 + \Theta_{32}^{(1)} x_2 + \Theta_{33}^{(1)} x_3) \\<br />
+h_\Theta(x) = a_1^{(3)} = g(\Theta_{10}^{(2)} a_0 + \Theta_{11}^{(2)} a_1 + \Theta_{12}^{(2)} a_2 + \Theta_{13}^{(2)} a_3)<br />
 $$</p>
-<p>的 LaTex 代码为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">$$
-\theta_i = \theta_i - \alpha\frac\partial{\partial\theta_i}J(\theta)
-$$
-</pre></div>
-
-
-<p><strong>常用 LaTex 代码</strong><br />
-需要记住的几个常用的符号，这样书写起来会快一点</p>
+<p>假设 j 层有 $s_j$ 个单元，j + 1 层有 $s_{j+1}$ 个单元。那么 $\Theta^{(j)}$ 将是一个 $s_{j+1} \times (s_j + 1)$ 的矩阵。</p>
+<h3 id="forward-propagation">向前传播 (Forward Propagation) 算法的向量化实现</h3>
+<p>针对上图的三层神经网络，其元素之前的关系按照向量化写法如下：</p>
+<p>$$<br />
+let: z_1^{(2)} = \Theta_{10}^{(1)} x_0 + \Theta_{11}^{(1)} x_1 + \Theta_{12}^{(1)} x_2 + \Theta_{13}^{(1)} x_3 = \Theta^{(1)} x \\<br />
+\Rightarrow a_1^{(2)} = g\left( z_1^{(2)} \right) \\<br />
+a_2^{(2)} = g\left( z_2^{(2)} \right) \\<br />
+a_3^{(2)} = g\left( z_3^{(2)} \right) \\<br />
+\Rightarrow a^{(2)} = g\left( z^{(2)} \right) \\<br />
+z^{(3)} = \Theta^{(2)} a^{(2)} \\<br />
+\Rightarrow h_\Theta(x) = a^{(3)} = g\left( z^{(3)} \right)<br />
+$$</p>
+<p>上述关系的本质上，就是从第二层开始，<strong>每个神经元，都把上一层的神经元当作输入，他们之间满足逻辑回归算法</strong>。即从上一层的神经元可以计算出下一层的神经元。这也形象地称为向前传播算法。</p>
+<p>更一般的情况，假设待训练的数据集 $X$ 是 m x n 矩阵，记作 $X \in R^{m \times n}$，其中 m 是数据集个数，n 是输入的特征数，此处假设 $X$ 里已经加入了偏置单元 (bias unit)。假设隐藏层有 s2 个单元，$\Theta^{(1)}$ 为输入层到隐藏层的转换参数。则 $\Theta^{(1)} \in R^{s2 \times n}$。输出层有 s3 个单元，$\Theta^{(2)}$ 为隐藏层到输出层的转换参数。则 $\Theta^{(2)} \in R^{s3 \times (s2 + 1)}$。我们记 $a^{(2)}$ 为隐藏层，$a^{(3)}$ 为输出层，则：</p>
+<p>$$<br />
+a^{(2)} = g\left( X * \left( \Theta^{(1)} \right)^T \right)<br />
+$$</p>
+<p>算出后，给 $a^{(2)}$ 加上偏置单元。为了书写方便，此处我们仍然将加上偏置单元后的隐藏层记作 $a^{(2)}$。则：</p>
+<p>$$<br />
+a^{(3)} = g\left( a^{(2)} * \left( \Theta^{(2)} \right)^T \right)<br />
+$$</p>
+<p>这几个公式就是神经网络向量化运算的重要规则。其中 $g(z) = \frac{1}{1 + e^{-z}}$ 是 Sigmoid Function。熟悉矩阵运算的同学可以验证一下上述运算在矩阵维度上的一致性。</p>
+<p><strong>神经网络通过学习来决定其特征</strong></p>
+<p>单单从 $h_\Theta(x) = g\left(\Theta^{(2)} a^{(2)}\right)$ 式子来看，神经网络的输出就是由特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 的逻辑回归模型表述的。但这里的每个特征 $a_1^{(2)}, a_2^{(2)}, a_3^{(2)}$ 都是分别由 $x_1, x_2, x_3$ 的逻辑回归模型学习出来的。这就是神经网络的精髓所在。</p>
+<h2 id="_5">神经网络的应用实例</h2>
+<h3 id="_6">运用神经网络来模拟逻辑运算</h3>
+<p>假设 $\Theta = [-30, 20, 20]$，</p>
+<p>$$<br />
+h_\Theta(x) = g(\Theta^T x) = g(-30 + 20x_1 + 20x_2)<br />
+$$</p>
+<p>$g(z)$ 是 Sigmoid Function，其图形近似于 S 形。假设 $x_1, x_2 \in [0, 1]$ 是逻辑值。当 $x_1 = 0, x_2 = 0$ 时，$h_\Theta(x) = g(-30) \approx 0$。同理可以写出下面的真值表：</p>
 <table>
 <thead>
 <tr>
-<th>编码</th>
-<th>说明</th>
-<th>示例</th>
+<th>x_1</th>
+<th>x_2</th>
+<th>h(x)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\frac</td>
-<td>分子分母之间的横线</td>
-<td>$\frac1x$</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr>
-<td>_</td>
-<td>用下划线来表示下标</td>
-<td>$x_i$</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr>
-<td>^</td>
-<td>次方运算符来表示上标</td>
-<td>$x^i$</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
 </tr>
 <tr>
-<td>\sum</td>
-<td>累加器，上下标用上面介绍的编码来书写</td>
-<td>$\sum$</td>
-</tr>
-<tr>
-<td>\alpha</td>
-<td>希腊字母 alpha</td>
-<td>$y := \alpha x$</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
-<p>记住这几个就差不多了，倒回去看一下线性回归算法的成本函数的公式及其 LaTex 代码，对着练习个10分钟基本就可以掌握常用公式的写法了。要特别注意公式里空格和 <code>{}</code> 的运用规则。基本原则是，空格可加可不加，但如果会引起歧义，最好加上空格。<code>{}</code> 是用来组成群组的。比如写一个分式时，分母是一个复杂公式时，可以用 <code>{}</code> 包含起来，这样整个复杂公式都会变成分母了。</p>
-<h3 id="_4">几个非常有用的资源</h3>
-<ul>
-<li>这是一篇质量很高的<a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/">介绍 MathJax 的中文博客文章</a>，需要注意的是如果是用 markdown 编写 MathJax 公式，当公式里需要两个斜杠 \ 时要写四个斜杠 \。因为 \ 会被 markdown 转义一次。</li>
-<li>Github 上有个<a href="https://kerzol.github.io/markdown-mathjax/editor.html">在线 Markdown MathJax 编辑器</a>，可以在这里练习，平时写公式时也可以在这里先写好再拷贝到文章里</li>
-<li>这是 <a href="http://www.forkosh.com/mathtextutorial.html">LaTex 完整教程</a>，包含完整的 LaTex 数学公式的内容，包括更高级的格式控制等</li>
-<li>这是一份PDF 格式的 <a href="http://mirrors.ctan.org/info/symbols/math/maths-symbols.pdf">MathJax 支持的数学符号表</a>，当需要书写复杂数学公式时，一些非常特殊的符号的转义字符可以从这里查到</li>
-</ul>
-<p>好啦，这样差不多就可以写出优美的数学公式啦。</p>
+<p>这样就模拟了逻辑 AND 的运算，即 h(x) = x1 AND x2。同理可以推算出当 $\Theta = [-10, 20, 20]$ 时，h(x) = x1 OR x2。还可以推断出当 $\Theta = [10, -20, -20]$ 时，h(x) = (NOT x1) AND (NOT x2)。当需要计算 x1 NXOR x2 时，可以用神经网络模型，即 x1 NXOR x2 = (x1 AND x2) OR ((NOT x1) AND (NOT x2))。我们把 x1, x2 当作输入，a1 = (x1 AND x2), a2 = (NOT x1) AND (NOT x2) 当作隐藏层，而最终的输出由 a1 OR a2 来计算得来了。这样我们就可以使用神经网络模拟复杂的逻辑运算。</p>
+<h3 id="_7">运用神经网络来处理多类别的分类问题</h3>
+<p>上文介绍的神经网络只能输出 0, 1 二元问题。扩展到多个类别时，我们输出一个向量，比如针对最终结果是四种类别的问题时，输出 [1, 0, 0, 0] 表示第一种类别，输出 [0, 1, 0, 0] 表示是第二种类别，依此类推。</p>
+<p>问：为什么不用 1, 2, 3, 4 四个不同的值来表示四种类别，而要用一个四维的向量来表示？<br />
+答：从神经网络模拟逻辑运算的例子可以看出来，一个神经元可以输出只能是从 0 到 1 的之间的值，回忆逻辑回归算法里的描述，这个值表示的是出现 0 或 1 的概率，我们可以选择一个临界点，比如 0.5。当输出值大于等于 0.5 时判定为 1，当输出值小于 0.5 时判定为 0，一个神经元不能输出整其他整数值。逻辑回归就是用来解决分类问题的离散函数，而不是对值进行预测的连续函数。针对四个类别的分类问题时，我们可以把输出层神经元个数定为 4 个，这样这四个输出层神经元的值就构成了一个有四个元素的列向量。所以，我们使用四维的列向量来表示。</p>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/tools.html">tools</a> on 2015-09-01(Tuesday) 22:52. Tags: <a href="./tag/markdown.html">markdown</a>, <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-11-25(Wednesday) 22:59. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
 
 <hr/>
