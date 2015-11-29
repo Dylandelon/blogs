@@ -1,0 +1,397 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="./theme/css/foundation.css" />
+		<link rel="stylesheet" href="./theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="./theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="./theme/img/favicon.ico">
+
+		<script src="./theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="./category/android.html">android</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/flask.html">flask</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="./">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>神经网络（二）</h2>
+	<h2 id="_1">成本函数</h2>
+<p>与线性回归或逻辑回归类似，要使用神经网络对训练数据进行拟合时，需要有成本函数。这样只要针对训练数据，求解成本函数的最小值即可得出神经网络模型参数。</p>
+<p>针对 K 类分类问题的神经网络的输出层</p>
+<p>$$<br />
+h_\Theta(x) \in R^K; \left( h_\Theta(x) \right)_k = k^{th} output<br />
+$$</p>
+<p>其中 K 是输出层的的单元个数，K &gt;= 3。因为如果 K &lt; 3 则可以直接用一个单元表示。其成本函数是：</p>
+<p>$$<br />
+J(\Theta) = - \frac{1}{m} \left[ \sum_{i=1}^m \sum_{k=1}^K y_k^{(i)} log(h_k^{(i)}) + (1 - y_k^{(i)}) log(1 - h_k^{(i)}) \right] + \frac{\lambda}{2m} \sum_{l=1}^{L-1} \sum_{i=1}^{s_l} \sum_{j=1}^{s_{l+1}} (\Theta_{ji}^{(l)})^2<br />
+$$</p>
+<p>其中 $h_k^{(i)} = {h_\Theta(x^{(i)})}_k$ 是输出层的第 $k^{th}$ 个输出值。$L$ 是神经网络的层数，$s_l$ 是指第 $l$ 层的单元个数。公式的前半部分是未正则化的成本函数，后半部分是正则项，加起来就是正则化的成本公式。注意正则项部分求和时是从 $i=1$ 开始的，即我们不把偏置变量正则化。</p>
+<div class="admonition warnning">
+<p class="admonition-title">MathJax 的缺陷</p>
+<p>这个公式我写了 20 分钟。它已经复杂到我不得不把 $h_k^{(i)}$ 独立写出来了，如果全部写一个公式里，公式将无法正确显示。不服的人可以试看看。</p>
+</div>
+<p><strong>怎么理解神经网络的成本公式</strong></p>
+<p>实际上不需要记住这么复杂的公式，但可以结合逻辑回归算法的成本公式来理解神经网络的成本公式。我们知道，神经网络中间层和输出层的每个神经元，都和其前面一层的神经网络的神经元构成逻辑回归关系。这个是神经网络的定义。而逻辑回归算法的成本函数是：</p>
+<p>$$<br />
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]<br />
+$$</p>
+<p>跟神经网络成本函数对比，你会发现神经网络输出层有 K 个神经元。所以计算成本函数时，需要把输出层 K 个神经元的逻辑回归成本累加起来。</p>
+<p><strong>怎么理解正则项呢？</strong></p>
+<p>正则项有三个累加器，最前面那个是层累加器，典型地，对 3 层神经网络模型 $L=3$ ，正则项简化为：</p>
+<p>$$<br />
+reg = \frac{\lambda}{2m} \left( \sum_{i=1}^{s_1} \sum_{j=1}^{s_2} \left( \Theta_{ji}^{(1)} \right)^2 + \sum_{i=1}^{s_2} \sum_{j=1}^{s_3} \left( \Theta_{ji}^{(2)} \right)^2 \right)<br />
+$$</p>
+<h3 id="_2">向后传播算法</h3>
+<p>我们把 $\delta_j^{(l)}$ ( $\delta$ 读作 delta ) 记作神经网络中第 $l$ 层，第 $j$ 个节点的误差。针对输出层，我们有</p>
+<p>$$<br />
+\delta_j^{(L)} = a_j^{(L)} - y_j<br />
+$$</p>
+<p>按照向量化写法，我们得到</p>
+<p>$$<br />
+\delta^{(L)} = a^{(L)} - y<br />
+$$</p>
+<p>此由可见，$\delta^{(L)}$ 是和 $y$ 一样维度的向量。针对第 $L-1$ 层，我们把误差定义为</p>
+<p>$$<br />
+\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g&rsquo;(z^{(L-1)})<br />
+$$</p>
+<p>这个公式的前半部分 $ (\Theta^{(L-1)})^T \delta^{(L)}$ 样式很熟悉吧，就是线性回归算法的预测函数的样式。中间的 $.*$ 读作点乘，就是逐个元素相乘。$z^{(L-1)}=\Theta^{(L-2)} a^{(L-2)}$，$g&rsquo;(z)$ 是 Sigmoid 函数的偏微分。</p>
+<p>可以从数学上证明 $g&rsquo;(z^{(L-1)}) = a^{(L-1)} .* (1 - a^{(L-1)})$ 成立。证明过程可以参阅 <a href="http://blog.kamidox.com/computation-rules-for-derivative.html">常用的微分运算法则</a> 里关于 Sigmoid Function 偏微分的推导过程。这样我们算出输出层的误差，然后一层层往前推导，算出各层的误差，就是我们向后传播算法名字的由来。需要注意的是，不存在 $\delta^{(1)}$，因为神经网络的第 1 层是我们的输入项，不存在误差问题。</p>
+<p>从数学上可以证明，如果忽略正则项，即 $\lambda = 0$时</p>
+<p>$$<br />
+\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = a_j^{(l)} \delta_i^{(l+1)}<br />
+$$</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>计算微分项时，只需要计算 1, 2, &hellip;, l+1 层的微分项</li>
+<li>微分项 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta)$ 是个和 $\Theta^{(l)}$ 尺寸相同的矩阵</li>
+</ol>
+<p>针对训练样本 ${ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), &hellip; (x^{(m)}, y^{(m)}),}$，我们可以把向后传播算法用伪代码描述如下：</p>
+<ul>
+<li>初始化误差累加值 set $\Delta_{ij}^{(l)} = 0$, for all $l, i, j$</li>
+<li>遍历所有的训练样本 for i = 1 to m<ul>
+<li>设置输入层的激励为第 $i$ 个训练样本的输入值 set $a^{(1)} = x^{(i)}$</li>
+<li>使用向前传播算法 $a^{(l+1)} = g\left( a^{(l)} * \left( \Theta^{(l)} \right)^T \right)$，算出所有层的激励 $a^{(l)}$ for $l = 2, 3, &hellip; , L$</li>
+<li>使用输出层的激励，计算输出层的误差 $\delta^{(L)} = a^{(L)} - y^{(i)}$</li>
+<li>使用反向扩散的方法 $\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g&rsquo;(z^{(L-1)})$ 计算每一层的误差 $\delta^{(L-1)}, \delta^{(L-2)}, &hellip;, \delta^{(2)}$。</li>
+<li>累加 $(x^{(i)}, y^{(i)})$ 训练样本的误差 $\Delta_{ij}^{(l)} = \Delta_{ij}^{(l)} + a_j^{(l)} \delta_i^{(l+1)}$。</li>
+</ul>
+</li>
+<li>endfor</li>
+<li>累加的值除以 m 即得到无正则化的微分项 $\frac{\Delta_{ij}^{(l)}}{m}$</li>
+</ul>
+<p>最后一项可以用向量化的写法：</p>
+<p>$$<br />
+\Delta^{(l)} = \Delta^{(l)} + \delta^{(l+1)} \left( a^{(l)} \right)^T<br />
+$$</p>
+<p><strong>注意</strong>:<br />
+<strong>计算过程中，需要注意偏置单元。根据惯例，累加时不计算偏置单元。针对反向扩散公式 $\delta^{(L-1)} = (\Theta^{(L-1)})^T \delta^{(L)} .* g&rsquo;(z^{(L-1)})$，需要特别注意矩阵运算时的维度需要匹配。</strong></p>
+<p>加入正则项后，我们有</p>
+<p>$$<br />
+D_{ij}^{(l)} = \frac{1}{m} \Delta_{ij}^{(l)} + \frac{\lambda}{m} \Theta_{ij}^{(l)}, if j \ne 0<br />
+$$<br />
+$$<br />
+D_{ij}^{(l)} = \frac{1}{m} \Delta_{ij}^{(l)}, if j = 0<br />
+$$</p>
+<p>从数学上可以证明</p>
+<p>$$<br />
+\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta) = D_{ij}^{(l)}<br />
+$$</p>
+<p>这样我们就算出来了神经网络模型的<strong>成本函数微分项</strong>。有了成本函数和成本函数微分项，我们就可以使用线性回归或其他高级算法来计算神经网络成本函数的最小值，从而求解神经网络中各层激励的参数。</p>
+<p>在具体实现的时候，使用向量化的实现可以大幅提高算法效率。具体可以参考 <a href="http://deeplearning.stanford.edu/wiki/index.php/Neural_Network_Vectorization">Neural Network Vectorization</a>。</p>
+<h2 id="_3">实践中的向后传播算法</h2>
+<h3 id="_4">参数折叠</h3>
+<p>在线性回归或逻辑回归算法里，我们的参数是向量，我们使用的 <code>fminunc</code> 等函数也只接受向量作为参数。而神经网络算法里，参数是个向量，$\Theta^{(l)} \in R^{s_{l+1} \times s_l + 1}$。所以，在训练神经网络算法时，需要对参数进行折叠，即把矩阵转换为向量，而在使用时，可以再从向量里恢复矩阵数据。</p>
+<p>假设 Theta1 是 10x11 的矩阵，它是第一层的参数； Theta2 是 10x11 的矩阵，它是第二层的参数。可以使用下面的 matlab/octave 来转换：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ThetaVec = [Theta1(:); Theta2(:)];
+</pre></div>
+
+
+<p>在成本函数函数里，我们需要转换为矩阵进行计算：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Theta1 = reshape(ThetaVec(1:110), 10, 11);
+Theta2 = reshape(ThetaVec(111:220), 10, 11);
+</pre></div>
+
+
+<p>同理，针对成本函数的微分项，$D^{(1)} \in R^{10x11}, D^{(2)} \in R^{10x11}$，我们的成本函数返回这个微分项时，也需要把矩阵转换为向量：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">DVec = [D1(:); D2(:)]
+</pre></div>
+
+
+<h3 id="_5">微分项检验</h3>
+<p>神经网络的微分项特别复杂，有时候一些小的错误可能不会导致算法失败，这样就很难发现问题。这里介绍一个方法来验证微分项算法是否正确。我们使用的是微分的数值估算方法。</p>
+<p>$$<br />
+\frac{d}{d\theta} J(\theta) \approx \frac{J(\theta + \varepsilon) + J(\theta - \varepsilon)}{2 \varepsilon}<br />
+$$</p>
+<p>这里只要 $\varepsilon$ 足够小，则可以近似地计算出微分项的值。实际计算时，我们一般取 $\varepsilon = 0.0001$ 。这样算出来的值和微分项算出来的值应该非常近似，用这个方法我们可以验证微分项计算是否准确。<strong>需要特别注意的是，在验证完微分项计算的正确性后，数值近似计算必须关闭掉。否则会使算法效率严重降低。</strong>因为数值计算的成本是很高的。</p>
+<p><strong>编程时需要注意</strong></p>
+<p>微分项检查实际上是一种纯数学的做法。主要是检查我们使用向后传播算法 (backpropagation) 方法算出来的微分和用数值计算算出来的微分是否相同。它适用于其他算法，如线性回归或逻辑回归算法。有几点需要特别注意。</p>
+<ul>
+<li>由于计算很费时间，实际检查时，$\theta$ 可以选小一点的矩阵，比如 3 x 5，而不需要使用真正的机器学习时的 theta。因为 $\theta$ 太大不但费时间，还不利于观察。</li>
+<li>实际计算时，$\theta$ 往往是个列向量。这个时候我们需要让 $\varepsilon$ 也是一个和 $\theta$ 维度相同的向量，当检查 $\theta(i)$ 元素的偏微分项时，让 $\varepsilon$ 的的第 i 项的值为 0.0001，其他项都为 0 。这样进行矩阵来进行数值微分计算。</li>
+</ul>
+<h3 id="_6">用随机数初始化参数</h3>
+<p>在进行线性回归和逻辑回归计算时，我们把参数全部初始化为零。但这个做法在神经网络里是不可行的，如果我们把参数全部初始化为零，那么隐藏层的神经单元的激励 $a_i^{(l)}$ 将是相同的，其误差 $\delta_i^{(l)}$ 也将是相同的，即我们计算的全部是相同的特征，这样神经网络就失去了其特征的覆盖度和丰富性。</p>
+<p>所以，我们需要把神经网络的每个参数 $\Theta_{ij}^{(l)}$ 初始化为 $[-\varepsilon, \varepsilon]$ 之间的一个随机数。例如：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Theta1 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">10</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
+Theta2 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">10</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
+Theta3 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">1</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
+</pre></div>
+
+
+<p>$\varepsilon$ 应该选择小一点，这样神经网络的学习最有效率。一个经验做法是</p>
+<p>$$<br />
+\varepsilon^{(l)} = \frac{\sqrt{6}}{\sqrt{s_l} + \sqrt{s_{l+1}}}<br />
+$$</p>
+<p>$s_l, s_{l+1}$ 分别表示 $l$ 层和 $l+1$ 层的神经单元个数。即每层的参数范围根据这层的神经单元个数及下一层的神经单元个数。</p>
+<h2 id="_7">总结</h2>
+<p>使用神经网络解决问题时，需要经过两个步骤。一是设计神经网络的架构；二是训练出对应的神经网络参数。</p>
+<h3 id="_8">神经网络架构</h3>
+<p>在进行神经网络计算时，需要先进行神经网络的架构设计。架构设计时需要考虑以下三个事情：</p>
+<ol>
+<li>输入层的特征数量 (number of input unit)</li>
+<li>输出层的单元个数 (number of output unit) ，针对多类别的分类问题，可以把输出层设计成一个向量</li>
+<li>隐藏层的个数以及每个隐藏层的单元数目。一般来讲，隐藏层的个数越多越好，但会增加计算的工作量。另外，多个隐藏层的单元数目一般是相同的。</li>
+</ol>
+<h3 id="_9">训练神经网络</h3>
+<p>训练神经网络总共有六个步骤</p>
+<ul>
+<li>按照随机数对初始权重 (参数) 进行初始化</li>
+<li>实现向前传播算法，以便针对任何的输入 $x^{(i)}$ 都能算出相应的 $h_\Theta(x^{(i)})$</li>
+<li>实现神经网络成本函数 $J(\Theta)$ 来计算成本</li>
+<li>实现向后传播算法，计算成本函数针对每个参数的偏微分 $\frac{\partial}{\partial \Theta_{ij}^{(l)}} J(\Theta)$<ul>
+<li>需要遍历每个训练样本，即有个从 1 到 m 的循环</li>
+<li>针对每个训练样本 $(x^{(i)}, y^{(i)})$ 执行向前传播算法和向后传播算法，以便算出 $l$ 层的激励 (Activations) $a^{(l)}$ 和误差 $\delta^{(l)}$</li>
+<li>需要针对神经网络的每层算出*的值，这些层是 2, 3, &hellip; , L</li>
+<li>最后，在循环外，算出成本函数的偏微分</li>
+</ul>
+</li>
+<li>使用数值估计算法来验证神经网络成本函数的偏微分是否正确。验证通过后，关闭数值估计算法。</li>
+<li>使用梯度下降或其他优化过的高级算法来对成本函数 $J(\Theta)$ 进行最小化运算</li>
+</ul>
+	<hr/>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-11-29(Sunday) 23:09. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="./category/android.html">android</a></li>
+										<li><a href="./category/essay.html">essay</a></li>
+										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/ml.html">ml</a></li>
+										<li><a href="./category/python.html">python</a></li>
+										<li><a href="./category/tools.html">tools</a></li>
+										<li><a href="./category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/android.html">android</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="./theme/js/jquery.js"></script>
+		<script src="./theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
