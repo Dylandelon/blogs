@@ -114,7 +114,7 @@ $$
 由于 $y \in [0, 1]$ 的离散值，可以把两个成本函数合并起来：
 
 $$
-J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]
+J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]
 $$
 
 把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。使用梯度下降算法进行参数迭代的公式如下：
