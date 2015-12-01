@@ -1,0 +1,320 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="./theme/css/foundation.css" />
+		<link rel="stylesheet" href="./theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="./theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="./theme/img/favicon.ico">
+
+		<script src="./theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="./category/android.html">android</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/flask.html">flask</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2015/12/index.html">December 2015 (1)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="./">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>机器学习算法的性能评估</h2>
+	<h2 id="_1">机器学习算法的性能评估</h2>
+<h3 id="_2">为什么需要评估机器学习算法的性能</h3>
+<p>当我们辛苦开发出来的机器学习算法不能很好地预测新数据时，我们该怎么办呢？一般情况下，有以下几个方法：</p>
+<ol>
+<li>获取更多的训练数据</li>
+<li>减少输入的特征数量，避免出现过拟合</li>
+<li>增加有价值的特征，即重新解读并理解训练数据</li>
+<li>增加多项式特征</li>
+<li>减小正则化参数 $\lambda$</li>
+<li>增大正则化参数 $\lambda$</li>
+</ol>
+<p>如何评估机器学习算法，以便遇到问题时能知道用上面方法中的哪个方法？</p>
+<ol>
+<li>对机器学习算法的性能进行评估，接下来就要介绍机器学习算法性能评估的方法</li>
+<li>对机器学习算法进行诊断，诊断是指通过对机器学习算法进行测试，以便找出算法在哪种情况下能良好地工作，哪种情况下无法良好地工作。进而找出算法性能优化的方向和方法。</li>
+</ol>
+<h3 id="_3">预测函数模型性能评估</h3>
+<p>怎么样判断我们的预测函数模型的性能是可以接受的呢？</p>
+<p>我们可以把训练数据集分成两部分，随机选择 70% 的训练数据作为训练数据集，用来训练机器学习算法；另外 30% 作为测试数据集，用来验证训练出来的机器学习算法针对这些测试数据集的误差。<strong>一个好的机器学习算法应该是对训练数据集成本比较低，即较准确地拟合数据，同时对测试数据集误差比较小，即对未知数据有良好的预测性</strong>。</p>
+<p>如何计算测试数据集的误差呢？</p>
+<p>简单地说，就是用测试数据集和训练出来的机器学习算法参数，代入相应的成本函数里计算测试数据集的成本。</p>
+<p>针对线性回归算法，我们可以使用下面的公式计算测试数据集的误差，其中 m 是测试数据集的个数：</p>
+<p>$$<br />
+J_{test}(\theta) = \frac{1}{2m} \sum_{i=0}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2<br />
+$$</p>
+<p>针对逻辑回归算法，可以使用下面的公式计算测试数据集的误差，其中 m 是测试数据集的个数：</p>
+<p>$$<br />
+J_{test}(\theta) = -\frac{1}{m} \sum_{i=1}^m \left[ log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]<br />
+$$</p>
+<p>针对分类问题时，还可以用分类错误率来代替成本函数算法，从而更直观地观察到一个算法对测试数据集的误差情况。我们定义错误率为：</p>
+<p>$$<br />
+err(h_\theta(x), y) = \begin{cases}<br />
+    1, &amp; \text{if error classification. $h_\theta(x) \geq 0.5$, $y$ = 0 or $h_\theta(x) &lt; 0.5$, $y$ = 1} \\<br />
+    0, &amp; \text{if correct classification. $h_\theta(x) \geq 0.5$, $y$ = 1 or $h_\theta(x) &lt; 0.5$, $y$ = 0} \\<br />
+\end{cases}<br />
+$$</p>
+<p>如何直观地理解错误率？如果预测出错了 (即实际值是 1 预测为 0 ，或者实际值是 0 预测为 1) ，则成本算为 1 。如果预测正确了，成本算为 0 。</p>
+<p>测试数据集的错误率定义为：</p>
+<p>$$<br />
+Test Error = \frac{1}{m} \sum_{i=0}^m err(h_\theta(x^{(i)}), y^{(i)})<br />
+$$</p>
+<p>其中，m 为测试数据集的个数，$(x^{(i)}), y^{(i)})$ 为测试数据。直观地理解，就是针对测试数据集，其错误预测的数据的个数。</p>
+<h3 id="_4">模型选择</h3>
+<p>模型选择问题包括怎么样选择多项式来拟合数据，怎么样把数据集分成训练数据集，验证数据集，测试数据集，怎么样确定正则化参数 lambda 的值等等。</p>
+<p>以多项式模型选择为例。假设我们用一阶多项式，二阶多项式，三阶多项式 &hellip; 十阶多项式来拟合数据，多项式的阶数我们记为 d。我们把数据集分成训练数据集和测试数据集。先用训练数据集训练出机器学习算法的参数 $\theta^{(1)}, \theta^{(2)}, \theta^{(3)}, &hellip; , \theta^{(10)}$ 分别代表从一阶到十阶多项式的参数。这个时候我们再用测试数据集算出针对测试数据集的成本 $J_test(\theta)$ 看哪个模型的测试数据集成本最低，这样我们选择这个测试数据集最低的多项式来拟合我们的数据。但实际上，<strong>这是不公平的，因为我们通过测试数据集的成本来选择多项式时，我们可能选择了一个针对测试数据集成本最低的多项式，即在模型选择过程中，我们通过测试数据集拟合了多项式的项数 d。</strong></p>
+<p>为了解决这个问题，我们把数据分成三部分，随机选择 60% 的数据作为训练数据集，其成本记为 $J(\theta)$，随机选择剩下的 20% 数据作为交叉验证数据集 (Cross Validation)，其成本记为 $J_{cv}(\theta)$，剩下的 20% 作为测试数据集，其成本记为 $J_{test}(\theta)$。</p>
+<p>在模型选择时，我们使用训练数据集来训练算法参数，用交叉验证数据集来验证参数，选择交叉验证数据集的成本 $J_{cv}(\theta)$ 最小的参数来选择合适的模型多项式 d ，最后再用测试数据集来测试选择出来的模型的针对测试数据集的错误率。<strong>因为在模型选择过程中，我们使用了交叉验证数据集，所以适配模型多项式 d 的过程中，实际上是没有使用我们的测试数据集的。这样保证了使用测试数据集来计算成本时，确保我们选择出来的模型没有见过测试数据，即测试数据集没有参与模型选择的过程。</strong>这样算出来的针对测试数据集的成本是相对公平合理的。</p>
+<p>当然，在实践过程中，很多人直接把数据集分成训练数据集和测试数据集，然后通过比较测试数据集选择的成本来选择模型。</p>
+<h3 id="bias-vs-variance">方差与偏差 Bias vs. Variance</h3>
+<p>假定 $J_{train}(\theta)$ 表示训练误差；$J_{cv}(\theta)$ 表示交叉验证误差；那么高方差意味着 $J_{train}(\theta)$ 很大，$J_{cv}(\theta)$ 也很大，这时算法是<strong>欠拟合</strong>的。高偏差定义为 $J_{train}(\theta)$ 很小，但 $J_{cv}(\theta)$ 很大，这时算法是<strong>过拟合</strong>的。</p>
+<h3 id="_5">正则化与方差及偏差的关系</h3>
+<p>当 lambda 为零时，容易产生过拟合，即 $J_{train}(\theta)$ 很小，但 $J_{cv}(\theta)$ 很大，这个就是高偏差的定义。而当 lambda 太大时，$J_{train}(\theta)$ 很大，$J_{cv}(\theta)$ 也很大，此时会产生高方差。</p>
+<p>可以把数据集的成本作为纵坐标，lambda 作为横坐标，把 $J_{train}(\theta)$ 和 $J_{cv}(\theta)$ 以及 lambda 画在一个二维坐标轴上，这样我们可以明显地看到 $J_{train}(\theta)$ 和 $J_{cv}(\theta)$ 随着 lambda 的变化规则，从而编程自动找出最合适的 lambda 值。</p>
+<h3 id="_6">学习曲线</h3>
+<p>我们可以把 $J_{train}(\theta)$ 和 $J_{cv}(\theta)$ 作为纵坐标，画出与训练数据集 m 的大小的关系。</p>
+<p>我们可以观察到当高偏差 (High Bias, Under Fitting) 时，随着训练数据集的增加，$J_{cv}(\theta)$ 不会明显地下降，且 $J_{train}(\theta)$ 增加很快，且最终<strong>$J_{train}(\theta)$ 和 $J_{cv}(\theta)$ 的值非常接近，且两个值都比较大</strong>。这个就是过拟合的表现。从这个关系也可以看出来，<strong>当发生高偏差时，过多的训练数据样例不会对算法性能有较大的改善</strong>。</p>
+<p><img alt="contacts_structure" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_high_bias.png" /></p>
+<p>当高方差产生时 (High Variance, Over Fitting)，比如我们用 100 阶的多项式来拟合数据。随着训练数据集 m 的增加，$J_{train}(\theta)$ 的增加比较缓慢，且值比较小。而 $J_{train}(\theta)$ 刚开始时很大，随着训练数据集 m 的增加，它会开始缓慢下降，但其值还是比较大。最终 <strong>$J_{train}(\theta)$ 和 $J_{cv}(\theta)$ 的值相差比较大。</strong>当发生高方差时，更多的训练数据样例会对算法性能有较大的改善，因为最终两条线会越来越接近，达到我们想要的效果**。</p>
+<p><img alt="contacts_structure" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_high_variance.png" /></p>
+<p>当需要改进学习算法时，可以画出学习曲线，以便判断算法是处在高偏差还是高方差问题。</p>
+<h3 id="_7">决定下一步行动</h3>
+<p>回到本周开始的地方，我们可以总结那些行动可以解决哪些算法问题。</p>
+<ol>
+<li>获取更多的训练数据 -&gt; 解决高方差问题 (High Variance, Over Fitting)</li>
+<li>减少输入的特征数量，避免出现过拟合 -&gt; 解决高方差问题</li>
+<li>增加有价值的特征，即重新解读并理解训练数据 -&gt; 解决高偏差问题 (High Bias, Under Fitting)</li>
+<li>增加多项式特征 -&gt; 解决高偏差问题 (High Bias, Under Fitting)</li>
+<li>减小正则化参数 lambda -&gt; 解决高偏差问题 (High Bias, Under Fitting)</li>
+<li>增大正则化参数 lambda -&gt; 解决高方偏差问题 (High Variance, Over Fitting)</li>
+</ol>
+<h3 id="_8">神经网络的过拟合</h3>
+<p>针对神经网络时，我们可以设计两套方案。第一套方案是使用小型的神经网络，即只有一个隐藏层，隐藏层的神经单元个数也比较少。第二套是使用大型的神经网络，可以有多个隐藏层，每个隐藏层有多个神经单元。</p>
+<p>一般来讲，方案一可能会导致高偏差，即欠拟合，但计算成本很低。而方案二可能会导致过拟合，且计算成本很高。针对欠拟合的情况，我们可以通过调整正则项参数 lambda 来解决。一般来讲，针对一个实际问题，选择一个大一点的神经网络，通过 lambda 纠正过拟合现象，这样的神经网络架构会比小型神经网络性能要好。</p>
+<p>另外一个问题，多个隐藏层好还是一个隐藏层好呢？针对不同的实际问题结论是不一样的。一个通用的方法是在不同隐藏层个数的神经网络里进行比较，通过计算交叉验证数据集的成本 $J_{cv}(\theta)$ 来判断哪个网络更适合我们的实际问题。</p>
+	<hr/>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-12-01(Tuesday) 22:48. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="./category/android.html">android</a></li>
+										<li><a href="./category/essay.html">essay</a></li>
+										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/ml.html">ml</a></li>
+										<li><a href="./category/python.html">python</a></li>
+										<li><a href="./category/tools.html">tools</a></li>
+										<li><a href="./category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2015/12/index.html">December 2015 (1)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="./theme/js/jquery.js"></script>
+		<script src="./theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
