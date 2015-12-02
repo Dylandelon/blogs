@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-12-02T23:08:00+08:00</updated><entry><title>机器学习系统的设计及性能评估</title><link href="http://blog.kamidox.com/evaluating-2.html" rel="alternate"></link><updated>2015-12-02T23:08:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-12-02:evaluating-2.html</id><summary type="html">&lt;h2 id="_1"&gt;构建垃圾邮件过滤系统&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-12-02T23:08:00+08:00</updated><entry><title>机器学习系统的设计与调优</title><link href="http://blog.kamidox.com/evaluating-2.html" rel="alternate"></link><updated>2015-12-02T23:08:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-12-02:evaluating-2.html</id><summary type="html">&lt;h2 id="_1"&gt;构建垃圾邮件过滤系统&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;特征选择&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;在实践中，可以遍历所有的训练数据集，即所有的垃圾邮件和所有的非垃圾邮件，找出出现频率最高的 10,000 - 50,000 个单词作为特征，假设特征数量记为 n。这样&lt;strong&gt;一封邮件就可以用一个 n 维向量来表示&lt;/strong&gt;，即 n 个特征单词是否出现在邮件里，如果出现记为 1 不出现记为 0 。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;构建步骤&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;收集尽量多的数据，如 [honeypot][15] 项目&lt;/li&gt;
+&lt;li&gt;收集尽量多的数据，如 &lt;a href="http://www.projecthoneypot.org"&gt;honeypot&lt;/a&gt; 项目&lt;/li&gt;
 &lt;li&gt;从邮件路由信息中提取出有效的特征来区分垃圾邮件，路由信息放在邮件头部&lt;/li&gt;
 &lt;li&gt;从邮件的内容中提取复杂特征&lt;/li&gt;
 &lt;li&gt;开发一套算法来检查拼写错误。因为很多算法从邮件内容中通过关键字为特征来区分垃圾邮件，垃圾邮件系统为了跳过这个检查，故意把一些敏感词拼错，这样规避垃圾邮件检查机制&lt;/li&gt;
