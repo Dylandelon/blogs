@@ -4,7 +4,7 @@ Modified: 2015-12-03 22:04
 Slug: svm
 Tags: machine-learning
 Authors: Joey Huang
-Summary: 本文以设计一个垃圾邮件过滤系统为例，谈谈如何设计一个机器学习系统。同时介绍查准率，召回率以及 F1Score 来评价算法的性能。
+Summary: 支持向量机算法 SVM 是 Support Vector Machine 的缩写，它是工业和学术界都有广泛应用的强大的算法。
 
 支持向量机算法 SVM 是 Support Vector Machine 的缩写，它是工业和学术界都有广泛应用的强大的算法。
 
