@@ -1,7 +1,7 @@
 Title: 支持向量机 SVM 算法
 Date: 2015-12-03 22:04
 Modified: 2015-12-03 22:04
-Slug: evaluating-2
+Slug: svm
 Tags: machine-learning
 Authors: Joey Huang
 Summary: 本文以设计一个垃圾邮件过滤系统为例，谈谈如何设计一个机器学习系统。同时介绍查准率，召回率以及 F1Score 来评价算法的性能。
