@@ -160,7 +160,7 @@ $$</p>
 <p>$$<br />
 J(\theta) = C \left[ \sum_{i=1}^m y^{(i)} cost_1(\theta^T x^{(i)}) + (1 - y^{(i)}) cost_0(\theta^T x^{(i)}) \right] + \frac{1}{2} \sum_{j=1}^n \theta_j^2<br />
 $$</p>
-<p>这就是用在支持向量机算法里的成本函数。这里的参数 C 越大，正则项的比重就越小，就容易造成过拟合。反之，如果 C 越小，正则项的比重就越大，就容易千万欠拟合。</p>
+<p>这就是用在支持向量机算法里的成本函数。这里的参数 C 越大，正则项的比重就越小，就容易造成过拟合。反之，如果 C 越小，正则项的比重就越大，就容易造成欠拟合。</p>
 <h3 id="_5">支持向量机的预测函数</h3>
 <p>我们定义支持向量机的预测函数如下：</p>
 <p>$$<br />
@@ -207,7 +207,7 @@ $$</p>
 <p><img alt="theta and x inner product" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_svm_inner_product_xt.png" /></p>
 <p>而我们的算法求解目标是使 $J(\theta) = \frac{1}{2} \| \theta \|^2$ 最小，所以 SVM 算法的求解目标就是要让 p 尽可能最大。即使所有的训练样例点 $x^{i}$ 到参数向量 $\theta$ 的投影长度最大。在几何上，<strong>决策边界和参数 $\theta$ 是正交的</strong>。如下图所示：</p>
 <p><img alt="svm decision boundary" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_svm_db_3.png" /></p>
-<p>绿色线为决策边界，蓝色线为 $\theta$ 所代表的向量。那么 <strong>SVM 的求解目标就是让各个训练样例的点 $x^{i}$ 到 $\theta$ 上的投影长度最大</strong>。上图中，我们可以试着换一个决策边界，试着画出训练样例到这个新的决策边界所决定的参数 $\theta$ 的投影长度，即可理解为什么 SVM 可以让决策边界得到最大的间距。</p>
+<p>绿色线为决策边界，绿色线为 $\theta$ 所代表的向量。那么 <strong>SVM 的求解目标就是让各个训练样例的点 $x^{i}$ 到 $\theta$ 上的投影长度最大</strong>。上图中，我们可以试着换一个决策边界，试着画出训练样例到这个新的决策边界所决定的参数 $\theta$ 的投影长度，即可理解为什么 SVM 可以让决策边界得到最大的间距。</p>
 	<hr/>
 	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-12-03(Thursday) 22:04. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
@@ -258,23 +258,23 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
 										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
 										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-3"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-3"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/sublime.html">sublime</a></li>
 										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
 										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
 								</ul>
 							</div>
 
