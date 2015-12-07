@@ -43,9 +43,9 @@ f_i &= similarity(x, l^{(i)}) \\\\
 \end{align}
 $$
 
-![landmark](https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_sk_landmark.png)
+如下图所示，当我们选择三个标记点 $l^{(1)}, l^{(2)}, l^{(3)}$ 时，针对一个只有两个特征的训练样例 $(x_1, x_2)$，通过我们的相似性函数映射后，我们将得到 $f_1, f_2, f_3$ 三个新特征。
 
-如上图所示，当我们选择三个标记点 $l^{(1)}, l^{(2)}, l^{(3)}$ 时，针对一个只有两个特征的训练样例 $(x_1, x_2)$，通过我们的相似性函数映射后，我们将得到 $f_1, f_2, f_3$ 三个新特征。
+![landmark](https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_sk_landmark.png)
 
 **相似性函数的物理意义**
 
