@@ -70,9 +70,9 @@
 
 						<li><label>Categories</label></li>
 							<li ><a href="./category/android.html">android</a></li>
-							<li class="active"><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/ml.html">ml</a></li>
+							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/python.html">python</a></li>
 							<li ><a href="./category/tools.html">tools</a></li>
 							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
@@ -125,33 +125,48 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>学习开源代码的三个层次</h2>
-	<p>网络上有很多优秀的开源代码，学习这些代码是提高自己编程水平的最佳途径。我们在实际项目开发的过程中也会使用很多优秀的开源代码来加快开发速度，避免重复造轮子。优秀开源代码至少可以给我们提供三个层次的学习资料。</p>
-<p><strong>第一层次：使用开源代码</strong><br />
-这一步相对简单，也是大部分人在项目开发过程中最常用的方式。优秀的开源代码一般文档齐全，示例代码丰富。通过简单地学习这些资料，可以较容易地掌握开源代码的用法。</p>
-<p><strong>第二层次：阅读开源代码，理解其实现原理</strong><br />
-做到这一步的人就比较少了。这一步需要花很多时间，而且还需要一些必要的基础知识储备。但如果能达到这个层次，能掌握的技能也会比较多，不单单是开源代码本身的核心逻辑及其架构设计，还能掌握软件开发过程中的一些最佳实践法则。比如单元测试，利用<a href="https://travis-ci.org">travis</a>进行自动编译测试等等。</p>
-<p><strong>第三个层次：吸收并应用开源代码的设计理念到自己的软件开发过程中去</strong><br />
-看得懂和懂得灵活应用是两个层次的东西。从看得懂到会灵活应用中间还需要大量的时间去思考，去实践。面试过不少人，讲起来头头是道，真要让他写出来时，却卡壳了。要么类名方法名忘记了（IDE惹的祸），要么写出来的完全变味。要真正掌握一个技能，除了多看，还要多写，更要多总结，多思考。大道至简，总结多了，无非都是那些模式。面向测试的编程，面向对象编程，设计模式，函数式编程，宏等等这些抽象的概念，通过一些优秀的开源代码去总结思考，才能真正地理解这些抽象概念，最终把这些设计理念应用到自己的代码中去。</p>
-<p><strong>今日推荐</strong></p>
-<p>今天推荐一个Android开源库<a href="https://github.com/greenrobot/EventBus">EventBus</a>。</p>
-<blockquote>
-<p>EventBus is publish/subscribe event bus optimized for Android.</p>
-</blockquote>
+	<h2>K 均值算法</h2>
+	<h2 id="clustering">聚类问题 Clustering</h2>
+<p>针对监督式学习，输入数据为 (x, y) ，目标是找出分类边界，即对新的数据进行分类。而无监督式学习只给出一组数据集 ${x_1, x_2, &hellip; , x_m}$ ，目标是去找出这组数据的模式特征，比如哪些数据是一种类型的，哪些数据是另外一种类型的。典型的无监督式学习包括市场细分，通过分析用户数据，来把一个产品的市场进行细分，找出细分人群。另外一个是社交网络分析，分析社交网络中的参与人员的不同特点，根据特点区分出不同群体。这些都是无监督式学习里的聚类 (Clustering) 问题。</p>
+<h2 id="k">K 均值算法</h2>
+<p>K 均值算法算法就是一种解决聚类问题的算法，它包含两个步骤：</p>
+<ul>
+<li>给聚类中心分配点：计算所有的训练样例，把他分配到距离某个聚类中心最短的的那聚类里。</li>
+<li>移动聚类中心：新的聚类中心移动到这个聚类所有的点的平均值处。</li>
+</ul>
+<p>一直重复做上面的动作，直到聚类中心不再移动为止。这个时候我们就探索出了数据集的结构了。可以通过一个动画来直观地看一下 K 均值算法聚类的过程：</p>
+<p><img alt="k-means animation" src="http://simplystatistics.org/wp-content/uploads/2014/02/kmeans.gif" /></p>
+<p>用数学的方法来描述 K 均值算法如下：</p>
+<p>算法有两个输入信息。一是 K 表示选取的聚类个数；二是训练数据集 ${x^{(1)}, x^{(2)}, &hellip; , x^{(m)}}$。</p>
 <ol>
-<li>它和Android的广播通信方式有什么区别？</li>
-<li>它和另外一个开源库<a href="https://github.com/square/otto">Otto</a>有什么区别？</li>
+<li>随机选择 K 个聚类中心 $u_1, u_2, &hellip; , u_k$。</li>
+<li>从 1 - m 遍历所有的数据集，计算 $x^{(i)}$ 分别到 $u_1, u_2, &hellip; , u_k$ 的距离，记录距离最短的聚类中心点。然后把 $x^{(i)}$ 这个点分配给这个聚类。令 $c^{(i)} = j$ 其中 $u_j$ 就是与 $x^{(i)}$ 距离最短的聚类中心点。计算距离时，一般使用 $\| x^{(i)} - u_j \|^2$ 来计算。</li>
+<li>从 1 - K 遍历所有的聚类中心，移动聚类中心的新位置到这个聚类的均值处。即 $u_j = \frac{1}{c} \left( \sum_{d=1}^c \right)$ ，其中 c 表示分配给这个聚类的训练样例点的个数。如果特殊情况下，没有点分配给这个聚类中心，那么说明这个聚类中心就不应该存在，直接删除掉这个聚类中心，最后聚类的个数变成 K - 1 个。</li>
+<li>重复步骤 2 ，直到聚类中心不再移动为止。</li>
 </ol>
-<p>答案都在其官方文档里。关于这个库，还有两个很好的学习资源：</p>
+<h3 id="k_1">K 均值算法成本函数</h3>
+<p>$$<br />
+J = \frac{1}{m} \sum_{i=1}^m \| x^{(i)} - u_{c^{(i)}} \|^2<br />
+$$</p>
+<p>其中， $c^{(i)}$ 是训练样例 $x^{(i)}$ 分配的聚类序号；$u_{c^{(i)}}$ 是 $x^{(i)}$ 所属的聚类的中心点。K 均值算法的成本函数的物理意义，就是<strong>训练样例到其所属的聚类中心点的距离的平均值</strong>。</p>
+<h3 id="_1">随机初始化聚类中心点</h3>
+<p>假设 K 是聚类的个数，m 是训练样本的个数，那么必定有 $K &lt; m$。在随机初始化时，随机从 m 个训练数据集里选择 K 个样本来作为聚类中心点。这是正式推荐的随机初始化聚类中心的做法。</p>
+<p>在实际解决问题时，最终的聚类结果会和随机初始化的聚类中心点有关。即不同的随机初始化的聚类中心点可能得到不同的最终聚类结果。因为成本函数可能会收敛在一个局部最优解，而不是全局最优解上。一个解决方法是多做几次随机初始化的动作，然后训练出不同的取类中心点以及聚类节点分配方案。然后用这些值算出成本函数，最终选择那个成本最小的。</p>
+<p>比如，假设我们做 100 次运算，步骤如下：</p>
 <ol>
-<li><a href="https://github.com/android-cn/android-open-project-demo/tree/master/event-bus-demo">event-bus-demo</a><br />
-   这是一个DEMO程序。</li>
-<li><a href="https://github.com/android-cn/android-open-project-analysis/tree/master/event-bus">EventBus 源码解析</a><br />
-   这个分析了其原理和实现。</li>
+<li>随机选择 K 个聚类中心点</li>
+<li>运行 K 均值算法，算出 $c^{(1)}, c^{(2)}, &hellip; , c^{(m)}$ 和 $u_1, u_2, &hellip; , u_k$</li>
+<li>使用 $c^{(1)}, c^{(2)}, &hellip; , c^{(m)}$ 和 $u_1, u_2, &hellip; , u_k$ 算出最终的成本值</li>
+<li>记录最小的成本值，然后跳回步骤 1，直到达到最大运算次数</li>
 </ol>
-<p>网络上的那些XXX源码解析，XXX源码情景分析之类的文章质量还是比较高的，但这些文档不能代替对源码的阅读。这些文档的作用是帮助初学者更好的理解源码，降低学习成本。需要深刻理解设计精髓，还是需要通过阅读源码去深刻领会。阅读一些设计优秀的源码和青春期时阅读汪国真的蒙珑诗一样美。与其走马观花，不如花一些时间深入去学习几个开源代码，自己偿试通过阅读代码总结出其架构和设计的精髓。通过这样的训练，几个月后就会发现编程水平会有长足的进步。</p>
+<p>这样我们可以适当加大运算次数，从而求出全局最优解。</p>
+<h3 id="_2">选择聚类的个数</h3>
+<p>怎么样选择合适的聚类个数呢？实际上聚类个数和业务有紧密的关联，比如我们要对 T-Shirt 大小进行聚类分析，我们是分成 3 个尺寸好呢还是分成 5 个尺寸好？这个更多的是个业务问题而非技术问题。3 个尺寸可以给生产和销售带来便利，但客户体验可能不好。5 个尺寸客户体验好了，但可能会给生产和库存造成不便。</p>
+<p><img alt="Elbow" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_km_elbow.png" /></p>
+<p>从技术角度来讲，也是有一些方法可以来做一些判断的。我们可以把聚类个数作为横坐标，成本函数作为纵坐标，这样把成本和聚类个数的数据画出来。如上图所示。大体的趋势是随着 K 值越来越大，成本越来越低。我们找出一个拐点，即在这个拐点之前成本下降比较快，在这个拐点之后，成本下降比较慢，那么很可能这个拐点所在的 K 值就是我们要寻求的最优解。</p>
+<p>当然，这个技术方法并不总是有效，我们很可能会得到一个没有拐点的曲线，这样的话，就必须和业务逻辑结合以便选择合适的聚类个数。</p>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/essay.html">essay</a> on 2015-01-16(Friday) 23:20. Tags: <a href="./tag/thought.html">thought</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-12-08(Tuesday) 21:31. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
 
 <hr/>
