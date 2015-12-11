@@ -1,5 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/joey-huang.atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-12-08T21:31:00+08:00</updated><entry><title>K 均值算法</title><link href="http://blog.kamidox.com/k-mean.html" rel="alternate"></link><updated>2015-12-08T21:31:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-12-08:k-mean.html</id><summary type="html">&lt;h2 id="clustering"&gt;聚类问题 Clustering&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/joey-huang.atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2015-12-10T22:52:00+08:00</updated><entry><title>使用 Sublime + PlantUML 高效地画图</title><link href="http://blog.kamidox.com/sublime-plantuml.html" rel="alternate"></link><updated>2015-12-10T22:52:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-12-10:sublime-plantuml.html</id><summary type="html">&lt;h2 id="plantuml"&gt;什么是 PlantUML&lt;/h2&gt;
+&lt;p&gt;PlantUML 是一个画图脚本语言，用它可以快速地画出：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;时序图&lt;/li&gt;
+&lt;li&gt;流程图&lt;/li&gt;
+&lt;li&gt;用例图&lt;/li&gt;
+&lt;li&gt;状态图&lt;/li&gt;
+&lt;li&gt;组件图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;简单地讲，我们使用 visio 画图时需要一个一个图去画，但使用 PlantUML 只需要用文字表达出图的内容，然后就可以直接生成图片。看一个最简单的例子：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;Bob -&amp;gt; Alice : Hello, how are you
+Alice -&amp;gt; Bob : Fine, thank you, and you?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="demo" src="http://plantuml.com/plantuml/png/SyfFKj2rKt3CoKnELR1Iy4ZDoSdNKSZ8BrT8B4fLgCmlvO980TKu0PLQARXbvgNgA9Ha9EPbWwHr51BpKa0CUm00" /&gt;&lt;/p&gt;
+&lt;h2 id="_1"&gt;软件安装&lt;/h2&gt;
+&lt;p&gt;这些软件全部是开源或共享软件，不存在版权问题，可以放心使用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;安装 &lt;a href="http://www.sublimetext.com/"&gt;Sublime&lt;/a&gt;&lt;br /&gt;
+  Sublime 是个强大的可扩展的文本编辑器。进入&lt;a href="http://www.sublimetext.com/"&gt;官网&lt;/a&gt;下载对应操作系统下的版本安装即可。&lt;/li&gt;
+&lt;li&gt;安装 &lt;a href="http://graphviz.org/"&gt;graphviz&lt;/a&gt;&lt;br /&gt;
+  graphviz 是个开源的图片渲染库。安装了这个库才能在 Windows 下实现把 PlantUML 脚本转换为图片。&lt;/li&gt;
+&lt;li&gt;安装 &lt;a href="https://github.com/jvantuyl/sublime_diagram_plugin"&gt;PlantUML for Sublime&lt;/a&gt; 插件&lt;br /&gt;
+  有了这个插件后，我们就可以在 Sublime 里写 PlantUML 脚本，然后直接通过一个快捷键生成图片。安装步骤如下&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/jvantuyl/sublime_diagram_plugin/tarball/master"&gt;下载插件&lt;/a&gt;，并解压&lt;/li&gt;
+&lt;li&gt;通过 &lt;code&gt;Preferences -&amp;gt; Browse Packages ...&lt;/code&gt; 打开 sublime 的 &lt;code&gt;Packages&lt;/code&gt; 目录，解压后的插件放在 &lt;code&gt;Packages&lt;/code&gt; 目录下&lt;/li&gt;
+&lt;li&gt;重启 Sublime&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了简化使用，可以在 Sublime 里配置个快捷键。打开 &lt;code&gt;Preferences -&amp;gt; Key Binding - User&lt;/code&gt;，添加一个快捷键：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;{ &amp;quot;keys&amp;quot;: [&amp;quot;alt+d&amp;quot;], &amp;quot;command&amp;quot;: &amp;quot;display_diagrams&amp;quot;}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面的代码配置成按住 &lt;code&gt;Alt + d&lt;/code&gt; 来生成 PlantUML 图片，你可以修改成你自己喜欢的按键。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;效果检验&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最后检验一下工作安装是否正确。打开 Sublime 输入：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;Bob -&amp;gt; Alice : Hello, how are you
+Alice -&amp;gt; Bob : Fine, thank you, and you?
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;选中这些文本内容，按 Alt + d 会在当前工作目录下生成这个图片文件，同时自动弹出窗口显示图片。&lt;/p&gt;
+&lt;h2 id="plantulm"&gt;PlantULM 快速入门&lt;/h2&gt;
+&lt;h3 id="_2"&gt;时序图&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;@startuml
+
+title 时序图
+
+== 鉴权阶段 ==
+
+Alice -&amp;gt; Bob: 请求
+Bob -&amp;gt; Alice: 应答
+
+== 数据上传 ==
+
+Alice -&amp;gt; Bob: 上传数据
+note left: 这是显示在左边的备注
+
+Bob --&amp;gt; Canny: 转交数据
+... 不超过 5 秒钟 ...
+Canny --&amp;gt; Bob: 状态返回
+note right: 这是显示在右边的备注
+
+Bob -&amp;gt; Alice: 状态返回
+
+== 状态显示 ==
+
+Alice -&amp;gt; Alice: 给自己发消息
+
+@enduml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="sequence diagram" src="http://plantuml.com/plantuml/png/RO_DIiD058Ntzodk2vYTcq84zKbKeWP22fADE-iFqK89beYfzMyHj8WsbjQ9HarU9dCpUGkdCoeKihkSUyxvEE3PdcCXNJAU1NoO0vWcrcSpkZcg8qRZDpHDW5N7th9mQGNNsfij54bAaqEGzrnIlnRoBAnUGXMdYrVgZSltRlbrtn3N3sq2j-rPw5ZRdgmj1XGb5ELLdF7h4KyVHFvHNHtpsAVf23HFbgnlkEw-j7y_brdyMsCOXkpj2NOY2X-NiNhir_qxb38ekmegUjLbTD0HHSY7jvg-P-_iDk23QGF-V-v2pNoq5dHySVHVudCW_2UUJdXmJkoKEWdy0000" /&gt;&lt;/p&gt;
+&lt;p&gt;TIPS：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 &lt;code&gt;title&lt;/code&gt; 来指定标题&lt;/li&gt;
+&lt;li&gt;&amp;rsquo;-&amp;gt;&amp;rsquo; 和 &amp;lsquo;&amp;ndash;&amp;gt;&amp;rsquo; 来指示线条的形式&lt;/li&gt;
+&lt;li&gt;在每个时序后面加冒号 &lt;code&gt;:&lt;/code&gt; 来添加注释&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;note&lt;/code&gt; 来显示备注，备注可以指定显示在左边或右边&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;== xxx ==&lt;/code&gt; 来分隔时序图&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;...&lt;/code&gt; 来表示延迟省略号&lt;/li&gt;
+&lt;li&gt;节点可以给自己发送消息，方法是发送方和接收方使用同一个主体即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_3"&gt;用例图&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;@startuml
+
+left to right direction
+actor 消费者
+actor 销售员
+rectangle 买单 {
+消费者 -- (买单)
+(买单) .&amp;gt; (付款) : include
+(帮助) .&amp;gt; (买单) : extends
+(买单) -- 销售员
+}
+
+@enduml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="use case" src="http://plantuml.com/plantuml/png/oqbDAr4eoLSeoapFA558oInAJIx9pC_ZIamkoIzIUBQjuyMMdIyQMg7ybrCQdavPztJY32wGkiIyz9nKXISxDppjdQfGpGLNhA2hgw014TRaWZ4KzEo0WhjdF5kpJrF1IY4pBpcdD2MLI-FfZdLFkrP2fQ5AhHHIAqfIyrAA4Rg1HY8ih-K20000" /&gt;&lt;/p&gt;
+&lt;p&gt;TIPS：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用例图&lt;ul&gt;
+&lt;li&gt;用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的静态视图&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://baike.baidu.com/view/1281729.htm"&gt;百度百科&lt;/a&gt;上有简易的入门资料，其中用例之间的关系 (include, extends) 是关键&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;actor&lt;/code&gt; 来定义参与者&lt;/li&gt;
+&lt;li&gt;使用括号 &lt;code&gt;(xxx)&lt;/code&gt; 来表示用例，用例用椭圆形表达&lt;/li&gt;
+&lt;li&gt;使用不同的线条表达不同的关系。包括参与者与用例的关系，用例与用例的关系&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_4"&gt;流程图&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;@startuml
+
+title 流程图
+
+(*) --&amp;gt; &amp;quot;步骤1处理&amp;quot;
+--&amp;gt; &amp;quot;步骤2处理&amp;quot;
+if &amp;quot;条件1判断&amp;quot; then
+    -&amp;gt;[true] &amp;quot;条件1成立时执行的动作&amp;quot;
+    if &amp;quot;分支条件2判断&amp;quot; then
+        -&amp;gt;[no] &amp;quot;条件2不成立时执行的动作&amp;quot;
+        -&amp;gt; === 中间流程汇总点1 ===
+    else
+        --&amp;gt;[yes] === 中间流程汇总点1 ===
+    endif
+    if &amp;quot;分支条件3判断&amp;quot; then
+        --&amp;gt;[yes] &amp;quot;分支条件3成立时执行的动作&amp;quot;
+        --&amp;gt; &amp;quot;Page.onRender ()&amp;quot; as render
+        --&amp;gt; === REDIRECT_CHECK ===
+    else
+        --&amp;gt;[no] &amp;quot;分支条件3不成立时的动作&amp;quot;
+        --&amp;gt; render
+    endif
+else
+    --&amp;gt;[false] === REDIRECT_CHECK ===
+endif
+
+if &amp;quot;条件4判断&amp;quot; then
+    -&amp;gt;[yes] &amp;quot;条件4成立时执行的动作&amp;quot;
+    --&amp;gt; &amp;quot;流程最后结点&amp;quot;
+else
+endif
+--&amp;gt; &amp;quot;流程最后结点&amp;quot;
+--&amp;gt;(*)
+
+@enduml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="activity diagram" src="http://plantuml.com/plantuml/png/uoh9BCb9LNYsjV7vYkwdi_TnSMbeQIhewjefA3rRk_JbgYM6JvUqF9_GfiI596O44yjC0mhDNVXazpR3fnrBdarRgwHGaf6QnwK01BfsqIL5fQcnS1NFEYOyNztzRFgsPvtBNopiUJwhvMdNYYTxvoY1bOECUjhHzcpAUeXo8mm3eORcvSEDD7goenU_gH0z2hQsjWfFTgnzENqBnAFFDhO_QzZzl6cd8KWAh38rfpWLeGLeJsLgSInH6lDICjEmUi4OknTWPgEg9S8Ve0W8I4nFrSlF2mBQcbgaeA6ff91Oh504vg4e13ayoDN5CyZLEIJUsSFLsHktJy4XYk8Ov735uH8aEo4X03SMP6HQ8f0NYyiL40r8gSS4M-g1119K0VxWWQHDI0pDQNWweU_vxid0I5A2E0fY7KurG0bWckS20000" /&gt;&lt;/p&gt;
+&lt;p&gt;上面的流程图写的时候还是挺直观的，但画出来的图片渲染效果不好，对逻辑的显示不清楚。由于这个原因 PlantUML 实现了另外版本的流程图脚本。&lt;/p&gt;
+&lt;p&gt;下面是 PlantUML 支持的新版本的流程图脚本，从使用角度来讲，更直观，画出来的图片也更漂亮，推荐使用。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;@startuml
+
+start
+:&amp;quot;步骤1处理&amp;quot;;
+:&amp;quot;步骤2处理&amp;quot;;
+if (&amp;quot;条件1判断&amp;quot;) then (true)
+    :条件1成立时执行的动作;
+    if (&amp;quot;分支条件2判断&amp;quot;) then (no)
+        :&amp;quot;条件2不成立时执行的动作&amp;quot;;
+    else
+        if (&amp;quot;条件3判断&amp;quot;) then (yes)
+            :&amp;quot;条件3成立时的动作&amp;quot;;
+        else (no)
+            :&amp;quot;条件3不成立时的动作&amp;quot;;
+        endif
+    endif
+    :&amp;quot;顺序步骤3处理&amp;quot;;
+endif
+
+if (&amp;quot;条件4判断&amp;quot;) then (yes)
+:&amp;quot;条件4成立的动作&amp;quot;;
+else
+    if (&amp;quot;条件5判断&amp;quot;) then (yes)
+        :&amp;quot;条件5成立时的动作&amp;quot;;
+    else (no)
+        :&amp;quot;条件5不成立时的动作&amp;quot;;
+    endif
+endif
+stop
+@enduml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="active diagram 2" src="http://plantuml.com/plantuml/png/Aov9B2hXib9wjdRforLB39ykQNa-eKt96YvY11V9J5FGK7esT-6JtTiCdtOiUJPjhPAcGab6Qfw2HabHQQecbm8GM44LFEkOy7nrzxFfsvvrBd-niEVvh9QdNIkUx9rZ3LO5DkffHzkpAUiXwetG3CpBXnW7DX9ggT6J7RsuZ5M2c9kQKvmAruVaNcCquojJYn7c8zjX3BS0tMYOyQXkGz6Bx3wislDICjEuK5bMIYyNxdgwgnyIsCRmm8QeG0vp4sn-WDbj0h4OsLPuM22POOel761ccUBq1AR_uNhm-HtY5mXPN99V0000" /&gt;&lt;/p&gt;
+&lt;p&gt;TIPS：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 &lt;code&gt;start&lt;/code&gt; 来表示流程开始，使用 &lt;code&gt;stop&lt;/code&gt; 来表示流程结束&lt;/li&gt;
+&lt;li&gt;顺序流程使用冒号和分号 &lt;code&gt;:xxx;&lt;/code&gt; 来表示&lt;/li&gt;
+&lt;li&gt;条件语句使用 &lt;code&gt;if ("condition 1") then (true/yes/false/no)&lt;/code&gt; 来表示&lt;/li&gt;
+&lt;li&gt;条件语句可以嵌套&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_5"&gt;组件图&lt;/h3&gt;
+&lt;p&gt;我们经常使用组件图来画部署视图，或者用来画系统的拓扑结构图。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;@startuml
+
+package &amp;quot;组件1&amp;quot; {
+    [&amp;quot;组件1.1&amp;quot;] - [&amp;quot;组件1.2&amp;quot;]
+    [&amp;quot;组件1.2&amp;quot;] -&amp;gt; [&amp;quot;组件2.1&amp;quot;]
+}
+
+node &amp;quot;组件2&amp;quot; {
+    [&amp;quot;组件2.1&amp;quot;] - [&amp;quot;组件2.2&amp;quot;]
+    [&amp;quot;组件2.2&amp;quot;] --&amp;gt; [负载均衡服务器]
+}
+
+cloud {
+    [负载均衡服务器] -&amp;gt; [逻辑服务器1]
+    [负载均衡服务器] -&amp;gt; [逻辑服务器2]
+    [负载均衡服务器] -&amp;gt; [逻辑服务器3]
+}
+
+database &amp;quot;MySql&amp;quot; {
+    folder &amp;quot;This is my folder&amp;quot; {
+        [Folder 3]
+    }
+
+    frame &amp;quot;Foo&amp;quot; {
+        [Frame 4]
+    }
+}
+
+[逻辑服务器1] --&amp;gt; [Folder 3]
+[逻辑服务器2] --&amp;gt; [Frame 4]
+[逻辑服务器3] --&amp;gt; [Frame 4]
+
+@enduml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="component diagram" src="http://plantuml.com/plantuml/png/uof8JCvEJ4zLK7g-k-N9xcs6IWhLN0f040qJq3DKYbNGHU8RASMYgJ02gR232nY1j73LSd7bvQV03JP2DzW8pM0Z38ED80Q3J7wnPVwBlNkVpcr_iN3XipczJxiMFfsv0cn7Sav-QGhCQEpAm6vxsR3xnRw9S473M59r696imnZim9J4aiIan69WGFXM1XVcm88XBJyd9RL8GIaa8xDO0OXoAw52C0LWozmWgemXTWDD0sijIim56kUMdu-g5Yni0bCAL8pfQKXe8ap5z2HK1SmiJ3-XAG00" /&gt;&lt;/p&gt;
+&lt;p&gt;TIPS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用方括号 &lt;code&gt;[xxx]&lt;/code&gt; 来表示组件&lt;/li&gt;
+&lt;li&gt;可以把几个组件合并成一个包，可以使用的关键字为 &lt;code&gt;package, node, folder, frame, cloud, database&lt;/code&gt;。不同的关键字图形不一样。&lt;/li&gt;
+&lt;li&gt;可以在包内部用不同的箭头表达同一个包的组件之间的关系&lt;/li&gt;
+&lt;li&gt;可以在包内部直接表达到另外一个包内部的组件的交互关系&lt;/li&gt;
+&lt;li&gt;可以在流程图外部直接表达包之间或包的组件之间的交互关系&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_6"&gt;状态图&lt;/h3&gt;
+&lt;p&gt;我们一般使用状态图来画状态机。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;@startuml
+
+scale 640 width
+
+[*] --&amp;gt; NotShooting
+
+state NotShooting {
+    [*] --&amp;gt; Idle
+    Idle --&amp;gt; Processing: SignalEvent
+    Processing --&amp;gt; Idle: Finish
+    Idle --&amp;gt; Configuring : EvConfig
+    Configuring --&amp;gt; Idle : EvConfig
+}
+
+state Configuring {
+    [*] --&amp;gt; NewValueSelection
+    NewValueSelection --&amp;gt; NewValuePreview : EvNewValue
+    NewValuePreview --&amp;gt; NewValueSelection : EvNewValueRejected
+    NewValuePreview --&amp;gt; NewValueSelection : EvNewValueSaved
+    state NewValuePreview {
+        State1 -&amp;gt; State2
+    }
+}
+
+@enduml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="State Diagram" src="http://plantuml.com/plantuml/png/SoWkIImgAStDuIfEJin9LJ0sDL0epqmfoU2ArefLqDMrK_3BBmdEoCyloSnBvm8gBab55b6eXglpJCb9vG8HO9vpVbvQPdff4KYDbO9h6OJFXImCquGiNmkr0baTmWg_rFAmn9pIrE3KdDJaaipyF2uC4HHr0KMfPPcfvM0BO69Sw99O3KRH4fIQ1HHDJI53Qt1Y6L0VDDZGT5Tp1OF43HM0fe1PHa3lrt8vfEQb0EC30000" /&gt;&lt;/p&gt;
+&lt;p&gt;TIPS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 &lt;code&gt;[*]&lt;/code&gt; 来表示状态的起点&lt;/li&gt;
+&lt;li&gt;使用 state 来定义子状态图&lt;/li&gt;
+&lt;li&gt;状态图可以嵌套&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;scale&lt;/code&gt; 命令来指定生成的图片的尺寸&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_7"&gt;总结&lt;/h2&gt;
+&lt;p&gt;不需要去记这些标记，在需要的时候去使用它，通过不断地使用来熟悉不同的图的语法。可以下载 &lt;a href="http://plantuml.com/PlantUML_Language_Reference_Guide.pdf"&gt;PlanUML 官方文档&lt;/a&gt; 作为参考，遇到问题的时候翻一翻，这样很快就可以学会使用 PlantUML 高效地画图。&lt;/p&gt;</summary><category term="sublime"></category><category term="uml"></category></entry><entry><title>K 均值算法</title><link href="http://blog.kamidox.com/k-mean.html" rel="alternate"></link><updated>2015-12-08T21:31:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2015-12-08:k-mean.html</id><summary type="html">&lt;h2 id="clustering"&gt;聚类问题 Clustering&lt;/h2&gt;
 &lt;p&gt;针对监督式学习，输入数据为 (x, y) ，目标是找出分类边界，即对新的数据进行分类。而无监督式学习只给出一组数据集 ${x_1, x_2, &amp;hellip; , x_m}$ ，目标是去找出这组数据的模式特征，比如哪些数据是一种类型的，哪些数据是另外一种类型的。典型的无监督式学习包括市场细分，通过分析用户数据，来把一个产品的市场进行细分，找出细分人群。另外一个是社交网络分析，分析社交网络中的参与人员的不同特点，根据特点区分出不同群体。这些都是无监督式学习里的聚类 (Clustering) 问题。&lt;/p&gt;
 &lt;h2 id="k"&gt;K 均值算法&lt;/h2&gt;
 &lt;p&gt;K 均值算法算法就是一种解决聚类问题的算法，它包含两个步骤：&lt;/p&gt;
