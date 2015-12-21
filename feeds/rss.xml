@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 19 Dec 2015 22:36:00 +0800</lastBuildDate><item><title>基于协同过滤算法的推荐系统</title><link>http://blog.kamidox.com/recommend-system.html</link><description>&lt;h2 id="_1"&gt;推荐系统的描述&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 15 Dec 2021 23:36:00 +0800</lastBuildDate><item><title>我的时间去哪儿了</title><link>http://blog.kamidox.com/time-event-log.html</link><description>&lt;p&gt;我的时间去哪儿了？李笑来在他的《把时间当朋友》里提到时间事件日志的方法，可以帮助发现我们的时间去了哪儿。本文介绍一种更简洁更直观的方法，来发现&lt;code&gt;我们的时间去了哪儿&lt;/code&gt;这个问题的答案。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;时间就是生命。&amp;mdash;鲁迅&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;理解并践行这句话比我们想象得要难得多。今天我准备用数据来回答这个问题：我的时间去了哪儿？&lt;/p&gt;
+&lt;h2 id="_1"&gt;效果预览&lt;/h2&gt;
+&lt;h3 id="_2"&gt;时间总览&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="时间总览" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/dida365_pie_chart.png" /&gt;&lt;/p&gt;
+&lt;p&gt;从这个图表可以清晰地看到 dida365 里面各个顶层类别事件的时间分配。看看那个&lt;strong&gt;时间黑洞&lt;/strong&gt;，那些就是被偷走的时间。&lt;/p&gt;
+&lt;h3 id="_3"&gt;工作负荷&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="工作负荷" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/dida365_workload_chart.png" /&gt;&lt;/p&gt;
+&lt;p&gt;从时间维度查看我们的工作负荷。一目了然。&lt;/p&gt;
+&lt;h3 id="_4"&gt;精力分配&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="工作负荷" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/dida365_pie_chart_sec.png" /&gt;&lt;/p&gt;
+&lt;p&gt;顶层事件类型下可以有事件子类别，从精力分配图可以清晰地看出来我们的时间花在哪些事情上了。&lt;/p&gt;
+&lt;h3 id="_5"&gt;持续行动&lt;/h3&gt;
+&lt;p&gt;&lt;img alt="持续行动" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/dida365_pa_chart.png" /&gt;&lt;/p&gt;
+&lt;p&gt;选定我们感兴趣的事件类型，我们可以查看一定周期内，我们的精力投入情况。监督自己持续行动。&lt;/p&gt;
+&lt;h2 id="_6"&gt;需要的工具&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;GTD 工具&lt;br /&gt;
+&lt;a href="https://www.dida365.com"&gt;dida365.com&lt;/a&gt;是个良心产品。如果你不了解 GTD 方法论，可以在 &lt;a href="http://baike.baidu.com/view/406078.htm"&gt;百度百科&lt;/a&gt; 上了解一下。&lt;/li&gt;
+&lt;li&gt;统计脚本&lt;br /&gt;
+  使用 pandas 实现的一个 &lt;a href="https://github.com/kamidox/utils"&gt;Python 统计脚本&lt;/a&gt;。目前没有做成 Web 产品，对非程序员可能会有点门槛。目前的脚本只适配 dida365 的数据格式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_7"&gt;使用说明&lt;/h2&gt;
+&lt;h3 id="dida365"&gt;步骤一：利用 dida365 记录时间事件日志&lt;/h3&gt;
+&lt;p&gt;像平常一样在 dida365 上完成 GTD 工作，在记录事件时注意以下规则，用来增加子类别和记录事件的时间。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dida365 上的&lt;code&gt;清单&lt;/code&gt;就是我们事件的主类别，可以建立多个清单&lt;/li&gt;
+&lt;li&gt;每个清单的事件标题按照 &lt;code&gt;[子类别] 事件标题 [时长]&lt;/code&gt; 这样的格式来记录。比如&lt;code&gt;[写作] 博客《时间事件日志》[1.2h]&lt;/code&gt;。时长支持 &lt;code&gt;h&lt;/code&gt; 和 &lt;code&gt;m&lt;/code&gt; ，分别表示小时和分钟&lt;/li&gt;
+&lt;li&gt;给任务分配预期完成时间。统计脚本在统计一个工作在什么时候完成的，是根据预期完成时间来算的，而不是根据点击完成复选框的时间来算的。理由是点击完成的时间是不能变的，比如某个事情忘了记录，过了两天才记录，这个时候点完成，则完成时间是点击完成的那个时间点，而预期完成时间我们可以设置在两天前，这样这项工作就会记录在两天前。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="_8"&gt;步骤二：导出数据&lt;/h3&gt;
+&lt;p&gt;进入 dida365 的用户&lt;code&gt;设置&lt;/code&gt;界面，点击&lt;code&gt;数据备份&lt;/code&gt;，再点击&lt;code&gt;生成备份&lt;/code&gt;。这一动作会在电脑端保存一份所有你记录在 dida365 上的时间事件日志，这是个 csv 格式的文件。&lt;/p&gt;
+&lt;h3 id="_9"&gt;步骤三：生成统计图表&lt;/h3&gt;
+&lt;p&gt;下载 &lt;a href="https://github.com/kamidox/utils"&gt;Python 统计脚本&lt;/a&gt;。安装 matplotlib, pandas 等必要的库。参考下面的 demo 代码。注释已经把用法写清楚了。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #008800; font-style: italic"&gt;# dida_20151220.csv 是从 dida365.com 上导出的你的时间事件日志，可以取任意你喜欢的文件名&lt;/span&gt;
+&lt;span style="color: #008800; font-style: italic"&gt;# 用这个文件作为输入，创建时间事件日志对象&lt;/span&gt;
+&lt;span style="color: #008800; font-style: italic"&gt;# 参数 routine_duration 为每天固定的例行公事时间长度（吃，喝，拉，撒，睡，行，发呆），单位为小时&lt;/span&gt;
+log &lt;span style="color: #666666"&gt;=&lt;/span&gt; DidaEventLog(&lt;span style="color: #BB4444"&gt;&amp;#39;dida_20151220.csv&amp;#39;&lt;/span&gt;, routine_duration&lt;span style="color: #666666"&gt;=14&lt;/span&gt;)
+&lt;span style="color: #008800; font-style: italic"&gt;# 设定要统计的时间周期&lt;/span&gt;
+period &lt;span style="color: #666666"&gt;=&lt;/span&gt; (&lt;span style="color: #BB4444"&gt;&amp;#39;2015-12-1&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;2015-12-20&amp;#39;&lt;/span&gt;)
+&lt;span style="color: #008800; font-style: italic"&gt;# 生成时间总览饼图&lt;/span&gt;
+log&lt;span style="color: #666666"&gt;.&lt;/span&gt;pie_chart(period&lt;span style="color: #666666"&gt;=&lt;/span&gt;period, display_routine&lt;span style="color: #666666"&gt;=&lt;/span&gt;&lt;span style="color: #AA22FF"&gt;False&lt;/span&gt;)
+&lt;span style="color: #008800; font-style: italic"&gt;# 生成工作负荷图表&lt;/span&gt;
+log&lt;span style="color: #666666"&gt;.&lt;/span&gt;workload_chart(period&lt;span style="color: #666666"&gt;=&lt;/span&gt;period)
+&lt;span style="color: #008800; font-style: italic"&gt;# 生成某个主类别下的子类别的精力分配情况&lt;/span&gt;
+log&lt;span style="color: #666666"&gt;.&lt;/span&gt;pie_chart_secondary(&lt;span style="color: #BB4444"&gt;&amp;#39;自我成长&amp;#39;&lt;/span&gt;, period&lt;span style="color: #666666"&gt;=&lt;/span&gt;period)
+&lt;span style="color: #008800; font-style: italic"&gt;# 生成某个类别的时间投入情况，fields 参数可以是主类别也可以是子类别&lt;/span&gt;
+log&lt;span style="color: #666666"&gt;.&lt;/span&gt;permanent_action_chart(fields&lt;span style="color: #666666"&gt;=&lt;/span&gt;[&lt;span style="color: #BB4444"&gt;&amp;#39;机器学习&amp;#39;&lt;/span&gt;, &lt;span style="color: #BB4444"&gt;&amp;#39;写作&amp;#39;&lt;/span&gt;], period&lt;span style="color: #666666"&gt;=&lt;/span&gt;period)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="_10"&gt;参数说明&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;时间黑洞&lt;/strong&gt;&lt;br /&gt;
+  那些发呆走神，刷微博微信的时间就是黑洞时间。我们要想办法把时间黑洞降到 20% 以下。那些为自己理想打着鸡血，走在万众创业路上的同学，估计时间黑洞会为负数。为什么呢？因为他们牺牲了吃喝拉撒睡等例行公事的时间，想着每天要睡够 7 小时，结果只有 5 小时。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;例行公事&lt;/strong&gt;&lt;br /&gt;
+  我们要睡觉，交通也要花时间，吃饭也要花时间。这部分我们称为例行公事，每天相对比较固定，简单起见，统计时，我们就取个固定值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_11"&gt;总结&lt;/h2&gt;
+&lt;p&gt;行动起来吧，和我们的时间作朋友，管理我们自己。当你持续记录一个星期，一个月，一年后，再回过头看这些数据时，你一定会吓一跳。最终，我们才能慢慢理解并践行&lt;code&gt;时间就是生命&lt;/code&gt;这句话的真正内涵。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Wed, 15 Dec 2021 23:36:00 +0800</pubDate><guid>tag:blog.kamidox.com,2015-12-21:time-event-log.html</guid><category>tools</category></item><item><title>基于协同过滤算法的推荐系统</title><link>http://blog.kamidox.com/recommend-system.html</link><description>&lt;h2 id="_1"&gt;推荐系统的描述&lt;/h2&gt;
 &lt;p&gt;我们以电影推荐系统来看一下怎么样以机器学习的角度来描述推荐系统。我们记 $n_u$ 为用户的数量，$n_m$ 为电影的数量，$r(i,j) = 1$ 表示用户 j 对电影 i 进行过了评价，$y^{(i,j)}$ 就是它的分数。$r(i,j) = 0$ 表示用户还没观看过这个电影，也没评分过。我们假设用户看过电影后，一定会给电影一个评分，如果没有给，默认评分为零。这样，我们的电影推荐系统的任务，就是根据用户的评分，预测出那些用户还未观看的电影的评分，从而把那些用户可能会给出较高评分的电影推荐给用户。&lt;/p&gt;
 &lt;h2 id="_2"&gt;基于内容的推荐算法&lt;/h2&gt;
 &lt;p&gt;我们依然以电影推荐系统为例，我们假设 $\theta^{(j)}$ 表示用户 j 的参数，$x^{(i)}$ 为电影 i 的特征向量 (比如爱情电影，动作电影，好吧，如你所愿，可能还有爱情动作片)。这样，用户 j 对电影 i 的预测评分为 $(\theta^{(j)})^T (x^{(i)})$。&lt;/p&gt;
