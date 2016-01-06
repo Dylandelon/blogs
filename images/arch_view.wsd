@@ -1,0 +1,75 @@
+diagrams for architecture view
+
+----------------------------------------------------------
+@startuml
+
+title App 远程控制 Camera
+
+package App <<frame>> {
+
+    class AppUI {
+    }
+
+    class AppNetModel {
+    }
+
+    class AppStorageModel {
+    }
+
+
+    AppUI o-- AppNetModel
+    AppUI o-- AppStorageModel
+}
+
+package Server <<frame>> {
+    class ServerUI {
+    }
+
+    class ServerEngine {
+    }
+
+    class ServerAppNetModel {
+    }
+
+    class ServerDeviceNetModel {
+    }
+
+    class ServerStorage {
+    }
+
+    ServerUI o-- ServerAppNetModel
+    ServerUI o-- ServerDeviceNetModel
+    ServerEngine o-- ServerAppNetModel
+    ServerEngine o-- ServerDeviceNetModel
+    ServerAppNetModel o-- ServerStorage
+    ServerDeviceNetModel o-- ServerStorage
+}
+
+package Device <<frame>> {
+    class Camera {
+    }
+
+    class DeviceNetModel {
+    }
+
+    Camera o-- DeviceNetModel
+}
+
+AppNetModel <--> ServerEngine
+DeviceNetModel <--> ServerEngine
+
+@enduml
+
+----------------------------------------------------------
+@startuml
+
+title 远程控制 App 的过程视图
+
+[APP UI Thread 1] <--> [APP Network Thread 1]: MessageQueue
+[APP UI Thread n] <--> [APP Network Thread n]: MessageQueue
+[APP Network Thread 1] <--> [Server Main Thread]: TCP
+[APP Network Thread n] <--> [Server Main Thread]: TCP
+[Server Main Thread] <--> [Camera Network Thread 1]: TCP
+[Server Main Thread] <--> [Camera Network Thread n]: TCP
+
+@enduml
