@@ -81,6 +81,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
 									<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
 									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
 									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
@@ -232,14 +233,16 @@ understander<span style="color: #666666">.</span><span style="color: #BB4444">st
 </ul>
 <h3 id="_8">实现策略</h3>
 <p>语音控制主要有两个要素，一是<strong>设备</strong>，如客厅的空调，书房的空调，厕所的电灯，餐厅的开关等等。二是<strong>动作</strong>，如打开，关闭，打开一半，调高温度等等。</p>
-<p>识别设备时：</p>
-<ul>
-<li>优先匹配命令式语音命令</li>
-<li>语义匹配命令作为最后的偿试</li>
-<li>失败了提示用户</li>
-</ul>
-<p>识别动作时：可优先使用语义识别里的结果</p>
-<p>比如，用户说“打开客厅的空调”，语义设备的定位应该优先看一下设备列表里有没有叫“客厅空调”的设备，如果没有，再看一下是不是只有一个空调设备？如果也不满足，就只能报错。</p>
+<ol>
+<li>使用语义接口来实现（text）</li>
+<li>设备定位：<br />
+  2.1 设备列表（灯光1，冰箱1，灯光5）<br />
+  2.2 遍历设备列表，去 text 里找 （第一优先级），如果找到，就直接使用这个设备来作为控制对象<br />
+  2.3 动作：从语义识别（第一优先级），比如打开，关闭，调高，调低等。<br />
+  2.4 动作：自定义的动作（调亮，调暗），根据自定义动作的关键词，从 text 里找。<br />
+  2.5 人性化动作：比如，用户说太热了，语义识别会识别出打开空调，但是哪个空调呢？如果只有一个空调，那我就直接打开空调。再比如，用户说打开电视。如果只有一个电视，就直接打开。如果有多个电视，报错。<br />
+  2.6 使用地点定位：比如“打开一楼客厅灯光”，如果一楼只有一个客厅，且客厅只有一个灯光，就打开。否则提示用户错误。</li>
+</ol>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-12-15(Tuesday) 15:36.</h6>
 </article>
@@ -290,30 +293,31 @@ understander<span style="color: #666666">.</span><span style="color: #BB4444">st
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
 										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
 										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
 										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
 										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
 										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
 										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
+											<li><a href="/posts/2016/01/index.html">January 2016 (1)</a></li>
 											<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
 											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
 											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>

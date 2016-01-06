@@ -126,97 +126,37 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>支持向量机核函数</h2>
-	<h2 id="_1">核函数</h2>
-<p>什么是核函数？核函数是<strong>特征转换</strong>函数。这是非常抽象的描述，这一节的内容就是为了理解这个抽象的概念的。</p>
-<h3 id="_2">从多项式说起</h3>
-<p><img alt="Non-linear Decsion Boundary" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_sk_boundary.png" /></p>
-<p>假设我们有一个非线性分界线的分类问题，有两个特征 $x_1, x_2$ ，回顾逻辑回归算法里的知识，我们可以使用多项式来增加特征，以便描述出非线性分界线。当：</p>
-<p>$$<br />
-\theta_0 + \theta_1 x_1 + \theta_2 x_2 + \theta_3 x_1 x_2 + \theta_4 x_1^2 + \theta_5 x_2^2 + &hellip; &gt;= 0<br />
-$$</p>
-<p>时，我们预测出 $y=1$。上述公式只写了二阶多项式，我们可以写到更高阶的多项式来模拟复杂的分界线。我们改写一下上面的公式：</p>
-<p>$$<br />
-\theta_0 + \theta_1 f_1 + \theta_2 f_2 + \theta_3 f_3 + \theta_4 f_4 + \theta_5 f_5 + &hellip; &gt;= 0<br />
-$$</p>
-<p>这里，$f_1=x_1, f_2 = x_2, f_3 = x_1 x_2, f_4 = x_1^2, f_5 = x_2^2 &hellip;$ 。</p>
-<p>那么问题来了，<strong>除了多项式外，有没有更好地途径把特征 $x_1, x_2$ 映射到特征 $f_1, f_2, f_3, f_4, f_5 &hellip;$ 呢？</strong></p>
-<h3 id="_3">相似性函数</h3>
-<p>我们在二维坐标上选择三个标记点 $l^{(i)}$ ，针对一个训练样例 $x$，我们使用相似性函数来定义新的特征：</p>
-<p>$$<br />
-\begin{align}<br />
-f_i &amp;= similarity(x, l^{(i)}) \\<br />
-&amp;= exp \left( - \frac{\| x - l^{(i)} \|^2}{2\sigma^2} \right) \\<br />
-&amp;= exp \left( - \frac{\sum_{j=1}^n (x_j - l_j^{(i)})^2}{2\sigma^2} \right) \\<br />
-\end{align}<br />
-$$</p>
-<p>如下图所示，当我们选择三个标记点 $l^{(1)}, l^{(2)}, l^{(3)}$ 时，针对一个只有两个特征的训练样例 $(x_1, x_2)$，通过我们的相似性函数映射后，我们将得到 $f_1, f_2, f_3$ 三个新特征。</p>
-<p><img alt="landmark" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_sk_landmark.png" /></p>
-<p><strong>相似性函数的物理意义</strong></p>
-<p>$\| x - l^{(i)} \|^2$ 在二维平面上的物理意义是点 $x$ 到标记点 $l^{(i)}$ 的距离。从向量角度来理解，个是向量的范数。</p>
-<p><strong>高斯核函数</strong></p>
-<p>$$<br />
-f_i = exp \left( - \frac{\sum_{j=1}^n (x_j - l_j^{(i)})^2}{2\sigma^2} \right)<br />
-$$</p>
-<p>我们把上面的相似性函数称为高斯核函数，它的主要作用就是<strong>把输入特征映射到另外一组特征</strong>上。当 $x$ 离标记点 $l^{(i)}$ 很近的时候，这两个点间的距离接近于 0 ，故 $f_i$ 接近于 1 。当 $x$ 离标记点 $l^{(i)}$ 很远的时候，这两个点间的距离接近于无穷大，故 $f_i$ 接近于 0 。</p>
-<h3 id="_4">理解相似性函数</h3>
-<p>假设我们选择了三个标识点 $l^{(1)}, l^{(2)}, l^{(3)}$ ，映射出三个新特征 $f_1, f_2, f_3$ ，那么当：</p>
-<p>$$<br />
-\theta_0 + \theta_1 f_1 + \theta_2 f_2 + \theta_3 f_3 &gt;= 0<br />
-$$</p>
-<p>时，我们预测为 1。假设我们训练出来的参数为 $\theta_0 = -0.5, \theta_1 = 1, \theta_2 = 1, \theta_3 = 0$ ，那么当某个测试样例点 $x$ 靠近 $l^{(1)}$ ，但远离 $l^{(2)}, l^{(3)}$ 时，我们可以得出：</p>
-<p>$$<br />
-\theta_0 + \theta_1 f_1 + \theta_2 f_2 + \theta_3 f_3 = -0.5 + 1 + 0 + 0 = 0.5 &gt;= 0<br />
-$$</p>
-<p>即我们把测试样例点 $x$ 归类到 $y=1$ 这个类别里。相同的道理，假设某个测试样例 $x$ 离三个标记点都很远，那么：</p>
-<p>$$<br />
-\theta_0 + \theta_1 f_1 + \theta_2 f_2 + \theta_3 f_3 = -0.5 + 0 + 0 + 0 = -0.5 &lt; 0<br />
-$$</p>
-<p><img alt="prediction" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_sk_predict.png" /></p>
-<p>这样我们得出结论，把 $x$ 归类到 $y=0$ 这个类别里。使用相同的方法，最终我们针对所有的测试样例进行归类。</p>
-<h2 id="_5">带核函数的支持向量机算法</h2>
-<h3 id="_6">选择标记点</h3>
-<p><img alt="Select Landmark" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_sk_landmark_select.png" /></p>
-<p>定义标记点 (landmark) 的一个很自然的方法是直接把 landmark 定义在训练数据集的训练样例上，即 $l^{(i)}=x^{(i)}$。那么给定一个新的交叉验证数据集或测试数据集里的样例 $x$，它与 landmark 的相似性函数，即高斯核函数如下</p>
-<p>$$<br />
-f_i = similarity(x, l^{(i)}) = exp \left( - \frac{\| x - l^{(i)} \|^2}{2\sigma^2} \right)<br />
-$$</p>
-<p>针对训练样例，也满足上述核函数。由于我们选择 landmark 与训练样例重合，所以针对训练样例 $x^{(i)}$ 有 $f_i=1$ 。</p>
-<h3 id="_7">计算预测值</h3>
-<p>假如我们已经算出了 $\theta$，那么当 $\theta^Tf &gt;= 0$ 时，预测值为 1，反之为 0。</p>
-<h3 id="_8">计算参数</h3>
-<p>根据 SVM 的成本函数，由于我们把 $f$ 代替 $x$ 作为新的特征，所以我们可以通过最小化下面的函数来计算得出参数 $\theta$</p>
-<p>$$<br />
-J(\theta) = C \left[ \sum_{i=1}^m y^{(i)} cost_1(\theta^T f^{(i)}) + (1 - y^{(i)}) cost_0(\theta^T f^{(i)}) \right] + \frac{1}{2} \sum_{j=1}^n \theta_j^2<br />
-$$</p>
-<p>针对上述公式，实际上 $m=n$，因为 $f$ 是由训练数据集 $x^{(i)}$ 定义，即 $f$ 是一个 m 维的向量。</p>
-<h3 id="_9">支持向量机算法的参数</h3>
-<ol>
-<li>C 值越大，越容易造成过拟合，即 lower bias, higher variance. 当 C 值越小，越容易造成欠拟合，即 higher bias, lower variance。</li>
-<li>$\sigma^2$ 越大，高斯核函数的变化越平缓，会导致 higher bias, lower variance。当 $\sigma^2$ 越小，高斯核函数变化越快，会导致 lower bias, higher variance。</li>
-</ol>
-<h2 id="svm">实践中的 SVM</h2>
-<p>一般情况下，我们使用 SVM 库 (liblinear, libsvm &hellip;) 来求解 SVM 算法的参数 $\theta$，而不是自己去实现 SVM 算法。在使用这些库的时候，我们要做的步骤如下</p>
+	<h2>文艺地解读贝叶斯定理</h2>
+	<p>小李年方二八，身强力壮。参加单位组织的体检时，被检出 AIDS 呈阳性。这惊雷轰得小李不省人事：自己明明生活检点，从没做过可能感染 AIDS 的不良行为，这闹的是哪出啊！</p>
+<p>假设整个人群 AIDS 发病率是 0.08%。这家医院使用的检测方法对已经确诊的 AIDS 病人检测出阳性的概率是 99% (true positive rate)，对没有携带 AIDS 病毒的人检测呈阴性的概率是 99% (true negative rate)。聪明如你，帮小李算算他确实携带 AIDS 病毒的概率是多少？</p>
+<p>不着急，再想 5 分钟 ......</p>
+<p>答案是 7.34%。</p>
+<p>一个简单而自然的算法是假设总共有 10000 人，由于 AIDS 发病率是 0.08%，所以总共有 8 个人携带 AIDS 病毒。由于没有携带 AIDS 病毒的人检测呈阴性的概率是 99% ，所以这家医院使用的检测方法有 1% 的概率会导致没有携带 AIDS 病毒的人被检测呈阳性，即 10000 人中总共会有 (10000 - 8) * 1% = 99.92 人实际上没有携带 AIDS 病毒，但检测出了阳性。针对己确诊患病的 8 人中，会有 8 * 99% = 7.92 人检测呈阳性。所以，小李携带 AIDS 病毒的概率是 7.92 / (99.92 + 7.92) = 7.34%。嗯，虽如晴天惊雷，但其实概率也没那么高嘛，特别是小李生活检点，不吸毒的前提下，误诊的概率极大。</p>
+<p>wikipedia 上有个<a href="https://en.wikipedia.org/w/index.php?title=Base_rate_fallacy&amp;redirect=no">专门的条目</a>讨论这种忽视基础概率问题的页面。</p>
+<h2 id="_1">贝叶斯定理</h2>
+<p>贝叶斯定理是关于条件概率的定理，其公式如下：</p>
+<p>P(A|B) = P(A) P(B|A) / P(B)</p>
+<p>解释一下公式：</p>
 <ul>
-<li>选择参数 C</li>
-<li>选择核函数<ul>
-<li>可以支持空的核函数，即线性核函数 (linear kernel)。Predict &ldquo;y = 1&rdquo; if $\theta^Tx &gt;= 0$。</li>
-<li>高斯核函数 $f_i = exp \left( - \frac{\| x - l^{(i)} \|^2}{2\sigma^2} \right)$，这个时候需要选择合适的参数 $\sigma^2$。</li>
+<li>P(A), P(B) 表示事件 A 和事件 B 的独立发生概率</li>
+<li>P(A|B) 是个条件概率，表示当事件 B 发生的情况下，事件 A 发生的概率</li>
+<li>P(B|A) 也是个条件概率，表示当事件 A 发生的情况下，事件 B 发生的概率</li>
 </ul>
-</li>
-</ul>
-<p>在使用第三方算法的时候，一般需要我们提供核函数的实现。输入参数是 $x_1, x_2$，输出为新的特征值 $f_i$。另外一个需要注意的点是，如果使用高斯核函数，在实现核函数时，需要对参数进行缩放，以便加快算法收敛速度。</p>
-<h3 id="_10">多类别的分类算法</h3>
-<p>这个和逻辑回归里介绍的 one-vs.-all 一样。可以先针对一个类别和其他类别做二元分类，逐个分类出所有的类别。这样我们得到一组参数。假如，我们有 K 个类别，那么我们最终将得到 $\theta^{(1)}, \theta^{(2)}, \theta^{(3)} &hellip; \theta^{(K)}$ 个参数。</p>
-<h3 id="_11">算法选择</h3>
-<p>逻辑回归和 SVM 都可以用来解决分类问题，他们适用的场景有些区别。</p>
-<p>假设 n 是特征个数；m 是训练数据集的样例个数。一般可以按照下面的规则来选择算法。</p>
-<p>如果 n 相对 m 来说比较大。比如 n = 10,000; m = 10 - 1000，如文本处理问题，这个时候使用逻辑回归或无核函数的 SVM 算法。<br />
-如果 n 比较小，m 中等大小。比如 n = 1 - 1000; m = 10 - 10,000。那么可以使用高斯核函数的 SVM 算法。<br />
-如果 n 比较小，m 比较大。比如 n = 1 - 1000; m = 50,000+ 。那么一般需要增加特征，并且使用逻辑回归或无核函数的 SVM 算法。</p>
-<p>以上的所有情况都可以使用神经网络来解决。但训练神经网络的计算成本比较高。</p>
+<p>我们用贝叶斯定理再算一下小李的患病概率，假设 A 表示携带 AIDS 病毒事件，B 表示检测结果呈阳性事件，那么我们要求解的就是在检测结果呈阳性的情况下的真实患病概率，即 P(A|B)。P(A) 表示患病概率，在我们的例子里是 0.08%。P(B|A) 表示如果一个人己确诊患病，检测呈阳性的概率是多少，从例子里知道 P(B|A) = 99%。P(B) 表示随机一个人被检测呈阳性的概率是多少，这包括两部分的数据，一部分是患病且被检测呈阳性的概率，它的数值是 0.08% * 99%，另一部分没患病但被检测呈阳性的概率，它的数值是 (1 - 0.08%) * (1 - 99%)。根据贝叶斯定理：</p>
+<p>P(A|B) = P(A) P(B|A) / P(B) = 0.08% * 99% / ((0.08% * 99%) + (1 - 0.08%) * (1 - 99%)) = 7.34%</p>
+<p>看来和我们的土办法算出来的数值是相同的。</p>
+<h2 id="_2">解读贝叶斯定理</h2>
+<p>就象解读这个千疮百孔的世界一样，很多人选择把眼睛闭起来，选择对它视而不见。而一些人选择热爱这个千疮百孔的世界，努力前行，让这个世界变得美好一点点。</p>
+<p>文艺地解读贝叶斯定理是可能的。P(A) 是基础概率，每个人刚来到这个世界上时，对这个世界的美好感受都有一个初始值，随着他的不断成长，碰到了事件 B ，而 B 刚好是这个世界美好的一面，比如一个学渣被女神鼓励，然后奋发图强，变成学霸，那么事件 B 的发生无疑会增加这个人对这个世界的美好程度的感知，所以 P(A|B) 增加了。身体发肤，受之父母。有些人的颜值就是比较高，高颜值的你如果是学渣的话，被女神鼓励的概率应该也是会比较高的，不知不觉，你的先天优势让 P(B|A) 更高。</p>
+<p>这是对贝叶斯定理最文艺的解读，没有之一。</p>
+<p>然并卵。除了看完感觉有道理之外，你还是不理解贝叶斯定理定理的本质。一个事物的本质往往是朴素的，朴素到没有女神，颜值也处在正态分布的正中间。</p>
+<p><img alt="Bayesian interpretation" src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Bayes_theorem_visualisation.svg" /></p>
+<p>维基百科上的这张图包含了简易的推导贝叶斯定理的过程，简洁，朴素。</p>
+<p>而从事件发生频率角度解读贝叶斯定理的的另外一张图片，让我们和贝叶斯走得更近。</p>
+<p><img alt="frequentist interpretation" src="https://upload.wikimedia.org/wikipedia/commons/6/61/Bayes_theorem_tree_diagrams.svg" /></p>
+<p><strong>学点概率，用更朴素的视角去看这个世界。</strong></p>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-12-07(Monday) 23:04. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2016-01-06(Wednesday) 23:43. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
 </article>
 
 <hr/>
