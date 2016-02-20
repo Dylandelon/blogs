@@ -5,7 +5,6 @@ Tags: thought
 Slug: twelve-citizen
 Authors: Joey Huang
 Summary: 独立思考是终极目标，如果做不到至少保持客观理智。
-Status: draft
 
 > 独立思考是终极目标，如果做不到，至少保持客观理智。--- 《十二公民》观后感
 
