@@ -1,5 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/joey-huang.atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2021-12-15T23:36:00+08:00</updated><entry><title>文艺地解读贝叶斯定理</title><link href="http://blog.kamidox.com/bayes-theorem.html" rel="alternate"></link><updated>2016-01-06T23:43:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2016-01-06:bayes-theorem.html</id><summary type="html">&lt;p&gt;小李年方二八，身强力壮。参加单位组织的体检时，被检出 AIDS 呈阳性。这惊雷轰得小李不省人事：自己明明生活检点，从没做过可能感染 AIDS 的不良行为，这闹的是哪出啊！&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/joey-huang.atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2021-12-15T23:36:00+08:00</updated><entry><title>词典的存储和搜索</title><link href="http://blog.kamidox.com/trie.html" rel="alternate"></link><updated>2016-02-20T22:48:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2016-02-20:trie.html</id><summary type="html">&lt;p&gt;在自然语言处理领域，分词是最基本的任务。不管是传统的基于词典的分词算法还是现代的基于统计语言模型的分词算法，都需要词典作为输入。本文介绍 Trie 算法，用来存储词典，并提供高效的搜索功能。&lt;/p&gt;
+&lt;h2 id="_1"&gt;词典的格式&lt;/h2&gt;
+&lt;p&gt;这里的词典比你书架上的现代汉语词典要简单很多，因为没有释义，只有光溜溜的一个词在那。这也好理解，释义是给人看的，而计算机根本就看不懂释义。计算机顶多只会“算”，但它算的真的很快很快，快到让人感觉它真的有智能。比如下面就是一个分词时用到的词典：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;阿
+阿巴丹
+阿爸
+...
+...
+...
+做贼心虚
+做主
+做作
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当然，基于现代的统计语言模型的分词算法，还需要存储词的常用程度。所以需要对词典里的词做一些标注，比如：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;反   1205
+作战股 1
+先人后己    1
+传媒者 1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;由此可见，词典的数据其实是很简单的，就是一个词加上与这个词对应的一个整形数值。在实际应用中，需要非常频繁地查找词典，比如在分词算法里，我们找到两个字后，需要判断这两个字是否在词典里，如果在，就说明这是一个整体的词，如果不在，那么就不能组成一个词。所以词典的格式应该要满足&lt;strong&gt;快速查找&lt;/strong&gt;的要求。那么怎么样保存词典以便查找速度最快呢？直接把词典按照线性放在数组里显然是不行的。&lt;/p&gt;
+&lt;h2 id="trie"&gt;Trie 数据结构&lt;/h2&gt;
+&lt;p&gt;Trie 的读音和 Tree 相同，也有人读作 Try ，是为了和 Tree 区分开。因为在 Tree 也是数据结构的一种，容易让人误解。&lt;/p&gt;
+&lt;p&gt;话说，怎么样存储词典呢？科学家们发明了一种叫做叫 Trie 的数据结构来保存词典：&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Trie" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Trie_example.svg/400px-Trie_example.svg.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;图一：图片来自 wikipedia&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;上图展示了 &amp;ldquo;A&amp;rdquo;, &amp;ldquo;t&amp;rdquo;, &amp;ldquo;to&amp;rdquo;, &amp;ldquo;tea&amp;rdquo;, &amp;ldquo;ted&amp;rdquo;, &amp;ldquo;ten&amp;rdquo;, &amp;ldquo;i&amp;rdquo;, &amp;ldquo;in&amp;rdquo;, &amp;ldquo;inn&amp;rdquo;。在这样的数据结构里，要查找某个词时，基本上和词典的大小无关，而只与要查找的词的大小有关。查找的速度基本上达到 O(1)。比如，我们要找 &amp;ldquo;tea&amp;rdquo; 这个词，从开始状态起步，我们的第一个字母是 &amp;ldquo;t&amp;rdquo; 则沿着根节点最左边的子树上前进到达其对应的子节点，接着是字母 &amp;ldquo;e&amp;rdquo; ，找到对应的子节点，再接着字母 &amp;ldquo;a&amp;rdquo; 找到 &amp;ldquo;tea&amp;rdquo; 这个单词。再如，我们要找 &amp;ldquo;too&amp;rdquo; 这个单词，在到达 &amp;ldquo;to&amp;rdquo; 这个节点时，还剩下一个 &amp;ldquo;o&amp;rdquo; 没有消化掉。所以 &amp;ldquo;too&amp;rdquo; 这个单词就不在上图表示的词典里。&lt;/p&gt;
+&lt;p&gt;从另外一个角度看这个图，实际上这也是个&lt;strong&gt;确定有限状态机&lt;/strong&gt;(DFA - Deterministic Finite Automaton)。实际上针对 Trie 算法的实现，就是基于 DFA 的的原理进行的，所以要理解 Trie 算法，本质上需要先理解 DFA。&lt;/p&gt;
+&lt;h2 id="_2"&gt;确定有限状态机&lt;/h2&gt;
+&lt;p&gt;有限状态机的定义是非常严谨的，它包含一个五元组 (Q, Σ, δ, q0, F)，其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Q 是一个&lt;strong&gt;有限&lt;/strong&gt;的状态&lt;strong&gt;集合&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Σ 是一个有限的输入事件集合&lt;/li&gt;
+&lt;li&gt;δ 是一个状态转移函数，当某个&lt;strong&gt;状态&lt;/strong&gt;遇到某个&lt;strong&gt;事件&lt;/strong&gt;时，会引起状态转换，跳到另外一个状态 (δ : Q × Σ → Q)&lt;/li&gt;
+&lt;li&gt;q0 是一个起始状态 (q0 ∈ Q)&lt;/li&gt;
+&lt;li&gt;F 是一组可接受的终止状态 (F ⊆ Q)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不得不说，数学家这个群体还是很令人佩服的。他们把很好理解的概念抽象抽象再抽象，抽象到我等智商平平的人看不懂的程度。当然，数学家的本意并非让我等看不懂，而是为了计算方便。另外一些人和数学家干的事正好相反，他们把很复杂的数学原理和算法，解释得通俗易懂，让大部分资质平平，没经过专业训练的人也能感受到数学之美。比如吴军老师的&lt;a href="http://book.douban.com/subject/10750155/"&gt;《数学之美》&lt;/a&gt;就是这类的典范。&lt;/p&gt;
+&lt;p&gt;跑题结束，我们说回 DFA。上文讲过，我们可以把 Trie 数据结构看成是一个 DFA 。那么词典和数学家定义的 DFA 有什么关系呢？&lt;/p&gt;
+&lt;p&gt;还是以图一为例，我们看一下对应关系：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Q 是有限状态集合。上图所有的圆圈构成了一个有限状态集合&lt;/li&gt;
+&lt;li&gt;Σ 是有限的输入事件集合。上图中，引起状态转移，标注在状态转移线段上的字母就是输入事件集合，t, o, e, a, d, n, A, i, n 构成输入事件集合&lt;/li&gt;
+&lt;li&gt;q0 是一个起始状态。上图中，根节点就是起始状态。&lt;/li&gt;
+&lt;li&gt;F 是一组可接受的终止状态。上图中，有标注数字的圆圈就代表一个可接受的终止状态，to, tea, ted, ten, A, i, in, inn。从词典的角度考虑，所有构成合法单词的状态就是可接受的终止状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上述对应关系里，我们漏了状态转移函数。&lt;strong&gt;确定有限状态机&lt;/strong&gt;的关键点在&lt;strong&gt;状态转移&lt;/strong&gt;上，如果当前状态遇到一个确定的事件时，&lt;strong&gt;最多&lt;/strong&gt;只能转移到&lt;strong&gt;一个确定的状态&lt;/strong&gt;上，那么这就是一个&lt;strong&gt;确定有限状态机&lt;/strong&gt;，简称 DFA。为什么有&lt;strong&gt;最多一个确定状态&lt;/strong&gt;这一说法？因为可能没有下一个状态，对词典的例子来说，如果没有下一个状态，就说明要查找的词不在词典里。比如我们要查找 &amp;ldquo;too&amp;rdquo; 这个单词，当消耗完 &amp;ldquo;t&amp;rdquo;, &amp;ldquo;o&amp;rdquo; 两个字母后，还剩下一个 &amp;ldquo;o&amp;rdquo; ，这个时候应该还要有下一个由 &amp;ldquo;o&amp;rdquo; 触发的确定的状态才对，但在上图中找不到，说明 &amp;ldquo;too&amp;rdquo; 这个单词不在上图表示的词典里。&lt;/p&gt;
+&lt;p&gt;聪明的你可能会问，如果一个输入事件，导致可能转移到不同的状态去，每种状态有不同的概率，这是什么？答案是&lt;strong&gt;不确定有限状态机&lt;/strong&gt;。感兴趣的搜索一下马尔可夫链。等你研究完马尔可夫链会发现，下一步要看隐马尔可夫模型了。咳咳，这段文字纯属装逼，我们还是就此打住，继续今天的课题吧。&lt;/p&gt;
+&lt;h2 id="_3"&gt;状态转移表&lt;/h2&gt;
+&lt;p&gt;我们终于把 Trie 和 DFA 联系起来了。在 DFA 里，状态转移函数一般使用&lt;strong&gt;状态转移表&lt;/strong&gt;来描述。这是个二维的表格，行用来表示所有的状态集合，列用来表示输入事件集合。&lt;/p&gt;
+&lt;p&gt;我们来看一个最简单的使用 Trie 描述的词典：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;           t        o
+begin(0) ---&amp;gt; t(1) ---&amp;gt; to(2:F)
+                   |
+                   | e          a
+                   ----&amp;gt; te(3) ---&amp;gt; tea(4:F)
+                               |
+                               | d
+                               ---&amp;gt; ted(5:F)
+                               |
+                               | n
+                               ---&amp;gt; ten(6:F)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这是本文示例图片的一小部分，这个词典只包含四个单词，分别是 to, tea, ted, ten。从 DFA 的角度来看，它总共有 7 个状态，包含一个状态为 0 的起始状态。输入事件集合是 [t, o, e, a, d, n]。可接受的终止状态集合就是上图中标注着 &amp;ldquo;:F&amp;rdquo; 字样的状态，就是四个有效的单词。那么上述词典所代表的 DFA 的的状态转移表长什么样呢？&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;state&lt;/th&gt;
+&lt;th&gt;t&lt;/th&gt;
+&lt;th&gt;o&lt;/th&gt;
+&lt;th&gt;e&lt;/th&gt;
+&lt;th&gt;a&lt;/th&gt;
+&lt;th&gt;d&lt;/th&gt;
+&lt;th&gt;n&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;td&gt;x&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;表一：状态转移表&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;这就是上述 DFA 的状态转移表。从表中，我们可以清晰地看到。[0, 1, 2, 3, 4, 5, 6] 表示我们的 DFA 中的 7 个状态。而 [t, o, e, a, d, n] 表示我们的输入事件。表格中的数字表示当前状态遇到输入事件后能正确转移的下一个状态，其中 x 表示出错，即无法转移到下一个有效状态。比如当状态为 0 时，遇到 t 即可转移到状态 1，而遇到其他的输入事件，则无法转移到有效状态。聪明如你，试着画一下图一的状态转移表吧。&lt;/p&gt;
+&lt;h2 id="trie_1"&gt;双数组 Trie&lt;/h2&gt;
+&lt;p&gt;状态转移表很好很强大，可以实现 O(1) 的搜索速度。但其不足非常明显，如表一所示，表中 x 非常多。即针对词典来说，其 DFA 的状态转移表中，有效的状态转移只占少数，大部分都是无效的状态转移。聪明的科学家们哪能放过这个扬名立万的机会？特别是在计算机的早期，内存非常宝贵，往往以字节计算价格，哪像现在，各位的手机动不动就有几个 G 的内存。&lt;/p&gt;
+&lt;p&gt;在 1985 年科学家发明了一个压缩算法，可以用三个数组即可表达状态转移表。1989 年更进一步压缩到只用两个数组即可表达状态转移表。详细信息可以阅读 &lt;a href="http://linux.thai.net/~thep/datrie/datrie.html"&gt;An Implementation of Double-Array Trie&lt;/a&gt;。这个页面里包含两个实现，一个是早期的使用 C++ 模板类的实现，称为 midatrie ，网上比较著名的开源分词算法库 &lt;a href="http://www.coreseek.cn/opensource/mmseg/"&gt;LibMMSeg&lt;/a&gt; 就使用这一实现。另外一个实现是使用 C 语言重写的，称为 libdatrie，它更通用，可读性也比较强。&lt;/p&gt;
+&lt;p&gt;要使用两个数组实现 Tire 并非简单的事情，要理解这一过程没有烧些脑细胞估计很难做到，除非你是个天才。除此之外，还有一些细节需要了解，对理解代码不无益处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;上文讨论中，我们都使用英文作为词典保存对象。输入事件集合就是一个个字母。实际上，中文的处理方法类似，如果是 utf-8 编码，中文会把一个字拆成三个字节，然后以字节为单位，作为输入事件集合中的一个元素。比如“中文”这两个字的 utf-8 编码是 E4 B8 AD E6 96 87，其实际上被解读为 6 个输入事件。由此可见，对任何语言，输入事件总数不会超过 255 个。可以使用一个字节来表示。&lt;/li&gt;
+&lt;li&gt;输入事件并非连续的，所以在实现 Tire 时，一般会有个映射关系，比如把 a 映射到 1，把 b 映射到 2 等。这是为了更进一步节省空调。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_4"&gt;应用场景&lt;/h2&gt;
+&lt;p&gt;Trie 构造的词典除了在分词算法里使用外，在自动完成 Auto Complete，拼写纠正等领域都有非常广泛的应用。&lt;/p&gt;</summary><category term="nlp"></category></entry><entry><title>文艺地解读贝叶斯定理</title><link href="http://blog.kamidox.com/bayes-theorem.html" rel="alternate"></link><updated>2016-01-06T23:43:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2016-01-06:bayes-theorem.html</id><summary type="html">&lt;p&gt;小李年方二八，身强力壮。参加单位组织的体检时，被检出 AIDS 呈阳性。这惊雷轰得小李不省人事：自己明明生活检点，从没做过可能感染 AIDS 的不良行为，这闹的是哪出啊！&lt;/p&gt;
 &lt;p&gt;假设整个人群 AIDS 发病率是 0.08%。这家医院使用的检测方法对已经确诊的 AIDS 病人检测出阳性的概率是 99% (true positive rate)，对没有携带 AIDS 病毒的人检测呈阴性的概率是 99% (true negative rate)。聪明如你，帮小李算算他确实携带 AIDS 病毒的概率是多少？&lt;/p&gt;
 &lt;p&gt;不着急，再想 5 分钟 ......&lt;/p&gt;
 &lt;p&gt;答案是 7.34%。&lt;/p&gt;
