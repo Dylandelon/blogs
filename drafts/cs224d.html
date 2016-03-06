@@ -1,0 +1,549 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="../theme/css/foundation.css" />
+		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="../theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+
+		<script src="../theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="../category/android.html">android</a></li>
+							<li ><a href="../category/essay.html">essay</a></li>
+							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/ml.html">ml</a></li>
+							<li ><a href="../category/nlp.html">nlp</a></li>
+							<li ><a href="../category/python.html">python</a></li>
+							<li ><a href="../category/tools.html">tools</a></li>
+							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+									<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="../">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>NLP and Deep Learning</h2>
+	<div class="toc">
+<ul>
+<li><a href="#lecture-1">Lecture 1</a></li>
+<li><a href="#lecture-2">Lecture 2 如何表达一个词语</a><ul>
+<li><a href="#_1">词典</a></li>
+<li><a href="#_2">基于统计的词语向量表达</a></li>
+<li><a href="#_3">基于上下文的表达</a><ul>
+<li><a href="#word-document-matrix">word-document matrix</a></li>
+<li><a href="#word-word-cooccurence-matrix">word-word cooccurence matrix</a></li>
+<li><a href="#_4">奇异值分解</a></li>
+</ul>
+</li>
+<li><a href="#_5">基于迭代的词语向量表达</a><ul>
+<li><a href="#word2vec">word2vec</a></li>
+<li><a href="#_6">语言模型</a></li>
+<li><a href="#continuous-bag-of-words-model-cbow">Continuous Bag of Words Model (CBOW)</a></li>
+<li><a href="#skip-gram-model">Skip-Gram Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="lecture-1">Lecture 1</h2>
+<p><strong>深度学习 (Deep Learning) 和传统的机器学习 (Machine Learning) 的区别是什么？</strong></p>
+<p>传统的机器学习主要分两部分，一部分是特征提取，需要人工从数据中提取出特征，并且想办法用计算机能理解的格式来表达这些特征。另外一部分是是模型，使用计算机能理解的特征数据来训练模型。人工提取的特征慢，而且很容易遗漏。</p>
+<p>深度学习能够从原始数据中学习出特征，然后用来训练模型。</p>
+<p><strong>深度学习和神经网络是什么关系？</strong></p>
+<p>神经网络是深度学习的一种算法。实际上，还有其他的概率模型可以应用到深度学习中来。但目前在 NLP 领域效果比较好的，还是神经网络算法。</p>
+<p><strong>应用</strong></p>
+<p>iPhone 上的 Siri 和 Android 上的 Google Now 都是使用深度学习算法来进行语音识别。就连这个课程视频的字幕，也是使用深度学习的算法，把语音直接转换为字幕的。</p>
+<p>按照从易到难，自然语言处理的几个典型的应用如下：</p>
+<p><strong>简单</strong></p>
+<ul>
+<li>拼写检查</li>
+<li>关键字搜索</li>
+<li>查找同义词</li>
+</ul>
+<p><strong>中等难度</strong></p>
+<ul>
+<li>从网络或文档中提取信息</li>
+</ul>
+<p><strong>难</strong></p>
+<ul>
+<li>机器翻译（号称自然语言领域的圣杯）</li>
+<li>语义分析（一句话是什么意思）</li>
+<li>交叉引用（一句话中，他，这个等代词所对应的主体是哪个）</li>
+<li>问答系统（Siri, Google Now, 小娜等）</li>
+</ul>
+<h2 id="lecture-2">Lecture 2 如何表达一个词语</h2>
+<p>这一节课探讨如何表达一个词。</p>
+<h3 id="_1">词典</h3>
+<p>现实生活中，我们通过查词典来知道一个词的意思，这实际上是用另外的词或短语来表达一个词。这一方法在计算机领域也有，比如 <a href="http://wordnet.princeton.edu">WordNet</a> 实际上就是个电子化的英语词典。</p>
+<p>然而，这一方式有以下几个问题：</p>
+<ul>
+<li>有大量的同义词，不利于计算</li>
+<li>更新缓慢，没有办法自动地添加新词</li>
+<li>一个词释义含有比较明显的主观色彩</li>
+<li>需要人工来创建和维护</li>
+<li>很难计算词的相似性</li>
+<li>很难进行计算，因为计算机本质上只认识 0 和 1</li>
+</ul>
+<h3 id="_2">基于统计的词语向量表达</h3>
+<p>在统计语言模型里，我们使用向量来表达一个词。比如，在一个精灵国里，他们的语言非常简单，总共只有三句话：</p>
+<ol>
+<li>I like NLP.</li>
+<li>I like deep learning.</li>
+<li>I enjoy flying.</li>
+</ol>
+<p>这样，我们可以看到这个精灵国的词典是 [I, like, NLP, deep, learning, enjoy, flying, .]。没错，我们把标点也认为是一个词。用向量来表达词时，我们创建一个向量，向量的维度与词典的个数相同，然后让向量的某个位置为 1 ，其他位置全为 0。这样就创建了一个向量词 (one-hot)。</p>
+<p>比如，在我们的精灵国里，I 这个词的向量是：[1 0 0 0 0 0 0 0], deep 这个词的向量表达是 [0 0 0 1 0 0 0 0]。</p>
+<p>看起来挺好，我们终于把词转换为 0 和 1 这种计算机能理解的格式了。然而，这种表达也有个问题，很多同义词没办法表达出来，因为他们是不同的向量。怎么解决这个问题呢？我们可以通过词的上下文来表达一个词。通过上下文表达一个词的另外一个好处是，一个词往往有多个意思，具体在某个句子里是什么意思往往由它的上下文决定。</p>
+<h3 id="_3">基于上下文的表达</h3>
+<blockquote>
+<p>You shall know a word by the company it keeps. &mdash; (J. R. Firth 1957: 11)</p>
+</blockquote>
+<p>这是现代基于统计语言模型的词的表达方法。有两种方法可以实现基于上下文的词的表达。一种是基于词和文档关系矩阵 word-document matrix，另外一个是基于窗口的 word-word cooccurence matrix。分别介绍如下：</p>
+<h4 id="word-document-matrix">word-document matrix</h4>
+<p>这一表达的理解基础上，词义相近或关联较大的词比较大的概率会出现在同一篇文章里，而词义想差较远的词出现在同一个文章里的概率比较低。这样我们就可以建立一个基于统计语言模型的词的表达。比如，“银行”，“股票”，“投资”等词出现在同一篇文章中的概率会比较高，而“银行”，“猴子”，“椅子”出现在同一篇文章中的概率会比较低。基于这个思想，我们建立一个矩形 X ，当第 i 个词出现在第 j 篇文章中时，就把 $X_ij$ 的值加上 1 。这个矩阵是 $R^{|V| \times M}$，其中 |V| 是词库的大小，M 是文章的个数。这一方法就是经典的 <a href="https://en.wikipedia.org/wiki/Latent_semantic_analysis">Latent semantic analysis</a>，简称 LSA。</p>
+<p>据统计，目前互联网上有 100 亿篇文章，可以看出来这将是个巨大无比的矩阵。另外一个角度，一篇文章里不可能包含所有的词，所以这也是一个稀疏矩阵，矩阵里很多元素的值都是 0。</p>
+<h4 id="word-word-cooccurence-matrix">word-word cooccurence matrix</h4>
+<p>基于窗口机制的词关联性矩阵可以很好地表达语义 (semantic) 和语法 (syntactic)。它也需要建立一个矩阵，所不同的是行和列都是词典里的词，所以这是一个方阵。来看一下我们精灵国的词典 [I, like, NLP, deep, learning, enjoy, flying, .]，精灵国的语料库也非常简单：</p>
+<ol>
+<li>I like NLP.</li>
+<li>I like deep learning.</li>
+<li>I enjoy flying.</li>
+</ol>
+<p>假设我们的窗口大小为 1 ，即一个词只关心前面和后面 1 个词的关联性，通过扫描这个语料库，可以得到下面的矩阵：</p>
+<table>
+<thead>
+<tr>
+<th>counts</th>
+<th>I</th>
+<th>like</th>
+<th>enjoy</th>
+<th>deep</th>
+<th>learning</th>
+<th>NLP</th>
+<th>flying</th>
+<th>.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td>0</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>like</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>enjoy</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>deep</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>learning</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>NLP</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>flying</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>.</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>这样的矩阵可以很好地捕获到词之间的关联性信息。但这个矩阵也是比较大的，典型地，它随着词典的增加而增加。而且这也是个稀疏矩阵。因为词典中，能组成上下文的词还是少数的。我们的首要任务是给矩阵降维。</p>
+<h4 id="_4">奇异值分解</h4>
+<p>通过奇异值分解可以有效地把矩阵的维度降下来。在学习线代时，根本就不知道奇异值分解这种奇怪的东西到底有什么用，没有想到会在这里派上用场。关于奇异值分解的几何含义，可以参阅<a href="http://www.flickering.cn/数学之美/2015/01/奇异值分解（we-recommend-a-singular-value-decomposition）/">We Recommend a Singular Value Decomposition</a>，这是一篇深入浅出的译文。</p>
+<p>针对 word-word cooccurence matrix，奇异值分解的思路如下：</p>
+<p><img alt="neural networks" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/nlp_svd.png" /></p>
+<p>分解后矩阵 U 里的行向量就表示一个词。我们可以用 Python 简单实现如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">%</span>matplotlib inline
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+<span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span>
+
+<span style="color: #008800; font-style: italic"># 词典</span>
+words <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;I&#39;</span>, <span style="color: #BB4444">&#39;like&#39;</span>, <span style="color: #BB4444">&#39;enjoy&#39;</span>, <span style="color: #BB4444">&#39;deep&#39;</span>, <span style="color: #BB4444">&#39;learning&#39;</span>, <span style="color: #BB4444">&#39;NLP&#39;</span>, <span style="color: #BB4444">&#39;flying&#39;</span>, <span style="color: #BB4444">&#39;.&#39;</span>]
+X <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros((<span style="color: #666666">8</span>,<span style="color: #666666">8</span>))
+<span style="color: #008800; font-style: italic"># 语料库</span>
+corpus <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;I like NLP.&#39;</span>, <span style="color: #BB4444">&#39;I like deep learning.&#39;</span>, <span style="color: #BB4444">&#39;I enjoy flying.&#39;</span>]
+<span style="color: #008800; font-style: italic"># 这里我们简单起见，直接写出从语料库里扫描后得到的字典</span>
+X[<span style="color: #666666">0</span>, <span style="color: #666666">1</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">1</span>, <span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">2</span>
+X[<span style="color: #666666">0</span>, <span style="color: #666666">2</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">2</span>, <span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">1</span>, <span style="color: #666666">3</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">3</span>, <span style="color: #666666">1</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">1</span>, <span style="color: #666666">5</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">5</span>, <span style="color: #666666">1</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">2</span>, <span style="color: #666666">6</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">6</span>, <span style="color: #666666">2</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">3</span>, <span style="color: #666666">4</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">4</span>, <span style="color: #666666">3</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">4</span>, <span style="color: #666666">7</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">7</span>, <span style="color: #666666">4</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">5</span>, <span style="color: #666666">7</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">7</span>, <span style="color: #666666">5</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+X[<span style="color: #666666">6</span>, <span style="color: #666666">7</span>] <span style="color: #666666">=</span> X[<span style="color: #666666">7</span>, <span style="color: #666666">6</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+
+U, s, V <span style="color: #666666">=</span> np<span style="color: #666666">.</span>linalg<span style="color: #666666">.</span>svd(X, full_matrices<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+plt<span style="color: #666666">.</span>xlim(<span style="color: #666666">-0.8</span>, <span style="color: #666666">0.2</span>)
+plt<span style="color: #666666">.</span>ylim(<span style="color: #666666">-0.8</span>, <span style="color: #666666">0.8</span>)
+<span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #AA22FF">len</span>(words)):
+    plt<span style="color: #666666">.</span>text(U[i, <span style="color: #666666">0</span>], U[i, <span style="color: #666666">1</span>], words[i])
+</pre></div>
+
+
+<p><em>在 ipython notebook 环境下运行</em></p>
+<p>运行后会输出如下图片：</p>
+<p><img alt="neural networks" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/nlp_word_relation.png" /></p>
+<p>从图中，我们可以看到一些有意思的现象，在二维空间里，NLP 和 deep 靠得很近，从我们有限的只有三句话的语料库里就能把这个特征捕获出来了。如果语料库足够大，就可以表达出更多的语义和语法信息了。</p>
+<p>我们使用奇异值分解后的矩阵 U 的行向量$u_i$ 来表示一个词。比如，$u_0$ 就表示 I 这个单词，其值为：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">20</span>]: U[<span style="color: #666666">0</span>]
+
+Out[<span style="color: #666666">20</span>]:
+array([<span style="color: #666666">-0.52412493</span>, <span style="color: #666666">-0.57285914</span>,  <span style="color: #666666">0.0954463</span> ,  <span style="color: #666666">0.38322849</span>, <span style="color: #666666">-0.17696338</span>,
+       <span style="color: #666666">-0.17609218</span>, <span style="color: #666666">-0.4191856</span> , <span style="color: #666666">-0.05577027</span>])
+
+In [<span style="color: #666666">21</span>]: U[<span style="color: #666666">3</span>]
+
+Out[<span style="color: #666666">21</span>]:
+array([<span style="color: #666666">-0.28563741</span>, <span style="color: #666666">-0.24791213</span>,  <span style="color: #666666">0.35461032</span>, <span style="color: #666666">-0.07319013</span>,  <span style="color: #666666">0.44578449</span>,
+        <span style="color: #666666">0.08361414</span>,  <span style="color: #666666">0.54872107</span>, <span style="color: #666666">-0.46801241</span>])
+
+In [<span style="color: #666666">22</span>]: U[<span style="color: #666666">5</span>]
+
+Out[<span style="color: #666666">22</span>]:
+array([<span style="color: #666666">-0.30513468</span>, <span style="color: #666666">-0.29398899</span>, <span style="color: #666666">-0.22343359</span>, <span style="color: #666666">-0.19161425</span>,  <span style="color: #666666">0.12746094</span>,
+        <span style="color: #666666">0.49121941</span>,  <span style="color: #666666">0.2095928</span> ,  <span style="color: #666666">0.65753537</span>])
+</pre></div>
+
+
+<p>$u_3$ 和 $u_5$ 分别表示 deep 和 NLP 这两个词。从数据中也可以看到，向量的前两个值比较接近。</p>
+<p>这就是数学的美妙之处。一个词竟然可以通过向量来表达。</p>
+<p>然而，这样的向量表达还是有一些问题：</p>
+<ul>
+<li>功能性词汇 (the, is, he, 的, 是) 出现地太频繁了，会影响语法分析。一个方法是生成 word-word cooccurence matrix 时使用计数上限，另外一个方法直接去掉这些功能性</li>
+<li>上述例子里，我们只计算前后一个词的关联性。我们可以计算得远一点，不同距离使用不同的权重值</li>
+<li>使用 <a href="https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson correlations</a> 替代 counts 计数</li>
+</ul>
+<p>这些优化的方案可以参阅 <a href="http://tedlab.mit.edu/~dr/Papers/RohdeGonnermanPlaut-COALS.pdf">An Improved Model of Semantic Similarity Based on Lexical Cooccurrence - Rohde et al. 2005</a>。</p>
+<p>然而奇异值分解的方法有一个最大的缺点是计算量还是很大，达到了 $O(mn^2)$ (m &gt; n时)，而且每次添加了一个新词或新的文章，需要重新做奇异值分解，所有的词向量都会更新。作为替代方法，能不能直接学习出这个词的向量，而不通过奇异值分解后获得呢？</p>
+<h3 id="_5">基于迭代的词语向量表达</h3>
+<p>实际上，科学家们已经发明了很多这样的算法。</p>
+<ul>
+<li>Learning representations by back-propagating errors.  (Rumelhart et al., 1986)</li>
+<li><a href="http://machinelearning.wustl.edu/mlpapers/paper_files/BengioDVJ03.pdf">A neural probabilistic language model (Bengio et al., 2003)</a></li>
+<li><a href="http://ronan.collobert.com/pub/matos/2011_nlp_jmlr.pdf">NLP from Scratch (Collobert &amp; Weston, 2008)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Word2vec">word2vec (Mikolov et al. 2013)</a></li>
+<li><a href="http://nlp.stanford.edu/projects/glove/">Glove: Global Vectors for  Word Representation - by Pennington et al. (2014)</a></li>
+</ul>
+<p>特别提一下 GloVe 模型，这个是课程老师 Richard Socher 和几位同事在2014年发表的论文。本课程重点介绍 word2vec ，它的主要思想是：直接通过预测一个词的前后几个词的出现概率，来直接得到词的向量。</p>
+<h4 id="word2vec">word2vec</h4>
+<p>这是这节课最难理解的部分，涉及到大量的背景知识，有信息论里的<a href="https://en.wikipedia.org/wiki/Cross_entropy">交叉熵</a>，有概率论里的 <a href="https://en.wikipedia.org/wiki/Softmax_activation_function">softmax function</a>，还有一些<a href="http://blog.kamidox.com/computation-rules-for-derivative.html">微分运算法则</a>。</p>
+<p>基于迭代模型的原理，就是利用语料库里的句子作为训练数据集，以每一个词作为中心词，预测其左右两边的一定个数 (称为窗口大小) 的词的概率，最终使整体概率最大。</p>
+<p>我们先通过一个简单的例子来看一下基于迭代模型的原理。假设我们的语料库里有一个句子：&rdquo;The cat jumped over the puddle.&rdquo;。模型刚开始训练时，我们以一个很小的随机数作为一个词可能出现在另外一个词前后的概率，作为先验概率。假设我们的窗口大小 c = 2，当 t = 2 时，当中心词 &ldquo;jumped&rdquo; 时，它的上下文词是 [&ldquo;The&rdquo;, &ldquo;cat&rdquo;, &ldquo;over&rdquo;, &ldquo;the&rdquo;] ，通过这个语料库里的信息，我们就知道这些词分别出现在 &ldquo;jumped&rdquo; 单词两边的概率就增加一点点，因为我们从语料库里学习到了这个特征。当 t = 3 时，中心词是 &ldquo;over&rdquo;，这个时候上下文词是 [&ldquo;cat&rdquo;, &ldquo;jumped&rdquo;, &ldquo;the&rdquo;, &ldquo;puddle&rdquo;]，我们的模型又从这个输入里学习到了一点点特征。这样一直通过语料库来训练这个模型，只要语料库足够大，就可以把这些特征全部学习出来。</p>
+<p>这个模型可以很好地解决基于奇异值分解模型的缺点，语料库可以随意增加，只需要作为新的输入来训练模型即可，而不需要从头开始计算。二是新词也可以随意增加，模型遇到没遇到过的词时，可以自己从语料库里学习出这个词的用法。</p>
+<p>当然，上面的定性描述是为了帮助理解模型原理，怎么样通过数学来严格地描述这个模型呢？我们直接给出模型的目标函数：</p>
+<p>$$<br />
+J = \frac{1}{T} \sum_{t=1}^T \sum_{-c \leq j \leq c, j \neq 0} log (p(w_{t+j}|w_t))<br />
+$$</p>
+<p>我们的目标就是让 J 取最大值，目标函数里有个 log 函数的主要目的是为了数学上的方便。T 是训练时的迭代次数。直观地描述，就是让所有的迭代后，中心词 $w_t$ 的上下文词出现的概率最大。当使用<a href="http://blog.kamidox.com/gradient-descent.html">梯度下降算法</a>来求 J 的最大值时，我们需要计算目标函数基于 $w_t$ 的偏微分。</p>
+<p>在计算偏微分之前，先来看一下 $p(w_{t+j}|w_t)$ 概率怎么算。这是个条件概率，我们重写成 $p(w_o|w_i)$，其中 $w_o$ 表示出现在上下文的词，$w_i$ 表示中心词。这是一个多选择的逻辑回归概率函数。就是我们上文提到的 Softmax function。</p>
+<p>$$<br />
+p(w_o|w_i) = \frac{\exp \left( {u_o^T v_i} \right) } {\sum_{w=1}^W \exp \left( {u_w^T v_i} \right)}<br />
+$$</p>
+<p>其中 W 是词库的个数。这个公式看起来挺吓人的。简单而直观地理解，可以看成特定的词 $w_o$ 出现的次数，与所有词可能出现的次数之和相除。实际上，之前我们介绍<a href="http://blog.kamidox.com/logistic-regression.html">逻辑回归模型</a>时，介绍的 <a href="https://en.wikipedia.org/wiki/Sigmoid_function">Sigmoid Fuction</a> 是这个公式的一个特例。Sigmoid function 适用在只有两个选择的概率问题上，而 Softmax function 适用在两个以上可选项的概率问题上。</p>
+<p>这样，对目标函数求偏微分，关键就是对 $log (p(o|i))$ 求偏微分，其中 o 和 i 分别是指上下文词和中心词的序号。老师在课堂上花了大量的时间在计算偏微分，过程中用到了对矩阵求偏微分，链接法则 (chain rules)，exp 及 log 求微分等，这些法则可参阅<a href="http://blog.kamidox.com/computation-rules-for-derivative.html">微分运算法则</a>。具体推导过程可查阅视频，最终求出的偏微分如下：</p>
+<p>$$<br />
+\frac{\partial}{\partial{v_i}} log (p(o|i)) = u_o - \sum_{x=1}^W p(x|i) u_x<br />
+$$</p>
+<p>这是一个类似递归的结果。利用这个偏分结果，就可以使用梯度下降算法来训练模型。</p>
+<h4 id="_6">语言模型</h4>
+<h4 id="continuous-bag-of-words-model-cbow">Continuous Bag of Words Model (CBOW)</h4>
+<h4 id="skip-gram-model">Skip-Gram Model</h4>
+	<hr/>
+	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2016-02-29(Monday) 23:20.</h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="../category/android.html">android</a></li>
+										<li><a href="../category/essay.html">essay</a></li>
+										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/ml.html">ml</a></li>
+										<li><a href="../category/nlp.html">nlp</a></li>
+										<li><a href="../category/python.html">python</a></li>
+										<li><a href="../category/tools.html">tools</a></li>
+										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-3"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+											<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="../theme/js/jquery.js"></script>
+		<script src="../theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
