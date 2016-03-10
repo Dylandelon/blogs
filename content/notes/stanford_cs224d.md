@@ -1,7 +1,7 @@
 Title: NLP and Deep Learning
 Date: 2016-02-29 23:20
 Modified: 2016-02-29 23:20
-Slug: machine-learning
+Slug: cs224d
 Authors: Joey Huang
 Summary: Notes of Stanford cc224d, Deep Learning with NLP
 Status: draft
