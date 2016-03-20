@@ -1,5 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 15 Dec 2021 23:36:00 +0800</lastBuildDate><item><title>如何写出高质量的技术博客</title><link>http://blog.kamidox.com/thought.html</link><description>&lt;p&gt;如何写出高质量的技术博客？答案是：如果你想，就一定能写出高质量的技术博客。看起来很唯心，但这就是事实。有足够愿力去做一件目标明确，有良好反馈系统的事情往往很简单。就是不停地训练，慢慢地，你自己就能找出规律和技巧。所以，要写出高质量的技术博客，首先要解决为什么要写的问题。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 15 Dec 2021 23:36:00 +0800</lastBuildDate><item><title>用 kitabu/princexml 制作高颜值的电子书</title><link>http://blog.kamidox.com/export-ebook-by-kitabu.html</link><description>&lt;p&gt;辛辛苦苦用 markdown 写就了一系列文章，怎么样导出制作成一本高颜值的电子书呢？本文介绍一种在 Mac 下使用 kitabu + princexml 导出高颜值电子书的方法。&lt;/p&gt;
+&lt;h2 id="_1"&gt;安装软件&lt;/h2&gt;
+&lt;p&gt;首先安装 &lt;a href="https://github.com/fnando/kitabu"&gt;kitabu&lt;/a&gt;&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;gem install kitabu
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这是个开源的 Ruby 包，主要提供电子书模板和制作过程自动化的功能。如果你没使用过 ruby ，可能在使用 &lt;code&gt;gem install kitabu&lt;/code&gt; 时报错 &lt;code&gt;Errno::ECONNRESET: Connection reset by peer&lt;/code&gt;，可以试试切换 taobao 的 &lt;a href="https://ruby.taobao.org"&gt;RubyGems 镜像&lt;/a&gt;：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;$ gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org/
+$ gem sources -l
+*** CURRENT SOURCES ***
+
+https://ruby.taobao.org
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接着安装 &lt;a href="http://princexml.com"&gt;princexml&lt;/a&gt;，可以从官网 princexml.com 下载免费的安装包。princexml 会完成从 html 转为为 pdf 功能。安装完这两个工具后，可以用 &lt;code&gt;kitabu check&lt;/code&gt; 命令检查一下是否安装成功：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;bogon:~ kamidox&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;kitabu check
+
+Prince XML: Converts HTML files into PDF files.
+Installed.
+
+KindleGen: Converts ePub e-books into .mobi files.
+Installed.
+
+html2text: Converts HTML documents into plain text.
+Not installed.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我的环境里多安装了 KindleGen ，如果你需要制作 .mobi 格式的电子书，可以使用 &lt;code&gt;brew install kindlegen&lt;/code&gt; 来安装。不过这一步不是必须的。&lt;/p&gt;
+&lt;h2 id="_2"&gt;制作电子书&lt;/h2&gt;
+&lt;p&gt;接着在工作目录执行 &lt;code&gt;kitabu new mybook&lt;/code&gt; 即可创建 kitabu 电子书的模板：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;mybook/
+├── Gemfile
+├── Guardfile
+├── config
+│   ├── helper.rb
+│   └── kitabu.yml
+├── fonts
+├── images
+│   ├── kitabu-icon.png
+│   ├── kitabu-icon.svg
+│   ├── kitabu-word.png
+│   ├── kitabu-word.svg
+│   ├── kitabu.png
+│   └── kitabu.svg
+├── output
+├── templates
+│   ├── epub
+│   │   ├── cover.erb
+│   │   ├── cover.png
+│   │   └── page.erb
+│   ├── html
+│   │   └── layout.erb
+│   └── styles
+│       ├── epub.scss
+│       ├── files
+│       │   └── _normalize.scss
+│       ├── html.scss
+│       ├── pdf.scss
+│       └── print.scss
+└── text
+    ├── 01_Getting_Started.md
+    ├── 02_Creating_Chapters.md
+    ├── 03_Syntax_Highlighting.erb
+    ├── 04_Dynamic_Content.erb
+    └── 05_Exporting_Files.md
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后在 &lt;code&gt;mybook&lt;/code&gt; 目录运行 &lt;code&gt;kitabu export&lt;/code&gt; 即可在 &lt;code&gt;output&lt;/code&gt; 目录下生成电子书了。默认情况下，会生成 &lt;a href="https://github.com/fnando/kitabu/raw/master/attachments/kitabu.pdf"&gt;kitabu 使用说明文档&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id="_3"&gt;配置&lt;/h2&gt;
+&lt;p&gt;要制作自己的电子书，需要做些简单的配置。先把 kitabu 模板的 &lt;code&gt;text&lt;/code&gt; 目录清空，然后把自己的 markdown 文件拷贝到这个目录下，需要注意的是 kitabu 是使用文件名排序生成电子书，并且会自动把 2-6 级标题自动生成书籍的目录。如果你的 markdown 文件是以 1 级标题开始，则需要把所有的标题降一个等级。&lt;/p&gt;
+&lt;p&gt;接着修改 &lt;code&gt;config/kitabu.yml&lt;/code&gt; 把书箱的作者，版权声明，出版商的信息补充完整。然后修改 &lt;code&gt;templates&lt;/code&gt; 目录下的 css 文件，让生成的电子书更漂亮。&lt;/p&gt;
+&lt;p&gt;我自己主要修改两处。一是修改 &lt;code&gt;templates/styles/pdf.scss&lt;/code&gt;，在所有的 &lt;code&gt;font-family&lt;/code&gt; 字段里添加 &lt;code&gt;PingFang SC&lt;/code&gt;，以便使用 Mac 的苹方字体来显示中文，默认字体中文效果比较差。比如：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;body {
+  font-family: Caslon, serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;改成&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;body {
+  font-family: PingFang SC, Caslon, serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;二是修改图片的宽度，以便电子书里的图片能自动缩放，避免大图片显示不全的问题。这个主要是修改 &lt;code&gt;templates/styles/files/_normalize.scss&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;img {
+  border: 0;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;改成：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;img {
+  border: 0;
+  width: 100%;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样生成的电子书颜值就很高了。如果你是前端工程师，折腾一下 css 可以做出更精美的电子书。&lt;/p&gt;
+&lt;h2 id="_4"&gt;可能遇到的问题&lt;/h2&gt;
+&lt;p&gt;另外，我自己写作过程中，直接把图片放在本地目录，然后使用相对路径在 markdown 里生成图片，比如：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;![正弦曲线](images/ch02.01.png)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;否则就得找图床，生成电子书时还会从图床下载图片。所以直接放在本地，用相对路径引用是个相对经济的方案。默认情况下，kitabu 是不认本地相对路径的图片的。这时需要 hack 一下 kitabu，因为默认情况下，kitabu 启用了安全链接的功能，我们可以把这个功能关闭掉。&lt;/p&gt;
+&lt;p&gt;首先找到 kitabu 包的安装目录，可以使用 &lt;code&gt;gem help install&lt;/code&gt; 命令，然后在输出中找 &lt;code&gt;--install-dir&lt;/code&gt; 字段，比如我的机器上有这样的输出：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;bogon:mybook kamidox$ gem help install
+  ... ...
+  Defaults:
+    --both --version &amp;#39;&amp;gt;= 0&amp;#39; --document --no-force
+    --install-dir /usr/local/lib/ruby/gems/2.3.0 --lock
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后进入 &lt;code&gt;/usr/local/lib/ruby/gems/2.3.0/gems/kitabu-2.0.4/&lt;/code&gt; 目录，打开 &lt;code&gt;lib/kitabu/markdown.rb&lt;/code&gt; 文件，把&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;renderer &lt;span style="color: #666666"&gt;=&lt;/span&gt; &lt;span style="color: #880000"&gt;Renderer&lt;/span&gt;&lt;span style="color: #666666"&gt;.&lt;/span&gt;new(&lt;span style="color: #B8860B"&gt;hard_wrap&lt;/span&gt;: &lt;span style="color: #AA22FF"&gt;true&lt;/span&gt;, &lt;span style="color: #B8860B"&gt;safe_links_only&lt;/span&gt;: &lt;span style="color: #AA22FF"&gt;true&lt;/span&gt;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改为&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;renderer &lt;span style="color: #666666"&gt;=&lt;/span&gt; &lt;span style="color: #880000"&gt;Renderer&lt;/span&gt;&lt;span style="color: #666666"&gt;.&lt;/span&gt;new(&lt;span style="color: #B8860B"&gt;hard_wrap&lt;/span&gt;: &lt;span style="color: #AA22FF"&gt;true&lt;/span&gt;, &lt;span style="color: #B8860B"&gt;safe_links_only&lt;/span&gt;: &lt;span style="color: #AA22FF"&gt;false&lt;/span&gt;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="_5"&gt;结语&lt;/h2&gt;
+&lt;p&gt;差不多就这些。奋力写作吧，只为自己成为自己的出版商。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sun, 20 Mar 2016 21:15:00 +0800</pubDate><guid>tag:blog.kamidox.com,2016-03-20:export-ebook-by-kitabu.html</guid><category>markdown</category><category>ebook</category></item><item><title>如何写出高质量的技术博客</title><link>http://blog.kamidox.com/thought.html</link><description>&lt;p&gt;如何写出高质量的技术博客？答案是：如果你想，就一定能写出高质量的技术博客。看起来很唯心，但这就是事实。有足够愿力去做一件目标明确，有良好反馈系统的事情往往很简单。就是不停地训练，慢慢地，你自己就能找出规律和技巧。所以，要写出高质量的技术博客，首先要解决为什么要写的问题。&lt;/p&gt;
 &lt;h2 id="_1"&gt;为什么要写&lt;/h2&gt;
 &lt;p&gt;我一直很喜欢的一个学习方法是&lt;/p&gt;
 &lt;blockquote&gt;
