@@ -198,7 +198,7 @@ $u_3$ 和 $u_5$ 分别表示 deep 和 NLP 这两个词。从数据中也可以�
 * Learning representations by back-propagating errors.  (Rumelhart et al., 1986)
 * [A neural probabilistic language model (Bengio et al., 2003)](http://machinelearning.wustl.edu/mlpapers/paper_files/BengioDVJ03.pdf)
 * [NLP from Scratch (Collobert & Weston, 2008)](http://ronan.collobert.com/pub/matos/2011_nlp_jmlr.pdf)
-* [word2vec (Mikolov et al. 2013)](https://en.wikipedia.org/wiki/Word2vec)
+* [word2vec (Mikolov et al. 2013)](http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf
 * [Glove: Global Vectors for  Word Representation - by Pennington et al. (2014)](http://nlp.stanford.edu/projects/glove/)
 
 特别提一下 GloVe 模型，这个是课程老师 Richard Socher 和几位同事在2014年发表的论文。本课程重点介绍 word2vec ，它的主要思想是：直接通过预测一个词的前后几个词的出现概率，来直接得到词的向量。
@@ -219,7 +219,9 @@ $$
 J = \frac{1}{T} \sum_{t=1}^T \sum_{-c \leq j \leq c, j \neq 0} log (p(w_{t+j}|w_t))
 $$
 
-我们的目标就是让 J 取最大值，目标函数里有个 log 函数的主要目的是为了数学上的方便。T 是训练时的迭代次数。直观地描述，就是让所有的迭代后，中心词 $w_t$ 的上下文词出现的概率最大。当使用[梯度下降算法](http://blog.kamidox.com/gradient-descent.html)来求 J 的最大值时，我们需要计算目标函数基于 $w_t$ 的偏微分。
+我们的目标就是让 J 取最大值，目标函数里有个 log 函数的主要目的是为了数学上的方便。T 是训练时的迭代次数，比如语料库里有 T 个词，那么我们将迭代 T 次。我们可以看到，T 是和语料库大小相关的一个量。针对一个较大的语料库，我们需要较长的时间来训练这个模型。直观地描述，就是让所有的迭代后（即遍历过所有的语料库中的每个词），中心词 $w_t$ 的上下文词出现的概率最大。
+
+当使用[梯度下降算法](http://blog.kamidox.com/gradient-descent.html)来求 J 的最大值时，我们需要计算目标函数基于 $w_t$ 的偏微分。
 
 在计算偏微分之前，先来看一下 $p(w_{t+j}|w_t)$ 概率怎么算。这是个条件概率，我们重写成 $p(w_o|w_i)$，其中 $w_o$ 表示出现在上下文的词，$w_i$ 表示中心词。这是一个多选择的逻辑回归概率函数。就是我们上文提到的 Softmax function。
 
@@ -237,9 +239,17 @@ $$
 
 这是一个类似递归的结果。利用这个偏分结果，就可以使用梯度下降算法来训练模型。
 
-#### 语言模型
+这就是 word2vec 的基本原理，实际上归纳起来就是使用当前中心词，预测出现在这个中心词周边的词的概率。通过使这个概率最大化来作为模型的目标函数。最终算出来的向量就是这个词的向量表达。这一模型被称为 Skip-gram 模型。如下图所示：
 
-#### Continuous Bag of Words Model (CBOW)
+![Skip-gram](https://raw.githubusercontent.com/kamidox/blogs/master/images/nlp_skip_gram.png)
 
-#### Skip-Gram Model
+然而，这一模型在工程应用上有一个最严重的问题是计算量特别大。因为目标函数的偏微分方程里，包含一个累加操作 $\sum_{x=1}^W p(x|i) u_x$，公式中的 W 是词库的个数。即每迭代一次参数，都需要对词库里的所有词计算一次条件概率。这将是非常大的计算量。
+
+针对这个问题，Google 的自然语言专家 Mikolov 等人在论文 [Distributed Representations of Words and Phrases and their Compositionality - Mikolov et al. 2013](http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf) 里提出了几个方案。
+
+* Hierarchical Softmax: 利用树形结构，把 Softmax 计算转换为 Sigmoid 计算。这样就可以提高计算效率。
+* Negative Sampling: 这一方法更巧妙。直接回避了 Softmax function。它的思路是，针对一个中心词以及其上下文，预测这个组合在词库里出现的概率。这就是个典型的逻辑回归问题，问题就转化为 Sigmoid function。如果这组词在语料库里出现，我们需要让模型的预测出来的概率最高，如果这组词在语料库里没有出现，需要让模型预测出来的概率最低。
+
+具体可参阅论文本身。需要说明的是，Mikolov 等人写了算法的代码，并开放出来让大家学习和测试。原始代码放在 Google Code 上，好心人把它克隆到 Github 上了。具体可查阅 [word2vec](https://github.com/svn2github/word2vec)。
+
 
