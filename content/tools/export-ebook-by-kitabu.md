@@ -1,4 +1,4 @@
-Title: 用 kitabu/princexml 制作高颜值的电子书
+Title: 用 kitabu 制作高颜值的电子书
 Date: 2016-03-20 21:15
 Modified: 2016-03-20 21:15
 Tags: markdown, ebook
