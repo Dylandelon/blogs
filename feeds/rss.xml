@@ -14,7 +14,7 @@
 &lt;p&gt;我心中滋生的新东西究竟是什么？我寻觅不到恰如其分的表达，不过，许是近乎“心灰意冷”的东西。说得夸张些，由于跑完了一百公里，我似乎一脚踏进了“稍稍不同的场所”。跑过七十五公里，疲劳感突然销声匿迹后，那段意识的空白之中，甚至存有某种哲学或宗教的妙趣。其中有强迫我内省的东西。&amp;mdash;村上春树&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;村上春树所描述的“跑者蓝调”的东西，大概就是这样的吧。我不知道为什么起了这么个名字，大概和蓝调爵士一样，你沉浸其中，轻松惬意，偶有所感，时而轻吟，偶尔高吭，但你竟找不到恰当地词来准确地描述它。&lt;/p&gt;
-&lt;p&gt;如果硬要问我为什么喜欢跑步，大概就是这个叫跑者蓝调的东西吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sat, 26 Mar 2016 21:22:00 +0800</pubDate><guid>tag:blog.kamidox.com,2016-03-26:running.html</guid><category>thought</category></item><item><title>用 kitabu/princexml 制作高颜值的电子书</title><link>http://blog.kamidox.com/export-ebook-by-kitabu.html</link><description>&lt;p&gt;辛辛苦苦用 markdown 写就了一系列文章，怎么样导出制作成一本高颜值的电子书呢？本文介绍一种在 Mac 下使用 kitabu + princexml 导出高颜值电子书的方法。&lt;/p&gt;
+&lt;p&gt;如果硬要问我为什么喜欢跑步，大概就是这个叫跑者蓝调的东西吧。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sat, 26 Mar 2016 21:22:00 +0800</pubDate><guid>tag:blog.kamidox.com,2016-03-26:running.html</guid><category>thought</category></item><item><title>用 kitabu 制作高颜值的电子书</title><link>http://blog.kamidox.com/export-ebook-by-kitabu.html</link><description>&lt;p&gt;辛辛苦苦用 markdown 写就了一系列文章，怎么样导出制作成一本高颜值的电子书呢？本文介绍一种在 Mac 下使用 kitabu + princexml 导出高颜值电子书的方法。&lt;/p&gt;
 &lt;h2 id="_1"&gt;安装软件&lt;/h2&gt;
 &lt;p&gt;首先安装 &lt;a href="https://github.com/fnando/kitabu"&gt;kitabu&lt;/a&gt;&lt;/p&gt;
 &lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;gem install kitabu
