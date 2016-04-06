@@ -8,6 +8,38 @@ Status: draft
 
 [TOC]
 
+## 20160406
+
+Pelican 代码阅读
+
+* 命令行参数解析: python std lib -> argparse
+* Log 系统: python std lib -> logging
+* 导入 pelicanconf.py 中的设置信息
+  使用 `imp.load_source()` 或 `SourceFileLoader().load_module()` 把 `pelicanconf.py` 作为模块导入，再使用 `inspect.getmembers()` 来获取模块里的变量，所有的全大写的变量作为设置信息读取进来。导入模块时，也可以使用 `__import__()` 函数，但参数的形式是不一样的。
+* 给定一个字符串 `pelican.Pelican`，怎么样用这个字符串所代表的类创建对象？
+  使用 `__import__` 和 `getattr()` 实现
+
+```python
+    cls = settings['PELICAN_CLASS']     # default class: 'pelican.Pelican'
+    if isinstance(cls, six.string_types):
+        module, cls_name = cls.rsplit('.', 1)
+        module = __import__(module)
+        cls = getattr(module, cls_name)
+
+    return cls(settings), settings
+```
+
+* 如何把某个目录加入当前的模块搜索目录？
+  把目录添加进 `sys.path` 列表即可
+* 进程内信号/事件: 使用 [blinker](https://github.com/jek/blinker) 实现
+* 插件系统
+  * 使用进程内信号 `blinker` 来实现与插件的通信
+  * 插件需要实现 `register()` 函数，这个函数由 Pelican 在初始化时调用
+  * 插件需要注册 Pelican 系统的信号，根据不同的信号做相应的处理，具体参阅 `docs/plugins.rst` 以及 `pelican/signals.py`。
+* 如何处理可选的依赖包？
+  比如 Pelican 支持多种文档格式 markdown, rst, etc. 怎么样确保只使用 markdown 的人没安装 rst 转码库 `docutils` 也能正常运行呢？这里的方法是处理 `ImportError`，并且当发生 `ImportError` 时禁用这个转换器。
+* TODO: Reader/Writer/Generator 源码阅读
+
 ## 20150607
 
 ####《持续的幸福》阅读笔记
@@ -121,7 +153,7 @@ Status: draft
   Type-safe REST client for Android and Java by Square, Inc.
 * okhttp
   https://github.com/square/okhttp
-  An HTTP+SPDY client for Android and Java applications. 
+  An HTTP+SPDY client for Android and Java applications.
 * Gson
   https://github.com/google/gson
   Gson is a Java library that can be used to convert Java Objects into their JSON representation. It can also be used to convert a JSON string to an equivalent Java object. Gson can work with arbitrary Java objects including pre-existing objects that you do not have source-code of.
@@ -145,4 +177,3 @@ http://tumblr.unsplash.com/api/read?num=10
 #### 壁纸应用，图片来自 unsplash
 
 https://github.com/kamidox/wallsplash-android
-
