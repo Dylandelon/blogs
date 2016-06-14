@@ -8,6 +8,27 @@ Status: draft
 
 [TOC]
 
+## 20160614
+
+Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
+
+异步和回调；模块系统；观察者模式等等
+
+### The Node.js philosophy
+
+* Small Core: 微内核
+* Small Module: 小模块。解决了 dependency hell 问题，每个模块可以有自己独立的依赖模块列表。即一个软件可以依赖同一个模块的不同版本。
+  * Small is beautiful.
+  * Make each program do one thing well.
+  * Easier to understand and use
+  * Simpler to test and maintain
+  * Perfect to share with the browser
+* Small surface area: 小接口。暴露出最小的，最重要的接口。次要的放在模块的属性，方法里。
+  * 暴露尽量少的接口 -> 易于使用
+  * 模块设计的目的是为了被使用，而不是被扩展
+* Simplicity and pragmatism: 简单实用原则
+
+
 ## 20160406
 
 Pelican 代码阅读
