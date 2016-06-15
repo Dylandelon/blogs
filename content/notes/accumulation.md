@@ -8,6 +8,29 @@ Status: draft
 
 [TOC]
 
+## 20160615
+
+最高效的深度拷贝库: https://github.com/ivolovikov/fastest-clone
+
+* javascript 元编程：利用 `new Function('params', 'function body')` 或 `eval('code')` 来进行实现元编程
+* 判断是否在 node.js 环境： `if (typeof module == 'object' && typeof module.exports == 'object')`
+* 递归获取 Object 实例的所有属性以及属性的属性：`_getKeyMap: function (source, deep, baseKey, arrIndex)`
+
+Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
+
+### The reactor pattern
+
+* I/O is slow: 与内存访问速度在 GB/s 数量级；磁盘的访问速度在 MB/s 数量级。
+* Blocking I/O:　阻塞式访问 I/O ，需要用多线程机制来处理并发。需要增加线程锁和线程数据同步，增加了复杂性。
+* Non-blocking I/O: 使用非阻塞式 I/O 的一个方案是忙等待 (Busy Wait)，即不停地调用 I/O 函数，直到读出数据或出错为止。这种方案较浪费 CPU 。
+* Event demultiplexing: 多路事件分解器来提高使用非阻塞 I/O 的效率。把所有待监控的资源都放在一个数组里，交给事件分解器来监视，当资源上有事件发生（比如有数据可供读取）时，监视动作返回，再去读取数据。当没有事件发生时，监控函数会进入睡眠状态，把 CPU 让给别的程序。这一编程模式类似用 `select` 函数实现异步 Socket 编程。
+* The reactor pattern: 反应堆模式。比 Event demultiplexing 更进一步。直接给资源的操作提供一个 Handler 作为回调函数。当资源可用时，直接调用回调函数。实现完整的异步 I/O 编程模式。
+* libuv: The non-blocking I/O engine of Node.js。不同的操作系统有各种的 Event demultiplexing 机制，比如 Linux 下的 `epoll`，Mac OS X 下的 `kqueue`，Windows 下的 I/O Completion Port API (IOCP)。不同平台的事件分发机制不同，且同一个平台下不同的资源的异步模式也不同。比如 Unix 下 socket 支持异步 I/O，而普通的文件系统 API 则不支持异步 I/O，这个时候就需要用单独的线程来模拟异步文件读写操作。libuv 库就是为了解决这些问题而产生的。它向 javascript 提供了不同操作系统，不同资源的异步 I/O 的抽像封装和实现。
+* The recipe for Node.js: Node.js 包含以下几部分
+  * 操作系统底层接口的封装，并暴露给 javascript 调用，如 libuv 等
+  * V8, 这是 Google 给 Chrome 开发的高性能的 javascript 引擎
+  * node.js 核心库 (node-core)，实现 Node.js 的高层 API
+
 ## 20160614
 
 Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
@@ -117,7 +140,7 @@ Pelican 代码阅读
 * 持续运营：把文章/视频发到热闹的社区引流
 * 想像空间：证明团队价值；与更大的世界发生交集；
 
-**注意点：**专注；持续；快乐。忌朝三暮四，左顾右盼。
+**注意点**：专注；持续；快乐。忌朝三暮四，左顾右盼。
 
 ## 20150419
 
