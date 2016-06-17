@@ -8,6 +8,68 @@ Status: draft
 
 [TOC]
 
+## 20160616
+
+Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
+
+### The callback pattern
+
+* The continuation-passing style: CPS 把函数作为参数传递，完成回调
+  * Synchronous continuation-passing style：同步回调，即函数返回后，回调也己调用了。
+  * Asynchronous continuation-passing style：异步回调，即函数返回后，回调还没被调用，回调会被推送到 event queue 里，在下一轮的 event loop 里调用回调。比如使用 `setTimeout()`， `process.nextTick()` 来实现。
+  * Non continuation-passing style callbacks：非 CPS 方式的回调。比如 `Array.map()` 的回调函数，通过回调函数的返回值直接交互。
+* Synchronous or asynchronous?：同步还是异步？
+  * An unpredictable function：同步和异步不可预见性，即[有时是同步回调，有时是异步回调](#an_unpredictable_function)。这种问题会引入非常难查的 bug 。
+  * Using synchronous APIs：改装成同步 API，比如通过 `fs.readFileSync()` 函数来实现。不推荐使用这种方式，会破坏 Node.js 的异步 I/O 模式。一个判断标准是：Use blocking API only when they don't affect the ability of the application to serve concurrent requests.
+  * Deferred execution：延后执行，把 API 改装成异步回调。通过 `process.nextTick()` 实现。需要注意在 event loop 里的优先级。
+* Node.js callback conventions: Node.js 的回调惯例
+  * Callbacks come last: 把回调放在最后一个参数，这样在使用的时候，可以直接用匿名函数或箭头函数实现。如 `fs.readFile(filename, [options], callback)` 。
+  * Error comes first: 把错误放在第一个参数。在 Node.js 里，CPS 风格的回调的第一个参数通常是错误信息，数据结果在第二个及之后的参数提供。如果没有出错，第一个参数的值为 `null` 或 `undefined` 。如 `fs.readFile('foo.txt', 'utf8', function(err, data) {}` 。
+  * Propagating errors: 错误传递机制。同步调用时，错误传递机制通过 `throw` 来抛出异常，这样可以使错误在调用栈里往上跳，直到它被处理为止。而在异常调用里，异常处理的机制是，在 CPS 回调链里，通过回调函数一层层往上传递。可参阅[示例代码](#propagating_errors)。
+  * Uncaught exceptions: 未处理的异常可以通过 `process.on('uncaughtException', function(err){}` 来捕获到。系统默认是直接退出程序。一般的处理是在这里记录异步 Log ，然后退出程序。针对网络服务而言，退出程序重启总是保证持续服务可用的一个折衷策略。
+
+<a name="an_unpredictable_function"></a>**同步或异步不可预测的函数**
+
+```javascript
+var fs = require('fs');
+var cache = {};
+function inconsistentRead(filename, callback) {
+  if(cache[filename]) {
+    //invoked synchronously
+    callback(cache[filename]);
+  } else {
+    //asynchronous function
+    fs.readFile(filename, 'utf8', function(err, data) {
+      cache[filename] = data;
+      callback(data);
+    });
+  }
+}
+```
+
+<a name="propagating_errors"></a>**异步回调的异常处理**
+
+```javascript
+var fs = require('fs');
+function readJSON(filename, callback) {
+  fs.readFile(filename, 'utf8', function(err, data) {
+    var parsed;
+    if(err)
+      //propagate the error and exit the current function
+      return callback(err);
+    try {
+      //parse the file contents
+      parsed = JSON.parse(data);
+    } catch(err) {
+      //catch parsing errors
+      return callback(err);
+    }
+    //no errors, propagate just the data
+    callback(null, parsed);
+  });
+};
+```
+
 ## 20160615
 
 最高效的深度拷贝库: https://github.com/ivolovikov/fastest-clone
