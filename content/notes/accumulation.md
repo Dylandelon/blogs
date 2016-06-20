@@ -8,6 +8,90 @@ Status: draft
 
 [TOC]
 
+## 20160620
+
+Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
+
+### The module system and its patterns
+
+模块系统是 Node.js 的代码结构化的基础，实现信息隐藏和接口实现的功能。
+
+* The revealing module pattern: 模块系统的本质是利用函数来创建具有信息隐藏功能的代码块。函数内的嵌套函数及变量对模块外部不可见，只有函数返回的属性和方法才对外可见。
+* Node.js modules explained: 官方文档 [Node.js 模块系统](https://nodejs.org/api/modules.html) 是最权威且最清晰的资料。
+* module.exports vs exports: The variable exports is just a reference to the initial value of module. exports。
+* require is synchronous
+* The resolving algorithm
+  * File modules: 以 `/` 或 `./` 或 `../` 开头的参数，解释为文件模块
+  * Core modules: 如果没有以路径开头，则解释为 Node.js 核心内置模块，如 `var fs = require(fs);` 。
+  * Package modules: 如果没有核心模块与之匹配，则查找当前目录下的 `node_modules` 目录下查找匹配的模块，如果找不到，则查找从父目录的 `node_modules` 目录下查找，直至根目录下的 `node_modules` 。
+  * 文件模块/包模块匹配策略
+    * `moduleName.js`
+    * `moduleName/index.js`
+    * The `main` property of `moduleName/package.json`
+* Solution for **Dependency Hell**: 按照上述模块搜索算法，每个模块都可以通过自己的 `node_modules` 子目录指定其依赖的子模块。这样即使同一个应用程序里不同模块引用了相同的子模块，他们各自独立，可以是不同的版本。
+* The module cache: 模块缓存可以解决几个问题
+  * 循环引用问题
+  * 确保引用的一致性
+  * 加快效率
+* Cycles: 模块循环引用问题，A require B, B require A
+* Module de nition patterns
+  * Named exports: `exports.info = function(message) { ... }`
+  * Exporting a function: `module.exports = function(message) { ... }`
+  * Exporting a constructor: [示例代码](#exporting_a_constructor)
+  * Exporting an instance: [示例代码](#exporting_an_instance)。巧妙地利用模块的缓存功能，使每个引用此模块的模块都引用了同一个实例。这样就实现了单例 (Singleton) 模式。
+* Modifying other modules or the global scope: 不是好的实践，但在自动测试领域有其应用场景，我们称之为猴子补丁 (Monkey Patching) 。[示例代码](#monkey_patching) 。
+
+<a name="exporting_a_constructor"></a>**模块返回构造函数**
+
+```javascript
+//file logger.js
+function Logger(name) {
+ this.name = name;
+};
+Logger.prototype.log = function(message) {
+ console.log('[' + this.name + '] ' + message);
+};
+Logger.prototype.info = function(message) {
+ this.log('info: ' + message);
+};
+Logger.prototype.verbose = function(message) {
+ this.log('verbose: ' + message);
+};
+module.exports = Logger;
+```
+
+<a name="exporting_an_instance"></a>**模块返回一个实例/单例**
+
+```javascript
+// file logger.js
+function Logger(name) {
+  this.count = 0;
+  this.name = name;
+};
+
+Logger.prototype.log = function(message) {
+  this.count++;
+  console.log('[' + this.name + '] ' + message);
+};
+module.exports = new Logger('DEFAULT');
+```
+
+<a name="monkey_patching"></a>**猴子补丁**
+
+```javascript
+// file patcher.js
+// ./logger is another module
+require('./logger').customMessage = function() {
+  console.log('This is a new functionality');
+};
+
+// Using our new patcher module would be as easy as writing the following code:
+// file main.js
+require('./patcher');
+var logger = require('./logger');
+logger.customMessage();
+```
+
 ## 20160616
 
 Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
@@ -74,7 +158,8 @@ function readJSON(filename, callback) {
 
 最高效的深度拷贝库: https://github.com/ivolovikov/fastest-clone
 
-* javascript 元编程：利用 `new Function('params', 'function body')` 或 `eval('code')` 来进行实现元编程
+* javascript 元编程：利用 `new Function('params', 'function body')` 或 `eval('code')` 来进行实现函数
+* javascript 元编程：利用 `Function.prototype.call()` 或 `Function.prototype.apply()` 来对函数进行调用
 * 判断是否在 node.js 环境： `if (typeof module == 'object' && typeof module.exports == 'object')`
 * 递归获取 Object 实例的所有属性以及属性的属性：`_getKeyMap: function (source, deep, baseKey, arrIndex)`
 
