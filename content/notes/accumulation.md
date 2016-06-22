@@ -8,6 +8,35 @@ Status: draft
 
 [TOC]
 
+## 20160622
+
+Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
+
+### The observer pattern
+
+The observer pattern is already built into the Node.js core and is available through the `EventEmitter` class.
+
+* EventEmitter 类的用法，可以手动创建一个 `EventEmitter` 实例来使用。
+* 错误处理：不能直接抛出异常，因为事件回调一般在单独的消息循环里处理，抛出的异常会丢失。一个通用的做法是定义一个独立的 `error` 事件，然后 `emmit` 这个事件。
+* Make any object observable：通过继承 `EventMitter` 来实现。ES5 可以通过 `util.inherits()` 实现，ES6 可以直接用 `inherit` 关键字实现。
+* Synchronous and asynchronous events: 同步事件和异常事件
+* EventEmitter vs Callbacks: 应该用哪个呢？
+  * semantic: callbacks should be used when a result must be returned in an asynchronous way; events should instead be used when there is a need to communicate that something has just happened.
+  * 如果一个事件可能发生多次，或者可能根本不会发生，使用 EventEmitter 是较好的选择
+  * 使用 EventEmitter 可以让多个监听者同时监听到事件。而 callback 是一对一的结果返回。
+* Combine callbacks and EventEmitter: 结合两者的优势。
+
+```javascript
+var glob = require('glob');
+glob('data/*.txt', function(error, files) {
+  console.log('All files found: ' + JSON.stringify(files));
+}).on('match', function(match) {
+  console.log('Match found: ' + match);
+});
+```
+
+关于 `EventEmitter` 可参阅[官方资料](https://nodejs.org/dist/latest-v6.x/docs/api/events.html) 。
+
 ## 20160620
 
 Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
