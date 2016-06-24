@@ -8,6 +8,158 @@ Status: draft
 
 [TOC]
 
+## 20160624
+
+Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns
+
+### The difficulties of asynchronous programming
+
+**The callback hell**: 使用 `request` 和 `mkdirp` 实现的一个简单的爬虫程序，可以明显地看到异步流程控制代码很容易陷入 callback hell 的陷阱。如[示例程序](#callback_hell)。callback hell 的代码有如下问题：
+
+* 可读性差：很难界定回调函数的起始位置和结束位置
+* 变量名重叠：比如回调函数里的错误码 `err` 在每个回调函数里都有，容易引起误解
+* 闭包函数会引起少量的内存和性能问题，比如内存泄露
+
+<a name="callback_hell"></a>**爬虫程序：callback hell**
+
+```javascript
+function spider(url, callback) {
+    var filename = utilities.urlToFilename(url);
+    fs.exists(filename, function(exists) {                              //[1]
+        if(!exists) {
+            console.log("Downloading " + url);
+            request(url, function(err, response, body) {                //[2]
+                if(err) {
+                    callback(err);
+                } else {
+                    mkdirp(path.dirname(filename), function(err) {      //[3]
+                        if(err) {
+                            callback(err);
+                        } else {
+                            fs.writeFile(filename, body, function(err) { //[4]
+                                if(err) {
+                                    callback(err);
+                                } else {
+                                    callback(null, filename, true);
+                                } });
+                        } });
+                } });
+        } else {
+            callback(null, filename, false);
+        } });
+}
+```
+
+### Using plain JavaScript
+
+使用 JavaScript 的一些通用规则可以避免 callback hell 问题。
+
+**Callback discipline**: 编写回调函数的一些原则
+
+* You must exit as soon as possible. 尽早返回。即先处理错误。
+* You need to create named functions for callbacks. 给回调创建命名函数。
+* You need to modularize the code. Split the code into smaller, reusable functions whenever it's possible.
+
+下面是按照编写回调函数的原则执行后的改进版本：
+
+```javascript
+function saveFile(filename, contents, callback) {
+    mkdirp(path.dirname(filename), function(err) {
+        if(err) {
+            return callback(err);
+        }
+        fs.writeFile(filename, contents, callback);
+    });
+}
+
+function download(url, filename, callback) {
+    console.log('Downloading ' + url);
+    request(url, function(err, response, body) {
+        if(err) {
+            return callback(err);
+        }
+        saveFile(filename, body, function(err) {
+            console.log('Downloaded and saved: ' + url);
+            if(err) {
+                return callback(err);
+            }
+            callback(null, body);
+        });
+    });
+}
+
+function spider(url, callback) {
+    var filename = utilities.urlToFilename(url);
+    fs.exists(filename, function(exists) {
+        if(exists) {
+            return callback(null, filename, false);
+        }
+        download(url, filename, function(err) {
+            if(err) {
+                return callback(err);
+            }
+            callback(null, filename, true);
+        })
+    });
+}
+```
+
+**Sequential execution**: 顺序执行
+
+爬虫程序就是一个典型的顺序执行的程序。文件是否存在 -> 从网络下载 -> 新建文件夹 -> 写文件。对己知的顺序执行的异步任务，可以使用下面的代码模板：
+
+```javascript
+function task1(callback) {
+    asyncOperation(function() {
+        Start Task 1 Task 2 Task 3 End
+        task2(callback);
+    });
+}
+
+function task2(callback) {
+    asyncOperation(function(result) {
+        task3(callback);
+    });
+}
+
+function task3(callback) {
+    asyncOperation(function() {
+        callback();
+    });
+}
+
+task1(function() {
+    //task1, task2, task3 completed
+});
+```
+
+**Sequential iteration**: 异步遍历序列数据
+
+* `task()` 函数最好是异步函数，如果是同步函数，可能造成深度递归，从而使栈溢出
+
+```javascript
+function iterate(index) {
+    if(index === tasks.length)  {
+        return finish();
+    }
+    var task = tasks[index];
+    task(function() {
+        iterate(index + 1);
+    });
+}
+
+function finish() {
+    //iteration completed
+}
+
+iterate(0);   // start iterate sequence asynchronize
+```
+
+**思考**
+
+* 使用异步遍历序列数据的方法，实现爬虫的另外一个版本：递归下载网页和网页里的所有链接。注意，只下载相同域名下的链接。
+* 更一般化地抽你异步遍历模型，可以实现如下函数签名的异步遍历函数 `iterateSeries(collection, iteratorCallback, finalCallback)` 。
+
 ## 20160622
 
 Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
