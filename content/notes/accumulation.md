@@ -8,6 +8,53 @@ Status: draft
 
 [TOC]
 
+## 20160621
+
+### rethinkdb
+
+提供在线数据库，提供数据的增删改查。一大亮眼特性是 changefeed。它能够把数据库中某个查询结果集的改变 publish 出来，供其他人 subscribe。这个特性对 realtime collaboration 的 app 来说非常有用。可以实现数据实时同步。
+
+什么样的场景适合使用 rethinkdb ?
+
+* Collaborative web and mobile apps
+* Streaming analytics apps
+* Multiplayer games
+* Realtime marketplaces
+* Connected devices
+
+### leancloud
+
+提供在线非结构化数据库，提供数据的增删改查。辅助类，提供实时聊天及推送，流量分析等功能。
+
+### wilddog
+
+国内的 BaaS (Backend as a Service) 平台。提供两大功能：
+
+* 实时同步: 提供毫秒级实时数据同步。使用 TLS + websocket 保障通信安全。不支持 websocket 的环境使用 long-polling 模拟长连接。保障通信实时性。即一个数据修改后，另外一个订阅者可以马上得到同步。
+* 在线 Json 数据库：提供数据的增删改查功能。
+
+### 带网关的 IoT 系统通信需求
+
+* 安全性：通信安全 (TLS) 及访问授权 (Auth)
+* 实时性：控制命令和状态能及时送达，达到毫秒级实时性
+* 双向通信：不同于 request/response 响应模型。App 与 Gateway，App 与 Server 之间必须支持双向实时通信。
+* 一致性：App 与 Gateway 之间；App 与 Server 之间需要实现一致的通信协议和通信模型，减少系统复杂度和开发工作量。
+
+### websocket & long-polling
+
+* [RFC 6455 - The WebSocket Protocol](http://tools.ietf.org/html/rfc6455)
+* [WebSocket API Specification](http://www.w3.org/TR/websockets/)
+* [socket.io](http://socket.io): A powerful cross-platform WebSocket API for Node.js
+
+### XaaS
+
+> 传统云服务公司的定义：SaaS、PaaS、IaaS。越往下自由度越高，越往上使用起来越简单。
+> SaaS解决的是开箱即用的问题，不用写代码，直接用。PaaS解决的是运维的问题，写完代码往云端一扔，搞定。而IaaS解决的是硬件资源弹性扩容的问题，像个水龙头，用多少拧多少。
+> 目前PaaS代表的产品比如HeroKu，Google App Engine、国内SAE等，几乎全线已挂或半死不活。PaaS挂掉的原因是没有解决根本问题，半吊子。又不简单，又不自由。
+> 广义BaaS是指用户需要通过远程API获得服务的云服务产品。比如类似统计服务MixPanel、友盟等。狭义的BaaS是指通过远程API提供计算和存储资源的产品，比如Parse、Firebase、Twilio、Pusher，Apple Cloud Kit这样的产品。
+
+REF: http://www.leiphone.com/news/201605/UQ4LxnsXfxqv2r39.html
+
 ## 20160620
 
 Node.js Design Patterns: Chapeter 1 Node.js Design Fundamentals
