@@ -621,6 +621,68 @@ function finish() {
 }
 ```
 
+## 20160630
+
+Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns
+
+### Limiting the concurrency
+
+带上限的并发执行可以有效地控制资源消耗，避免资源过载。
+
+```javascript
+var tasks = [...];
+var concurrency = 2, running = 0, completed = 0, index = 0;
+
+function next() {              //[1]
+    while(running < concurrency && index < tasks.length) {
+        task = tasks[index++];
+        task(function() {            //[2]
+            if(completed === tasks.length) {
+                return finish();
+            }
+            completed++, running--;
+            next();
+        });
+        running++;
+    }
+}
+
+next();
+
+function finish() {
+    //all tasks finished
+}
+```
+
+### Globally limiting the concurrency
+
+上面的模式无法实现全局限制，如果一个任务产生两个并发任务，多个任务就会产生多个并发任务。我们需要实现全局并发数量限制，可以用一个队列来实现。
+
+```javascript
+function TaskQueue(concurrency) {
+    this.concurrency = concurrency;
+    this.running = 0;
+    this.queue = [];
+}
+
+TaskQueue.prototype.pushTask = function(task, callback) {
+    this.queue.push(task);
+    this.next();
+}
+
+TaskQueue.prototype.next = function() {
+    var self = this;
+    while(self.running < self.concurrency && self.queue.length) {
+        var task = self.queue.shift();
+        task(function(err) {
+            self.running--;
+            self.next();
+        });
+        self.running++;
+    }
+}
+```
+
 
 
 
