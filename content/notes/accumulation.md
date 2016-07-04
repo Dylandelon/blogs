@@ -683,8 +683,102 @@ TaskQueue.prototype.next = function() {
 }
 ```
 
+## 20160704
 
+Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns
 
+### The async library
 
+[async](https://npmjs.org/package/async) 已经成为 JavaScriopt 异步流程控制的事实标准。它最初设计目标是运行在 Node.js 环境，目前也可以在浏览器环境执行。
 
+**Sequential execution**
 
+async 库有 20 多个函数用来执行串行任务。[`series()`](http://caolan.github.io/async/docs.html#.series) 函数确保异步函数顺序执行；[`waterfall()` ](http://caolan.github.io/async/docs.html#.waterfall) 在确保异步函数顺序执行的同时，还会以上一个函数的输出作为下一个函数的输入。
+
+**Parallel execution**
+
+async 库有大量的并行异步任务控制器。比如 `map()` 从一个列表逐个元素映射，生成一个新列表，在列表元素映射的过程中，是并行发生的，所以没有顺序保证。`parallel()` 只是单纯地确保任务并行执行。
+
+**Limited parallel execution**
+
+async 也可以限制并发个数的并行执行。典型地，`parallel()` 有个对应的 `parallelLimit()` 函数，作为并发个数限制的版本。`queue()` 作为任务队列，和书中介绍过的 `TaskQueue` 完成类似的功能。
+
+### Promises
+
+#### What is a promise?
+
+Promises 是一种抽像，它允许异步函数返回一个 Promises 对象，用这个对象来表达异步函数的最终结果。用 Promises 术语来讲，当异步函数未完成时，这个 Promises 对象处于 **未决 (pending)** 状态。当异步函数成功完成时，这个 Promises 对象处于 **达成 (fulfilled)** 状态。当异步任务发生错误时，这个 Promises 对象处于 **驳回 (rejected)** 状态。只要异步函数完成，不管是成功还是失败，我们称这个 Promises 对象为 **确定 (settled)** 状态，这个状态和未决状态相对应。
+
+In very simple terms, promises are an abstraction that allow an asynchronous function to return an object called a promise, which represents the eventual result of the operation. In the promises jargon, we say that a promise is pending when the asynchronous operation is not yet complete, it's fulfilled when the operation successfully completes, and rejected when the operation terminates with an error. Once a promise is either fulfilled or rejected, it's considered settled.
+
+Promises 对象有个重要的方法 `then()` 可以用来处理异步代码。
+
+```javascript
+promise.then([onFulfilled], [onRejected])
+```
+
+`onFulfilled` 是一个函数，用来处理达成状态的 Promises。`onRejected` 用来处理驳回状态的 Promises。
+
+利用这一特性，可以把 CPS 回调转换为 Promises 异步处理方式：
+
+```javascript
+asyncOperation(arg, function(err, result) {
+    if(err) {
+        //handle error
+    }
+    //do stuff with result
+});
+
+asyncOperation(arg)
+    .then(function(result) {
+        //do stuff with result
+    }, function(err) {
+        //handle error
+    });
+```
+
+用 Promises 写的代码更简洁，结构化现强。但这不是 Promises 的主要功能。**Promises 的神奇功能在于 `then` 函数本身返回一个 Promises 对象**。 `then` 函数的函数 `onFullfilled` 和 `onRejected` 什么时候被调用？在异步函数处于 settled 状态时被调用。如果 `onFulfilled` 或 `onRejected` 函数返回一个对象 `x`，那么 `then` 函数返回的 Promises 对象具有以下特性：
+
+* 如果 `x` 是一个值，那么 `then` 返回的 Promises 对象处于**达成**状态，且其值为 `x`
+* 如果 `x` 是一个 Promises 对象，那么 `then` 返回的 Promises 对象将会**达成** `x` 所达成的状态
+* 如果 `x` 是一个 Promises 对象，那么 `then` 返回的 Promises 对象将会**驳回** `x` 所最终驳回的状态
+
+这一特性的重要性在于我们可以写出链式的 Promises 表达式。如果我们不指定 `onFulfilled` 或 `onRejected` ，那么 Promises 对象会自动把确定的状态 (达成或驳回) 传递给下一个 Promises 对象。这样我们可以非常方便地把错误处理传递下去，直到最后一环的 `onRejected` 函数中处理即可。
+
+使用这个编程模型，顺序执行的异步函数可以写得非常简洁：
+
+```javascript
+asyncOperation(arg)
+    .then(function(result1) {
+        //returns another promise
+        return asyncOperation(arg2);
+    })
+    .then(function(result2) {
+        //returns a value
+        return 'done';
+    })
+    .then(undefined, function(err) {
+        //any error in the chain is caught here
+    });
+```
+
+关于链式 Promises 的工作流程，可以参阅下图：
+
+![Promises Chain](../../images/accumulate_promises_chain.png)
+
+另外一个特性是，Promises 对象的 `then` 函数总是确保 `onFulfilled` 和 `onRejected` 被异步调用。即使一个 Promises 对象是由一个同步函数返回的，也是如此。这样就确保了调用的一致性，避免出现[同步异步不可预测性的问题](#an_unpredictable_function)。这种问题最典型的情况是，不知道函数的调用顺序。
+
+#### Promises/A+ implementations
+
+[Promises/A+](https://promisesaplus.com) 是 ES6 Promises 采纳的实现标准。除此之外，还有一系列第三方库实现了 Promises/A+ 标准：
+
+* Bluebird (https://npmjs.org/package/bluebird)
+* Q (https://npmjs.org/package/q)
+* RSVP (https://npmjs.org/package/rsvp)
+* Vow (https://npmjs.org/package/vow)
+* When.js (https://npmjs.org/package/when)
+* ES6 Promises
+
+这些库的区别在于在 Promises/A+ 标准之外的功能上。Promises/A+ 实际上只规范了 `then` 函数的行为以及 Promises 对象从 pending 状态到 settled 状态的过程。对其他功能并没有规定，比如怎么样创建一个 Promises 对象，即构造函数的函数签名是没有规定的。
+
+关于 ES6 Promises 可以参阅 [ES6-cheatsheet](https://github.com/DrkSephy/es6-cheatsheet#promises)。
