@@ -658,30 +658,41 @@ function finish() {
 
 上面的模式无法实现全局限制，如果一个任务产生两个并发任务，多个任务就会产生多个并发任务。我们需要实现全局并发数量限制，可以用一个队列来实现。
 
+<a name="globally_limiting_the_concurrency"></a>**全局限制并发数量**
+
 ```javascript
-function TaskQueue(concurrency) {
+function TaskQueue (concurrency) {
     this.concurrency = concurrency;
     this.running = 0;
     this.queue = [];
 }
 
-TaskQueue.prototype.pushTask = function(task, callback) {
-    this.queue.push(task);
-    this.next();
-}
+TaskQueue.prototype.pushTask = function (task, callback) {
+    this.queue.push([task, callback]);
+    this.nextTask();
+};
 
-TaskQueue.prototype.next = function() {
-    var self = this;
-    while(self.running < self.concurrency && self.queue.length) {
-        var task = self.queue.shift();
-        task(function(err) {
-            self.running--;
-            self.next();
-        });
-        self.running++;
+TaskQueue.prototype.nextTask = function () {
+
+    function makeCallback(self, task, callback) {
+        return function (err) {
+            callback(err, task);
+            self.running --;
+            self.nextTask();
+        }
     }
-}
+
+    while (this.running < this.concurrency && this.queue.length > 0) {
+        var [task, callback] = this.queue.shift();
+        task(makeCallback(this, task, callback));
+        this.running ++;
+    }
+};
+
+module.exports = TaskQueue;
 ```
+
+具体 `TaskQueue` 代码可[参阅 GitHub 上的源码](https://github.com/kamidox/exercism/tree/master/javascript/task-queue)。
 
 ## 20160704
 
@@ -804,3 +815,92 @@ asyncOperation(arg)
 * 历史分红配股情况：分列出每一年的分红配股情况
 * 历史分红配股情况在所有股票中的排名：需要有个算法，算出每支股票分红配股分数
 * 股价与 深证指数/上证指数 的吻合情况及其排名 （排名：需要算出每支股票与上证指数/深证指数的相关系数）
+
+## 20160706
+
+Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns
+
+### Promises
+
+#### Promisifying a Node.js style function
+
+Node.js 库里只有少数几个原生支持 Promises ，我们可以通过转换，把 Node.js 类型的 CPS 回调函数改装成 Promises 样式的函数。
+
+```js
+var Promise = require('bluebird');
+
+module.exports.promisify = function (callbackBasedApi) {
+    return function promisified() {
+        // copy array: copy arguments of function promisified()
+        var args = [].slice.call(arguments);
+        return new Promise(function (resolve, reject) {
+            args.push(function (err, result) {
+                if (err) {
+                    return reject(err);
+                }
+                if (arguments.length <= 2) {
+                    resolve(result);
+                } else {
+                    resolve([].slice.call(arguments, 1));
+                }
+            });
+            callbackBasedApi.apply(null, args);
+        });
+    }
+};
+```
+
+大多数 Promises 实现都提供了把传统的 CPS 回调的 API 转换为 Promises 样式的工具函数，比如 Q 的 `Q.denodeify()`, `Q.nbind()`，bluebird 的 `Promises.promisify()` 等。
+
+#### Sequential execution
+
+Promises 对己知函数的顺序执行的模式代码如下：
+
+```js
+function promisesFunc() {
+    return func1(params1)
+        .then(=> (result1) {
+            return func2(result1[0]);
+        })
+        .then(=> (result2) {
+            return func3(result2);
+        })
+        .then(=> (result3)) {
+            return func4(result3);
+        };
+}
+```
+
+对未知列表进行迭代顺序执行时，其模式代码如下：
+
+```js
+var tasks = [...];
+var promise = Promise.resolve();    // create a empty Promise Object which resolved as 'undefined'
+tasks.forEach(function (task) {     // chain each task with Promises Object
+    promise = promise.then(function () {
+        return task();
+    });
+});
+```
+
+#### Parallel execution
+
+使用 Promises 也可轻松执行并行任务：
+
+```js
+function spiderLinks(currentUrl, body, nesting) {
+    if (nesting === 0) {
+        return Promise.resolve();
+    }
+    var links = utilities.getPageLinks(currentUrl, body);
+    var promises = links.map(function (link) {
+        return spider(link, nesting - 1);
+    });
+    return Promise.all(promises);
+}
+```
+
+#### Limited parallel execution
+
+ES6 Promises 并没有提供原生的机制来实现并行任务的控制。一个办法是使用 Javascript 原生方法来实现并行执行数量限制，比如[使用 `TaskQueue` 来实现](#globally_limiting_the_concurrency)。
+
