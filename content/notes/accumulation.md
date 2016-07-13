@@ -904,3 +904,222 @@ function spiderLinks(currentUrl, body, nesting) {
 
 ES6 Promises 并没有提供原生的机制来实现并行任务的控制。一个办法是使用 Javascript 原生方法来实现并行执行数量限制，比如[使用 `TaskQueue` 来实现](#globally_limiting_the_concurrency)。
 
+#### 示例代码
+
+关于使用 ES6 Promise 实现的网络爬虫己发布到 github 上。
+
+* [spider](https://github.com/kamidox/exercism/tree/master/javascript/spider)
+  使用串行 Promise 模型，递归下载一个网站下的所有资源，包括 html, css, javascript 等。
+* [spider v2](https://github.com/kamidox/exercism/tree/master/javascript/spider-v2)
+  使用全局并发限制的 Promise 模型，递归下载一个网站下的所有资源，包括 html, css, javascript 等。
+
+## 20160713
+
+### Generator
+
+#### Basic
+
+生成器是 ES6 引入的一个新特性，和其他语言的生成器类似：
+
+```js
+function *infiniteNumbers() {
+    var n = 1;
+    while (true) {
+        yield n++;
+    }
+}
+
+var numbers = infiniteNumbers(); // returns an iterable object
+
+numbers.next(); // { value: 1, done: false }
+numbers.next(); // { value: 2, done: false }
+numbers.next(); // { value: 3, done: false }
+```
+
+#### Generator as iterator
+
+生成器可以作为替代器使用：
+
+```js
+function* iteratorGenerator(arr) {
+    for(var i = 0; i < arr.length; i++) {
+        yield arr[i];
+    };
+}
+var iterator = iteratorGenerator(['apple', 'orange', 'watermelon']);
+var currentItem = iterator.next();
+while(!currentItem.done) {
+    console.log(currentItem.value);
+    currentItem = iterator.next();
+}
+```
+
+#### Passing values back to a generator
+
+通过生成器的 `next()` 函数可以向生成器传递参数：
+
+```js
+function* twoWayGenerator() {
+    var what = yield null;
+    console.log('Hello ' + what);
+}
+var twoWay = twoWayGenerator();
+twoWay.next();
+twoWay.next('world');
+```
+
+甚至可以向生成器传递一个异常：
+
+```js
+var twoWay = twoWayGenerator();
+twoWay.next();
+twoWay.throw(new Error());
+```
+
+这个代码会使生成器函数在 `yield` 返回的地方抛出异常。
+
+#### Asynchronous control flow with generators
+
+生成器可以用来作为异步流程控制工具。用来解决 callback hell 问题。
+
+```js
+function asyncFlow(generatorFunction) {
+
+    function callback(err) {
+        if(err) {
+            return generator.throw(err);
+        }
+        var results = [].slice.call(arguments, 1);
+        generator.next(results.length > 1 ? results : results[0]);
+    };
+
+    var generator = generatorFunction(callback);
+    generator.next();
+}
+```
+
+`asyncFlow()` 函数接受一个生成器函数作为参数。作为参数的生成器函数有个特点，即接受一个 `callback` 作为参数。有了 `asyncFlow()` 我们可以实现一个简单的文件复制的函数：
+
+```js
+var fs = require('fs');
+var path = require('path');
+
+asyncFlow(function* (callback) {
+    var fileName = path.basename(__filename);
+    var myself = yield fs.readFile(fileName, 'utf8', callback);
+    yield fs.writeFile('clone_of_' + fileName, myself, callback);
+    console.log('Clone created');
+});
+```
+
+这样，通过 `asyncFlow()` 函数把异步的流程变成类似**同步**函数的流程。注意到函数中的 `callback` 参数实在有点多余，可以进一步变形如下：
+
+```js
+function readFileThunk(filename, options) {
+    return function(callback) {
+        fs.readFile(filename, options, callback);
+    }
+}
+
+function writeFileThunk(filename, options) {
+    return function(callback) {
+        fs.writeFile(filename, options, callback);
+    }
+}
+
+function asyncFlowWithThunks(generatorFunction) {
+    function callback(err) {
+        if(err) {
+            return generator.throw(err);
+        }
+        var results = [].slice.call(arguments, 1);
+        var thunk = generator.next(results.length > 1 ? results : results[0]).value;
+        thunk && thunk(callback);   // 注意：这里的 thunk 是生成器的返回值，它是一个函数
+    };
+
+    var generator = generatorFunction();
+    var thunk = generator.next().value;
+    thunk && thunk(callback);   // 注意：这里的 thunk 是生成器的返回值，它是一个函数
+}
+```
+
+经过变形以后，我们使用 Generator 来实现异步流程控制的时候，就不需要看到 `callback` 函数了，显得更简洁：
+
+```js
+asyncFlowWithThunks(function* () {
+    var myself = yield readFileThunk(__filename, 'utf8');
+    yield writeFileThunk("clone of clone.js", myself);
+    console.log("Clone created");
+});
+```
+
+#### Generator-based control flow using co
+
+ 一些第三方库利用上面介绍的 `asyncFlow()` 的原理实现了异步控制，其中最早的是 [`suspend`](https://npmjs.org/package/suspend)，另外一个是 [`co`](https://npmjs.org/package/co)。`co` 有自己的生态系统：
+
+* Web frameworks, the most popular being [koa](https://npmjs.org/package/koa)
+* Libraries implementing specific control flow patterns
+* Libraries wrapping popular APIs to support co
+
+另外一个值得介绍的是 [`thunkify`](https://npmjs.org/package/thunkify)，用来对传统的 CPS 回调函数进行变形处理。
+
+#### Sequential execution
+
+利用上面介绍的内容，使用 Generator 重新实现网络爬虫的串行版本。
+
+```js
+var thunkify = require('thunkify');
+var co = require('co');
+var request = thunkify(require('request'));
+var fs = require('fs');
+var mkdirp = thunkify(require('mkdirp'));
+var readFile = thunkify(fs.readFile);
+var writeFile = thunkify(fs.writeFile);
+var nextTick = thunkify(process.nextTick);
+```
+
+经过 thunkify 后，使用生成器函数版本的资源下载函数 `download` 变成跟同步函数一样简洁，线性写下来即可：
+
+```js
+function* download(url, filename) {
+    console.log('Downloading ' + url);
+    var results = yield request(url);
+    var body = results[1];
+    yield mkdirp(path.dirname(filename));
+    yield writeFile(filename, body);
+    console.log('Downloaded and saved:' + url);
+    return body;
+}
+```
+
+使用相同的方法可以写出 `spider()` 和 `spiderLinks()` 函数，最后使用 `co` 来调用生成器函数：
+
+```js
+co(function* () {
+    try {
+        yield spider(process.argv[2], 1);
+        console.log('Download complete');
+    } catch(err) {
+        console.log(err);
+    };
+})();
+```
+
+#### Parallel execution
+
+使用 Generator 并不有直接实现并行执行。但第三方库 `co` 提供了针对数组进行并发执行的功能。如下示例代码：
+
+```js
+co(function* () {
+    var res = yield [
+        Promise.resolve(1),
+        Promise.resolve(2),
+        Promise.resolve(3),
+    ];
+    console.log(res); // => [1, 2, 3]
+}).catch(onerror);
+```
+
+`co` 的参数是个生成器函数，生成器函数 `yield` 了一个数组。数组里包含了一系列的任务，这些任务将会**并发**执行，直到所有任务都完成后，`yield` 才会返回。所以上面的示例代码将输出 `[1, 2, 3]` 。
+
+
