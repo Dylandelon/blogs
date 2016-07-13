@@ -227,8 +227,35 @@ Pelican支持大量的开源主题，GitHub上的[pelican-themes][14]项目有�
 
 稍微有点Jinja的知识加上一些HTML和CSS的知识，就可以自己定义主题了。
 
-!!! Note "为什么博客主页打开半天都不显示出来"
-    因为GFW封锁了几乎所有和Google相关的网站，这些主题里又用了Google的字体，所以下载这些字体时会导致无法下载成功而半天不显示网页。解决方案很简单，直接修改css文件，不去下载Google字体即可。比如针对`foundation-default-colours`主题，打开主题根目录下的`static/css/foundation.css`和`static/css/foundation.min.css`文件，删除掉`@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");`内容即可。当然，如果你和你的读者都是翻墙高手，那就不会遇到这个问题了。
+### 异常
+
+**为什么博客主页打开半天都不显示出来**
+
+因为GFW封锁了几乎所有和Google相关的网站，这些主题里又用了Google的字体，所以下载这些字体时会导致无法下载成功而半天不显示网页。解决方案很简单，直接修改css文件，不去下载Google字体即可。比如针对`foundation-default-colours`主题，打开主题根目录下的`static/css/foundation.css`和`static/css/foundation.min.css`文件，删除掉`@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");`内容即可。当然，如果你和你的读者都是翻墙高手，那就不会遇到这个问题了。
+
+**No module named html_parser**
+
+运行 pelican 命令可能出现下面的错误：
+
+```python
+    Traceback (most recent call last):
+  File "/usr/local/bin/pelican", line 7, in <module>
+    from pelican import main
+  File "/Library/Python/2.7/site-packages/pelican/__init__.py", line 20, in <module>
+    from pelican.generators import (ArticlesGenerator, PagesGenerator,
+  File "/Library/Python/2.7/site-packages/pelican/generators.py", line 22, in <module>
+    from pelican.readers import Readers
+  File "/Library/Python/2.7/site-packages/pelican/readers.py", line 24, in <module>
+    from six.moves.html_parser import HTMLParser
+ImportError: No module named html_parser
+```
+
+这种情况是由于 `six` 模块的 bug 引起的。可以修改 pelican 安装目录下的 `/Library/Python/2.7/site-packages/pelican/readers.py` 文件。
+
+```python
+# from six.moves.html_parser import HTMLParser
+from HTMLParser import HTMLParser       # 如果你在 Python 2.7 版本下运行，可直接按照这个方式修改
+```
 
 ## 撰写博客
 
@@ -319,14 +346,14 @@ Ubuntu下安装Nginx：
     :::shell
     make rsync_upload
 
-因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用`publishconf.py`来生成html，并且通过rsync上传到服务器Amazon EC2服务器的`/home/ubuntu/blogs/`目录下。
+因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用 `publishconf.py` 来生成html，并且通过rsync上传到服务器Amazon EC2服务器的 `/home/ubuntu/blogs/` 目录下。
 
 !!! Hint "配置Amazon EC2主机"
     发布博客到服务器上，需要先完成Amazon EC2主机的配置。具体可参阅[Amazon官网上的文档][6]。如果还没有主机，也可以把自己的电脑配置成服务器来作试验，所要做的，就是修改Makefile里的SSH_HOST的值为localhost即可。
 
 ## 最佳实践
 
-我的博客内容托管在GitHub上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行`make devserver`，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据`Status: draft`。然后git commit + git push提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后git commit + git push先提交到GitHub上；接着运行`make rsync_upload`即可把博客内容上传到Amazon EC2主机上。打开[kamidox.com][17]确认一下即完成了一篇博文的发布。
+我的博客内容托管在 GitHub 上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行 `make devserver`，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据 `Status: draft` 。然后 git commit + git push 提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后 git commit + git push 先提交到 GitHub 上；接着运行 `make rsync_upload` 即可把博客内容上传到 Amazon EC2 主机上。打开 [blog.kamidox.com][17] 确认一下即完成了一篇博文的发布。
 
 [1]: http://docutils.sourceforge.net/rst.html
 [2]: http://daringfireball.net/projects/markdown/
@@ -344,5 +371,5 @@ Ubuntu下安装Nginx：
 [14]: https://github.com/getpelican/pelican-themes
 [15]: http://www.pelicanthemes.com/
 [16]: http://jinja.pocoo.org/
-[17]: http://kamidox.com
+[17]: http://blog.kamidox.com
 
