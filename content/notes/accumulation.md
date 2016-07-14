@@ -1053,6 +1053,8 @@ asyncFlowWithThunks(function* () {
 });
 ```
 
+关于如何使用 Generator 进行异步流程控制，可参阅 Github 上的 [async-flow](https://github.com/kamidox/exercism/tree/master/javascript/async-flow) 示例代码。
+
 #### Generator-based control flow using co
 
  一些第三方库利用上面介绍的 `asyncFlow()` 的原理实现了异步控制，其中最早的是 [`suspend`](https://npmjs.org/package/suspend)，另外一个是 [`co`](https://npmjs.org/package/co)。`co` 有自己的生态系统：
