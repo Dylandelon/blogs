@@ -1148,3 +1148,36 @@ Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns
 
 ![Comparation](https://raw.githubusercontent.com/kamidox/blogs/master/images/js_async_flow.png)
 
+## 20160716
+
+### 以练习为核心的编程学习打卡社区
+
+#### 核心业务流程
+
+* 学生登录网站，查找需要练习的编程课程
+* 进入课程后，逐个练习完成作业，每个练习配有思路讲解以及用到的关键技术介绍
+* 上传作业发起打卡流程
+* 系统运行测试例检查作业完成情况，如果失败学生可以选择重试或者参考标准答案，如果成功则记录打卡行为
+* 学习完某个课程后，获得相关课程的徽章或证书，徽章和证书可分享到社交媒体
+
+#### 内容运营开发
+
+* 以 [exercism.io](http://exercism.io) 为蓝本，摘抄合理的练习
+* 以领域内优质图书为蓝本，提取关键技术，开发想着练习
+
+#### 课程示例
+
+* JavaScript 快速入门
+    * 课程目标：熟悉 JavaScript 语法；熟悉 JavaScript 标准库；使用 JavaScript 解决简单问题
+    * 目标用户：有其他语言背影，想要学习 JavaScript 编程的程序员
+    * 课程内容：以 exercism.io 为蓝本进行习题设计
+* Node.js 设计模式
+    * 课程目标：JavaScript 进阶；熟悉 Node.js 及其生态库的核心设计模式
+    * 目标用户：熟悉 JavaScript 基础知识，想进一步深入 JavaScript 设计模式的程序员
+    * 课程内容：以 Node.js Design Patterns 为蓝本，设计不同版本的爬虫程序来进行练习
+* 轻松掌握 ES6：逐个知识点，配合适量的练习，掌握 ES6 新特性
+
+#### 运营模式
+
+前期开发一些课程，在微信公众号，掘金，简书等平台推广。后期设计充值打卡的赢利模式。如十节课，需要充值 100 元，完成一节课返还 10 元。超过期限没有完成课程的同学，没收课程充值费用。后期可设计，放弃某个练习，返还一半练习费用；参考标准答案扣除全部的练习费用。
+
