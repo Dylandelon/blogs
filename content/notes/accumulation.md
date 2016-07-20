@@ -1181,3 +1181,104 @@ Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns
 
 前期开发一些课程，在微信公众号，掘金，简书等平台推广。后期设计充值打卡的赢利模式。如十节课，需要充值 100 元，完成一节课返还 10 元。超过期限没有完成课程的同学，没收课程充值费用。后期可设计，放弃某个练习，返还一半练习费用；参考标准答案扣除全部的练习费用。
 
+## 20160720
+
+Node.js Design Patterns: Chapeter 3 Coding With Stream
+
+### Discovering the importance of streams
+
+大部分的异步 IO API 使用 Buffering 模式，即数据缓存起来，然后一次性返回。比如 `fs.readFile()` 即工作在缓存模式下。而 Streaming 模式允许数据一到就直接被处理。流模式有以下两个优点：
+
+* 空间效率高：当处理大文件（比如超过 1 GB）时，缓存模式可能会耗尽内存而出错。而流模式则没问题。具体可参阅[空间效率](#spatial_efficiency)。
+* 时间效率高：缓存模式需要把数据全部缓存完了，才通过回调函数返回给调用者。而流模式只要有数据到达，就直接返回给调用者。具体可参阅[时间效率](#time_efficiency)。
+* 可组合性：这个是流模式最显著的优点。可以通过 `pipe()` 函数把几个流处理程序组合起来。比如，如果需要在传输过程中加密，只需要在客户端加上代码 `.pipe(crypto.createCipher('aes192', 'a_shared_secret'))`，然后在服务端加上代码 `.pipe(crypto.createDecipher('aes192', 'a_shared_secret'))` 。这样就加上了加密功能。
+
+<a name="spatial_efficiency"></a>**空间效率: 使用 GZip 算法压缩文件**
+
+```js
+var fs = require('fs');
+var zlib = require('zlib');
+
+// 压缩大于 1 GB 的文件时，会报错
+function gzipBuffered(filename) {
+    var start = Date.now();
+    fs.readFile(filename, (err, data) => {
+        zlib.gzip(data, (err, data) => {
+            fs.writeFile(filename + '.b.gz', data, () => {
+                console.log(`${filename} successful compressed. Elapsed ${Date.now() - start} ms.`);
+            })
+        })
+    })
+}
+
+// 对超大文件工作良好
+function gzipStreamed(filename) {
+    var start = Date.now();
+    fs.createReadStream(filename)
+        .pipe(zlib.createGzip())
+        .pipe(fs.createWriteStream(filename + '.s.gz'))
+        .on('finish', () => {
+            console.log(`${filename} successful compressed. Elapsed ${Date.now() - start} ms.`)
+        })
+}
+```
+
+<a name="time_efficiency"></a>**时间效率: 上传经过 gzip 压缩的文件**
+
+```js
+// 服务器端代码 gzip-stream-server.js
+var http = require('http');
+var fs = require('fs');
+var zlib = require('zlib');
+
+var server = http.createServer((req, res) => {
+    var filename = req.headers.filename;
+    console.log(`receiving ${filename} ...`);
+    var start = Date.now();
+    req.pipe(zlib.createGunzip())
+        .pipe(fs.createWriteStream(filename + '.received'))
+        .on('finish', () => {
+            res.writeHead(201, {'Content-Type': 'text/plain'});
+            res.end('File uploading successful.');
+            console.log(`received ${filename} - elapsed ${Date.now() - start} ms`)
+        });
+});
+
+server.listen(3000, () => {
+    console.log('Listening on 3000 ...');
+});
+
+// 客户端代码 gzip-stream-client.js
+var fs = require('fs');
+var zlib = require('zlib');
+var http = require('http');
+var path = require('path');
+
+var file = process.argv[2];
+file = file || './gzip-stream-client.js';
+var server = 'localhost';
+var port = 3000;
+
+var options = {
+    hostname: server,
+    port: port,
+    method: 'PUT',
+    headers: {
+        filename: path.basename(file),
+        'Content-Type': 'application/octet-stream',
+        'Content-Encoding': 'gzip'
+    }
+};
+
+var req = http.request(options, (res) => {
+    console.log(`Server response: ${res.statusCode}`);
+});
+
+var start = Date.now();
+fs.createReadStream(file)
+    .pipe(zlib.createGzip())
+    .pipe(req)
+    .on('finish', () => {
+        console.log(`${file} successful uploaded.  - elapsed ${Date.now() - start} ms`)
+    });
+```
