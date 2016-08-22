@@ -1282,3 +1282,121 @@ fs.createReadStream(file)
         console.log(`${file} successful uploaded.  - elapsed ${Date.now() - start} ms`)
     });
 ```
+
+## 20160821
+
+[blockly-games](https://github.com/google/blockly-games) - Games for tomorrow's programmers.
+
+### Blockly-Games - boot.js
+
+Blockly-Games 应用程序的 BootLoader，负载载入指定的应用程序。
+
+1. 根据 `location.pathname` 解析出应用的名称和语言
+2. 把语言记录在 `window` 全局变量里
+3. 根据解析出来的名称和语言，创建一个 `script` 标签，把应用对应的脚本 `compressed.js` 或 `uncompressed.js` 插入到页面里
+
+### Blockly-Games - deps
+
+构建 Blockly-Games 用到的工具和库。
+
+* [closure-library](https://github.com/google/closure-library): Google's common JavaScript library
+  Closure Library is a powerful, low-level JavaScript library designed for building complex and scalable web applications. It is used by many Google web applications, such as Google Search, Gmail, Google Docs, Google+, Google Maps, and others.
+* [closure-templates](https://github.com/google/closure-templates): A client- and server-side templating system that helps you dynamically build reusable HTML and UI elements
+  [helloword_js](https://developers.google.com/closure/templates/docs/helloworld_js) is a example to getting started.
+* [closure-compiler](https://github.com/google/closure-compiler): A JavaScript checker and optimizer.
+  The Closure Compiler is a tool for making JavaScript download and run faster. It is a true compiler for JavaScript. Instead of compiling from a source language to machine code, it compiles from JavaScript to better JavaScript. It parses your JavaScript, analyzes it, removes dead code and rewrites and minimizes what's left. It also checks syntax, variable references, and types, and warns about common JavaScript pitfalls.
+* [closurebuilder.py](https://github.com/google/closure-library/blob/master/closure/bin/build/closurebuilder.py): Utility for Closure Library dependency calculation.
+  ClosureBuilder scans source files to build dependency info.  From the dependencies, the script can produce a manifest in dependency order, a concatenated script, or compiled output from the Closure Compiler.
+
+### Blockly-Games - build
+
+Blockly-Games 应用程序编译流程。
+
+1. 使用 `closure-templates` 格式编写后缀为 `.soy` 的源代码。并把它编译成 JavaScript 文件 `soy.js`。
+2. 最后通过 `closurebuilder.py` 工具，把所有依赖的文件打包，生成 `compressed.js` 和 `uncompressed.js`。
+3. Apps 的 `index.html` 通过 `boot.js` 载入应用对应的 `compressed.js` 或 `uncompressed.js`。
+
+这样就构建出了一个完整的应用。其中 `uncompressed.js` 代码是关键：
+
+```js
+function loadScript() {
+    var src = srcs.shift();
+    if (src) {
+      var script = document.createElement('script');
+      script.src = src;
+      script.type = 'text/javascript';
+      // 下面的代码是关键：第一个脚本载入完成后会载入第二个脚本，直到所有 JavaScript 全部载入为止
+      script.onload = loadScript;
+      document.head.appendChild(script);
+    }
+  }
+  loadScript();
+```
+
+## 20160822
+
+<a name="google-closure-templates"></a>
+
+### Google Closure Templates
+
+Closure Templates are a client- and server-side templating system that helps you dynamically build reusable HTML and UI elements.
+
+* 传统的模板 (如 jinja2 etc.) 需要为每个页面制作一个巨大的模板文件。而 Closure Templates 的思想则是定义 UI 组件，这些 UI 组件可以在不同的页面里重用。*注：这一点有点牵强，很多模板框架支持 include 机制引用页面片段。*
+* 原生的多语言支持。
+* 可以把 Closure Templates 编译成 JavaScript 或 Java 语言，这样可以在客户端和服务器重用代码。
+
+*在客户端生成页面的技术就叫 Client Rendering, 在服务器生成页面的技术就叫 Server Rendering.*
+
+What are the benefits of using Closure Templates?
+
+* Convenience. Closure Templates provide an easy way to build pieces of HTML for your application's UI and help you separate application logic from display.
+* Language-neutral. Closure Templates work with JavaScript or Java. You can write one template and share it between your client- and server-side code.
+* Client-side speed. Closure Templates are compiled to efficient JavaScript functions for maximum client-side performance.
+* Easy to read. You can clearly see the structure of the output HTML from the structure of the template code. Messages for translation are inline for extra readability.
+* Designed for programmers. Templates are simply functions that can call each other. The syntax includes constructs familiar to programmers. You can put multiple templates in one source file.
+* A tool, not a framework. Works well in any web application environment in conjunction with any libraries, frameworks, or other tools.
+* Battle-tested. Closure Templates are used extensively in some of the largest web applications in the world, including Gmail and Google Docs.
+* Secure. Closure Templates are contextually autoescaped to reduce the risk of XSS.
+
+### Closure Templates HelloWorld
+
+[Hello World Using JavaScript](https://developers.google.com/closure/templates/docs/helloworld_js) 是个快速了解 Closure Templates 的入门示例。几个关键步骤：
+
+1. 下载 [Closure Templates JavaScript Compiler](https://dl.google.com/closure-templates/closure-templates-for-javascript-latest.zip)
+  使用这个工具把 Closure Templates 源文件 `.soy` 编译成 JavaScript 源码
+2. 按照 Closure Templates 规范编写 `.soy` 文件。目的是定义一系列可重用的 UI 组件。这些 UI 组件可以包含基本的程序化定制的内容，如参数，条件判断，循环等等。还可以使用 Closure Templates 的 `call` 命令调用其他 `.soy` 文件里定义的 UI 组件。
+3. 使用 Closure Templates JavaScript Compiler 把 `.soy` 文件编译生成 JavaScript 文件。每个 template 会被编译成一个同名的 JavaScript 函数。
+4. 创建 html 文件，通过 `<script>` 标签引用生成的 JavaScript 文件。并且在 html 文件里通过 JavaScript 调用之前定义在 `.soy` 文件里的 UI 组件。再通过 `document.write` 函数把 UI 组件的内容写到 html dom 树里。
+
+本质上，Closure Templates 还是使用 JavaScript 输出 html 界面元素，再通过 `document.write` 输出到 html dynamic dom 里。那为什么要发明一个 Closure Templates，绕一大圈来做这个事情呢？
+
+画外音响起，是一个中年男子磁性又略带沧桑的声音：我们到达一个个目的地，却忘记了为什么出发。是时候停下脚步 ...
+
+其实，[Closure Templates 的设计目标及特点](#google-closure-templates) 就是目的。
+
+## 20160823
+
+### Blockly-Games - Multi-languages
+
+Blockly-Games 多语言使用 Google Closure Templates 来实现的，其[官方文档](https://developers.google.com/closure/templates/docs/translation)有详细的步骤说明。
+
+多语言的编译步骤如下：
+
+1. 在 `.soy` 文件里，把所有需要翻译的文本用 `msg` 命令标记
+2. 下载 [closure-templates-msg-extractor-latest.zip](https://dl.google.com/closure-templates/closure-templates-msg-extractor-latest.zip)
+3. 运行 `SoyMsgExtractor.jar` 用来从 `.soy` 文件里提取出所有待翻译的文本，并生成 XLIFF 格式
+4. 运行 `i18n/xliff_to_json.py` 把 XLIFF 文件转成 json 文件，放在 `json` 目录下
+5. 运行 `i18n/json_to_js.py` 把 `.soy` 文件编译成对应语言的 `soy.js` 源文件
+6. 运行 `python build-app.py` 生成每种语言 `compressed.js` 和 `uncompressed.js` 文件
+
+### Blockly-Games - closure-templates
+
+`.soy` 文件规范。
+
+### Blockly-Games - MVC
+
+Blockly-Games 的 MVC 架构。
+
+
+
+
