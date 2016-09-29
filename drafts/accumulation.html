@@ -82,6 +82,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
 									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
 									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
@@ -222,8 +223,91 @@
 <li><a href="#sequential-execution">Sequential execution</a></li>
 <li><a href="#parallel-execution_1">Parallel execution</a></li>
 <li><a href="#limited-parallel-execution">Limited parallel execution</a></li>
+<li><a href="#_4">示例代码</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#20160713">20160713</a><ul>
+<li><a href="#generator">Generator</a><ul>
+<li><a href="#basic">Basic</a></li>
+<li><a href="#generator-as-iterator">Generator as iterator</a></li>
+<li><a href="#passing-values-back-to-a-generator">Passing values back to a generator</a></li>
+<li><a href="#asynchronous-control-flow-with-generators">Asynchronous control flow with generators</a></li>
+<li><a href="#generator-based-control-flow-using-co">Generator-based control flow using co</a></li>
+<li><a href="#sequential-execution_1">Sequential execution</a></li>
+<li><a href="#parallel-execution_2">Parallel execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#20160715">20160715</a><ul>
+<li><a href="#generator_1">Generator</a><ul>
+<li><a href="#producer-consumer-pattern">Producer-consumer pattern</a></li>
+</ul>
+</li>
+<li><a href="#_5">比较总结</a></li>
+</ul>
+</li>
+<li><a href="#20160716">20160716</a><ul>
+<li><a href="#_6">以练习为核心的编程学习打卡社区</a><ul>
+<li><a href="#_7">核心业务流程</a></li>
+<li><a href="#_8">内容运营开发</a></li>
+<li><a href="#_9">课程示例</a></li>
+<li><a href="#_10">运营模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#20160720">20160720</a><ul>
+<li><a href="#discovering-the-importance-of-streams">Discovering the importance of streams</a></li>
+</ul>
+</li>
+<li><a href="#20160821">20160821</a><ul>
+<li><a href="#blockly-games-bootjs">Blockly-Games - boot.js</a></li>
+<li><a href="#blockly-games-deps">Blockly-Games - deps</a></li>
+<li><a href="#blockly-games-build">Blockly-Games - build</a></li>
+</ul>
+</li>
+<li><a href="#20160822">20160822</a><ul>
+<li><a href="#google-closure-templates">Google Closure Templates</a></li>
+<li><a href="#closure-templates-helloworld">Closure Templates HelloWorld</a></li>
+</ul>
+</li>
+<li><a href="#20160823">20160823</a><ul>
+<li><a href="#blockly-games-multi-languages">Blockly-Games - Multi-languages</a></li>
+<li><a href="#blockly-games-closure-templates">Blockly-Games - closure-templates</a></li>
+<li><a href="#blockly-games-mvc">Blockly-Games - MVC</a></li>
+</ul>
+</li>
+<li><a href="#20160826">20160826</a><ul>
+<li><a href="#_11">欺诈交易异常检测</a></li>
+<li><a href="#_12">实施步骤</a></li>
+<li><a href="#_13">高斯分布异常检测模型</a></li>
+<li><a href="#_14">欺诈交易异常检测</a></li>
+</ul>
+</li>
+<li><a href="#20160907">20160907</a><ul>
+<li><a href="#_15">三步塑造你的职场气场</a></li>
+</ul>
+</li>
+<li><a href="#20160911">20160911</a><ul>
+<li><a href="#beyond-feelings-preface">Beyond Feelings - Preface</a></li>
+<li><a href="#beyond-feeling-part-one-the-context">Beyond Feeling - Part One - The Context</a></li>
+<li><a href="#beyond-feeling-chapter-1-who-are-you">Beyond Feeling - Chapter 1 - Who Are You?</a></li>
+</ul>
+</li>
+<li><a href="#20160913">20160913</a><ul>
+<li><a href="#beyond-feeling-becoming-an-individual">Beyond Feeling - Becoming an Individual</a></li>
+<li><a href="#beyond-feeling-chapter-2-what-is-critical-thinking">Beyond Feeling - Chapter 2 What Is Critical Thinking?</a></li>
+<li><a href="#_16">博客主题：从进化的角度看短视</a></li>
+</ul>
+</li>
+<li><a href="#20160929">20160929</a><ul>
+<li><a href="#_17">博客主题：难与易</a></li>
+<li><a href="#_18">博客主题：龟毛的程序员</a></li>
+<li><a href="#_19">博客主题：逆向思维</a></li>
+<li><a href="#_20">博客主题：瞎忙是一种福分</a></li>
 </ul>
 </li>
 </ul>
@@ -1027,6 +1111,563 @@ tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span> (t
 
 <h4 id="limited-parallel-execution">Limited parallel execution</h4>
 <p>ES6 Promises 并没有提供原生的机制来实现并行任务的控制。一个办法是使用 Javascript 原生方法来实现并行执行数量限制，比如<a href="#globally_limiting_the_concurrency">使用 <code>TaskQueue</code> 来实现</a>。</p>
+<h4 id="_4">示例代码</h4>
+<p>关于使用 ES6 Promise 实现的网络爬虫己发布到 github 上。</p>
+<ul>
+<li><a href="https://github.com/kamidox/exercism/tree/master/javascript/spider">spider</a><br />
+  使用串行 Promise 模型，递归下载一个网站下的所有资源，包括 html, css, javascript 等。</li>
+<li><a href="https://github.com/kamidox/exercism/tree/master/javascript/spider-v2">spider v2</a><br />
+  使用全局并发限制的 Promise 模型，递归下载一个网站下的所有资源，包括 html, css, javascript 等。</li>
+</ul>
+<h2 id="20160713">20160713</h2>
+<p>Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns</p>
+<h3 id="generator">Generator</h3>
+<h4 id="basic">Basic</h4>
+<p>生成器是 ES6 引入的一个新特性，和其他语言的生成器类似：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> <span style="color: #666666">*</span>infiniteNumbers() {
+    <span style="color: #AA22FF; font-weight: bold">var</span> n <span style="color: #666666">=</span> <span style="color: #666666">1</span>;
+    <span style="color: #AA22FF; font-weight: bold">while</span> (<span style="color: #AA22FF; font-weight: bold">true</span>) {
+        <span style="color: #AA22FF; font-weight: bold">yield</span> n<span style="color: #666666">++</span>;
+    }
+}
+
+<span style="color: #AA22FF; font-weight: bold">var</span> numbers <span style="color: #666666">=</span> infiniteNumbers(); <span style="color: #008800; font-style: italic">// returns an iterable object</span>
+
+numbers.next(); <span style="color: #008800; font-style: italic">// { value: 1, done: false }</span>
+numbers.next(); <span style="color: #008800; font-style: italic">// { value: 2, done: false }</span>
+numbers.next(); <span style="color: #008800; font-style: italic">// { value: 3, done: false }</span>
+</pre></div>
+
+
+<h4 id="generator-as-iterator">Generator as iterator</h4>
+<p>生成器可以作为替代器使用：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> iteratorGenerator(arr) {
+    <span style="color: #AA22FF; font-weight: bold">for</span>(<span style="color: #AA22FF; font-weight: bold">var</span> i <span style="color: #666666">=</span> <span style="color: #666666">0</span>; i <span style="color: #666666">&lt;</span> arr.length; i<span style="color: #666666">++</span>) {
+        <span style="color: #AA22FF; font-weight: bold">yield</span> arr[i];
+    };
+}
+<span style="color: #AA22FF; font-weight: bold">var</span> iterator <span style="color: #666666">=</span> iteratorGenerator([<span style="color: #BB4444">&#39;apple&#39;</span>, <span style="color: #BB4444">&#39;orange&#39;</span>, <span style="color: #BB4444">&#39;watermelon&#39;</span>]);
+<span style="color: #AA22FF; font-weight: bold">var</span> currentItem <span style="color: #666666">=</span> iterator.next();
+<span style="color: #AA22FF; font-weight: bold">while</span>(<span style="color: #666666">!</span>currentItem.done) {
+    console.log(currentItem.value);
+    currentItem <span style="color: #666666">=</span> iterator.next();
+}
+</pre></div>
+
+
+<h4 id="passing-values-back-to-a-generator">Passing values back to a generator</h4>
+<p>通过生成器的 <code>next()</code> 函数可以向生成器传递参数：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> twoWayGenerator() {
+    <span style="color: #AA22FF; font-weight: bold">var</span> what <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #AA22FF; font-weight: bold">null</span>;
+    console.log(<span style="color: #BB4444">&#39;Hello &#39;</span> <span style="color: #666666">+</span> what);
+}
+<span style="color: #AA22FF; font-weight: bold">var</span> twoWay <span style="color: #666666">=</span> twoWayGenerator();
+twoWay.next();
+twoWay.next(<span style="color: #BB4444">&#39;world&#39;</span>);
+</pre></div>
+
+
+<p>甚至可以向生成器传递一个异常：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> twoWay <span style="color: #666666">=</span> twoWayGenerator();
+twoWay.next();
+twoWay.<span style="color: #AA22FF; font-weight: bold">throw</span>(<span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #AA22FF">Error</span>());
+</pre></div>
+
+
+<p>这个代码会使生成器函数在 <code>yield</code> 返回的地方抛出异常。</p>
+<h4 id="asynchronous-control-flow-with-generators">Asynchronous control flow with generators</h4>
+<p>生成器可以用来作为异步流程控制工具。用来解决 callback hell 问题。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> asyncFlow(generatorFunction) {
+
+    <span style="color: #AA22FF; font-weight: bold">function</span> callback(err) {
+        <span style="color: #AA22FF; font-weight: bold">if</span>(err) {
+            <span style="color: #AA22FF; font-weight: bold">return</span> generator.<span style="color: #AA22FF; font-weight: bold">throw</span>(err);
+        }
+        <span style="color: #AA22FF; font-weight: bold">var</span> results <span style="color: #666666">=</span> [].slice.call(arguments, <span style="color: #666666">1</span>);
+        generator.next(results.length <span style="color: #666666">&gt;</span> <span style="color: #666666">1</span> <span style="color: #666666">?</span> results <span style="color: #666666">:</span> results[<span style="color: #666666">0</span>]);
+    };
+
+    <span style="color: #AA22FF; font-weight: bold">var</span> generator <span style="color: #666666">=</span> generatorFunction(callback);
+    generator.next();
+}
+</pre></div>
+
+
+<p><code>asyncFlow()</code> 函数接受一个生成器函数作为参数。作为参数的生成器函数有个特点，即接受一个 <code>callback</code> 作为参数。有了 <code>asyncFlow()</code> 我们可以实现一个简单的文件复制的函数：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> path <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;path&#39;</span>);
+
+asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> (callback) {
+    <span style="color: #AA22FF; font-weight: bold">var</span> fileName <span style="color: #666666">=</span> path.basename(__filename);
+    <span style="color: #AA22FF; font-weight: bold">var</span> myself <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> fs.readFile(fileName, <span style="color: #BB4444">&#39;utf8&#39;</span>, callback);
+    <span style="color: #AA22FF; font-weight: bold">yield</span> fs.writeFile(<span style="color: #BB4444">&#39;clone_of_&#39;</span> <span style="color: #666666">+</span> fileName, myself, callback);
+    console.log(<span style="color: #BB4444">&#39;Clone created&#39;</span>);
+});
+</pre></div>
+
+
+<p>这样，通过 <code>asyncFlow()</code> 函数把异步的流程变成类似<strong>同步</strong>函数的流程。注意到函数中的 <code>callback</code> 参数实在有点多余，可以进一步变形如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> readFileThunk(filename, options) {
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">function</span>(callback) {
+        fs.readFile(filename, options, callback);
+    }
+}
+
+<span style="color: #AA22FF; font-weight: bold">function</span> writeFileThunk(filename, options) {
+    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">function</span>(callback) {
+        fs.writeFile(filename, options, callback);
+    }
+}
+
+<span style="color: #AA22FF; font-weight: bold">function</span> asyncFlowWithThunks(generatorFunction) {
+    <span style="color: #AA22FF; font-weight: bold">function</span> callback(err) {
+        <span style="color: #AA22FF; font-weight: bold">if</span>(err) {
+            <span style="color: #AA22FF; font-weight: bold">return</span> generator.<span style="color: #AA22FF; font-weight: bold">throw</span>(err);
+        }
+        <span style="color: #AA22FF; font-weight: bold">var</span> results <span style="color: #666666">=</span> [].slice.call(arguments, <span style="color: #666666">1</span>);
+        <span style="color: #AA22FF; font-weight: bold">var</span> thunk <span style="color: #666666">=</span> generator.next(results.length <span style="color: #666666">&gt;</span> <span style="color: #666666">1</span> <span style="color: #666666">?</span> results <span style="color: #666666">:</span> results[<span style="color: #666666">0</span>]).value;
+        thunk <span style="color: #666666">&amp;&amp;</span> thunk(callback);   <span style="color: #008800; font-style: italic">// 注意：这里的 thunk 是生成器的返回值，它是一个函数</span>
+    };
+
+    <span style="color: #AA22FF; font-weight: bold">var</span> generator <span style="color: #666666">=</span> generatorFunction();
+    <span style="color: #AA22FF; font-weight: bold">var</span> thunk <span style="color: #666666">=</span> generator.next().value;
+    thunk <span style="color: #666666">&amp;&amp;</span> thunk(callback);   <span style="color: #008800; font-style: italic">// 注意：这里的 thunk 是生成器的返回值，它是一个函数</span>
+}
+</pre></div>
+
+
+<p>经过变形以后，我们使用 Generator 来实现异步流程控制的时候，就不需要看到 <code>callback</code> 函数了，显得更简洁：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">asyncFlowWithThunks(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
+    <span style="color: #AA22FF; font-weight: bold">var</span> myself <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> readFileThunk(__filename, <span style="color: #BB4444">&#39;utf8&#39;</span>);
+    <span style="color: #AA22FF; font-weight: bold">yield</span> writeFileThunk(<span style="color: #BB4444">&quot;clone of clone.js&quot;</span>, myself);
+    console.log(<span style="color: #BB4444">&quot;Clone created&quot;</span>);
+});
+</pre></div>
+
+
+<p>关于如何使用 Generator 进行异步流程控制，可参阅 Github 上的 <a href="https://github.com/kamidox/exercism/tree/master/javascript/async-flow">async-flow</a> 示例代码。</p>
+<h4 id="generator-based-control-flow-using-co">Generator-based control flow using co</h4>
+<p>一些第三方库利用上面介绍的 <code>asyncFlow()</code> 的原理实现了异步控制，其中最早的是 <a href="https://npmjs.org/package/suspend"><code>suspend</code></a>，另外一个是 <a href="https://npmjs.org/package/co"><code>co</code></a>。<code>co</code> 有自己的生态系统：</p>
+<ul>
+<li>Web frameworks, the most popular being <a href="https://npmjs.org/package/koa">koa</a></li>
+<li>Libraries implementing specific control flow patterns</li>
+<li>Libraries wrapping popular APIs to support co</li>
+</ul>
+<p>另外一个值得介绍的是 <a href="https://npmjs.org/package/thunkify"><code>thunkify</code></a>，用来对传统的 CPS 回调函数进行变形处理。</p>
+<h4 id="sequential-execution_1">Sequential execution</h4>
+<p>利用上面介绍的内容，使用 Generator 重新实现网络爬虫的串行版本。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> thunkify <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;thunkify&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> co <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;co&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> request <span style="color: #666666">=</span> thunkify(require(<span style="color: #BB4444">&#39;request&#39;</span>));
+<span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> mkdirp <span style="color: #666666">=</span> thunkify(require(<span style="color: #BB4444">&#39;mkdirp&#39;</span>));
+<span style="color: #AA22FF; font-weight: bold">var</span> readFile <span style="color: #666666">=</span> thunkify(fs.readFile);
+<span style="color: #AA22FF; font-weight: bold">var</span> writeFile <span style="color: #666666">=</span> thunkify(fs.writeFile);
+<span style="color: #AA22FF; font-weight: bold">var</span> nextTick <span style="color: #666666">=</span> thunkify(process.nextTick);
+</pre></div>
+
+
+<p>经过 thunkify 后，使用生成器函数版本的资源下载函数 <code>download</code> 变成跟同步函数一样简洁，线性写下来即可：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> download(url, filename) {
+    console.log(<span style="color: #BB4444">&#39;Downloading &#39;</span> <span style="color: #666666">+</span> url);
+    <span style="color: #AA22FF; font-weight: bold">var</span> results <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> request(url);
+    <span style="color: #AA22FF; font-weight: bold">var</span> body <span style="color: #666666">=</span> results[<span style="color: #666666">1</span>];
+    <span style="color: #AA22FF; font-weight: bold">yield</span> mkdirp(path.dirname(filename));
+    <span style="color: #AA22FF; font-weight: bold">yield</span> writeFile(filename, body);
+    console.log(<span style="color: #BB4444">&#39;Downloaded and saved:&#39;</span> <span style="color: #666666">+</span> url);
+    <span style="color: #AA22FF; font-weight: bold">return</span> body;
+}
+</pre></div>
+
+
+<p>使用相同的方法可以写出 <code>spider()</code> 和 <code>spiderLinks()</code> 函数，最后使用 <code>co</code> 来调用生成器函数：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">co(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
+    <span style="color: #AA22FF; font-weight: bold">try</span> {
+        <span style="color: #AA22FF; font-weight: bold">yield</span> spider(process.argv[<span style="color: #666666">2</span>], <span style="color: #666666">1</span>);
+        console.log(<span style="color: #BB4444">&#39;Download complete&#39;</span>);
+    } <span style="color: #AA22FF; font-weight: bold">catch</span>(err) {
+        console.log(err);
+    };
+})();
+</pre></div>
+
+
+<h4 id="parallel-execution_2">Parallel execution</h4>
+<p>使用 Generator 并不有直接实现并行执行。但第三方库 <code>co</code> 提供了针对数组进行并发执行的功能。如下示例代码：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">co(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
+    <span style="color: #AA22FF; font-weight: bold">var</span> res <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> [
+        Promise.resolve(<span style="color: #666666">1</span>),
+        Promise.resolve(<span style="color: #666666">2</span>),
+        Promise.resolve(<span style="color: #666666">3</span>),
+    ];
+    console.log(res); <span style="color: #008800; font-style: italic">// =&gt; [1, 2, 3]</span>
+}).<span style="color: #AA22FF; font-weight: bold">catch</span>(onerror);
+</pre></div>
+
+
+<p><code>co</code> 的参数是个生成器函数，生成器函数 <code>yield</code> 了一个数组。数组里包含了一系列的任务，这些任务将会<strong>并发</strong>执行，直到所有任务都完成后，<code>yield</code> 才会返回。所以上面的示例代码将输出 <code>[1, 2, 3]</code> 。</p>
+<h2 id="20160715">20160715</h2>
+<p>Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns</p>
+<h3 id="generator_1">Generator</h3>
+<h4 id="producer-consumer-pattern">Producer-consumer pattern</h4>
+<p>如果要使用 Generator 实现并发数据控制，我们有一些思路：</p>
+<ul>
+<li>使用我们之前实现的基于回调的 <code>TaskQueue</code> 来实现并发数量控制。要使用这一机制，我们需要把 Generator 函数和其他函数通过 thunkify 进行变形。</li>
+<li>使用我们之前实现的基于 Promise 的 <code>TaskQueue</code> 版本来进行并发数量控制。要使用这一机制，我们需要把 Generator 函数转换为 Promise 对象即可。</li>
+<li>使用 <code>async</code> 进行并发数量控制。我们需要把 Generator 函数转换为普通的基于回调的函数。</li>
+<li>使用 <code>co</code> 生态库 <a href="https://npmjs.org/package/co-limiter">co-limiter</a> 进行并发数量控制。</li>
+<li>实现生产者/消费者模型，用它来进行并发数量控制。这实际上也是 <code>co-limiter</code> 库的原理。</li>
+</ul>
+<h3 id="_5">比较总结</h3>
+<p>几种异步流程控制的优缺点对比如下：</p>
+<p><img alt="Comparation" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/js_async_flow.png" /></p>
+<h2 id="20160716">20160716</h2>
+<h3 id="_6">以练习为核心的编程学习打卡社区</h3>
+<h4 id="_7">核心业务流程</h4>
+<ul>
+<li>学生登录网站，查找需要练习的编程课程</li>
+<li>进入课程后，逐个练习完成作业，每个练习配有思路讲解以及用到的关键技术介绍</li>
+<li>上传作业发起打卡流程</li>
+<li>系统运行测试例检查作业完成情况，如果失败学生可以选择重试或者参考标准答案，如果成功则记录打卡行为</li>
+<li>学习完某个课程后，获得相关课程的徽章或证书，徽章和证书可分享到社交媒体</li>
+</ul>
+<h4 id="_8">内容运营开发</h4>
+<ul>
+<li>以 <a href="http://exercism.io">exercism.io</a> 为蓝本，摘抄合理的练习</li>
+<li>以领域内优质图书为蓝本，提取关键技术，开发想着练习</li>
+</ul>
+<h4 id="_9">课程示例</h4>
+<ul>
+<li>JavaScript 快速入门<ul>
+<li>课程目标：熟悉 JavaScript 语法；熟悉 JavaScript 标准库；使用 JavaScript 解决简单问题</li>
+<li>目标用户：有其他语言背影，想要学习 JavaScript 编程的程序员</li>
+<li>课程内容：以 exercism.io 为蓝本进行习题设计</li>
+</ul>
+</li>
+<li>Node.js 设计模式<ul>
+<li>课程目标：JavaScript 进阶；熟悉 Node.js 及其生态库的核心设计模式</li>
+<li>目标用户：熟悉 JavaScript 基础知识，想进一步深入 JavaScript 设计模式的程序员</li>
+<li>课程内容：以 Node.js Design Patterns 为蓝本，设计不同版本的爬虫程序来进行练习</li>
+</ul>
+</li>
+<li>轻松掌握 ES6：逐个知识点，配合适量的练习，掌握 ES6 新特性</li>
+</ul>
+<h4 id="_10">运营模式</h4>
+<p>前期开发一些课程，在微信公众号，掘金，简书等平台推广。后期设计充值打卡的赢利模式。如十节课，需要充值 100 元，完成一节课返还 10 元。超过期限没有完成课程的同学，没收课程充值费用。后期可设计，放弃某个练习，返还一半练习费用；参考标准答案扣除全部的练习费用。</p>
+<h2 id="20160720">20160720</h2>
+<p>Node.js Design Patterns: Chapeter 3 Coding With Stream</p>
+<h3 id="discovering-the-importance-of-streams">Discovering the importance of streams</h3>
+<p>大部分的异步 IO API 使用 Buffering 模式，即数据缓存起来，然后一次性返回。比如 <code>fs.readFile()</code> 即工作在缓存模式下。而 Streaming 模式允许数据一到就直接被处理。流模式有以下两个优点：</p>
+<ul>
+<li>空间效率高：当处理大文件（比如超过 1 GB）时，缓存模式可能会耗尽内存而出错。而流模式则没问题。具体可参阅<a href="#spatial_efficiency">空间效率</a>。</li>
+<li>时间效率高：缓存模式需要把数据全部缓存完了，才通过回调函数返回给调用者。而流模式只要有数据到达，就直接返回给调用者。具体可参阅<a href="#time_efficiency">时间效率</a>。</li>
+<li>可组合性：这个是流模式最显著的优点。可以通过 <code>pipe()</code> 函数把几个流处理程序组合起来。比如，如果需要在传输过程中加密，只需要在客户端加上代码 <code>.pipe(crypto.createCipher('aes192', 'a_shared_secret'))</code>，然后在服务端加上代码 <code>.pipe(crypto.createDecipher('aes192', 'a_shared_secret'))</code> 。这样就加上了加密功能。</li>
+</ul>
+<p><a name="spatial_efficiency"></a><strong>空间效率: 使用 GZip 算法压缩文件</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> zlib <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;zlib&#39;</span>);
+
+<span style="color: #008800; font-style: italic">// 压缩大于 1 GB 的文件时，会报错</span>
+<span style="color: #AA22FF; font-weight: bold">function</span> gzipBuffered(filename) {
+    <span style="color: #AA22FF; font-weight: bold">var</span> start <span style="color: #666666">=</span> <span style="color: #AA22FF">Date</span>.now();
+    fs.readFile(filename, (err, data) <span style="color: #666666">=&gt;</span> {
+        zlib.gzip(data, (err, data) <span style="color: #666666">=&gt;</span> {
+            fs.writeFile(filename <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.b.gz&#39;</span>, data, () <span style="color: #666666">=&gt;</span> {
+                console.log(<span style="border: 1px solid #FF0000">`</span>${filename} successful compressed. Elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms.<span style="border: 1px solid #FF0000">`</span>);
+            })
+        })
+    })
+}
+
+<span style="color: #008800; font-style: italic">// 对超大文件工作良好</span>
+<span style="color: #AA22FF; font-weight: bold">function</span> gzipStreamed(filename) {
+    <span style="color: #AA22FF; font-weight: bold">var</span> start <span style="color: #666666">=</span> <span style="color: #AA22FF">Date</span>.now();
+    fs.createReadStream(filename)
+        .pipe(zlib.createGzip())
+        .pipe(fs.createWriteStream(filename <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.s.gz&#39;</span>))
+        .on(<span style="color: #BB4444">&#39;finish&#39;</span>, () <span style="color: #666666">=&gt;</span> {
+            console.log(<span style="border: 1px solid #FF0000">`</span>${filename} successful compressed. Elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms.<span style="border: 1px solid #FF0000">`</span>)
+        })
+}
+</pre></div>
+
+
+<p><a name="time_efficiency"></a><strong>时间效率: 上传经过 gzip 压缩的文件</strong></p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// 服务器端代码 gzip-stream-server.js</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> http <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;http&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> zlib <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;zlib&#39;</span>);
+
+<span style="color: #AA22FF; font-weight: bold">var</span> server <span style="color: #666666">=</span> http.createServer((req, res) <span style="color: #666666">=&gt;</span> {
+    <span style="color: #AA22FF; font-weight: bold">var</span> filename <span style="color: #666666">=</span> req.headers.filename;
+    console.log(<span style="border: 1px solid #FF0000">`</span>receiving ${filename} ...<span style="border: 1px solid #FF0000">`</span>);
+    <span style="color: #AA22FF; font-weight: bold">var</span> start <span style="color: #666666">=</span> <span style="color: #AA22FF">Date</span>.now();
+    req.pipe(zlib.createGunzip())
+        .pipe(fs.createWriteStream(filename <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.received&#39;</span>))
+        .on(<span style="color: #BB4444">&#39;finish&#39;</span>, () <span style="color: #666666">=&gt;</span> {
+            res.writeHead(<span style="color: #666666">201</span>, {<span style="color: #BB4444">&#39;Content-Type&#39;</span><span style="color: #666666">:</span> <span style="color: #BB4444">&#39;text/plain&#39;</span>});
+            res.end(<span style="color: #BB4444">&#39;File uploading successful.&#39;</span>);
+            console.log(<span style="border: 1px solid #FF0000">`</span>received ${filename} <span style="color: #666666">-</span> elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms<span style="border: 1px solid #FF0000">`</span>)
+        });
+});
+
+server.listen(<span style="color: #666666">3000</span>, () <span style="color: #666666">=&gt;</span> {
+    console.log(<span style="color: #BB4444">&#39;Listening on 3000 ...&#39;</span>);
+});
+
+<span style="color: #008800; font-style: italic">// 客户端代码 gzip-stream-client.js</span>
+<span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> zlib <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;zlib&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> http <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;http&#39;</span>);
+<span style="color: #AA22FF; font-weight: bold">var</span> path <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;path&#39;</span>);
+
+<span style="color: #AA22FF; font-weight: bold">var</span> file <span style="color: #666666">=</span> process.argv[<span style="color: #666666">2</span>];
+file <span style="color: #666666">=</span> file <span style="color: #666666">||</span> <span style="color: #BB4444">&#39;./gzip-stream-client.js&#39;</span>;
+<span style="color: #AA22FF; font-weight: bold">var</span> server <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;localhost&#39;</span>;
+<span style="color: #AA22FF; font-weight: bold">var</span> port <span style="color: #666666">=</span> <span style="color: #666666">3000</span>;
+
+<span style="color: #AA22FF; font-weight: bold">var</span> options <span style="color: #666666">=</span> {
+    hostname<span style="color: #666666">:</span> server,
+    port<span style="color: #666666">:</span> port,
+    method<span style="color: #666666">:</span> <span style="color: #BB4444">&#39;PUT&#39;</span>,
+    headers<span style="color: #666666">:</span> {
+        filename<span style="color: #666666">:</span> path.basename(file),
+        <span style="color: #BB4444">&#39;Content-Type&#39;</span><span style="color: #666666">:</span> <span style="color: #BB4444">&#39;application/octet-stream&#39;</span>,
+        <span style="color: #BB4444">&#39;Content-Encoding&#39;</span><span style="color: #666666">:</span> <span style="color: #BB4444">&#39;gzip&#39;</span>
+    }
+};
+
+<span style="color: #AA22FF; font-weight: bold">var</span> req <span style="color: #666666">=</span> http.request(options, (res) <span style="color: #666666">=&gt;</span> {
+    console.log(<span style="border: 1px solid #FF0000">`</span>Server response<span style="color: #666666">:</span> ${res.statusCode}<span style="border: 1px solid #FF0000">`</span>);
+});
+
+<span style="color: #AA22FF; font-weight: bold">var</span> start <span style="color: #666666">=</span> <span style="color: #AA22FF">Date</span>.now();
+fs.createReadStream(file)
+    .pipe(zlib.createGzip())
+    .pipe(req)
+    .on(<span style="color: #BB4444">&#39;finish&#39;</span>, () <span style="color: #666666">=&gt;</span> {
+        console.log(<span style="border: 1px solid #FF0000">`</span>${file} successful uploaded.  <span style="color: #666666">-</span> elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms<span style="border: 1px solid #FF0000">`</span>)
+    });
+</pre></div>
+
+
+<h2 id="20160821">20160821</h2>
+<p><a href="https://github.com/google/blockly-games">blockly-games</a> - Games for tomorrow&rsquo;s programmers.</p>
+<h3 id="blockly-games-bootjs">Blockly-Games - boot.js</h3>
+<p>Blockly-Games 应用程序的 BootLoader，负载载入指定的应用程序。</p>
+<ol>
+<li>根据 <code>location.pathname</code> 解析出应用的名称和语言</li>
+<li>把语言记录在 <code>window</code> 全局变量里</li>
+<li>根据解析出来的名称和语言，创建一个 <code>script</code> 标签，把应用对应的脚本 <code>compressed.js</code> 或 <code>uncompressed.js</code> 插入到页面里</li>
+</ol>
+<h3 id="blockly-games-deps">Blockly-Games - deps</h3>
+<p>构建 Blockly-Games 用到的工具和库。</p>
+<ul>
+<li><a href="https://github.com/google/closure-library">closure-library</a>: Google&rsquo;s common JavaScript library<br />
+  Closure Library is a powerful, low-level JavaScript library designed for building complex and scalable web applications. It is used by many Google web applications, such as Google Search, Gmail, Google Docs, Google+, Google Maps, and others.</li>
+<li><a href="https://github.com/google/closure-templates">closure-templates</a>: A client- and server-side templating system that helps you dynamically build reusable HTML and UI elements<br />
+<a href="https://developers.google.com/closure/templates/docs/helloworld_js">helloword_js</a> is a example to getting started.</li>
+<li><a href="https://github.com/google/closure-compiler">closure-compiler</a>: A JavaScript checker and optimizer.<br />
+  The Closure Compiler is a tool for making JavaScript download and run faster. It is a true compiler for JavaScript. Instead of compiling from a source language to machine code, it compiles from JavaScript to better JavaScript. It parses your JavaScript, analyzes it, removes dead code and rewrites and minimizes what&rsquo;s left. It also checks syntax, variable references, and types, and warns about common JavaScript pitfalls.</li>
+<li><a href="https://github.com/google/closure-library/blob/master/closure/bin/build/closurebuilder.py">closurebuilder.py</a>: Utility for Closure Library dependency calculation.<br />
+  ClosureBuilder scans source files to build dependency info.  From the dependencies, the script can produce a manifest in dependency order, a concatenated script, or compiled output from the Closure Compiler.</li>
+</ul>
+<h3 id="blockly-games-build">Blockly-Games - build</h3>
+<p>Blockly-Games 应用程序编译流程。</p>
+<ol>
+<li>使用 <code>closure-templates</code> 格式编写后缀为 <code>.soy</code> 的源代码。并把它编译成 JavaScript 文件 <code>soy.js</code>。</li>
+<li>最后通过 <code>closurebuilder.py</code> 工具，把所有依赖的文件打包，生成 <code>compressed.js</code> 和 <code>uncompressed.js</code>。</li>
+<li>Apps 的 <code>index.html</code> 通过 <code>boot.js</code> 载入应用对应的 <code>compressed.js</code> 或 <code>uncompressed.js</code>。</li>
+</ol>
+<p>这样就构建出了一个完整的应用。其中 <code>uncompressed.js</code> 代码是关键：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> loadScript() {
+    <span style="color: #AA22FF; font-weight: bold">var</span> src <span style="color: #666666">=</span> srcs.shift();
+    <span style="color: #AA22FF; font-weight: bold">if</span> (src) {
+      <span style="color: #AA22FF; font-weight: bold">var</span> script <span style="color: #666666">=</span> <span style="color: #AA22FF">document</span>.createElement(<span style="color: #BB4444">&#39;script&#39;</span>);
+      script.src <span style="color: #666666">=</span> src;
+      script.type <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;text/javascript&#39;</span>;
+      <span style="color: #008800; font-style: italic">// 下面的代码是关键：第一个脚本载入完成后会载入第二个脚本，直到所有 JavaScript 全部载入为止</span>
+      script.onload <span style="color: #666666">=</span> loadScript;
+      <span style="color: #AA22FF">document</span>.head.appendChild(script);
+    }
+  }
+  loadScript();
+</pre></div>
+
+
+<h2 id="20160822">20160822</h2>
+<p><a name="google-closure-templates"></a></p>
+<h3 id="google-closure-templates">Google Closure Templates</h3>
+<p>Closure Templates are a client- and server-side templating system that helps you dynamically build reusable HTML and UI elements.</p>
+<ul>
+<li>传统的模板 (如 jinja2 etc.) 需要为每个页面制作一个巨大的模板文件。而 Closure Templates 的思想则是定义 UI 组件，这些 UI 组件可以在不同的页面里重用。<em>注：这一点有点牵强，很多模板框架支持 include 机制引用页面片段。</em></li>
+<li>原生的多语言支持。</li>
+<li>可以把 Closure Templates 编译成 JavaScript 或 Java 语言，这样可以在客户端和服务器重用代码。</li>
+</ul>
+<p><em>在客户端生成页面的技术就叫 Client Rendering, 在服务器生成页面的技术就叫 Server Rendering.</em></p>
+<p>What are the benefits of using Closure Templates?</p>
+<ul>
+<li>Convenience. Closure Templates provide an easy way to build pieces of HTML for your application&rsquo;s UI and help you separate application logic from display.</li>
+<li>Language-neutral. Closure Templates work with JavaScript or Java. You can write one template and share it between your client- and server-side code.</li>
+<li>Client-side speed. Closure Templates are compiled to efficient JavaScript functions for maximum client-side performance.</li>
+<li>Easy to read. You can clearly see the structure of the output HTML from the structure of the template code. Messages for translation are inline for extra readability.</li>
+<li>Designed for programmers. Templates are simply functions that can call each other. The syntax includes constructs familiar to programmers. You can put multiple templates in one source file.</li>
+<li>A tool, not a framework. Works well in any web application environment in conjunction with any libraries, frameworks, or other tools.</li>
+<li>Battle-tested. Closure Templates are used extensively in some of the largest web applications in the world, including Gmail and Google Docs.</li>
+<li>Secure. Closure Templates are contextually autoescaped to reduce the risk of XSS.</li>
+</ul>
+<h3 id="closure-templates-helloworld">Closure Templates HelloWorld</h3>
+<p><a href="https://developers.google.com/closure/templates/docs/helloworld_js">Hello World Using JavaScript</a> 是个快速了解 Closure Templates 的入门示例。几个关键步骤：</p>
+<ol>
+<li>下载 <a href="https://dl.google.com/closure-templates/closure-templates-for-javascript-latest.zip">Closure Templates JavaScript Compiler</a><br />
+  使用这个工具把 Closure Templates 源文件 <code>.soy</code> 编译成 JavaScript 源码</li>
+<li>按照 Closure Templates 规范编写 <code>.soy</code> 文件。目的是定义一系列可重用的 UI 组件。这些 UI 组件可以包含基本的程序化定制的内容，如参数，条件判断，循环等等。还可以使用 Closure Templates 的 <code>call</code> 命令调用其他 <code>.soy</code> 文件里定义的 UI 组件。</li>
+<li>使用 Closure Templates JavaScript Compiler 把 <code>.soy</code> 文件编译生成 JavaScript 文件。每个 template 会被编译成一个同名的 JavaScript 函数。</li>
+<li>创建 html 文件，通过 <code>&lt;script&gt;</code> 标签引用生成的 JavaScript 文件。并且在 html 文件里通过 JavaScript 调用之前定义在 <code>.soy</code> 文件里的 UI 组件。再通过 <code>document.write</code> 函数把 UI 组件的内容写到 html dom 树里。</li>
+</ol>
+<p>本质上，Closure Templates 还是使用 JavaScript 输出 html 界面元素，再通过 <code>document.write</code> 输出到 html dynamic dom 里。那为什么要发明一个 Closure Templates，绕一大圈来做这个事情呢？</p>
+<p>画外音响起，是一个中年男子磁性又略带沧桑的声音：我们到达一个个目的地，却忘记了为什么出发。是时候停下脚步 &hellip;</p>
+<p>其实，<a href="#google-closure-templates">Closure Templates 的设计目标及特点</a> 就是目的。</p>
+<h2 id="20160823">20160823</h2>
+<h3 id="blockly-games-multi-languages">Blockly-Games - Multi-languages</h3>
+<p>Blockly-Games 多语言使用 Google Closure Templates 来实现的，其<a href="https://developers.google.com/closure/templates/docs/translation">官方文档</a>有详细的步骤说明。</p>
+<p>多语言的编译步骤如下：</p>
+<ol>
+<li>在 <code>.soy</code> 文件里，把所有需要翻译的文本用 <code>msg</code> 命令标记</li>
+<li>下载 <a href="https://dl.google.com/closure-templates/closure-templates-msg-extractor-latest.zip">closure-templates-msg-extractor-latest.zip</a></li>
+<li>运行 <code>SoyMsgExtractor.jar</code> 用来从 <code>.soy</code> 文件里提取出所有待翻译的文本，并生成 XLIFF 格式</li>
+<li>运行 <code>i18n/xliff_to_json.py</code> 把 XLIFF 文件转成 json 文件，放在 <code>json</code> 目录下</li>
+<li>运行 <code>i18n/json_to_js.py</code> 把 <code>.soy</code> 文件编译成对应语言的 <code>soy.js</code> 源文件</li>
+<li>运行 <code>python build-app.py</code> 生成每种语言 <code>compressed.js</code> 和 <code>uncompressed.js</code> 文件</li>
+</ol>
+<h3 id="blockly-games-closure-templates">Blockly-Games - closure-templates</h3>
+<p><code>.soy</code> 文件规范。</p>
+<h3 id="blockly-games-mvc">Blockly-Games - MVC</h3>
+<p>Blockly-Games 的 MVC 架构。</p>
+<h2 id="20160826">20160826</h2>
+<h3 id="_11">欺诈交易异常检测</h3>
+<p>核心思路：从数据集里，找出大部分帐户的行为模式，以此建立模型。如果一个帐户的行为模式与此模型偏差较远，则可定义为异常。<br />
+欺诈交易：并非所有的异常帐户都有欺诈交易，但我们可以通过人工参与的方式从异常帐户里人为发现一些线索，从而优化特征选择，从而不断地优化模型。</p>
+<p>经过不断优化后的模型，检测出来的异常帐户中，大部分都是欺诈交易。则这个模型就是个成功的模型。</p>
+<p><strong>行为模式</strong></p>
+<ul>
+<li>被欺诈的帐户是否有这样的特点：欺诈发生时的一段时间内（比如一周）的资金转出量会不会比平常大很多？<br />
+  如果有这样的特征，则可使用<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.24.5743&amp;rep=rep1&amp;type=pdf">PGA 算法</a>来检查出这些帐户。</li>
+<li>实施欺诈的帐户资金动向有哪些特点？比如多次均衡地有资金转入，但一次性有大比资金转出？<br />
+  如果有这样的特征，也可以使用 PGA 算法检测出来。</li>
+<li>检测出可能被欺诈的帐户后，再看看可能实施了欺诈的帐户列表。看看他们之间有没有资金往来，如果有，这两个帐户存在欺诈的可能性就更大了。</li>
+</ul>
+<h3 id="_12">实施步骤</h3>
+<ol>
+<li>清洗数据<br />
+   把不活跃帐户信息过滤掉，以免模型过多地关注这些不活跃的帐户的行为模式。怎么样定义不活跃帐户？</li>
+<li>提取特征<br />
+   根据行为模式的分析，提取特征</li>
+<li>建立模型<br />
+   建立模型，并拿测试数据来训练算法</li>
+<li>检测算法<br />
+   拿算法来找出异常的帐户，人工确认其是否存在欺诈，如果不存在欺诈，则优化特征。以此不断迭代，直到找出合理的模型。</li>
+</ol>
+<h3 id="_13">高斯分布异常检测模型</h3>
+<p>使用高斯分布进行检测，这一算法简单方便，可以较快地得出异常帐户列表。但这些异常帐户是否存在欺诈交易需要人工鉴别，并且根据鉴别的结果，进一步优化特征。这一算法的其他挑战有：</p>
+<ol>
+<li>所有的特征需要逐一检查，让其<strong>独立地满足正态分布</strong>，否则不能适用这个算法。</li>
+<li>训练数据是一个超级大矩阵，因为我们需要把用户的一段时间内所有行为数据都提取为特征，并且和所有的用户组成一个超级大矩阵。这样在非分布式计算的环境下，要训练这样的模型可能性基本为零。不过可以拿小部分数据试运行，检测模型的合理程度。如果可行，再想办法解决运算量的问题。</li>
+</ol>
+<h3 id="_14">欺诈交易异常检测</h3>
+<ol>
+<li>根据 PGA 算法检测可能被欺诈的帐户</li>
+<li>根据 PGA 算法检测可能实施欺诈的帐户</li>
+<li>检查被欺诈帐户和实施欺诈帐户之间的资金关联关系，如果存在强关联关系，则这组欺诈可能将变得很高</li>
+</ol>
+<h2 id="20160907">20160907</h2>
+<h3 id="_15">三步塑造你的职场气场</h3>
+<ol>
+<li>引出问题：职场气场是客观存在的<br />
+   有的人动不动被老板骂，连提出的合理要求都被驳回。有的人老板安排任务时说话很客气，更会替他考虑任务的资源是否充足。</li>
+<li>多听<br />
+   * 学会问问题，收集尽量多信息<br />
+   * 多思考，理解老板的真实意图<br />
+   * 换位思考，站在老板的角度思考问题</li>
+<li>少说<br />
+   * 不轻易摆困难，绝不抱怨<br />
+   * 说出信息，而不是噪声<br />
+   * 说出有价值的观点和分析，提升影响力<br />
+   * 状态汇报，预警风险，汇报结果</li>
+<li>多做<br />
+   * 言必信，行必果。这是塑造可信赖形象的不二法宝。<br />
+   * 结果导向</li>
+</ol>
+<h2 id="20160911">20160911</h2>
+<h3 id="beyond-feelings-preface">Beyond Feelings - Preface</h3>
+<p>Why we need a critical thinking?</p>
+<blockquote>
+<p>First, because we live in an age of manipulation. Armies of hucksters and demagogues stand ready with the rich resources of psychology to play upon our emotions and subconscious needs to persuade us that superficial is profound, harmful is beneficial, evil is virtuous. And feelings are especially vulnerable to such manipulation.</p>
+<p>Secondly, because in virtually every important area of modern life — law, medicine, government, education, science, business, and community affairs — we are beset with serious problems and complex issues that demand careful gathering and weighing of facts and informed opinions, thoughtful consideration of various conclusions or actions, and judicious selection of the best conclusion or most appropriate action &hellip;</p>
+<p>Feeling and thought are perfectly complementary. Feeling, being more spontaneous, is an excellent beginning to the development of conclusions. And thought, being more deliberate, provides a way to identify the best and most appropriate feeling. Both are natural.</p>
+</blockquote>
+<h3 id="beyond-feeling-part-one-the-context">Beyond Feeling - Part One - The Context</h3>
+<blockquote>
+<p>Anyone who wishes to master an activity must first understand its tools and rules.</p>
+<p>In critical thinking, however, the tools are not material objects but concepts, and the rules govern mental rather than physical performance.</p>
+</blockquote>
+<p>李笑来一直在强调概念要升级。爱因斯坦说过，如果有一个问题需要我一个小时内给出答案，我需要花 55 分钟搞清楚问题是什么。这都说明了概念的重要性。</p>
+<h3 id="beyond-feeling-chapter-1-who-are-you">Beyond Feeling - Chapter 1 - Who Are You?</h3>
+<blockquote>
+<p>It would have to include all your characteristics—not only the physical but also the emotional and intellectual.</p>
+</blockquote>
+<p>哲学史上的圣杯问题。需要从身体，情感和智力方面去定义一个个体。个体特性会受以下方面的影响：</p>
+<ul>
+<li>The Influence of Time and Place: 时间和空间对人(身体，情感，智力)的影响。</li>
+<li>The Influence of Ideas: 观念的暗示作用。</li>
+<li>The Influence of Mass Culture: 多元文化，多渠道信息的广泛影响。</li>
+<li>The “Science” of Manipulation: 科学操纵。行为主义心理学的发展。</li>
+<li>The Influence of Psychology: 心理学的影响。</li>
+</ul>
+<blockquote>
+<p>tell [the consumer] something that will tie him up with fear, something that will stir up a mild rage, that will call out an affectionate or love response, or strike at a deep psychological or habit need. &mdash; 行为主义心理学之父 John Watson</p>
+</blockquote>
+<p>几乎所有的现代广告和推广策略都离不开这段话。包括那些所谓产品情怀。</p>
+<blockquote>
+<p>advertisers and people with political or social agendas are not content to stimulate emotions and/or plant ideas in our minds. They also seek to reinforce those impressions by repeating them again and again. The more people hear a slogan or talking point, the more familiar it becomes. Before long, it becomes indistinguishable from ideas developed through careful thought.</p>
+</blockquote>
+<p>脑白金广告的真谛。</p>
+<h2 id="20160913">20160913</h2>
+<h3 id="beyond-feeling-becoming-an-individual">Beyond Feeling - Becoming an Individual</h3>
+<ol>
+<li>Treat your first reaction to any person, issue, or situation as tentative.<br />
+   No matter how appealing it may be, refuse to embrace it until you have examined it.</li>
+<li>Decide why you reacted as you did.</li>
+<li>Think of other possible reactions you might have had to the person, issue, or situation.</li>
+<li>Ask yourself whether one of the other reactions is more appropriate than your first reaction. And when you answer, resist the influence of your conditioning.</li>
+</ol>
+<h3 id="beyond-feeling-chapter-2-what-is-critical-thinking">Beyond Feeling - Chapter 2 What Is Critical Thinking?</h3>
+<blockquote>
+<p>Clear thinking is a very rare thing, but even just plain thinking is almost as rare. Most of us most of the time do not think at all. We believe and we feel, but we do not think.</p>
+<p>Mental indolence is one of the commonest of human traits.</p>
+</blockquote>
+<p>看到这些文字，令人恐慌，回忆过往，我们什么时候有理有据地分析思考过一个问题？大部分时候，我们只是凭直觉生活。让生活的列车由感觉这个司机来自动驾驶，而且没有配置雷达纠错机制。细细想来，又令人兴奋，既然大部分完全不思考，那么只要坚持哪怕一点点成果，可能就会超越很多人。</p>
+<h3 id="_16">博客主题：从进化的角度看短视</h3>
+<p>只有短视才能在残酷，朝不保夕，险像环生的环境中生存下来。</p>
+<h2 id="20160929">20160929</h2>
+<h3 id="_17">博客主题：难与易</h3>
+<p>我们努力奋斗，迎难而上，或多或少都希望将来的生活越来越容易。但生活从来都不曾容易过。</p>
+<p>微信小程序刚出来，就有人破解开发工具，有人在 github 上收集所有的可用资源，有人把知乎客户端的界面用微信小程序的框架开发出来。为的就是消费微信小程序的流量红利。小道消息曾经发表过一篇文章，分析哪些人可以从微信小程序上获利，最先获利的就是这些培训机构。</p>
+<h3 id="_18">博客主题：龟毛的程序员</h3>
+<p>程序员是龟毛的，甚至是吹毛求疵的。为了达到 DRY (Do not Repeat Yourself) 的目标，他们发明了一个又一个框架，抽像了一层又一层，把原本简单明了的东西，层层构架。最后呈现出来的，是简洁和一目了然。但在简洁之下，隐藏了复杂，隐藏了日日夜夜的冥思苦想。</p>
+<h3 id="_19">博客主题：逆向思维</h3>
+<p>一个程序员，如果他要设计一个模块给别人使用，一个好的方法是假设自己就是这个模块的用户，用这个模块的接口去实现一些典型的功能，真正地把代码写出来。从写出来的代码里去闻看看有没有坏味道，如果有，多半是接口设计得不合理。很多时候，我们抱怨模块接口复杂不好用。一个很重要的原因就是模块设计者没有把自己摆在使用者的位置上。</p>
+<h3 id="_20">博客主题：瞎忙是一种福分</h3>
+<p>一句被广泛传播的话：选择比努力重要。还有一个说法更令人焦虑：很多时候你只是在瞎忙。一下子否定了所有的努力，焦虑感油然而生。我的方向对不对？做这个事情有没有意义？做这个事情能不能对未来的成功有帮助？</p>
+<p>一个残酷的现实时，大部分人不会选择，甚至无法选择。</p>
+<p>1985 年乔布斯离开苹果公司，创建 NeXT，收购皮克斯，他能预见到皮克斯的成功？能预见到回归苹果，把 NeXT 软件和苹果操作系统结合，从而产生 Mac/iOS 系列软件生态系统？</p>
+<p>未来不可预测。我们需要偶尔布个闲棋，就像 AlphaGo 在胶着状态下，索性到脚落里下个闲棋，最后这个闲棋还真发挥了巨大的威力。乔布斯早年痴迷字体设计，他根本无法预见有朝一日这个技能会大大提高苹果软件的颜值。</p>
+<blockquote>
+<p>生命里的每一个点都会最终连成线。&mdash;乔布斯</p>
+</blockquote>
+<p>这里的点，在当时的情境下，可能都是瞎忙。</p>
+<p>我们在公司里上着班，做着不痛不痒的工作。为什么不利用闲暇时间瞎忙一下呢？人工智能很有神奇，为什么不花点时间了解机器学习的算法和原理呢？前端开发技术栈一日千里，为什么不花点时间看看这些层出不穷的前端框架有什么区别，如何解决开发过程中的问题？后端开发怎么解决海量并发问题的？海量数据是怎么存储和检索的？甚至可以花点时间学学画画，我们的画画水平和 10 岁的小孩基本没有差别，想想都觉得有点惭愧。</p>
+<p>但行好事，莫问前程。愿好奇心不泯，愿有时间瞎忙。</p>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2015-04-13(Monday) 00:19.</h6>
 </article>
@@ -1078,32 +1719,33 @@ tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span> (t
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
 										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
 										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
 										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
 										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
 										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
+											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
 											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
 											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>

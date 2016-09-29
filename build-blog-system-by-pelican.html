@@ -82,6 +82,7 @@
 
 
 						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
 									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
 									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
@@ -143,23 +144,24 @@
 <li><a href="#pelicanconfpypublishconfpy">配置pelicanconf.py和publishconf.py</a></li>
 <li><a href="#makefile">配置Makefile</a></li>
 <li><a href="#_2">配置主题</a></li>
+<li><a href="#_3">异常</a></li>
 </ul>
 </li>
-<li><a href="#_3">撰写博客</a><ul>
-<li><a href="#_4">撰写博客</a></li>
-<li><a href="#_5">预览博客文章</a></li>
+<li><a href="#_4">撰写博客</a><ul>
+<li><a href="#_5">撰写博客</a></li>
+<li><a href="#_6">预览博客文章</a></li>
 </ul>
 </li>
-<li><a href="#_6">发布博客</a><ul>
+<li><a href="#_7">发布博客</a><ul>
 <li><a href="#nginx">配置Nginx</a></li>
-<li><a href="#_7">上传博客到服务器</a></li>
+<li><a href="#_8">上传博客到服务器</a></li>
 </ul>
 </li>
-<li><a href="#_8">最佳实践</a></li>
+<li><a href="#_9">最佳实践</a></li>
 </ul>
 </div>
 <h2 id="_1">摘要</h2>
-<p>经过几天的折腾，用Pelican搭建的独立博客系统终于上线运行了。可以打开<a href="http://kamidox.com">kamidox.com</a>看一下效果图。由于选用了响应式网页设计的主题，所以在手机上的浏览效果也相当赞。本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出我自己的最佳实践描述。</p>
+<p>经过几天的折腾，用Pelican搭建的独立博客系统终于上线运行了。可以打开<a href="http://blog.kamidox.com">kamidox.com</a>看一下效果图。由于选用了响应式网页设计的主题，所以在手机上的浏览效果也相当赞。本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出我自己的最佳实践描述。</p>
 <h2 id="pelican">Pelican介绍</h2>
 <h3 id="pelican_1">什么是Pelican</h3>
 <p><a href="https://github.com/getpelican/pelican">Perlican</a>是用Python实现的一个静态网站生成器，支持<a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>或<a href="http://daringfireball.net/projects/markdown/">Markdown</a>。它支持以下功能：</p>
@@ -448,12 +450,32 @@ git clone https://github.com/getpelican/pelican-themes.git
 
 
 <p>稍微有点Jinja的知识加上一些HTML和CSS的知识，就可以自己定义主题了。</p>
-<div class="admonition note">
-<p class="admonition-title">为什么博客主页打开半天都不显示出来</p>
+<h3 id="_3">异常</h3>
+<p><strong>为什么博客主页打开半天都不显示出来</strong></p>
 <p>因为GFW封锁了几乎所有和Google相关的网站，这些主题里又用了Google的字体，所以下载这些字体时会导致无法下载成功而半天不显示网页。解决方案很简单，直接修改css文件，不去下载Google字体即可。比如针对<code>foundation-default-colours</code>主题，打开主题根目录下的<code>static/css/foundation.css</code>和<code>static/css/foundation.min.css</code>文件，删除掉<code>@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");</code>内容即可。当然，如果你和你的读者都是翻墙高手，那就不会遇到这个问题了。</p>
-</div>
-<h2 id="_3">撰写博客</h2>
-<h3 id="_4">撰写博客</h3>
+<p><strong>No module named html_parser</strong></p>
+<p>运行 pelican 命令可能出现下面的错误：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    Traceback (most recent call last):
+  File <span style="color: #BB4444">&quot;/usr/local/bin/pelican&quot;</span>, line <span style="color: #666666">7</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pelican</span> <span style="color: #AA22FF; font-weight: bold">import</span> main
+  File <span style="color: #BB4444">&quot;/Library/Python/2.7/site-packages/pelican/__init__.py&quot;</span>, line <span style="color: #666666">20</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pelican.generators</span> <span style="color: #AA22FF; font-weight: bold">import</span> (ArticlesGenerator, PagesGenerator,
+  File <span style="color: #BB4444">&quot;/Library/Python/2.7/site-packages/pelican/generators.py&quot;</span>, line <span style="color: #666666">22</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pelican.readers</span> <span style="color: #AA22FF; font-weight: bold">import</span> Readers
+  File <span style="color: #BB4444">&quot;/Library/Python/2.7/site-packages/pelican/readers.py&quot;</span>, line <span style="color: #666666">24</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">six.moves.html_parser</span> <span style="color: #AA22FF; font-weight: bold">import</span> HTMLParser
+<span style="color: #D2413A; font-weight: bold">ImportError</span>: No module named html_parser
+</pre></div>
+
+
+<p>这种情况是由于 <code>six</code> 模块的 bug 引起的。可以修改 pelican 安装目录下的 <code>/Library/Python/2.7/site-packages/pelican/readers.py</code> 文件。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># from six.moves.html_parser import HTMLParser</span>
+<span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">HTMLParser</span> <span style="color: #AA22FF; font-weight: bold">import</span> HTMLParser       <span style="color: #008800; font-style: italic"># 如果你在 Python 2.7 版本下运行，可直接按照这个方式修改</span>
+</pre></div>
+
+
+<h2 id="_4">撰写博客</h2>
+<h3 id="_5">撰写博客</h3>
 <p>在<code>content</code>目录下新建一个xxx.md，使用Makedown语法直接撰写文档即可。我在ubuntu下使用的是gedit，代码高亮效果很好。撰写博客的时候需要注意，Pelican支持一些元数据。比如，本文的元数据如下：</p>
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
@@ -478,7 +500,7 @@ Status: draft
 <li>第8行：这个表示本文是草稿。比如我们一篇博客经常不是一次性写完的，写了一半暂不想让读者看到，或者写完想让别人帮忙审查一下，就可以加这一行标识。这样Pelican在处理时，这篇文章也会生成html，但不会放在博客的主页及分类索引里，这样普通的读者一般看不到这个文章。有这个标识的文章生成时放在<code>output/drafts</code>目录下，你就可以通过分享url的方式让你的co-worker帮你review你的文章。</li>
 </ol>
 <p>我们可以在<code>content</code>目录下任意建子目录来组织管理博客文章。由于我们在设置文件里指定这个值<code>USE_FOLDER_AS_CATEGORY = True</code>，这样这些目录名称就自动变成博文分类的目录了。</p>
-<h3 id="_5">预览博客文章</h3>
+<h3 id="_6">预览博客文章</h3>
 <p>撰写文章的过程中，可以随时在浏览器里预览博客文章。方法是先在博客项目的根目录下执行下面命令来启动预览服务器：</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">make devserver
 </pre></div>
@@ -490,7 +512,7 @@ Status: draft
 <p class="admonition-title">文章在主页上没看到？</p>
 <p>撰写完文章，需要发布时，需要把<code>Status: draft</code>这行元数据去掉。否则文章不会出现在博客主页。只会在drafts下看得到。</p>
 </div>
-<h2 id="_6">发布博客</h2>
+<h2 id="_7">发布博客</h2>
 <p>写完博客，我们想发布到网上。这个时候我们就需要一个主机和一个域名，我的独立博客系统用到的下面资源：</p>
 <ul>
 <li>Amazon EC2主机。一个帐户可以免费使用一年。可以点击<a href="https://aws.amazon.com">这里</a>注册。</li>
@@ -543,19 +565,19 @@ Status: draft
 
 
 <p>然后在浏览器里输入<code>localhost</code>就可以看到博客首页。在本机验证成功Nginx配置后，就可以用SSH登录服务器去配置服务器了。</p>
-<h3 id="_7">上传博客到服务器</h3>
+<h3 id="_8">上传博客到服务器</h3>
 <p>直接在项目根目录下运行下面的命令即可把文章上传到博客服务器:</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">make rsync_upload
 </pre></div>
 
 
-<p>因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用<code>publishconf.py</code>来生成html，并且通过rsync上传到服务器Amazon EC2服务器的<code>/home/ubuntu/blogs/</code>目录下。</p>
+<p>因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用 <code>publishconf.py</code> 来生成html，并且通过rsync上传到服务器Amazon EC2服务器的 <code>/home/ubuntu/blogs/</code> 目录下。</p>
 <div class="admonition hint">
 <p class="admonition-title">配置Amazon EC2主机</p>
 <p>发布博客到服务器上，需要先完成Amazon EC2主机的配置。具体可参阅<a href="https://aws.amazon.com">Amazon官网上的文档</a>。如果还没有主机，也可以把自己的电脑配置成服务器来作试验，所要做的，就是修改Makefile里的SSH_HOST的值为localhost即可。</p>
 </div>
-<h2 id="_8">最佳实践</h2>
-<p>我的博客内容托管在GitHub上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行<code>make devserver</code>，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据<code>Status: draft</code>。然后git commit + git push提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后git commit + git push先提交到GitHub上；接着运行<code>make rsync_upload</code>即可把博客内容上传到Amazon EC2主机上。打开<a href="http://kamidox.com">kamidox.com</a>确认一下即完成了一篇博文的发布。</p>
+<h2 id="_9">最佳实践</h2>
+<p>我的博客内容托管在 GitHub 上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行 <code>make devserver</code>，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据 <code>Status: draft</code> 。然后 git commit + git push 提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后 git commit + git push 先提交到 GitHub 上；接着运行 <code>make rsync_upload</code> 即可把博客内容上传到 Amazon EC2 主机上。打开 <a href="http://blog.kamidox.com">blog.kamidox.com</a> 确认一下即完成了一篇博文的发布。</p>
 	<hr/>
 	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/tools.html">tools</a> on 2014-10-26(Sunday) 23:20. Tags: <a href="./tag/python.html">python</a>, <a href="./tag/pelican.html">pelican</a>, </h6>
 </article>
@@ -607,32 +629,33 @@ Status: draft
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
 										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
 										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
 										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
 										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
+											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
 											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
 											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>

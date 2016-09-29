@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 15 Dec 2021 23:36:00 +0800</lastBuildDate><item><title>跑者蓝调</title><link>http://blog.kamidox.com/running.html</link><description>&lt;p&gt;不知不觉已经坚持慢跑一年有余，大概因为觉得主动长期坚持一件枯燥的事情，总会有点感悟，总觉得应该写点什么，可似乎又无从谈起。看完村上春树的《当我谈跑步时我谈些什么》，似乎找到了一些知音的感觉，还是决定写点什么吧。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kamidox.com</title><link>http://blog.kamidox.com/</link><description></description><atom:link href="http://blog.kamidox.com/feeds/rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 15 Dec 2021 23:36:00 +0800</lastBuildDate><item><title>瞎忙是一种福分</title><link>http://blog.kamidox.com/busy-without-purpose.html</link><description>&lt;p&gt;一句被广泛传播的话：选择比努力重要。还有一个说法更令人焦虑：很多时候你只是瞎忙。一下子否定了所有的努力，焦虑感油然而生。我的方向对不对？做这个事情有没有意义？做这个事情能不能对未来的成功有帮助？&lt;/p&gt;
+&lt;p&gt;一个残酷的现实时，大部分人不会选择，甚至无法选择。&lt;/p&gt;
+&lt;p&gt;1985 年乔布斯离开苹果公司，创建 NeXT，收购皮克斯，他能预见到皮克斯的成功？能预见到回归苹果，把 NeXT 软件和苹果操作系统结合，从而产生 Mac/iOS 系列软件生态系统？&lt;/p&gt;
+&lt;p&gt;未来不可预测。我们需要偶尔布个闲棋，就像 AlphaGo 在胶着状态下，索性到脚落里下个闲棋，最后这个闲棋还真发挥了巨大的威力。乔布斯早年痴迷字体设计，他根本无法预见有朝一日这个技能会大大提高苹果软件的颜值。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;生命里的每一个点都会最终连成线。&amp;mdash;乔布斯&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里的点，在当时的情境下，可能都是瞎忙。&lt;/p&gt;
+&lt;p&gt;我们在公司里上着班，做着不痛不痒的工作。为什么不利用闲暇时间瞎忙一下呢？人工智能很有神奇，为什么不了解一下机器学习的算法和原理呢？前端开发技术一日千里，为什么不花点时间看看这些层出不穷的前端框架有什么区别，如何解决开发过程中的问题？后端开发怎么解决海量并发问题的？海量数据是怎么存储和检索的？甚至可以花点时间学学画画，我们的画画水平和 10 岁的小孩基本没有差别，想想都觉得有点惭愧。&lt;/p&gt;
+&lt;p&gt;但行好事，莫问前程。愿好奇心不泯，愿有时间瞎忙。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Thu, 29 Sep 2016 00:13:00 +0800</pubDate><guid>tag:blog.kamidox.com,2016-09-29:busy-without-purpose.html</guid><category>thought</category></item><item><title>跑者蓝调</title><link>http://blog.kamidox.com/running.html</link><description>&lt;p&gt;不知不觉已经坚持慢跑一年有余，大概因为觉得主动长期坚持一件枯燥的事情，总会有点感悟，总觉得应该写点什么，可似乎又无从谈起。看完村上春树的《当我谈跑步时我谈些什么》，似乎找到了一些知音的感觉，还是决定写点什么吧。&lt;/p&gt;
 &lt;p&gt;我们常说，真理掌握在少数人手上，大概是真理太少了的缘故。有些时候，我们手握真理，却没有足够的自信臣服于她，非得等自带光环的人说出同样的话来，我们才恍然大悟，原来这就是真理。跑步是枯燥的，跑步是痛苦的，至少对肉体而言。这一近乎真理的结论，我们大部分时间都不愿意承认它。跑步怎么这么枯燥，这么痛苦，一定是哪里出了问题，这么痛苦的事情怎么会有人坚持下去？我刚开始跑步的时候经常这么反问自己。幸好由于一些别的原因，虽然痛苦，但还是咬着牙坚持了下来。读完《当我谈跑步时我谈些什么》后，突然豁然开朗，跑步大概就是痛苦的。某种意义上，正是因为有了痛苦和枯燥，才让跑步更迷人。就像辣椒，辣椒素会刺激口腔细胞，引起灼烧般的痛感，多少人沉迷于这种痛感啊。&lt;/p&gt;
 &lt;p&gt;最近一年，我认真地跑着。跑量没有村上春树那么大，但基本符合他所定义的认真二字。除了天气原因，跑步计划雷打不动，至今己累积 1300 多公里的跑量。有一次穿完跑鞋，到楼下才发现下大雨了，索性就改为跑着爬楼梯，爬了 20 趟八层楼。接下来的整整一星期，小腿肌肉都在罢工，基本无法走路，但很奇怪的是可以慢跑。大概是因为平时慢跑训练出来的肌肉群承受力足够强，但爬楼梯用到的肌肉群毕竟和跑步用到的不一样，那些养尊处优的肌肉群冷不丁经历了这么大的运动量，不罢工才怪。以前要是有人跟我说，他没办法走路，但可以慢跑，我大概是无法相信的。在小腿肌肉罢工无法走路的一星期里，我还是坚持跑了两次六公里。&lt;/p&gt;
 &lt;p&gt;另外一次，我原想跑十公里，结果跑了六公里就下起了小雨。纠结了一下，突然想起一直以来想体验一下雨中狂奔的感觉，就索性继续跑下去了。清凉的雨水砸在脸上，身体慢慢地冷却了下来。可能是本能想要躲雨，速度也慢慢地提了上去。大口吸进湿润又清新的空气，肺像大脚油门轰下去的发动机，持续地输出氧气到全身细胞。注意力慢慢地从涣散状态集中到雨滴和脚步上，内心憋着一口气，想要快点结束战斗，回到温暖的家中。周遭的环境突然变得模糊起来，所有的意念只有雨滴和脚步，所有的愿力，都是想办法用最快的速度跑到前方的三米的地方。就这么机械地跑着，世界变得简单明了，只剩脸上的雨滴和脚下的步伐，世间的纷扰，得以暂时褪去。耳机里响起十公里的距离播报时，突然松了一口气，终于不用再跑啦。做完拉伸，回到家中，跟妻子说刚才跑着跑着感觉进入了深度冥想状态。妻子嘲笑着说，你跑步还能跑出高潮来。&lt;/p&gt;
@@ -6185,23 +6194,24 @@ app &lt;span style="color: #666666"&gt;=&lt;/span&gt; Flask(__name__)
 &lt;li&gt;&lt;a href="#pelicanconfpypublishconfpy"&gt;配置pelicanconf.py和publishconf.py&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#makefile"&gt;配置Makefile&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#_2"&gt;配置主题&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_3"&gt;异常&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#_3"&gt;撰写博客&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="#_4"&gt;撰写博客&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#_5"&gt;预览博客文章&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_4"&gt;撰写博客&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#_5"&gt;撰写博客&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_6"&gt;预览博客文章&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#_6"&gt;发布博客&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="#_7"&gt;发布博客&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="#nginx"&gt;配置Nginx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#_7"&gt;上传博客到服务器&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_8"&gt;上传博客到服务器&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href="#_8"&gt;最佳实践&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#_9"&gt;最佳实践&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;h2 id="_1"&gt;摘要&lt;/h2&gt;
-&lt;p&gt;经过几天的折腾，用Pelican搭建的独立博客系统终于上线运行了。可以打开&lt;a href="http://kamidox.com"&gt;kamidox.com&lt;/a&gt;看一下效果图。由于选用了响应式网页设计的主题，所以在手机上的浏览效果也相当赞。本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出我自己的最佳实践描述。&lt;/p&gt;
+&lt;p&gt;经过几天的折腾，用Pelican搭建的独立博客系统终于上线运行了。可以打开&lt;a href="http://blog.kamidox.com"&gt;kamidox.com&lt;/a&gt;看一下效果图。由于选用了响应式网页设计的主题，所以在手机上的浏览效果也相当赞。本文介绍了Pelican的特性；选择Pelican的理由以及从头安装配置，搭建出一个可运行的独立博客系统。最后给出我自己的最佳实践描述。&lt;/p&gt;
 &lt;h2 id="pelican"&gt;Pelican介绍&lt;/h2&gt;
 &lt;h3 id="pelican_1"&gt;什么是Pelican&lt;/h3&gt;
 &lt;p&gt;&lt;a href="https://github.com/getpelican/pelican"&gt;Perlican&lt;/a&gt;是用Python实现的一个静态网站生成器，支持&lt;a href="http://docutils.sourceforge.net/rst.html"&gt;reStructuredText&lt;/a&gt;或&lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown&lt;/a&gt;。它支持以下功能：&lt;/p&gt;
@@ -6490,12 +6500,32 @@ git clone https://github.com/getpelican/pelican-themes.git
 
 
 &lt;p&gt;稍微有点Jinja的知识加上一些HTML和CSS的知识，就可以自己定义主题了。&lt;/p&gt;
-&lt;div class="admonition note"&gt;
-&lt;p class="admonition-title"&gt;为什么博客主页打开半天都不显示出来&lt;/p&gt;
+&lt;h3 id="_3"&gt;异常&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;为什么博客主页打开半天都不显示出来&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;因为GFW封锁了几乎所有和Google相关的网站，这些主题里又用了Google的字体，所以下载这些字体时会导致无法下载成功而半天不显示网页。解决方案很简单，直接修改css文件，不去下载Google字体即可。比如针对&lt;code&gt;foundation-default-colours&lt;/code&gt;主题，打开主题根目录下的&lt;code&gt;static/css/foundation.css&lt;/code&gt;和&lt;code&gt;static/css/foundation.min.css&lt;/code&gt;文件，删除掉&lt;code&gt;@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");&lt;/code&gt;内容即可。当然，如果你和你的读者都是翻墙高手，那就不会遇到这个问题了。&lt;/p&gt;
-&lt;/div&gt;
-&lt;h2 id="_3"&gt;撰写博客&lt;/h2&gt;
-&lt;h3 id="_4"&gt;撰写博客&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;No module named html_parser&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;运行 pelican 命令可能出现下面的错误：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;    Traceback (most recent call last):
+  File &lt;span style="color: #BB4444"&gt;&amp;quot;/usr/local/bin/pelican&amp;quot;&lt;/span&gt;, line &lt;span style="color: #666666"&gt;7&lt;/span&gt;, &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style="color: #AA22FF; font-weight: bold"&gt;from&lt;/span&gt; &lt;span style="color: #0000FF; font-weight: bold"&gt;pelican&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;import&lt;/span&gt; main
+  File &lt;span style="color: #BB4444"&gt;&amp;quot;/Library/Python/2.7/site-packages/pelican/__init__.py&amp;quot;&lt;/span&gt;, line &lt;span style="color: #666666"&gt;20&lt;/span&gt;, &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style="color: #AA22FF; font-weight: bold"&gt;from&lt;/span&gt; &lt;span style="color: #0000FF; font-weight: bold"&gt;pelican.generators&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;import&lt;/span&gt; (ArticlesGenerator, PagesGenerator,
+  File &lt;span style="color: #BB4444"&gt;&amp;quot;/Library/Python/2.7/site-packages/pelican/generators.py&amp;quot;&lt;/span&gt;, line &lt;span style="color: #666666"&gt;22&lt;/span&gt;, &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style="color: #AA22FF; font-weight: bold"&gt;from&lt;/span&gt; &lt;span style="color: #0000FF; font-weight: bold"&gt;pelican.readers&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;import&lt;/span&gt; Readers
+  File &lt;span style="color: #BB4444"&gt;&amp;quot;/Library/Python/2.7/site-packages/pelican/readers.py&amp;quot;&lt;/span&gt;, line &lt;span style="color: #666666"&gt;24&lt;/span&gt;, &lt;span style="color: #AA22FF; font-weight: bold"&gt;in&lt;/span&gt; &lt;span style="color: #666666"&gt;&amp;lt;&lt;/span&gt;module&lt;span style="color: #666666"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span style="color: #AA22FF; font-weight: bold"&gt;from&lt;/span&gt; &lt;span style="color: #0000FF; font-weight: bold"&gt;six.moves.html_parser&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;import&lt;/span&gt; HTMLParser
+&lt;span style="color: #D2413A; font-weight: bold"&gt;ImportError&lt;/span&gt;: No module named html_parser
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这种情况是由于 &lt;code&gt;six&lt;/code&gt; 模块的 bug 引起的。可以修改 pelican 安装目录下的 &lt;code&gt;/Library/Python/2.7/site-packages/pelican/readers.py&lt;/code&gt; 文件。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #008800; font-style: italic"&gt;# from six.moves.html_parser import HTMLParser&lt;/span&gt;
+&lt;span style="color: #AA22FF; font-weight: bold"&gt;from&lt;/span&gt; &lt;span style="color: #0000FF; font-weight: bold"&gt;HTMLParser&lt;/span&gt; &lt;span style="color: #AA22FF; font-weight: bold"&gt;import&lt;/span&gt; HTMLParser       &lt;span style="color: #008800; font-style: italic"&gt;# 如果你在 Python 2.7 版本下运行，可直接按照这个方式修改&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="_4"&gt;撰写博客&lt;/h2&gt;
+&lt;h3 id="_5"&gt;撰写博客&lt;/h3&gt;
 &lt;p&gt;在&lt;code&gt;content&lt;/code&gt;目录下新建一个xxx.md，使用Makedown语法直接撰写文档即可。我在ubuntu下使用的是gedit，代码高亮效果很好。撰写博客的时候需要注意，Pelican支持一些元数据。比如，本文的元数据如下：&lt;/p&gt;
 &lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td&gt;&lt;div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"&gt;&lt;pre style="line-height: 125%"&gt;1
 2
@@ -6520,7 +6550,7 @@ Status: draft
 &lt;li&gt;第8行：这个表示本文是草稿。比如我们一篇博客经常不是一次性写完的，写了一半暂不想让读者看到，或者写完想让别人帮忙审查一下，就可以加这一行标识。这样Pelican在处理时，这篇文章也会生成html，但不会放在博客的主页及分类索引里，这样普通的读者一般看不到这个文章。有这个标识的文章生成时放在&lt;code&gt;output/drafts&lt;/code&gt;目录下，你就可以通过分享url的方式让你的co-worker帮你review你的文章。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;我们可以在&lt;code&gt;content&lt;/code&gt;目录下任意建子目录来组织管理博客文章。由于我们在设置文件里指定这个值&lt;code&gt;USE_FOLDER_AS_CATEGORY = True&lt;/code&gt;，这样这些目录名称就自动变成博文分类的目录了。&lt;/p&gt;
-&lt;h3 id="_5"&gt;预览博客文章&lt;/h3&gt;
+&lt;h3 id="_6"&gt;预览博客文章&lt;/h3&gt;
 &lt;p&gt;撰写文章的过程中，可以随时在浏览器里预览博客文章。方法是先在博客项目的根目录下执行下面命令来启动预览服务器：&lt;/p&gt;
 &lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;make devserver
 &lt;/pre&gt;&lt;/div&gt;
@@ -6532,7 +6562,7 @@ Status: draft
 &lt;p class="admonition-title"&gt;文章在主页上没看到？&lt;/p&gt;
 &lt;p&gt;撰写完文章，需要发布时，需要把&lt;code&gt;Status: draft&lt;/code&gt;这行元数据去掉。否则文章不会出现在博客主页。只会在drafts下看得到。&lt;/p&gt;
 &lt;/div&gt;
-&lt;h2 id="_6"&gt;发布博客&lt;/h2&gt;
+&lt;h2 id="_7"&gt;发布博客&lt;/h2&gt;
 &lt;p&gt;写完博客，我们想发布到网上。这个时候我们就需要一个主机和一个域名，我的独立博客系统用到的下面资源：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Amazon EC2主机。一个帐户可以免费使用一年。可以点击&lt;a href="https://aws.amazon.com"&gt;这里&lt;/a&gt;注册。&lt;/li&gt;
@@ -6585,19 +6615,19 @@ Status: draft
 
 
 &lt;p&gt;然后在浏览器里输入&lt;code&gt;localhost&lt;/code&gt;就可以看到博客首页。在本机验证成功Nginx配置后，就可以用SSH登录服务器去配置服务器了。&lt;/p&gt;
-&lt;h3 id="_7"&gt;上传博客到服务器&lt;/h3&gt;
+&lt;h3 id="_8"&gt;上传博客到服务器&lt;/h3&gt;
 &lt;p&gt;直接在项目根目录下运行下面的命令即可把文章上传到博客服务器:&lt;/p&gt;
 &lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;make rsync_upload
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用&lt;code&gt;publishconf.py&lt;/code&gt;来生成html，并且通过rsync上传到服务器Amazon EC2服务器的&lt;code&gt;/home/ubuntu/blogs/&lt;/code&gt;目录下。&lt;/p&gt;
+&lt;p&gt;因为我们在前文已经配置了Makefile文件。所以运行这个命令之后，就会使用 &lt;code&gt;publishconf.py&lt;/code&gt; 来生成html，并且通过rsync上传到服务器Amazon EC2服务器的 &lt;code&gt;/home/ubuntu/blogs/&lt;/code&gt; 目录下。&lt;/p&gt;
 &lt;div class="admonition hint"&gt;
 &lt;p class="admonition-title"&gt;配置Amazon EC2主机&lt;/p&gt;
 &lt;p&gt;发布博客到服务器上，需要先完成Amazon EC2主机的配置。具体可参阅&lt;a href="https://aws.amazon.com"&gt;Amazon官网上的文档&lt;/a&gt;。如果还没有主机，也可以把自己的电脑配置成服务器来作试验，所要做的，就是修改Makefile里的SSH_HOST的值为localhost即可。&lt;/p&gt;
 &lt;/div&gt;
-&lt;h2 id="_8"&gt;最佳实践&lt;/h2&gt;
-&lt;p&gt;我的博客内容托管在GitHub上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行&lt;code&gt;make devserver&lt;/code&gt;，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据&lt;code&gt;Status: draft&lt;/code&gt;。然后git commit + git push提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后git commit + git push先提交到GitHub上；接着运行&lt;code&gt;make rsync_upload&lt;/code&gt;即可把博客内容上传到Amazon EC2主机上。打开&lt;a href="http://kamidox.com"&gt;kamidox.com&lt;/a&gt;确认一下即完成了一篇博文的发布。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sun, 26 Oct 2014 23:20:00 +0800</pubDate><guid>tag:blog.kamidox.com,2014-10-26:build-blog-system-by-pelican.html</guid><category>python</category><category>pelican</category></item><item><title>Python SocketServer</title><link>http://blog.kamidox.com/python-stdlib-socketserver.html</link><description>&lt;div class="toc"&gt;
+&lt;h2 id="_9"&gt;最佳实践&lt;/h2&gt;
+&lt;p&gt;我的博客内容托管在 GitHub 上。当我需要写一篇文章时，直接打开gedit/sublime开始用Markdown语法码字。想预览时，直接运行 &lt;code&gt;make devserver&lt;/code&gt;，然后在浏览器里输入文章的URL就可以直接查看了。如果文章写了一半，还不想发布，直接加一条元数据 &lt;code&gt;Status: draft&lt;/code&gt; 。然后 git commit + git push 提交到服务器。等到文章写完，想发布了，删除掉草稿标识；然后 git commit + git push 先提交到 GitHub 上；接着运行 &lt;code&gt;make rsync_upload&lt;/code&gt; 即可把博客内容上传到 Amazon EC2 主机上。打开 &lt;a href="http://blog.kamidox.com"&gt;blog.kamidox.com&lt;/a&gt; 确认一下即完成了一篇博文的发布。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Joey Huang</dc:creator><pubDate>Sun, 26 Oct 2014 23:20:00 +0800</pubDate><guid>tag:blog.kamidox.com,2014-10-26:build-blog-system-by-pelican.html</guid><category>python</category><category>pelican</category></item><item><title>Python SocketServer</title><link>http://blog.kamidox.com/python-stdlib-socketserver.html</link><description>&lt;div class="toc"&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#_1"&gt;摘要&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#socketserver"&gt;SocketServer概述&lt;/a&gt;&lt;ul&gt;

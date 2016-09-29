@@ -8,14 +8,14 @@
 		<meta name="description" content="">
 		<meta name="author" content="Joey Huang">
 
-		<link rel="stylesheet" href="../theme/css/foundation.css" />
-		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
-		<link rel="stylesheet" href="../theme/css/custom.css" />
+		<link rel="stylesheet" href="./theme/css/foundation.css" />
+		<link rel="stylesheet" href="./theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="./theme/css/custom.css" />
 
 
-		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+		<link rel="shortcut icon" href="./theme/img/favicon.ico">
 
-		<script src="../theme/js/modernizr.js"></script>
+		<script src="./theme/js/modernizr.js"></script>
 
 		<!-- Feeds -->
 
@@ -69,14 +69,14 @@
 							<li><a href="http://blog.kamidox.com/about.html">About</a></li>
 
 						<li><label>Categories</label></li>
-							<li ><a href="../category/android.html">android</a></li>
-							<li class="active"><a href="../category/essay.html">essay</a></li>
-							<li ><a href="../category/flask.html">flask</a></li>
-							<li ><a href="../category/ml.html">ml</a></li>
-							<li ><a href="../category/nlp.html">nlp</a></li>
-							<li ><a href="../category/python.html">python</a></li>
-							<li ><a href="../category/tools.html">tools</a></li>
-							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+							<li ><a href="./category/android.html">android</a></li>
+							<li class="active"><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/nlp.html">nlp</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
+							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
 
 
 
@@ -111,7 +111,7 @@
 				<nav class="top-bar hide-for-small-only" data-topbar>
 					<ul class="title-area">
 						<li class="name">
-							<h1><a href="../">kamidox.com</a></h1>
+							<h1><a href="./">kamidox.com</a></h1>
 						</li>
 					</ul>
 
@@ -130,43 +130,19 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>学习一种新编程语言时，我们到底是要学什么</h2>
-	<h3 id="_1">语言的特性</h3>
-<p>对 Java 程序员而言，Swift 里的 <code>Optional</code> 应该算是一种新的特性。在 The Swift Programming Language 里有这样的描述：</p>
+	<h2>瞎忙是一种福分</h2>
+	<p>一句被广泛传播的话：选择比努力重要。还有一个说法更令人焦虑：很多时候你只是瞎忙。一下子否定了所有的努力，焦虑感油然而生。我的方向对不对？做这个事情有没有意义？做这个事情能不能对未来的成功有帮助？</p>
+<p>一个残酷的现实时，大部分人不会选择，甚至无法选择。</p>
+<p>1985 年乔布斯离开苹果公司，创建 NeXT，收购皮克斯，他能预见到皮克斯的成功？能预见到回归苹果，把 NeXT 软件和苹果操作系统结合，从而产生 Mac/iOS 系列软件生态系统？</p>
+<p>未来不可预测。我们需要偶尔布个闲棋，就像 AlphaGo 在胶着状态下，索性到脚落里下个闲棋，最后这个闲棋还真发挥了巨大的威力。乔布斯早年痴迷字体设计，他根本无法预见有朝一日这个技能会大大提高苹果软件的颜值。</p>
 <blockquote>
-<p>Swift also introduces optional types, which handle the absence of a value. Optionals say either “there is a value, and it equals x” or “there isn’t a value at all”. Optionals are similar to using nil with pointers in Objective-C, but they work for any type, not just classes. Optionals are safer and more expressive than nil pointers in Objective-C and are at the heart of many of Swift’s most powerful features.</p>
+<p>生命里的每一个点都会最终连成线。&mdash;乔布斯</p>
 </blockquote>
-<p>看这一句话并不能理解 <code>Optional</code> 的强大威力。但如果翻阅 Cocoa Touch 的 API 文档，你会发现大部分函数返回值都是 <code>Optional</code> 的，连很多类的属性也是 <code>Optional</code>。再深入学习，就会发现 <code>Optional</code> 基本上是 Swift 语言里的<strong>错误处理机制</strong>。至少到目前为止，Swift 还没有类似 try catch 这种错误处理方式。</p>
-<p>类似的概念还有闭包 (Closure)。Java 8 之前是没有闭包的，如果闭包对你而言是个新概念，那么就值得深入去学习它的作用和最佳实践。我们可以在内心保持一种对优秀编程语言的敬畏：设计一种优秀编程语言的人都是一群极客，他们发明了这样的概念一定是为了解决某种编程过程中的痛点的。当然，如果你学习过 Python，可能闭包对你就不是什么新概念，但实际上你会发现 Swift 里的闭包的写法是可以是非常地简洁。因为 Swift 是一种非常年轻的语言，它在设计阶段一定会去参考其他编程语言优缺点。</p>
-<h3 id="_2">语言的陷阱</h3>
-<p>语言的陷阱和特性一样重要。我们看下面一个简单的例子：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">array</span> = <span style="color: #AA22FF">Array</span>&lt;<span style="color: #AA22FF">Int</span>&gt;()
-array.append(<span style="color: #666666">1</span>)
-array.append(<span style="color: #666666">2</span>)
-array.append(<span style="color: #666666">3</span>)
-
-<span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">changeSomeThing</span>(a: <span style="color: #AA22FF">Array</span>&lt;<span style="color: #AA22FF">Int</span>&gt;) {
-    a[<span style="color: #666666">0</span>] = <span style="color: #666666">100</span>
-}
-
-changeSomeThing(array)
-
-<span style="color: #AA22FF">println</span>(<span style="color: #BB4444">&quot;</span><span style="color: #BB6688; font-weight: bold">\(</span>array<span style="color: #BB6688; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span>)
-</pre></div>
-
-
-<p>上面的代码会输出什么内容？实际上，这个代码无法编译通过。第 7 行代码会出错，提示数组是只读的。因为对 Swift 设计者而言，这种陷阱一定会在 Java 程序员身上发生，</p>
-<h3 id="_3">语言的应用场景</h3>
-<p>我们总是可以问这样的问题：为什么要设计这样一种这个语言？他的设计目标是什么？在什么场景下使用？通过搜索资料，我们不难找出这种语言的应用场景。</p>
-<p><strong>编程语言三个要素</strong><br />
-语法；标准库；应用框架。</p>
-<p><strong>今日推荐</strong><br />
-今天推荐一个小工具<a href="http://www.cockos.com/licecap/">LiceCap</a>。它可以把你的屏幕操作录制成 GIF 动画。</p>
-<blockquote>
-<p>LICEcap can capture an area of your desktop and save it directly to .GIF or .LCF</p>
-</blockquote>
+<p>这里的点，在当时的情境下，可能都是瞎忙。</p>
+<p>我们在公司里上着班，做着不痛不痒的工作。为什么不利用闲暇时间瞎忙一下呢？人工智能很有神奇，为什么不了解一下机器学习的算法和原理呢？前端开发技术一日千里，为什么不花点时间看看这些层出不穷的前端框架有什么区别，如何解决开发过程中的问题？后端开发怎么解决海量并发问题的？海量数据是怎么存储和检索的？甚至可以花点时间学学画画，我们的画画水平和 10 岁的小孩基本没有差别，想想都觉得有点惭愧。</p>
+<p>但行好事，莫问前程。愿好奇心不泯，愿有时间瞎忙。</p>
 	<hr/>
-	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/essay.html">essay</a> on 2015-01-08(Thursday) 23:20. Tags: <a href="../tag/thought.html">thought</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/essay.html">essay</a> on 2016-09-29(Thursday) 00:13. Tags: <a href="./tag/thought.html">thought</a>, </h6>
 </article>
 
 <hr/>
@@ -202,40 +178,40 @@ changeSomeThing(array)
 							<div class="panel">
 								<h5>Categories</h5>
 								<ul class="side-nav">
-										<li><a href="../category/android.html">android</a></li>
-										<li><a href="../category/essay.html">essay</a></li>
-										<li><a href="../category/flask.html">flask</a></li>
-										<li><a href="../category/ml.html">ml</a></li>
-										<li><a href="../category/nlp.html">nlp</a></li>
-										<li><a href="../category/python.html">python</a></li>
-										<li><a href="../category/tools.html">tools</a></li>
-										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+										<li><a href="./category/android.html">android</a></li>
+										<li><a href="./category/essay.html">essay</a></li>
+										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/ml.html">ml</a></li>
+										<li><a href="./category/nlp.html">nlp</a></li>
+										<li><a href="./category/python.html">python</a></li>
+										<li><a href="./category/tools.html">tools</a></li>
+										<li><a href="./category/werkzeug.html">werkzeug</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
 								</ul>
 							</div>
 
@@ -284,8 +260,8 @@ changeSomeThing(array)
 			</div><!--off-canvas inner-->
 		</div><!--off-canvas wrap-->
 
-		<script src="../theme/js/jquery.js"></script>
-		<script src="../theme/js/foundation.min.js"></script>
+		<script src="./theme/js/jquery.js"></script>
+		<script src="./theme/js/foundation.min.js"></script>
 		<script>
 			$(document).foundation();
 		</script>
