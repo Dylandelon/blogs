@@ -1397,9 +1397,9 @@ Blockly-Games 多语言使用 Google Closure Templates 来实现的，其[官方
 
 Blockly-Games 的 MVC 架构。
 
-### 20160826
+## 20160826
 
-#### 欺诈交易异常检测
+### 欺诈交易异常检测
 
 核心思路：从数据集里，找出大部分帐户的行为模式，以此建立模型。如果一个帐户的行为模式与此模型偏差较远，则可定义为异常。
 欺诈交易：并非所有的异常帐户都有欺诈交易，但我们可以通过人工参与的方式从异常帐户里人为发现一些线索，从而优化特征选择，从而不断地优化模型。
@@ -1414,7 +1414,7 @@ Blockly-Games 的 MVC 架构。
   如果有这样的特征，也可以使用 PGA 算法检测出来。
 * 检测出可能被欺诈的帐户后，再看看可能实施了欺诈的帐户列表。看看他们之间有没有资金往来，如果有，这两个帐户存在欺诈的可能性就更大了。
 
-#### 实施步骤
+### 实施步骤
 
 1. 清洗数据
    把不活跃帐户信息过滤掉，以免模型过多地关注这些不活跃的帐户的行为模式。怎么样定义不活跃帐户？
@@ -1425,22 +1425,112 @@ Blockly-Games 的 MVC 架构。
 4. 检测算法
    拿算法来找出异常的帐户，人工确认其是否存在欺诈，如果不存在欺诈，则优化特征。以此不断迭代，直到找出合理的模型。
 
-#### 高斯分布异常检测模型
+### 高斯分布异常检测模型
 
 使用高斯分布进行检测，这一算法简单方便，可以较快地得出异常帐户列表。但这些异常帐户是否存在欺诈交易需要人工鉴别，并且根据鉴别的结果，进一步优化特征。这一算法的其他挑战有：
 
 1. 所有的特征需要逐一检查，让其**独立地满足正态分布**，否则不能适用这个算法。
 2. 训练数据是一个超级大矩阵，因为我们需要把用户的一段时间内所有行为数据都提取为特征，并且和所有的用户组成一个超级大矩阵。这样在非分布式计算的环境下，要训练这样的模型可能性基本为零。不过可以拿小部分数据试运行，检测模型的合理程度。如果可行，再想办法解决运算量的问题。
 
-#### 欺诈交易异常检测
+### 欺诈交易异常检测
 
 1. 根据 PGA 算法检测可能被欺诈的帐户
 2. 根据 PGA 算法检测可能实施欺诈的帐户
 3. 检查被欺诈帐户和实施欺诈帐户之间的资金关联关系，如果存在强关联关系，则这组欺诈可能将变得很高
 
+## 20160907
 
+### 三步塑造你的职场气场
 
+1. 引出问题：职场气场是客观存在的
+   有的人动不动被老板骂，连提出的合理要求都被驳回。有的人老板安排任务时说话很客气，更会替他考虑任务的资源是否充足。
+2. 多听
+   * 学会问问题，收集尽量多信息
+   * 多思考，理解老板的真实意图
+   * 换位思考，站在老板的角度思考问题
+3. 少说
+   * 不轻易摆困难，绝不抱怨
+   * 说出信息，而不是噪声
+   * 说出有价值的观点和分析，提升影响力
+   * 状态汇报，预警风险，汇报结果
+3. 多做
+   * 言必信，行必果。这是塑造可信赖形象的不二法宝。
+   * 结果导向
 
+## 20160911
 
+### Beyond Feelings - Preface
 
+Why we need a critical thinking?
 
+> First, because we live in an age of manipulation. Armies of hucksters and demagogues stand ready with the rich resources of psychology to play upon our emotions and subconscious needs to persuade us that superficial is profound, harmful is beneficial, evil is virtuous. And feelings are especially vulnerable to such manipulation.
+
+> Secondly, because in virtually every important area of modern life — law, medicine, government, education, science, business, and community affairs — we are beset with serious problems and complex issues that demand careful gathering and weighing of facts and informed opinions, thoughtful consideration of various conclusions or actions, and judicious selection of the best conclusion or most appropriate action ...
+
+> Feeling and thought are perfectly complementary. Feeling, being more spontaneous, is an excellent beginning to the development of conclusions. And thought, being more deliberate, provides a way to identify the best and most appropriate feeling. Both are natural.
+
+### Beyond Feeling - Part One - The Context
+
+> Anyone who wishes to master an activity must first understand its tools and rules.
+
+> In critical thinking, however, the tools are not material objects but concepts, and the rules govern mental rather than physical performance.
+
+李笑来一直在强调概念要升级。爱因斯坦说过，如果有一个问题需要我一个小时内给出答案，我需要花 55 分钟搞清楚问题是什么。这都说明了概念的重要性。
+
+### Beyond Feeling - Chapter 1 - Who Are You?
+
+> It would have to include all your characteristics—not only the physical but also the emotional and intellectual.
+
+哲学史上的圣杯问题。需要从身体，情感和智力方面去定义一个个体。个体特性会受以下方面的影响：
+
+* The Influence of Time and Place: 时间和空间对人(身体，情感，智力)的影响。
+* The Influence of Ideas: 观念的暗示作用。
+* The Influence of Mass Culture: 多元文化，多渠道信息的广泛影响。
+* The “Science” of Manipulation: 科学操纵。行为主义心理学的发展。
+* The Influence of Psychology: 心理学的影响。
+
+> tell [the consumer] something that will tie him up with fear, something that will stir up a mild rage, that will call out an affectionate or love response, or strike at a deep psychological or habit need. --- 行为主义心理学之父 John Watson
+
+几乎所有的现代广告和推广策略都离不开这段话。包括那些所谓产品情怀。
+
+> advertisers and people with political or social agendas are not content to stimulate emotions and/or plant ideas in our minds. They also seek to reinforce those impressions by repeating them again and again. The more people hear a slogan or talking point, the more familiar it becomes. Before long, it becomes indistinguishable from ideas developed through careful thought.
+
+脑白金广告的真谛。
+
+## 20160913
+
+### Beyond Feeling - Becoming an Individual
+
+1. Treat your first reaction to any person, issue, or situation as tentative.
+   No matter how appealing it may be, refuse to embrace it until you have examined it.
+2. Decide why you reacted as you did.
+3. Think of other possible reactions you might have had to the person, issue, or situation.
+4. Ask yourself whether one of the other reactions is more appropriate than your first reaction. And when you answer, resist the influence of your conditioning.
+
+### Beyond Feeling - Chapter 2 What Is Critical Thinking?
+
+> Clear thinking is a very rare thing, but even just plain thinking is almost as rare. Most of us most of the time do not think at all. We believe and we feel, but we do not think.
+
+> Mental indolence is one of the commonest of human traits.
+
+看到这些文字，令人恐慌，回忆过往，我们什么时候有理有据地分析思考过一个问题？大部分时候，我们只是凭直觉生活。让生活的列车由感觉这个司机来自动驾驶，而且没有配置雷达纠错机制。细细想来，又令人兴奋，既然大部分完全不思考，那么只要坚持哪怕一点点成果，可能就会超越很多人。
+
+### 博客主题：从进化的角度看短视
+
+只有短视才能在残酷，朝不保夕，险像环生的环境中生存下来。
+
+## 20160929
+
+### 博客主题：难与易
+
+我们努力奋斗，迎难而上，或多或少都希望将来的生活越来越容易。但生活从来都不曾容易过。
+
+微信小程序刚出来，就有人破解开发工具，有人在 github 上收集所有的可用资源，有人把知乎客户端的界面用微信小程序的框架开发出来。为的就是消费微信小程序的流量红利。小道消息曾经发表过一篇文章，分析哪些人可以从微信小程序上获利，最先获利的就是这些培训机构。
+
+### 博客主题：龟毛的程序员
+
+程序员是龟毛的，甚至是吹毛求疵的。为了达到 DRY (Do not Repeat Yourself) 的目标，他们发明了一个又一个框架，抽像了一层又一层，把原本简单明了的东西，层层构架。最后呈现出来的，是简洁和一目了然。但在简洁之下，隐藏了复杂，隐藏了日日夜夜的冥思苦想。
+
+### 博客主题：逆向思维
+
+一个程序员，如果他要设计一个模块给别人使用，一个好的方法是假设自己就是这个模块的用户，用这个模块的接口去实现一些典型的功能，真正地把代码写出来。从写出来的代码里去闻看看有没有坏味道，如果有，多半是接口设计得不合理。很多时候，我们抱怨模块接口复杂不好用。一个很重要的原因就是模块设计者没有把自己摆在使用者的位置上。
