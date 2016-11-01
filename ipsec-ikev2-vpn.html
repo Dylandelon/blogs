@@ -70,12 +70,12 @@
 
 						<li><label>Categories</label></li>
 							<li ><a href="./category/android.html">android</a></li>
-							<li class="active"><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
-							<li ><a href="./category/tools.html">tools</a></li>
+							<li class="active"><a href="./category/tools.html">tools</a></li>
 							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
 
 
@@ -132,33 +132,129 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>学习开源代码的三个层次</h2>
-	<p>网络上有很多优秀的开源代码，学习这些代码是提高自己编程水平的最佳途径。我们在实际项目开发的过程中也会使用很多优秀的开源代码来加快开发速度，避免重复造轮子。优秀开源代码至少可以给我们提供三个层次的学习资料。</p>
-<p><strong>第一层次：使用开源代码</strong><br />
-这一步相对简单，也是大部分人在项目开发过程中最常用的方式。优秀的开源代码一般文档齐全，示例代码丰富。通过简单地学习这些资料，可以较容易地掌握开源代码的用法。</p>
-<p><strong>第二层次：阅读开源代码，理解其实现原理</strong><br />
-做到这一步的人就比较少了。这一步需要花很多时间，而且还需要一些必要的基础知识储备。但如果能达到这个层次，能掌握的技能也会比较多，不单单是开源代码本身的核心逻辑及其架构设计，还能掌握软件开发过程中的一些最佳实践法则。比如单元测试，利用<a href="https://travis-ci.org">travis</a>进行自动编译测试等等。</p>
-<p><strong>第三个层次：吸收并应用开源代码的设计理念到自己的软件开发过程中去</strong><br />
-看得懂和懂得灵活应用是两个层次的东西。从看得懂到会灵活应用中间还需要大量的时间去思考，去实践。面试过不少人，讲起来头头是道，真要让他写出来时，却卡壳了。要么类名方法名忘记了（IDE惹的祸），要么写出来的完全变味。要真正掌握一个技能，除了多看，还要多写，更要多总结，多思考。大道至简，总结多了，无非都是那些模式。面向测试的编程，面向对象编程，设计模式，函数式编程，宏等等这些抽象的概念，通过一些优秀的开源代码去总结思考，才能真正地理解这些抽象概念，最终把这些设计理念应用到自己的代码中去。</p>
-<p><strong>今日推荐</strong></p>
-<p>今天推荐一个Android开源库<a href="https://github.com/greenrobot/EventBus">EventBus</a>。</p>
-<blockquote>
-<p>EventBus is publish/subscribe event bus optimized for Android.</p>
+	<h2>step-by-step 构建 IPSec/IKEv2 VPN</h2>
+	<blockquote>
+<p>升级到 iOS 10 和 macOS Sierra 后，发现原来的 pptp vpn 没了。那是因为 Apple 因为安全原因，禁用的 pptp vpn ，这里可以查阅到 <a href="https://support.apple.com/en-us/HT206844">Apple 官方声明</a>。你需要搭建一个支持 IPSec/IKEv2 的 VPN 服务器。本文使用 AWS 的 Ubuntu 服务器搭建一个支持 IPSec/IKEv2 的 VPN 服务器。</p>
 </blockquote>
-<ol>
-<li>它和Android的广播通信方式有什么区别？</li>
-<li>它和另外一个开源库<a href="https://github.com/square/otto">Otto</a>有什么区别？</li>
-</ol>
-<p>答案都在其官方文档里。关于这个库，还有两个很好的学习资源：</p>
-<ol>
-<li><a href="https://github.com/android-cn/android-open-project-demo/tree/master/event-bus-demo">event-bus-demo</a><br />
-   这是一个DEMO程序。</li>
-<li><a href="https://github.com/android-cn/android-open-project-analysis/tree/master/event-bus">EventBus 源码解析</a><br />
-   这个分析了其原理和实现。</li>
-</ol>
-<p>网络上的那些XXX源码解析，XXX源码情景分析之类的文章质量还是比较高的，但这些文档不能代替对源码的阅读。这些文档的作用是帮助初学者更好的理解源码，降低学习成本。需要深刻理解设计精髓，还是需要通过阅读源码去深刻领会。阅读一些设计优秀的源码和青春期时阅读汪国真的蒙珑诗一样美。与其走马观花，不如花一些时间深入去学习几个开源代码，自己偿试通过阅读代码总结出其架构和设计的精髓。通过这样的训练，几个月后就会发现编程水平会有长足的进步。</p>
+<h2 id="_1">写在前面</h2>
+<p>你需要一个 AWS Ubuntu 服务器。国内访问的话，建议申请日本的服务器，速度最快。如果不知道怎么申请 AWS 服务器，请用 Baidu Google 一下。</p>
+<p>搭建支持 IPSec/IKEv2 的 VPN 服务器总共分几步：</p>
+<ul>
+<li>你需要有一台运行 ubuntu 的海外主机，本文使用 aws ubuntu 主机</li>
+<li>在 AWS ubuntu 主机上运行一个脚本安装并配置 VPN 服务器</li>
+<li>启动 VPN 服务</li>
+<li>客户端配置 VPN</li>
+</ul>
+<p>本文重点描述后面三个步骤。</p>
+<h2 id="vpn">安装并配置 VPN 服务器</h2>
+<p>这本来是一个很繁琐的步骤，具体可参阅 <a href="https://hjc.im/shi-yong-strongswanda-jian-ipsecikev2-vpn/">使用 Strongswan 搭建 IPSec/IKEv2 VPN</a>。有心人把文章里描述的步骤写了个 <a href="https://github.com/magic282/One-Key-L2TP-IKEV2-Setup">shell 脚本</a>并放在了 github 上。这样我们执行脚本即可完成软件安装以及配置工作。</p>
+<h3 id="step-1">STEP 1 下载脚本</h3>
+<p>使用 ssh 登录 aws ubuntu 主机，执行下面命令下载脚本：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>wget https://raw.githubusercontent.com/magic282/One-Key-L2TP-IKEV2-Setup/master/l2tp_setup.sh
+</pre></div>
+
+
+<h3 id="step-2">STEP 2 添加可执行权限</h3>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>chmod a+x l2tp_setup.sh
+</pre></div>
+
+
+<h3 id="step-3">STEP 3 安装软件</h3>
+<p>运行脚本，需要注意，需要使用 root 用户运行这个脚本。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>sudo ./l2tp_setup.sh
+</pre></div>
+
+
+<p>出现下面的提示时，输入 1</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&quot;#################################&quot;
+&quot;What do you want to do:&quot;
+&quot;1) Install l2tp&quot;
+&quot;2) Add an account&quot;
+&quot;#################################&quot;
+</pre></div>
+
+
+<p>出现下面的提示时，输入 PSK 密码，<strong>这个密码后面客户端登录时要用到</strong>，注意保管好：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Please <span style="color: #AA22FF">set </span>the secretkey<span style="color: #666666">(</span>Pre Shared Key<span style="color: #666666">)</span>:
+</pre></div>
+
+
+<p>出现下面提示时，输入 2</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&quot;##################&quot;
+&quot;What type is your VPS?&quot;
+&quot;1) OpenVZ&quot;
+&quot;2) others&quot;
+##################&quot;
+</pre></div>
+
+
+<p><strong>特别注意</strong>：这里需要确认一下你的主机是 OpenVZ 还是其他，如 xen 。然后做出相应的选择。一个简单的方法是运行 <code>ls /proc | grep vz</code> ，如果输出 <code>vz</code> 就选择 1，否则就选择 2。</p>
+<p>接下来，脚本会下载 Strongswan 软件包，并编译安装。过程可能要几分钟时间。如果没有错误的话，脚本接着会输出如下内容：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">##################</span>
+Please <span style="color: #AA22FF">set </span>a password to <span style="color: #AA22FF">export </span>the key
+<span style="color: #008800; font-style: italic">##################</span>
+Enter Export Password:
+Verifying - Enter Export Password:
+</pre></div>
+
+
+<p>可以直接按两个回车，即使用空的密钥导出密码。不出意外的话，最终会安装成功，并输出下面的成功信息：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">################################################</span>
+Success!
+Use this to connect your L2TP service.
+IP: xxx.xxx.xxx.xxx <span style="color: #666666">(</span>你的虚拟主机的 IP 地址<span style="color: #666666">)</span>
+Secretkey: xxxxxx <span style="color: #666666">(</span>你的 PSK 密码<span style="color: #666666">)</span>
+CA cert: /root/l2tpInstall/ca.cert.pem
+Don<span style="border: 1px solid #FF0000">&#39;</span>t forget to add a new user later, LOL.
+<span style="color: #008800; font-style: italic">################################################</span>
+</pre></div>
+
+
+<h3 id="step-4">STEP 4 添加用户</h3>
+<p>运行脚本</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>sudo ./l2tp_setup.sh
+</pre></div>
+
+
+<p>出现下面的提示时，输入 2</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&quot;#################################&quot;
+&quot;What do you want to do:&quot;
+&quot;1) Install l2tp&quot;
+&quot;2) Add an account&quot;
+&quot;#################################&quot;
+</pre></div>
+
+
+<p>接着在相应的提示下输入用户名和密码：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Please input an new username:
+&lt;在这里输入用户名&gt;
+Please input the password:
+&lt;在这里输入密码&gt;
+</pre></div>
+
+
+<p>这样就成功添加了一个用户。我们可以在客户端使用这个用户和密码以及 PSK 来登录了。</p>
+<h3 id="step-5">STEP 5 配置数据包转发</h3>
+<p>编辑 <code>/etc/sysctl.conf</code>，将 <code>net.ipv4.ip_forward=1</code> 一行前面的 <code>#</code> 号去掉，保存后执行 <code>sysctl -p</code>。</p>
+<h2 id="vpn_1">启动 VPN 服务</h2>
+<p>这一步不注意就会漏掉，如果漏掉这一步，不会有出错信息，但客户端就是连接不上。即，我们需要手动启动 VPN 服务：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo ipsec start
+</pre></div>
+
+
+<p>可以使用 <code>ps</code> 命令确认服务是否正常运行起来了</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>ps -ax | grep ipsec
+ <span style="color: #666666">1861</span> ?        Ss     0:00 /usr/local/libexec/ipsec/starter --daemon charon
+ <span style="color: #666666">1862</span> ?        Ssl    0:00 /usr/local/libexec/ipsec/charon --use-syslog
+</pre></div>
+
+
+<h2 id="vpn_2">客户端配置 VPN</h2>
+<p>在 macOS 上，新建一个 VPN，<code>VPN Type</code> 选择 <code>Cisco IPSec</code>。输入 VPN 服务器地址或域名，以及用户名和密码 (STEP 4 里添加的用户名和密码)。点击 <code>Authentication Settings ...</code> ，在弹出的窗口里的 <code>Shared Secret</code> 里输出 PSK (STEP 3 里设置的密码)。这样就可以上网了。</p>
+<p>在 iOS 上，进入 <code>设置 -&gt; 通用 -&gt; VPN -&gt; 添加 VPN 配置...</code>，类型选择 <code>IPSec</code>，输入用户名密码以及 PSK 即可完成配置。</p>
+<h2 id="_2">尽情冲浪吧~~~</h2>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/essay.html">essay</a> on 2015-01-16(Friday) 23:20. Tags: <a href="./tag/thought.html">thought</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/tools.html">tools</a> on 2016-11-01(Tuesday) 23:22. Tags: <a href="./tag/tools.html">tools</a>, </h6>
 </article>
 
 <hr/>

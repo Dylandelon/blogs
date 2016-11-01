@@ -1,5 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/joey-huang.atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2021-12-15T23:36:00+08:00</updated><entry><title>跨平台 App 开发技术方案汇总</title><link href="http://blog.kamidox.com/cross-platform-app-dev.html" rel="alternate"></link><updated>2016-10-23T01:13:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2016-10-23:cross-platform-app-dev.html</id><summary type="html">&lt;h2 id="hybrid"&gt;Hybrid 技术&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kamidox.com</title><link href="http://blog.kamidox.com/" rel="alternate"></link><link href="http://blog.kamidox.com/feeds/joey-huang.atom.xml" rel="self"></link><id>http://blog.kamidox.com/</id><updated>2021-12-15T23:36:00+08:00</updated><entry><title>step-by-step 构建 IPSec/IKEv2 VPN</title><link href="http://blog.kamidox.com/ipsec-ikev2-vpn.html" rel="alternate"></link><updated>2016-11-01T23:22:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2016-11-01:ipsec-ikev2-vpn.html</id><summary type="html">&lt;blockquote&gt;
+&lt;p&gt;升级到 iOS 10 和 macOS Sierra 后，发现原来的 pptp vpn 没了。那是因为 Apple 因为安全原因，禁用的 pptp vpn ，这里可以查阅到 &lt;a href="https://support.apple.com/en-us/HT206844"&gt;Apple 官方声明&lt;/a&gt;。你需要搭建一个支持 IPSec/IKEv2 的 VPN 服务器。本文使用 AWS 的 Ubuntu 服务器搭建一个支持 IPSec/IKEv2 的 VPN 服务器。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id="_1"&gt;写在前面&lt;/h2&gt;
+&lt;p&gt;你需要一个 AWS Ubuntu 服务器。国内访问的话，建议申请日本的服务器，速度最快。如果不知道怎么申请 AWS 服务器，请用 Baidu Google 一下。&lt;/p&gt;
+&lt;p&gt;搭建支持 IPSec/IKEv2 的 VPN 服务器总共分几步：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;你需要有一台运行 ubuntu 的海外主机，本文使用 aws ubuntu 主机&lt;/li&gt;
+&lt;li&gt;在 AWS ubuntu 主机上运行一个脚本安装并配置 VPN 服务器&lt;/li&gt;
+&lt;li&gt;启动 VPN 服务&lt;/li&gt;
+&lt;li&gt;客户端配置 VPN&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文重点描述后面三个步骤。&lt;/p&gt;
+&lt;h2 id="vpn"&gt;安装并配置 VPN 服务器&lt;/h2&gt;
+&lt;p&gt;这本来是一个很繁琐的步骤，具体可参阅 &lt;a href="https://hjc.im/shi-yong-strongswanda-jian-ipsecikev2-vpn/"&gt;使用 Strongswan 搭建 IPSec/IKEv2 VPN&lt;/a&gt;。有心人把文章里描述的步骤写了个 &lt;a href="https://github.com/magic282/One-Key-L2TP-IKEV2-Setup"&gt;shell 脚本&lt;/a&gt;并放在了 github 上。这样我们执行脚本即可完成软件安装以及配置工作。&lt;/p&gt;
+&lt;h3 id="step-1"&gt;STEP 1 下载脚本&lt;/h3&gt;
+&lt;p&gt;使用 ssh 登录 aws ubuntu 主机，执行下面命令下载脚本：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;wget https://raw.githubusercontent.com/magic282/One-Key-L2TP-IKEV2-Setup/master/l2tp_setup.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="step-2"&gt;STEP 2 添加可执行权限&lt;/h3&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;chmod a+x l2tp_setup.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="step-3"&gt;STEP 3 安装软件&lt;/h3&gt;
+&lt;p&gt;运行脚本，需要注意，需要使用 root 用户运行这个脚本。&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;sudo ./l2tp_setup.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;出现下面的提示时，输入 1&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&amp;quot;#################################&amp;quot;
+&amp;quot;What do you want to do:&amp;quot;
+&amp;quot;1) Install l2tp&amp;quot;
+&amp;quot;2) Add an account&amp;quot;
+&amp;quot;#################################&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;出现下面的提示时，输入 PSK 密码，&lt;strong&gt;这个密码后面客户端登录时要用到&lt;/strong&gt;，注意保管好：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;Please &lt;span style="color: #AA22FF"&gt;set &lt;/span&gt;the secretkey&lt;span style="color: #666666"&gt;(&lt;/span&gt;Pre Shared Key&lt;span style="color: #666666"&gt;)&lt;/span&gt;:
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;出现下面提示时，输入 2&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&amp;quot;##################&amp;quot;
+&amp;quot;What type is your VPS?&amp;quot;
+&amp;quot;1) OpenVZ&amp;quot;
+&amp;quot;2) others&amp;quot;
+##################&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;特别注意&lt;/strong&gt;：这里需要确认一下你的主机是 OpenVZ 还是其他，如 xen 。然后做出相应的选择。一个简单的方法是运行 &lt;code&gt;ls /proc | grep vz&lt;/code&gt; ，如果输出 &lt;code&gt;vz&lt;/code&gt; 就选择 1，否则就选择 2。&lt;/p&gt;
+&lt;p&gt;接下来，脚本会下载 Strongswan 软件包，并编译安装。过程可能要几分钟时间。如果没有错误的话，脚本接着会输出如下内容：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #008800; font-style: italic"&gt;##################&lt;/span&gt;
+Please &lt;span style="color: #AA22FF"&gt;set &lt;/span&gt;a password to &lt;span style="color: #AA22FF"&gt;export &lt;/span&gt;the key
+&lt;span style="color: #008800; font-style: italic"&gt;##################&lt;/span&gt;
+Enter Export Password:
+Verifying - Enter Export Password:
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以直接按两个回车，即使用空的密钥导出密码。不出意外的话，最终会安装成功，并输出下面的成功信息：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #008800; font-style: italic"&gt;################################################&lt;/span&gt;
+Success!
+Use this to connect your L2TP service.
+IP: xxx.xxx.xxx.xxx &lt;span style="color: #666666"&gt;(&lt;/span&gt;你的虚拟主机的 IP 地址&lt;span style="color: #666666"&gt;)&lt;/span&gt;
+Secretkey: xxxxxx &lt;span style="color: #666666"&gt;(&lt;/span&gt;你的 PSK 密码&lt;span style="color: #666666"&gt;)&lt;/span&gt;
+CA cert: /root/l2tpInstall/ca.cert.pem
+Don&lt;span style="border: 1px solid #FF0000"&gt;&amp;#39;&lt;/span&gt;t forget to add a new user later, LOL.
+&lt;span style="color: #008800; font-style: italic"&gt;################################################&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id="step-4"&gt;STEP 4 添加用户&lt;/h3&gt;
+&lt;p&gt;运行脚本&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;sudo ./l2tp_setup.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;出现下面的提示时，输入 2&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&amp;quot;#################################&amp;quot;
+&amp;quot;What do you want to do:&amp;quot;
+&amp;quot;1) Install l2tp&amp;quot;
+&amp;quot;2) Add an account&amp;quot;
+&amp;quot;#################################&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接着在相应的提示下输入用户名和密码：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;Please input an new username:
+&amp;lt;在这里输入用户名&amp;gt;
+Please input the password:
+&amp;lt;在这里输入密码&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就成功添加了一个用户。我们可以在客户端使用这个用户和密码以及 PSK 来登录了。&lt;/p&gt;
+&lt;h3 id="step-5"&gt;STEP 5 配置数据包转发&lt;/h3&gt;
+&lt;p&gt;编辑 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt;，将 &lt;code&gt;net.ipv4.ip_forward=1&lt;/code&gt; 一行前面的 &lt;code&gt;#&lt;/code&gt; 号去掉，保存后执行 &lt;code&gt;sysctl -p&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id="vpn_1"&gt;启动 VPN 服务&lt;/h2&gt;
+&lt;p&gt;这一步不注意就会漏掉，如果漏掉这一步，不会有出错信息，但客户端就是连接不上。即，我们需要手动启动 VPN 服务：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;sudo ipsec start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以使用 &lt;code&gt;ps&lt;/code&gt; 命令确认服务是否正常运行起来了&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;ps -ax | grep ipsec
+ &lt;span style="color: #666666"&gt;1861&lt;/span&gt; ?        Ss     0:00 /usr/local/libexec/ipsec/starter --daemon charon
+ &lt;span style="color: #666666"&gt;1862&lt;/span&gt; ?        Ssl    0:00 /usr/local/libexec/ipsec/charon --use-syslog
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id="vpn_2"&gt;客户端配置 VPN&lt;/h2&gt;
+&lt;p&gt;在 macOS 上，新建一个 VPN，&lt;code&gt;VPN Type&lt;/code&gt; 选择 &lt;code&gt;Cisco IPSec&lt;/code&gt;。输入 VPN 服务器地址或域名，以及用户名和密码 (STEP 4 里添加的用户名和密码)。点击 &lt;code&gt;Authentication Settings ...&lt;/code&gt; ，在弹出的窗口里的 &lt;code&gt;Shared Secret&lt;/code&gt; 里输出 PSK (STEP 3 里设置的密码)。这样就可以上网了。&lt;/p&gt;
+&lt;p&gt;在 iOS 上，进入 &lt;code&gt;设置 -&amp;gt; 通用 -&amp;gt; VPN -&amp;gt; 添加 VPN 配置...&lt;/code&gt;，类型选择 &lt;code&gt;IPSec&lt;/code&gt;，输入用户名密码以及 PSK 即可完成配置。&lt;/p&gt;
+&lt;h2 id="_2"&gt;尽情冲浪吧~~~&lt;/h2&gt;</summary><category term="tools"></category></entry><entry><title>跨平台 App 开发技术方案汇总</title><link href="http://blog.kamidox.com/cross-platform-app-dev.html" rel="alternate"></link><updated>2016-10-23T01:13:00+08:00</updated><author><name>Joey Huang</name></author><id>tag:blog.kamidox.com,2016-10-23:cross-platform-app-dev.html</id><summary type="html">&lt;h2 id="hybrid"&gt;Hybrid 技术&lt;/h2&gt;
 &lt;p&gt;这类技术，使用 HTML/CSS/JavaScript 等前端技术来构建 App。利用 JSBridge 获取部分访问原生 API 的能力。最有代表性的是 &lt;a href="http://phonegap.com"&gt;PhoneGap&lt;/a&gt;，它是 Adobe 收购一家开源创业公司后推出的平台。&lt;a href="http://blog.ionic.io/what-is-cordova-phonegap/"&gt;这个链接&lt;/a&gt;有 PhoneGap 的一些历史信息。&lt;/p&gt;
 &lt;p&gt;这类平台的目标是保持大部分代码跨平台共用，涉及到平台不共用的 API （比如 GPS 接口，iOS 和 Android 肯定是不一样的），则由 PhoneGap 平台通过 JSBridge 提供。除此之外，还有一些明显的优点：&lt;/p&gt;
 &lt;ul&gt;
