@@ -1,0 +1,299 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="../theme/css/foundation.css" />
+		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="../theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+
+		<script src="../theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="../category/android.html">android</a></li>
+							<li ><a href="../category/essay.html">essay</a></li>
+							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/ml.html">ml</a></li>
+							<li ><a href="../category/nlp.html">nlp</a></li>
+							<li ><a href="../category/python.html">python</a></li>
+							<li ><a href="../category/tools.html">tools</a></li>
+							<li ><a href="../category/weapp.html">weapp</a></li>
+							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+									<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="../">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>DES WiFi</h2>
+	<h2 id="wi-fi-extender">Wi-Fi Extender</h2>
+<h3 id="_1">配置方式</h3>
+<ol>
+<li>WPS 配置方式</li>
+<li>网页配置方式</li>
+</ol>
+<h3 id="ssid">配置后的 SSID 名称</h3>
+<ol>
+<li>与原 Router 一致，包括 SSID 和密码 (TP-Link)</li>
+<li>名称为原 Router 的 SSID 加上后缀 &ldquo;_EXT&rdquo; 组成，密码一致 (TP-Link/NETGEAR)</li>
+<li>用户可以自己修改方案 (NETGEAR)</li>
+</ol>
+<h3 id="_2">技术方案</h3>
+<h4 id="wisp">WISP 方案</h4>
+<p>WISP</p>
+<h4 id="wds">WDS 方案</h4>
+<p>WDS 的兼容性无法保证。</p>
+<blockquote>
+<p>WDS may be incompatible between different products (even occasionally from the same vendor) since the IEEE 802.11-1999 standard does not define how to construct any such implementations or how stations interact to arrange for exchanging frames of this format. The IEEE 802.11-1999 standard merely defines the 4-address frame format that makes it possible. - https://en.wikipedia.org/wiki/Wireless_distribution_system</p>
+</blockquote>
+<p>WDS 网域中的设备处于同一个局域网。WDS 中转设备需要关闭 DHCP 功能。</p>
+<h3 id="_3">杂项</h3>
+<h4 id="_4">国家/地区设置</h4>
+<p><a href="https://www.amazon.com/TP-Link-Wi-Fi-Range-Extender-TL-WA850RE/dp/B00E98O7GC/ref=sr_1_5?s=pc&amp;ie=UTF8&amp;qid=1474618374&amp;sr=1-5&amp;keywords=WiFi+extender">TP-Link N300 Wi-Fi Range Extender - TL-WA850RE</a> 的 <a href="https://images-na.ssl-images-amazon.com/images/I/A1dnoE9DPcS.pdf">user manual</a> 里写着可以设置国家？</p>
+<h4 id="upnp">UPNP</h4>
+<p>DesAP 各个网口上都会实现 UNPN 协议，通过广播让别的设备发现 DesAP 设备。</p>
+<h4 id="dhcp">DHCP</h4>
+<p>当监测到家庭网络的网口 IP 地址改变，则检查 IS 网络和 PLC 网络的地址，如果有冲突，则需要改变 DHCP 地址池，然后通过一定的机制让 IS 和 PLC 网络里的设备来重新获取 IP 地址。</p>
+<p>通知的机制可选如下：</p>
+<p>1) 应用层私有协议 -&gt; 通过广播发送。问题：Repeater 不会转发这个广播，且也不会重新发 DHCP 命令重新申请 IP 地址。<br />
+2) 利用 DHCP 续租时长，来周期性地继租 IP 地址，比如设置为 10 分钟。<br />
+3) 断网。 ifconfig wlan0 down / ifconfig wlan0 up 。在应用层实现，发现断网后，重新发送 DHCP 请求。</p>
+<p>如何解决 WiFi Repeater 子网里的设备？</p>
+	<hr/>
+	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2016-09-23(Friday) 15:36.</h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="../category/android.html">android</a></li>
+										<li><a href="../category/essay.html">essay</a></li>
+										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/ml.html">ml</a></li>
+										<li><a href="../category/nlp.html">nlp</a></li>
+										<li><a href="../category/python.html">python</a></li>
+										<li><a href="../category/tools.html">tools</a></li>
+										<li><a href="../category/weapp.html">weapp</a></li>
+										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+											<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="../theme/js/jquery.js"></script>
+		<script src="../theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,457 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="../theme/css/foundation.css" />
+		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="../theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+
+		<script src="../theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="../category/android.html">android</a></li>
+							<li ><a href="../category/essay.html">essay</a></li>
+							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/ml.html">ml</a></li>
+							<li ><a href="../category/nlp.html">nlp</a></li>
+							<li ><a href="../category/python.html">python</a></li>
+							<li ><a href="../category/tools.html">tools</a></li>
+							<li ><a href="../category/weapp.html">weapp</a></li>
+							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+									<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="../">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>Global IP 技术方案汇总</h2>
+	<div class="toc">
+<ul>
+<li><a href="#app">App</a><ul>
+<li><a href="#_1">推送方案</a></li>
+<li><a href="#_2">双向通信机制</a></li>
+<li><a href="#_3">远程和本地的通信机制</a></li>
+<li><a href="#_4">变更对其他设备的影响</a><ul>
+<li><a href="#desap">DesAP</a></li>
+<li><a href="#portal-server">Portal Server</a></li>
+</ul>
+</li>
+<li><a href="#_5">需要澄清的问题</a></li>
+</ul>
+</li>
+<li><a href="#desap_1">DesAP</a><ul>
+<li><a href="#plc">PLC 配置以及两线组网</a><ul>
+<li><a href="#_6">需要澄清的问题</a></li>
+</ul>
+</li>
+<li><a href="#wi-fi">Wi-Fi 驱动以及组网</a><ul>
+<li><a href="#softap">SoftAP 功能</a></li>
+<li><a href="#station">Station 功能</a></li>
+<li><a href="#bandwidth">Bandwidth 自动测试及频段自动选择</a><ul>
+<li><a href="#_7">需要澄清的问题</a></li>
+</ul>
+</li>
+<li><a href="#wps">WPS</a></li>
+</ul>
+</li>
+<li><a href="#dhcp">DHCP</a></li>
+<li><a href="#dns">DNS</a></li>
+<li><a href="#sip">SIP 服务器</a></li>
+<li><a href="#_8">视频转发以及码流控制</a><ul>
+<li><a href="#_9">需要澄清的问题</a></li>
+</ul>
+</li>
+<li><a href="#_10">手机，远程控制，远程通话相关功能</a></li>
+<li><a href="#xmpp-client">XMPP client</a></li>
+<li><a href="#salto">Salto</a></li>
+<li><a href="#risco">RISCO</a></li>
+<li><a href="#onvif-ipcam">Onvif IPCAM</a></li>
+<li><a href="#web-server">Web server</a></li>
+<li><a href="#web">Web前端设计</a></li>
+<li><a href="#_11">设备管理</a></li>
+<li><a href="#_12">用户管理</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="app">App</h2>
+<p>使用 Welcome App 3.0 作为基线来开发。变更的技术方案如下：</p>
+<h3 id="_1">推送方案</h3>
+<p>原方案：通过 SIP Server 发送推送通知，通过 SIP Message 来实现。<br />
+新方案：通过 Portal 服务器，通过 websocket/socket 发送 JSON 消息来实现。</p>
+<p>变更原因：我们想把推送方案从 SIP 服务器切换到 Portal 服务器。与 Free@Home 方案保持一致。</p>
+<p>适用场景：门铃/重复振铃/报警信息</p>
+<h3 id="_2">双向通信机制</h3>
+<p>原方案：通过 SIP Message 来实现。<br />
+新方案：通过 Portal 服务器，通过 websocket/socket 发送 JSON 消息来实现。</p>
+<p>变更原因：之前双向通信和推送都是用 SIP Message，这样会导致双向通信时，IPGW 回复的应答消息被当成推送发给所有的 App。最终导致最终用户会看到奇怪的推送消息。</p>
+<p>适用场景：开灯/开锁/抓拍/SOS/切换门口机摄像头/获取通话时长</p>
+<h3 id="_3">远程和本地的通信机制</h3>
+<p>当 DesAP 检测到需要发送推送消息时（门铃/重复振铃/报警信息），下面几个信息需要考虑：</p>
+<ol>
+<li>通过 websocket 发送推送请求给 portal 服务器。Portal 服务器判断 App 是否在线，如果在线，则直接通过 websocket 发送实时的 JSON 消息给 App。如果不在线，则通过 APNs/GCM 发送推送给 App。</li>
+<li>给工作在本地模式的 App ，通过 socket 长连接直接发送 JSON 消息。</li>
+<li>当 App 和 DesAP 通过局域网工作在本地模式时，App 需要向 Portal 服务器发送注销消息，这样确保不会收到 Portal 的推送以及实时消息。</li>
+</ol>
+<p>当 App 和 DesAP 进行双向通信时（开灯/开锁/抓拍/SOS/切换门口机摄像头/获取通话时长），App 和 DesAP 直接通过 websocket/socket 的长连接上交互 JSON 数据包实现实时双向通信。</p>
+<h3 id="_4">变更对其他设备的影响</h3>
+<h4 id="desap">DesAP</h4>
+<ol>
+<li>需要实现基于 tcp 的长连接服务器。用来和 App 在本地时进行双向通信。</li>
+<li>原来通过 SIP Message 的双向交互需要替换为基于 tcp 长连接的 JSON 消息双向交互。</li>
+<li>原来通过 SIP Message 发起推送的机制需要变更为通过 websocket 发送 JSON 消息来发起推送。</li>
+</ol>
+<h4 id="portal-server">Portal Server</h4>
+<ol>
+<li>提供基于 websocket 长连接的推送接口</li>
+<li>提供基于 websocket 的双向通信接口</li>
+</ol>
+<h3 id="_5">需要澄清的问题</h3>
+<ol>
+<li>Portal Server 只提供基于 websocket 的长连接，还是也有提供基于 tcp 的长连接？</li>
+<li>维护长连接的心跳包频率是多长？</li>
+</ol>
+<h2 id="desap_1">DesAP</h2>
+<h3 id="plc">PLC 配置以及两线组网</h3>
+<p>通过人为按一下 OS 上组网按钮，然后再按一下 DesAP 上的组网按钮，即可实现组网。DesAP 上的组网按钮只有在安全按钮拨向关闭状态时才允许 PLC 设备组网。</p>
+<h4 id="_6">需要澄清的问题</h4>
+<ol>
+<li>PLC 设备上我们需要开发代码么？</li>
+<li>OS 和 DesAP 上和有一个 PLC 芯片，我们是直接用芯片还是用第三方生产的模块？</li>
+<li>软件计划上的各个任务具体内容是什么？</li>
+</ol>
+<h3 id="wi-fi">Wi-Fi 驱动以及组网</h3>
+<p>确保驱动正确运行后，通过 hostapd 实现 SoftAP。通过 wpa_supplicant 实现 Station。</p>
+<h4 id="softap">SoftAP 功能</h4>
+<p>通过配置 hostapd.conf ，并在开机时自动运行 hostapd 来实现。需要关注的几个配置项：</p>
+<ol>
+<li>SSID 名称，如 ssid=DesAP-XXXX，其中 XXXX 为 MAC 地址后四位</li>
+<li>工作模式，如 hw_mode=a 表示 5G，hw_mode=g 表示 2.4G</li>
+<li>国家码，如 country_code=CN 表示中国。国家码如何设置需要讨论具体方案</li>
+<li>工作频段，如 channel=0 表示自动选择频段，也可以人为设置特定的频段，如 channel=11</li>
+<li>80211n，我们需要打开 802.11n 以便让 AP 获得更大的带宽吞吐量<ul>
+<li>ht_capab=[HT40-][SHORT-GI-20][SHORT-GI-40]</li>
+<li>ieee80211n=1</li>
+<li>hw_mode=a</li>
+<li>设置 channel=64（这个不能乱设，频段有规定）; 或设置成 0 自动选择</li>
+</ul>
+</li>
+<li>开启 DFS 功能，ieee80211d=1；ieee80211h=1</li>
+</ol>
+<h4 id="station">Station 功能</h4>
+<p>通过 wpa_supplicant 来连接家庭 WiFi 热点。</p>
+<h4 id="bandwidth">Bandwidth 自动测试及频段自动选择</h4>
+<p>通过交叉编译 iperf 并集成在 DesAP 和 IS 上实现带宽的自动测试。先让用户配置 DesAP 连接到家庭网络，从而确认家庭网络的频段 (2.4G or 5G)。然后启用 DesAP 的 SoftAP，让 IS 连接到 DesAP 上。开始测试带宽。测试完成后，DesAP 更换一个频段，继续测试带宽。然后建议用户选择最佳带宽的 DesAP SoftAP 配置。</p>
+<h5 id="_7">需要澄清的问题</h5>
+<p>需要讨论测试的方案。用户怎么样来开启自动测试流程？如果安装好之后，2.4G 或 5G 根本就连接不上，无法通信，这个时候怎么测试带宽？当测试完一个带宽后，需要切换到下一个带宽时，可以保持 SSID 和密码不变，等待 IS 自动连接上来？</p>
+<h4 id="wps">WPS</h4>
+<p>通过配置 hostapd 来实现。具体方案需要研究 hostapd.conf 来实现。</p>
+<h3 id="dhcp">DHCP</h3>
+<p>DesAP 有三个网口，一个作为 Station 连接到家里的 WiFi 热点。另外一个作为 AP 连接所有的 IS 设备；还有一个作为 PLC 网络接口连接 OS 设备。除了作为 Station 的网络接口外，其他两个网络接口 DesAP 都需要有一个 DHCP 服务器。主要需要实现如下功能：</p>
+<ol>
+<li>给 IS 设备分配 IP 地址</li>
+<li>给 OS 设备分配 IP 地址</li>
+<li>监控 Station 端的 IP 地址，确保这三个网段网络地址不冲突</li>
+</ol>
+<p>DHCP 需要实现以下功能：</p>
+<ol>
+<li>DHCP 地址池更改方案（当检测到地址冲突时，如何修改 DHCP 地址池，以及如何通知现有设备重新获取 IP 地址）</li>
+<li>IP 数据包转发策略，通过设置每个网口的路由表来实现</li>
+</ol>
+<p>具体方案 Hack 有详细的文档描述。</p>
+<h3 id="dns">DNS</h3>
+<p>DesAP 需要实现 DNS 服务，以便可以通过一个简单易记的短网址，访问到 DesAP 的 web 配置界面。</p>
+<h3 id="sip">SIP 服务器</h3>
+<p>大部分沿用 IPGW 上的 flexsip 服务器方案。需要评估三个网口以及 IP Camera 发现及视频转发机制的影响。</p>
+<h3 id="_8">视频转发以及码流控制</h3>
+<p>增加的功能点是码流控制，通过 RTCP 监控视频和音频的时延情况，根据时延情况动态调整 OS 设备的帧率以及码率。</p>
+<h4 id="_9">需要澄清的问题</h4>
+<p>问题：这个工作应该在 IS 和 OS 两个设备上开发。不应该在 DesAP 上开发。</p>
+<h3 id="_10">手机，远程控制，远程通话相关功能</h3>
+<p>与原来的 IPGW 相比，需要增加的功能包含：</p>
+<ol>
+<li>实现 websocket 客户端，和 portal 服务器对接</li>
+<li>实现 tcp 服务器，实现与 App 在本地同局域网时的交互</li>
+</ol>
+<p>这个工作的具体信息可参阅 App 的变更。</p>
+<h3 id="xmpp-client">XMPP client</h3>
+<p>需要在 DesAP 上实现 XMPP 客户端，以便与 Free@Home 对接。BJE 已经发了 Free@Home 的相差接口文档和 SDK 库。可以直接参考使用。</p>
+<h3 id="salto">Salto</h3>
+<p>需求及技术方案如何？</p>
+<ul>
+<li>与Salto application的接口设计</li>
+<li>GSM接口</li>
+<li>与cloud server的接口设计</li>
+<li>Salto appliation的移植</li>
+</ul>
+<h3 id="risco">RISCO</h3>
+<p>需求及技术方案如何？</p>
+<ul>
+<li>与RISCO的接口设计</li>
+<li>与cloud server的接口设计</li>
+</ul>
+<h3 id="onvif-ipcam">Onvif IPCAM</h3>
+<ul>
+<li>设备搜索</li>
+<li>设备管理</li>
+<li>本地监视以及IP转发方案</li>
+<li>远程监视方案</li>
+</ul>
+<h3 id="web-server">Web server</h3>
+<p>websocket 客户端由谁来实现？基于长连接的 tcp server 由谁来实现？</p>
+<ul>
+<li>http代理</li>
+<li>CGI接口设计</li>
+<li>RESTFUL接口设计</li>
+</ul>
+<h3 id="web">Web前端设计</h3>
+<p>外包来完成。但需要实现 PC 端和 Mobile 端兼容的前端设计和开发。</p>
+<h3 id="_11">设备管理</h3>
+<ul>
+<li>设备搜索</li>
+<li>设备注册</li>
+<li>设备认证绑定</li>
+<li>设备解绑</li>
+</ul>
+<p>Frank 的设备发现，组网与安全的设计文档里有详细的方案。</p>
+<h3 id="_12">用户管理</h3>
+<p>沿用 IPGW 的方案。</p>
+	<hr/>
+	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2016-11-04(Friday) 15:36. Tags: <a href="../tag/des.html">des</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="../category/android.html">android</a></li>
+										<li><a href="../category/essay.html">essay</a></li>
+										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/ml.html">ml</a></li>
+										<li><a href="../category/nlp.html">nlp</a></li>
+										<li><a href="../category/python.html">python</a></li>
+										<li><a href="../category/tools.html">tools</a></li>
+										<li><a href="../category/weapp.html">weapp</a></li>
+										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+											<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="../theme/js/jquery.js"></script>
+		<script src="../theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

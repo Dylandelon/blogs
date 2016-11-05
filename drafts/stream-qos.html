@@ -1,0 +1,313 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="../theme/css/foundation.css" />
+		<link rel="stylesheet" href="../theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="../theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="../theme/img/favicon.ico">
+
+		<script src="../theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="../category/android.html">android</a></li>
+							<li ><a href="../category/essay.html">essay</a></li>
+							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/ml.html">ml</a></li>
+							<li ><a href="../category/nlp.html">nlp</a></li>
+							<li ><a href="../category/python.html">python</a></li>
+							<li ><a href="../category/tools.html">tools</a></li>
+							<li ><a href="../category/weapp.html">weapp</a></li>
+							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+									<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="../">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>流媒体质量控制协议</h2>
+	<h2 id="_1">为什么需要质量控制</h2>
+<p>在实时视频流媒体领域，要求带宽充足且稳定。带宽的波动可能造成视频卡顿。</p>
+<h2 id="rtcp">RTCP 控制方案</h2>
+<p><a href="https://en.wikipedia.org/wiki/RTP_Control_Protocol">RTCP</a> 是在 <a href="https://tools.ietf.org/html/rfc3550">RFC3550</a> 里随着 RTP 协议里引入的。其目的是把接收端 QoS 信息发送给发送端，发送端根据接收端报告的 QoS 调整输出的 bitrate 。</p>
+<h3 id="rtcp_1">RTCP 包含的信息</h3>
+<ul>
+<li>丢包率</li>
+<li>jitter</li>
+</ul>
+<p>接收端根据这些信息调整编码器的输出。</p>
+<h3 id="rtcp_2">RTCP 发送间隔</h3>
+<p>根据带宽进行动态计算。简单地讲，就是 session bandwidth 的 5% 用来当 RTCP 。同时还建议了最小值，5s, 2.5s 等。实际上这个规则很复杂，因为要考虑到增大 RTCP 的包频率会占用带宽。ietf 上有个<a href="https://www.ietf.org/mail-archive/web/avt/current/msg15644.html">官方邮件</a>讨论这个问题。</p>
+<h3 id="rtcp_3">RTCP 的不足</h3>
+<p>RTCP 方案的最大缺点是，<strong>无法分辨出带宽限制和随机丢包</strong>。比如，在 30 fps 情况下，RTCP 报告的丢包率和在 15 fps 情况下报告的差别不大。这个时候输出端就无法做有有效的输出控制。</p>
+<h2 id="svp">SVP</h2>
+<p>为了解决 RTCP 的问题，<a href="https://tools.ietf.org/html/rfc4585">RFC4585</a> 定义了一套扩展的方案。</p>
+<h3 id="pli-picture-loss-indication">PLI - Picture Loss Indication</h3>
+<p>基于 intra-picture/inter-picture 模型。当帧预测链被破坏 (如 i-frame 丢失) ，接收方可以发送 PLI 命令给发送方，发送方重新发上一个 i-frame 给接收方来修复。</p>
+<h4 id="pli">PLI 命令的发送时机</h4>
+<p>可以在检测到 i-frame 丢失时发送，也可以待到常规的 RTCP 命令发送时间窗口发送。具体权衡要看整体的性能。</p>
+<h3 id="sli-slice-loss-indication">SLI - Slice Loss Indication</h3>
+<p>当接收端检测到丢失一个或多个连续的 microblock 时，向发送端发送 SLI 反馈。收到 SLI 反馈后接收端如何处理不在 RFC4585 里讨论，这个是和具体的视频压缩算法相关的。比如，典型地重新发送一个 i-frame 给接收端。</p>
+<h3 id="rpsi-reference-picture-selection-indication">RPSI - Reference Picture Selection Indication</h3>
+<p>现代解码算法允许使用更老的帧来作为预测的引用帧，而不仅仅依赖上一帧作为预测基础帧。RPSI 可以让解码码发送预测帧序列中的丢失帧给编码端，从而实现同步。</p>
+<h4 id="rpsi">RPSI 命令的发送时机</h4>
+<p>越老的 RPSI ，编码器构建的代价越大。所以 RPSI 应该尽快发送出去，而不必等到 RTCP 的时间窗口。</p>
+<h2 id="_2">背景知识</h2>
+<h3 id="rtp">RTP 协议</h3>
+<p>RTP 是由 RFC3550 定义的用来做实时流媒体传输的协议。它的特点是：</p>
+<ul>
+<li>在包头里带有流媒体的格式，时间以及帧序号</li>
+<li>一个包传输一个流媒体片段，比如 20ms 语音，接收者可以直接播放</li>
+</ul>
+<p><a href="https://tools.ietf.org/html/rfc3551">RFC3551</a> 定义了不同的音频视频格式使用 RTP 传输数据时的帧格式。这个文档有点老，如果想找新一点的视频格式，比如 H264, V8 等，比如可以搜索 “RTP payload H264”，&rdquo;rtp payload  V8&rdquo; 等来找到对应的 RFC 文档。</p>
+<h3 id="ip">IP 多播</h3>
+<p>RTP 可以使用 <a href="https://en.wikipedia.org/wiki/IP_multicast">IP 多播</a> 来传输数据。发送端把数据发出去，不管接收者。接收者使用 IGMP 协议向网络说明自己对哪个多播的数据包感兴趣，路由器根据 IGMP 登记的信息进行数据复制和转发。</p>
+<h3 id="microblock">microblock</h3>
+<p><a href="https://en.wikipedia.org/wiki/Macroblock">microblock</a> 是视频压缩处理单元。典型地 microblock 包含 16x16 个采样，这些采样可以进一步拆分成传输块 (transform blocks) 或预测块 (prediction blocks)。</p>
+<h3 id="yuv">YUV</h3>
+<ul>
+<li>Y 代表亮度，指明图片的黑白部分内容。</li>
+<li>U 代表输入信号中红色部分与亮度值的差异。</li>
+<li>V 代表输入信号中蓝色部分与亮度值的差异。</li>
+</ul>
+<p><a href="https://en.wikipedia.org/wiki/YUV">WikiPedia</a> 上有解释及示例图片。</p>
+<h3 id="interlaced-video">Interlaced Video</h3>
+<p>一种不增加带宽占用的前提下，提高用户帧率感知的技术。其原理是对不同时间的数据进行采样，利用 <a href="https://en.wikipedia.org/wiki/Phi_phenomenon">Phi phenomenon</a> 原理来增强用户感知的帧率。</p>
+	<hr/>
+	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2016-09-08(Thursday) 15:36.</h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="../category/android.html">android</a></li>
+										<li><a href="../category/essay.html">essay</a></li>
+										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/ml.html">ml</a></li>
+										<li><a href="../category/nlp.html">nlp</a></li>
+										<li><a href="../category/python.html">python</a></li>
+										<li><a href="../category/tools.html">tools</a></li>
+										<li><a href="../category/weapp.html">weapp</a></li>
+										<li><a href="../category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+											<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="../theme/js/jquery.js"></script>
+		<script src="../theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
