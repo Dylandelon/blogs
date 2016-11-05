@@ -1,7 +1,7 @@
 Title: DES WiFi
 Date: 2016-09-23 15:36
 Modified: 2016-09-23 15:36
-Slug: stream-qos
+Slug: des-wifi
 Authors: Joey Huang
 Summary: 流媒体质量控制协议
 Status: draft
