@@ -77,13 +77,15 @@
 							<li ><a href="../category/python.html">python</a></li>
 							<li ><a href="../category/tools.html">tools</a></li>
 							<li ><a href="../category/weapp.html">weapp</a></li>
+							<li ><a href="../category/web.html">web</a></li>
 							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
 
 
 
 
 						<li><label>Monthly Archives</label></li>
-									<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+									<li><a href="/posts/2016/12/index.html">December 2016 (1)</a></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
 									<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
 									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
@@ -167,6 +169,267 @@
 2) 利用 DHCP 续租时长，来周期性地继租 IP 地址，比如设置为 10 分钟。<br />
 3) 断网。 ifconfig wlan0 down / ifconfig wlan0 up 。在应用层实现，发现断网后，重新发送 DHCP 请求。</p>
 <p>如何解决 WiFi Repeater 子网里的设备？</p>
+<h2 id="wifi-dfs">WiFi DFS</h2>
+<h3 id="wifi-5g">给 WiFi 使用的有哪些 5G 频道？</h3>
+<table>
+<thead>
+<tr>
+<th>CHANNEL</th>
+<th>FREQUENCY</th>
+<th>EUROPE (ETSI)</th>
+<th>US (FCC)</th>
+<th>JAPAN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>36</td>
+<td>5180</td>
+<td>Indoors</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>40</td>
+<td>5200</td>
+<td>Indoors</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>44</td>
+<td>5220</td>
+<td>Indoors</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>48</td>
+<td>5240</td>
+<td>Indoors</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>52</td>
+<td>5260</td>
+<td>Indoors / DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>56</td>
+<td>5280</td>
+<td>Indoors / DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>60</td>
+<td>5300</td>
+<td>Indoors / DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>64</td>
+<td>5320</td>
+<td>Indoors / DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>100</td>
+<td>5500</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>104</td>
+<td>5520</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>108</td>
+<td>5540</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>112</td>
+<td>5560</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>116</td>
+<td>5580</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>120</td>
+<td>5600</td>
+<td>DFS / TPC</td>
+<td>No Access</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>124</td>
+<td>5620</td>
+<td>DFS / TPC</td>
+<td>No Access</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>128</td>
+<td>5640</td>
+<td>DFS / TPC</td>
+<td>No Access</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>132</td>
+<td>5660</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>136</td>
+<td>5680</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>140</td>
+<td>5700</td>
+<td>DFS / TPC</td>
+<td>DFS</td>
+<td>DFS / TPC</td>
+</tr>
+<tr>
+<td>149</td>
+<td>5745</td>
+<td>SRD</td>
+<td>OK</td>
+<td>No Access</td>
+</tr>
+<tr>
+<td>153</td>
+<td>5765</td>
+<td>SRD</td>
+<td>OK</td>
+<td>No Access</td>
+</tr>
+<tr>
+<td>157</td>
+<td>5785</td>
+<td>SRD</td>
+<td>OK</td>
+<td>No Access</td>
+</tr>
+<tr>
+<td>161</td>
+<td>5805</td>
+<td>SRD</td>
+<td>OK</td>
+<td>No Access</td>
+</tr>
+<tr>
+<td>165</td>
+<td>5825</td>
+<td>SRD</td>
+<td>OK</td>
+<td>No Access</td>
+</tr>
+</tbody>
+</table>
+<p>以欧洲为例，非 DFS 与 DFS 频道数大概是 9: 15。这个数字每个国家会有稍微不同。</p>
+<p>来源：http://www.radio-electronics.com/info/wireless/wi-fi/80211-channels-number-frequencies-bandwidth.php</p>
+<p><img alt="5G Channels" src="../../images/wifi_5G_bands.png" /></p>
+<h3 id="dfs">启用 DFS 的影响</h3>
+<ul>
+<li>需要做 DFS 认证</li>
+<li>设备开机时<strong>有可能</strong>在 10 分钟的时间客户端无法扫描到 AP ，因为这段时间 AP 需要进行雷达频道扫描</li>
+<li>使用 DFS 频道的过程中，AP 会持续检测雷达信号，如果检测到雷达信号，会进行频道切换，这会造成客户端连接中断一小段时间，之后客户端会自动连接上。</li>
+</ul>
+<p>来源：http://www.tp-link.com/en/faq-763.html</p>
+<p>禁用 DFS 频道是个较普遍的现象。不少厂商会决定不使用 DFS 频道。</p>
+<p>来源：http://superuser.com/questions/692835/which-5ghz-channel-to-use/692837</p>
+<h3 id="dfs_1">禁用 DFS 的影响</h3>
+<ul>
+<li>可用频道变少</li>
+<li>如果启用自动选择频道，则在 802.11n 下可用频道将变得更少</li>
+</ul>
+<p>以德国为例，自动选择的可选频道为：36, 40, 44, 48, 52, 56, 60, 64 ，其中 52, 56, 60, 64 为 DFS 频道。如果禁用 DFS ，则只剩下 36, 40, 44, 48 四个自动可选频道，以及 149, 153, 157, 161, 165 五个手动选择的频道。</p>
+<p>关于配置 802.11n 工作模式的自动可选频道相关的 <code>hostapd.conf</code> 配置项如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"># ht_capab: HT capabilities (list of flags)
+# LDPC coding capability: [LDPC] = supported
+# Supported channel width set: [HT40-] = both 20 MHz and 40 MHz with secondary
+#   channel below the primary channel; [HT40+] = both 20 MHz and 40 MHz
+#   with secondary channel above the primary channel
+#   (20 MHz only if neither is set)
+#   Note: There are limits on which channels can be used with HT40- and
+#   HT40+. Following table shows the channels that may be available for
+#   HT40- and HT40+ use per IEEE 802.11n Annex J:
+#   freq        HT40-       HT40+
+#   2.4 GHz     5-13        1-7 (1-9 in Europe/Japan)
+#   5 GHz       40,48,56,64 36,44,52,60
+#   (depending on the location, not all of these channels may be available
+#   for use)
+#   Please note that 40 MHz channels may switch their primary and secondary
+#   channels if needed or creation of 40 MHz channel maybe rejected based
+#   on overlapping BSSes. These changes are done automatically when hostapd
+#   is setting up the 40 MHz channel.
+# Spatial Multiplexing (SM) Power Save: [SMPS-STATIC] or [SMPS-DYNAMIC]
+#   (SMPS disabled if neither is set)
+# HT-greenfield: [GF] (disabled if not set)
+# Short GI for 20 MHz: [SHORT-GI-20] (disabled if not set)
+# Short GI for 40 MHz: [SHORT-GI-40] (disabled if not set)
+# Tx STBC: [TX-STBC] (disabled if not set)
+# Rx STBC: [RX-STBC1] (one spatial stream), [RX-STBC12] (one or two spatial
+#   streams), or [RX-STBC123] (one, two, or three spatial streams); Rx STBC
+#   disabled if none of these set
+# HT-delayed Block Ack: [DELAYED-BA] (disabled if not set)
+# Maximum A-MSDU length: [MAX-AMSDU-7935] for 7935 octets (3839 octets if not
+#   set)
+# DSSS/CCK Mode in 40 MHz: [DSSS_CCK-40] = allowed (not allowed if not set)
+# 40 MHz intolerant [40-INTOLERANT] (not advertised if not set)
+# L-SIG TXOP protection support: [LSIG-TXOP-PROT] (disabled if not set)
+#ht_capab=[HT40-][SHORT-GI-20][SHORT-GI-40]
+</pre></div>
+
+
+<h3 id="dfs_2">如何自动选择非 DFS 频道</h3>
+<p>可以通过配置 <code>hostapd.conf</code> 来实现。</p>
+<ul>
+<li>需要开启自动选择频道的功能</li>
+<li>设置 <code>acs_whitelist</code> 变量，标识出允许选择的频道列表</li>
+<li>可以通过配置 ACS 算法来优先选择某些频道</li>
+</ul>
+<p>下面是从 <code>hostapd.conf</code> 里摘抄出来涉及到的设置项。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"># Automatic channel selection (ACS) whitelist
+# (default: not set)
+# Allow only these channels in automatic channel selection
+acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
+</pre></div>
+
+
+<h3 id="_5">把需要手动选择的频道加入自动选择频道列表</h3>
+<p>可以通过配置黑白名单的方式把 149 153 157 161 165 频道配置进频道列表白名单，针对欧洲国家，可以按照下面的方式来配置。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"># Automatic channel selection (ACS) whitelist
+# (default: not set)
+# Allow only these channels in automatic channel selection
+acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
+</pre></div>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2016-09-23(Friday) 15:36.</h6>
 </article>
@@ -212,6 +475,7 @@
 										<li><a href="../category/python.html">python</a></li>
 										<li><a href="../category/tools.html">tools</a></li>
 										<li><a href="../category/weapp.html">weapp</a></li>
+										<li><a href="../category/web.html">web</a></li>
 										<li><a href="../category/werkzeug.html">werkzeug</a></li>
 								</ul>
 							</div>
@@ -219,34 +483,37 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-4"><a href="../tag/react.html">react</a></li>
 										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/web.html">web</a></li>
 										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
 										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
 										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
 										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
 										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
 										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
-											<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+											<li><a href="/posts/2016/12/index.html">December 2016 (1)</a></li>
+											<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
 											<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
 											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>

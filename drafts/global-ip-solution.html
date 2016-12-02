@@ -77,13 +77,15 @@
 							<li ><a href="../category/python.html">python</a></li>
 							<li ><a href="../category/tools.html">tools</a></li>
 							<li ><a href="../category/weapp.html">weapp</a></li>
+							<li ><a href="../category/web.html">web</a></li>
 							<li ><a href="../category/werkzeug.html">werkzeug</a></li>
 
 
 
 
 						<li><label>Monthly Archives</label></li>
-									<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+									<li><a href="/posts/2016/12/index.html">December 2016 (1)</a></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
 									<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
 									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
@@ -156,29 +158,25 @@
 <li><a href="#wi-fi">Wi-Fi 驱动以及组网</a><ul>
 <li><a href="#softap">SoftAP 功能</a></li>
 <li><a href="#station">Station 功能</a></li>
-<li><a href="#bandwidth">Bandwidth 自动测试及频段自动选择</a><ul>
-<li><a href="#_7">需要澄清的问题</a></li>
-</ul>
-</li>
+<li><a href="#bandwidth">Bandwidth 自动测试及频段自动选择</a></li>
 <li><a href="#wps">WPS</a></li>
 </ul>
 </li>
 <li><a href="#dhcp">DHCP</a></li>
 <li><a href="#dns">DNS</a></li>
 <li><a href="#sip">SIP 服务器</a></li>
-<li><a href="#_8">视频转发以及码流控制</a><ul>
-<li><a href="#_9">需要澄清的问题</a></li>
-</ul>
-</li>
-<li><a href="#_10">手机，远程控制，远程通话相关功能</a></li>
+<li><a href="#_7">视频转发以及码流控制</a></li>
+<li><a href="#_8">手机，远程控制，远程通话相关功能</a></li>
 <li><a href="#xmpp-client">XMPP client</a></li>
 <li><a href="#salto">Salto</a></li>
 <li><a href="#risco">RISCO</a></li>
 <li><a href="#onvif-ipcam">Onvif IPCAM</a></li>
 <li><a href="#web-server">Web server</a></li>
 <li><a href="#web">Web前端设计</a></li>
-<li><a href="#_11">设备管理</a></li>
-<li><a href="#_12">用户管理</a></li>
+<li><a href="#_9">设备管理</a></li>
+<li><a href="#_10">用户管理</a></li>
+<li><a href="#_11">自动测试以及软件测试模式</a></li>
+<li><a href="#_12">固件升级</a></li>
 </ul>
 </li>
 </ul>
@@ -221,13 +219,30 @@
 <li>维护长连接的心跳包频率是多长？</li>
 </ol>
 <h2 id="desap_1">DesAP</h2>
+<ul>
+<li>平台基于 I.MX6</li>
+<li>基于 IPGW DM365 平台，很多基础功能从 IPGW 上移植过来 -&gt; Nancy</li>
+</ul>
 <h3 id="plc">PLC 配置以及两线组网</h3>
+<ul>
+<li>PLC 直接贴在主板上，留出 SPI FLASH 接口，用顶针顶上去烧写软件</li>
+<li>PLC 接口设计：设置频段，工作模式设置，组网，退网。接口方式是 MII。AR7420。</li>
+</ul>
 <p>通过人为按一下 OS 上组网按钮，然后再按一下 DesAP 上的组网按钮，即可实现组网。DesAP 上的组网按钮只有在安全按钮拨向关闭状态时才允许 PLC 设备组网。</p>
 <h4 id="_6">需要澄清的问题</h4>
 <ol>
-<li>PLC 设备上我们需要开发代码么？</li>
-<li>OS 和 DesAP 上和有一个 PLC 芯片，我们是直接用芯片还是用第三方生产的模块？</li>
-<li>软件计划上的各个任务具体内容是什么？</li>
+<li>
+<p>PLC 设备上我们需要开发代码么？<br />
+A: 不需要开发代码</p>
+</li>
+<li>
+<p>OS 和 DesAP 上和有一个 PLC 芯片，我们是直接用芯片还是用第三方生产的模块？<br />
+A: 直接使用芯片</p>
+</li>
+<li>
+<p>软件计划上的各个任务具体内容是什么？<br />
+A: 己沟通</p>
+</li>
 </ol>
 <h3 id="wi-fi">Wi-Fi 驱动以及组网</h3>
 <p>确保驱动正确运行后，通过 hostapd 实现 SoftAP。通过 wpa_supplicant 实现 Station。</p>
@@ -250,11 +265,17 @@
 <h4 id="station">Station 功能</h4>
 <p>通过 wpa_supplicant 来连接家庭 WiFi 热点。</p>
 <h4 id="bandwidth">Bandwidth 自动测试及频段自动选择</h4>
+<p>前提：用户先进行配置，让 IS 连接到 DesAP 上。</p>
 <p>通过交叉编译 iperf 并集成在 DesAP 和 IS 上实现带宽的自动测试。先让用户配置 DesAP 连接到家庭网络，从而确认家庭网络的频段 (2.4G or 5G)。然后启用 DesAP 的 SoftAP，让 IS 连接到 DesAP 上。开始测试带宽。测试完成后，DesAP 更换一个频段，继续测试带宽。然后建议用户选择最佳带宽的 DesAP SoftAP 配置。</p>
-<h5 id="_7">需要澄清的问题</h5>
-<p>需要讨论测试的方案。用户怎么样来开启自动测试流程？如果安装好之后，2.4G 或 5G 根本就连接不上，无法通信，这个时候怎么测试带宽？当测试完一个带宽后，需要切换到下一个带宽时，可以保持 SSID 和密码不变，等待 IS 自动连接上来？</p>
 <h4 id="wps">WPS</h4>
 <p>通过配置 hostapd 来实现。具体方案需要研究 hostapd.conf 来实现。</p>
+<p>DesAP 上有两个 WPS 按键：</p>
+<ul>
+<li>实体按键：给 AP 模式使用，让 IS 连接上来</li>
+<li>软按键：作为 Station 去连接家庭网络。需要打开 DesAP Web 页面操作。</li>
+<li>IS 上的 WPS 按键: IS 上也使用 WPS 软按键实现。</li>
+<li>DesAP: 提供自适应的 Web 配置页面，App 通过 WebView 直接访问并设置 DesAP</li>
+</ul>
 <h3 id="dhcp">DHCP</h3>
 <p>DesAP 有三个网口，一个作为 Station 连接到家里的 WiFi 热点。另外一个作为 AP 连接所有的 IS 设备；还有一个作为 PLC 网络接口连接 OS 设备。除了作为 Station 的网络接口外，其他两个网络接口 DesAP 都需要有一个 DHCP 服务器。主要需要实现如下功能：</p>
 <ol>
@@ -265,18 +286,17 @@
 <p>DHCP 需要实现以下功能：</p>
 <ol>
 <li>DHCP 地址池更改方案（当检测到地址冲突时，如何修改 DHCP 地址池，以及如何通知现有设备重新获取 IP 地址）</li>
-<li>IP 数据包转发策略，通过设置每个网口的路由表来实现</li>
+<li>IP 数据包转发策略，通过设置每个网口的路由表来实现。这样可以让 DesAP 三个不同网口上的设备可以直接通信。</li>
 </ol>
 <p>具体方案 Hack 有详细的文档描述。</p>
 <h3 id="dns">DNS</h3>
 <p>DesAP 需要实现 DNS 服务，以便可以通过一个简单易记的短网址，访问到 DesAP 的 web 配置界面。</p>
 <h3 id="sip">SIP 服务器</h3>
 <p>大部分沿用 IPGW 上的 flexsip 服务器方案。需要评估三个网口以及 IP Camera 发现及视频转发机制的影响。</p>
-<h3 id="_8">视频转发以及码流控制</h3>
+<h3 id="_7">视频转发以及码流控制</h3>
 <p>增加的功能点是码流控制，通过 RTCP 监控视频和音频的时延情况，根据时延情况动态调整 OS 设备的帧率以及码率。</p>
-<h4 id="_9">需要澄清的问题</h4>
-<p>问题：这个工作应该在 IS 和 OS 两个设备上开发。不应该在 DesAP 上开发。</p>
-<h3 id="_10">手机，远程控制，远程通话相关功能</h3>
+<p>这个工作应该在 IS 和 OS 两个设备上开发，如果多台 IS ，有些信号好，有些信号不好。则会全部变成低质量的视频传输。</p>
+<h3 id="_8">手机，远程控制，远程通话相关功能</h3>
 <p>与原来的 IPGW 相比，需要增加的功能包含：</p>
 <ol>
 <li>实现 websocket 客户端，和 portal 服务器对接</li>
@@ -301,21 +321,28 @@
 </ul>
 <h3 id="onvif-ipcam">Onvif IPCAM</h3>
 <ul>
-<li>设备搜索</li>
+<li>前期方案：onvif 先由 DesAP 模块成主机设备，发 I 帧来实现监控</li>
+<li>
+<p>正式方案：使用 P2P + onvif 方案 -&gt; 和 Tobias 达成方案可行性的一致</p>
+</li>
+<li>
+<p>设备搜索</p>
+</li>
 <li>设备管理</li>
 <li>本地监视以及IP转发方案</li>
 <li>远程监视方案</li>
 </ul>
 <h3 id="web-server">Web server</h3>
-<p>websocket 客户端由谁来实现？基于长连接的 tcp server 由谁来实现？</p>
+<p>基于 TLS/SSL 安全机制</p>
 <ul>
-<li>http代理</li>
-<li>CGI接口设计</li>
-<li>RESTFUL接口设计</li>
+<li>CGI 接口设计 -&gt; 配置，给 Browser (App/Desktop)</li>
+<li>RESTFUL 接口设计 -&gt; 给 IS 用的配置接口</li>
+<li>Native Socket (TCP/UDP?) Server -&gt; 本地双向通信</li>
 </ul>
+<p>计划重新排一下，目前的计划时间太短</p>
 <h3 id="web">Web前端设计</h3>
 <p>外包来完成。但需要实现 PC 端和 Mobile 端兼容的前端设计和开发。</p>
-<h3 id="_11">设备管理</h3>
+<h3 id="_9">设备管理</h3>
 <ul>
 <li>设备搜索</li>
 <li>设备注册</li>
@@ -323,8 +350,12 @@
 <li>设备解绑</li>
 </ul>
 <p>Frank 的设备发现，组网与安全的设计文档里有详细的方案。</p>
-<h3 id="_12">用户管理</h3>
-<p>沿用 IPGW 的方案。</p>
+<h3 id="_10">用户管理</h3>
+<p>暂时先不做，沿用 IPGW 的方案。</p>
+<h3 id="_11">自动测试以及软件测试模式</h3>
+<p>白盒 + 老化测试 的自动测试系统。</p>
+<h3 id="_12">固件升级</h3>
+<p>通过上传到 Web 界面完成固件升级。沿用 IPGW 功能。</p>
 	<hr/>
 	<h6>Post by <a href="../author/joey-huang.html">Joey Huang</a> under <a href="../category/notes.html">notes</a> on 2016-11-04(Friday) 15:36. Tags: <a href="../tag/des.html">des</a>, </h6>
 </article>
@@ -370,6 +401,7 @@
 										<li><a href="../category/python.html">python</a></li>
 										<li><a href="../category/tools.html">tools</a></li>
 										<li><a href="../category/weapp.html">weapp</a></li>
+										<li><a href="../category/web.html">web</a></li>
 										<li><a href="../category/werkzeug.html">werkzeug</a></li>
 								</ul>
 							</div>
@@ -377,34 +409,37 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-4"><a href="../tag/react.html">react</a></li>
 										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/web.html">web</a></li>
 										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
 										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-4"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
 										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
 										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
 										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
 										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
 								</ul>
 							</div>
 
 							<div class="panel">
 								<h5>Monthly Archives</h5>
 								<ul class="side-nav">
-											<li><a href="/posts/2016/11/index.html">November 2016 (2)</a></li>
+											<li><a href="/posts/2016/12/index.html">December 2016 (1)</a></li>
+											<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
 											<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
 											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
 											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
