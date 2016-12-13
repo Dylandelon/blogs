@@ -33,3 +33,63 @@ package "运行环境" {
 ["main 函数"] -> ["测试报告"]
 
 @enduml
+----------------------------------------------------------
+@startuml
+
+left to right direction
+skinparam packageStyle rect
+
+title 用户使用 DesAP Wi-Fi 相关功能
+
+actor :用户: as user
+actor :电脑: as computer
+actor :IS 设备: as IS
+
+rectangle DesAP {
+    usecase (启动 DesAP) as UC1
+    usecase (把电脑连接到 DesAP Soft AP) as UC2
+    usecase (使用电脑浏览器配置 DesAP) as UC3
+    usecase (修改 Wi-Fi 工作频段) as UC7
+    usecase (启用 DesAP Wi-Fi Station WPS 功能) as UC4
+    usecase (启用 DesAP Wi-Fi AP WPS 功能) as UC5
+    usecase (发起网络带宽测试) as UC6
+
+    user -- UC1
+    user -- UC2
+    UC2 -- computer
+    user -- UC3
+    UC3 -- computer
+    user -- UC4
+    user -- UC5
+    user -- UC6
+    UC6 .> IS
+    user -- UC7
+}
+
+@enduml
+----------------------------------------------------------
+@startuml
+
+left to right direction
+skinparam packageStyle rect
+
+title 用户使用 IS Wi-Fi 相关功能
+
+actor :用户: as user
+actor :DesAP: as DesAP
+
+rectangle IS {
+    usecase (启动 IS) as UC1
+    usecase (把 IS 连接到 DesAP Soft AP) as UC2
+    usecase (启用 WPS 功能) as UC3
+    usecase (发起网络带宽测试) as UC4
+
+    user -- UC1
+    user -- UC2
+    UC2 -- DesAP
+    UC3 .> UC2 : extends
+    user -- UC4
+    UC4 -- DesAP
+}
+
+@enduml
