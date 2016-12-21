@@ -72,9 +72,9 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li class="active"><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
-							<li ><a href="./category/python.html">python</a></li>
+							<li class="active"><a href="./category/python.html">python</a></li>
 							<li ><a href="./category/tools.html">tools</a></li>
 							<li ><a href="./category/weapp.html">weapp</a></li>
 							<li ><a href="./category/web.html">web</a></li>
@@ -135,35 +135,54 @@
 						<!-- Main Content -->
 						<div class="medium-9 small-12 columns" role="content">
 <article>
-	<h2>标准方程 Normal Equations</h2>
-	<h2 id="_1">标准方程</h2>
-<p>线性回归里的梯度下降算法，通过不停地迭代求参数，从而不停地逼近成本函数的最小值来求解。另外一个方法是直接计算成本函数的微分，令微分算子为零，求解这个方程，即可得到线性回归的解。</p>
-<p>回忆一下线性回归算法的成本函数：</p>
-<p>$$<br />
-J(\theta) = \frac{1}{2m} \sum_{(i=0)}^n \left( h_\theta(x^{(i)}) - y^{(i)} \right)^2<br />
-$$</p>
-<p>我们让 $\frac{\delta}{\delta \theta} J(\theta) = 0$，求解这个方程最终可以得到：</p>
-<p>$$<br />
-\theta = \left( X^T X \right)^{-1} X^T y<br />
-$$</p>
-<p>这个就是我们的标准方程。它通过矩阵运算，直接从训练样本里求出参数 $\theta$ 的值。</p>
-<ul>
-<li>从成本函数的微分方程推导出标准议程的过程比较复杂，涉及到较多的矩阵运算和矩阵微分运算。感兴趣的可以参考 <a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf">cs229-notes1.pdf</a>。另外 <a href="http://cs229.stanford.edu/section/cs229-linalg.pdf"></a> 里面有线性代数的复习资料。</li>
-<li>$X$ 是训练样本的变量，它是个 m x n 矩阵。其中 m 是训练样本的个数，n 是变量个数。</li>
-<li>$y$ 是训练样本的结果数据，它是个 m x 1 的列向量。</li>
-</ul>
-<h2 id="_2">奇异矩阵</h2>
-<p>当训练数据集较少时，利用矩阵运算可以较快的算出参数 $\theta$ 的值。但如果 $X^T X$ 是奇异矩阵的话，它就没有逆矩阵存在，这个时候通用方程的解是什么呢？答案是，在 octave 里用 <code>pinv</code> 来代替 <code>inv</code> 来计算逆矩阵。这样即使 $X^T X$ 是奇异矩阵，<code>pinv</code> 也能算出其&rdquo;伪&rdquo;逆矩阵，从而顺利算出通用方向的解。</p>
-<p>那么，物理上讲，$X^T X$ 如果为奇异矩阵的话，到底代表什么意思呢？</p>
-<ul>
-<li>模型变量之间线性相关<br />
-  比如，在房价预测模型里，$x_1$ 代表房子的长度，$x_2$ 代表房子的宽度，而 $x_3$ 代表房子的面积，这里假设房子是方形的，那么实际上 $x_3$ 和 $x_1, x_2$ 是线性相关的。</li>
-<li>训练样例少于变量个数，即 m &lt; n<br />
-  这种情况下，需要减少变量个数来解决问题</li>
-</ul>
-<p>然后，如果 $\left( X^T X \right)$ 是奇异矩阵的话，在其他编程语言里是没有办法逆的。所以需要其他的办法来解决这个问题。在逻辑回归算法里，使用了另外一个方法来解决奇异矩阵的问题，即正则化 (Regularization) 。有关正则化的信息后文写到逻辑回归算法时再来详细介绍。</p>
+	<h2>macOS Sierra 上安装 mysqlclient 问题</h2>
+	<h2 id="_1">写在前面</h2>
+<p>好久没有写这种类型的文章了，记录遇到的具体问题。</p>
+<p>随着搜索水平的提高，特别是英文搜索水平的提高，这种类型的文章感觉越来越没有价值，因为一搜索就找到了答案。难怪大家说，现在的程序员 = 搜索引擎 + Ctrl+C + Ctrl+V 。</p>
+<p>今天写这个文章是因为花了吃奶的力气仍然搜索不到答案，最后还是靠经验和基础知识解决。问题是这样，在 macOS Sierra 上使用 pip 安装 mysqlclient 时遇到错误，无法链接到 libssl 库，系统上明明安装了 openssl 可是就是链接不到。</p>
+<p>看到这里，99% 的读者可以关掉这个页面走人了。</p>
+<h2 id="_2">问题现象</h2>
+<p>系统安装了 mysql ，使用 <code>pip install mysqlclient</code> 时出错，错误信息如下：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">building &#39;_mysql&#39; extension
+creating build/temp.macosx-10.6-intel-3.5
+/usr/bin/clang -fno-strict-aliasing -Wsign-compare -fno-common -dynamic -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -arch i386 -arch x86_64 -g -Dversion_info=(1,3,9,&#39;final&#39;,1) -D__version__=1.3.9 -I/usr/local/Cellar/mysql/5.7.16/include/mysql -I/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m -c _mysql.c -o build/temp.macosx-10.6-intel-3.5/_mysql.o -fno-omit-frame-pointer
+/usr/bin/clang -bundle -undefined dynamic_lookup -arch i386 -arch x86_64 -g build/temp.macosx-10.6-intel-3.5/_mysql.o -L/usr/local/Cellar/mysql/5.7.16/lib -lmysqlclient -lssl -lcrypto -o build/lib.macosx-10.6-intel-3.5/_mysql.cpython-35m-darwin.so
+ld: library not found for -lssl
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+error: command &#39;/usr/bin/clang&#39; failed with exit status 1
+</pre></div>
+
+
+<p>错误出现的系统是 macOS Sierra, 在 EI Capitan 上安装没有遇到这个问题。</p>
+<h2 id="_3">问题分析</h2>
+<p>系统上明明装了 openssl 库，可是为什么找不到 libssl 呢？找了一堆答案都是教大家用 <code>brew link --force openssl</code> ，可是这个方法对 macOS Sierra 无效。原因是苹果现在不用 openssl 了，而是使用自己维护的加密算法库。为什么要这样做，不得而知，或许是被 openssl 经常爆出的滴血漏洞伤透了心吧。</p>
+<p>所以，要在 mac 上链接 ssl 库，需要指定库的路径，即加上 <code>-L/usr/local/opt/openssl</code>，把这个目录加进库的搜索路径即可。</p>
+<p>细心的人在用 <code>brew install openssl</code> 时会注意到下面的信息：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">This formula is keg-only, which means it was not symlinked into /usr/local.
+
+Apple has deprecated use of OpenSSL in favor of its own TLS and crypto libraries
+
+Generally there are no consequences of this for you. If you build your
+own software and it requires this formula, you’ll need to add to your
+build variables:
+
+LDFLAGS: -L/usr/local/opt/openssl/lib
+CPPFLAGS: -I/usr/local/opt/openssl/include
+PKG_CONFIG_PATH: /usr/local/opt/openssl/lib/pkgconfig
+</pre></div>
+
+
+<h2 id="_4">解决方案</h2>
+<ol>
+<li>从 Github 上下载 <a href="https://github.com/PyMySQL/mysqlclient-python/archive/1.3.9.tar.gz">mysqlclient 源码</a></li>
+<li>进入项目的 virtualenv 环境。为什么要这一步，因为我们希望把 mysqlclient 安装到项目所在的 python 运行环境中</li>
+<li>运行 <code>python setup.py install</code>，这个时候肯定还是报错的</li>
+<li>拷贝命令台上的最后一个报错的命令，在 <code>-L/usr/local/Cellar/mysql/5.7.16/lib</code> 后面增加如下内容 <code>-L/usr/local/opt/openssl</code>，然后回车再执行一遍这个命令</li>
+<li>再次运行 <code>python setup.py install</code> 即可成功安装</li>
+</ol>
+<p>当然，这个做法是偷懒的做法。真正优雅一点的是修改 mysqlclient 的编译脚本，直接把 ssl 库增加进去。或许还可以向开发者提个 PR 来解决这个问题。</p>
 	<hr/>
-	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/ml.html">ml</a> on 2015-09-29(Tuesday) 23:20. Tags: <a href="./tag/machine-learning.html">machine-learning</a>, </h6>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/python.html">python</a> on 2016-12-22(Thursday) 23:23. Tags: <a href="./tag/python.html">python</a>, </h6>
 </article>
 
 <hr/>
