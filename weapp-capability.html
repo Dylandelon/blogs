@@ -1,0 +1,1977 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>kamidox.com</title>
+		<meta name="description" content="">
+		<meta name="author" content="Joey Huang">
+
+		<link rel="stylesheet" href="./theme/css/foundation.css" />
+		<link rel="stylesheet" href="./theme/css/pygment/monokai.css" />
+		<link rel="stylesheet" href="./theme/css/custom.css" />
+
+
+		<link rel="shortcut icon" href="./theme/img/favicon.ico">
+
+		<script src="./theme/js/modernizr.js"></script>
+
+		<!-- Feeds -->
+
+
+		<!-- mathjax config similar to math.stackexchange -->
+		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script>
+		MathJax.Hub.Config({
+		  config: ["MMLorHTML.js"],
+		  extensions: ["tex2jax.js"],
+		  jax: ["input/TeX"],
+		  tex2jax: {
+		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+		    processEscapes: false
+		  },
+		  TeX: {
+		    extensions: ["AMSmath.js", "AMSsymbols.js"],
+		    TagSide: "right",
+		    TagIndent: ".8em",
+		    MultLineWidth: "85%",
+		    equationNumbers: {
+		      autoNumber: "AMS",
+		    },
+		    unicode: {
+		      fonts: "STIXGeneral,'Arial Unicode MS'"
+		    }
+		  },
+		  showProcessingMessages: false
+		});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap">
+			<div class="inner-wrap">
+				<!-- mobile top bar to activate nav -->
+				<nav class="tab-bar show-for-small">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+					</section>
+
+					<section class="middle tab-bar-section">
+						<h1 class="title">kamidox.com</h1>
+					</section>
+				</nav>
+
+				<!-- mobile side bar nav -->
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+							<li><a href="http://blog.kamidox.com">Home</a></li>
+							<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						<li><label>Categories</label></li>
+							<li ><a href="./category/android.html">android</a></li>
+							<li ><a href="./category/essay.html">essay</a></li>
+							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/ml.html">ml</a></li>
+							<li ><a href="./category/nlp.html">nlp</a></li>
+							<li ><a href="./category/python.html">python</a></li>
+							<li ><a href="./category/tools.html">tools</a></li>
+							<li class="active"><a href="./category/weapp.html">weapp</a></li>
+							<li ><a href="./category/web.html">web</a></li>
+							<li ><a href="./category/werkzeug.html">werkzeug</a></li>
+
+
+
+
+						<li><label>Monthly Archives</label></li>
+									<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+									<li><a href="/posts/2016/12/index.html">December 2016 (2)</a></li>
+									<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+									<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+									<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+									<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+									<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+									<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+									<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+									<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+									<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+									<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+									<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+									<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+									<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+									<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+									<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+									<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+									<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+									<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+									<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+									<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+									<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+									<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+
+
+					</ul>
+				</aside>
+
+				<!-- top bar nav -->
+				<nav class="top-bar hide-for-small-only" data-topbar>
+					<ul class="title-area">
+						<li class="name">
+							<h1><a href="./">kamidox.com</a></h1>
+						</li>
+					</ul>
+
+					<section class="top-bar-section">
+						<ul class="left">
+								<li><a href="http://blog.kamidox.com">Home</a></li>
+								<li><a href="http://blog.kamidox.com/about.html">About</a></li>
+
+						</ul>
+					</section>
+				</nav>
+
+				<!-- Main Page Content and Sidebar -->
+				<section class="main-section">
+					<div class="row">
+						<!-- Main Content -->
+						<div class="medium-9 small-12 columns" role="content">
+<article>
+	<h2>微信小程序兼容性问题</h2>
+	<h2 id="_1">微信小程序兼容性问题</h2>
+<p>微信小程序发布一周多了，兼容性问题，特别是 Android 平台兼容性问题特别严重。据我观察，好多小程序掉到兼容性的坑里。掉坑里不要紧，更让人捉急的是，从坑里爬上来的时候，手刚抓到坑沿，又被微信官方踩到（紧急修复兼容性的版本没审核通过，被微信打回重审），再次跌落坑底，然后眼睁睁地看着后台用户在破口大骂“什么东西都没有啊~，什么破小程序”。</p>
+<p>微信小程序的兼容性问题除了微信本身的 Bug 外，大部分是目标平台对 JavaScript 标准库支持程度不同造成的。</p>
+<h3 id="bug">微信本身的 Bug 引起的</h3>
+<p>微信本身的 Bug 引发的兼容性问题有个现成的例子，就是 <code>wx.request()</code> 返回的状态码 <code>res.statusCode</code> 的值在 iOS 下是 int 型数据，而在 Android 6.0.1 上却是 String 型数据。如果你判断服务器的返回状态码方法不当，可能就踩到坑里了。</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">wx.request({
+    url<span style="color: #666666">:</span> <span style="color: #BB4444">&#39;http://api.example.com&#39;</span>,
+    success<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">function</span> (res) {
+        <span style="color: #AA22FF; font-weight: bold">if</span> (res.statusCode <span style="color: #666666">===</span> <span style="color: #666666">200</span>) {
+            <span style="color: #008800; font-style: italic">// success</span>
+        } <span style="color: #AA22FF; font-weight: bold">else</span> {
+            <span style="color: #008800; font-style: italic">// server failure</span>
+        }
+    }
+})
+</pre></div>
+
+
+<p>上述代码就踩坑了，正确的做法是使用 <code>==</code> 而不是使用 <code>===</code> 来判断。另外一个更规范的方法是使用 <code>parseInt(res.statusCode) === 200</code> 来实现。</p>
+<h3 id="javascript">Javascript 标准库兼容性问题</h3>
+<p>比如 <code>Array.find()</code> 方法在 iOS 10.2/Android 7.0 上完美支持，但在 Android 6.0.1 上却不支持。如果代码里用到了这个接口，就会导致在 Android 6.0.1 上无法正常工作。通过对比发现，这类接口不支持的个数还是比较多的。特别是 Android 平台版本众多，兼容性问题就更严重，可能一不小小心就掉到坑里。</p>
+<h2 id="_2">解决方法</h2>
+<p>微信本身 Bug 只能绕过去，但对 JavaScript 引擎的兼容性，可以有更优雅的解决方法。比如，我们可以打补丁，使用 polyfill 来实现这些不支持的标准库方法。比如，修复 Android 6.0.1 平台不支持 <code>String.startsWith()</code> 的问题，可以使用下面的 polyfill 代码：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #666666">!</span><span style="color: #AA22FF">String</span>.prototype.startsWith) {
+    console.warn(<span style="color: #BB4444">&#39;define polyfill for Array.prototype.startsWith&#39;</span>);
+    <span style="color: #AA22FF">String</span>.prototype.startsWith <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">function</span> (searchString, position) {
+      position <span style="color: #666666">=</span> position <span style="color: #666666">||</span> <span style="color: #666666">0</span>;
+      <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">this</span>.substr(position, searchString.length) <span style="color: #666666">===</span> searchString;
+  };
+}
+</pre></div>
+
+
+<p>推而广之，我们可以把平台不支持的标准库方法，使用 polyfill 实现。这就是 <a href="https://github.com/kamidox/minapp-polyfill">minapp-polyfill</a> 这个项目的目的。</p>
+<p>使用方法很简单，把 <a href="https://github.com/kamidox/minapp-polyfill">minapp-polyfill</a> 项目里的 <code>polyfill.js</code> 拷贝到小程序源码目录下，在需要打补丁的 JavaScript 源文件头部引入如下代码即可：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #BB4444">&#39;path/to/polyfill.js&#39;</span>
+</pre></div>
+
+
+<p><strong>目前这个项目只是搭了个骨架，还需要很多方法需要实现。PR is welcome。</strong></p>
+<h2 id="javascript_1">各个平台对 JavaScript 标准库支持情况</h2>
+<p>条件限制，这里统计了四个平台对 JavaScript 标准库的支持情况，分别是 iOS 10.2, Android 6.0.1, Android 7.0, 微信开发者工具，具体数据如下：</p>
+<table>
+<thead>
+<tr>
+<th>Component.apiName</th>
+<th>iOS 10.2</th>
+<th>Android 6.0.1</th>
+<th>Android 7.0</th>
+<th>devtool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Array.toString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.values</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Array.toLocaleString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.concat</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.fill</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.join</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.pop</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.push</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.reverse</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.shift</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.slice</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.sort</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.splice</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.unshift</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.every</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.forEach</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.some</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.indexOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.lastIndexOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.filter</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.reduce</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.reduceRight</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.map</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.entries</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.keys</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.find</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.findIndex</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.includes</td>
+<td>YES</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.copyWithin</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Buffer</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>DataView.getInt8</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getUint8</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getInt16</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getUint16</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getInt32</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getUint32</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getFloat32</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.getFloat64</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setInt8</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setUint8</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setInt16</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setUint16</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setInt32</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setUint32</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setFloat32</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.setFloat64</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DataView.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toISOString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toDateString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toTimeString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toLocaleString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toLocaleDateString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toLocaleTimeString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.valueOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getTime</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getFullYear</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCFullYear</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getMonth</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCMonth</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getDate</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCDate</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getDay</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCDay</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getHours</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCHours</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getMinutes</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCMinutes</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getSeconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCSeconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getMilliseconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getUTCMilliseconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getTimezoneOffset</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setTime</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setMilliseconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCMilliseconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setSeconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCSeconds</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setMinutes</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCMinutes</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setHours</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCHours</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setDate</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCDate</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setMonth</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCMonth</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setFullYear</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setUTCFullYear</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.setYear</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.getYear</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toJSON</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toUTCString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.toGMTString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Date.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Error.toString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Error.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Float32Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Float64Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Function.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Int16Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Int32Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Int8Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.forEach</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.clear</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.delete</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.get</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.has</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.set</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.keys</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.values</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.entries</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Map.constructor</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.abs</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.acos</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.asin</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.atan</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.acosh</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.asinh</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.atanh</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.atan2</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.cbrt</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.ceil</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.clz32</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.cos</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.cosh</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.exp</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.expm1</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.floor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.fround</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.hypot</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.log</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.log10</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.log1p</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.log2</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.max</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.min</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.pow</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.random</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.round</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.sign</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.sin</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.sinh</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.sqrt</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.tan</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.tanh</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.trunc</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Math.imul</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.toString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.toLocaleString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.valueOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.hasOwnProperty</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.propertyIsEnumerable</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.isPrototypeOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.<strong>defineGetter</strong></td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.<strong>defineSetter</strong></td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.<strong>lookupGetter</strong></td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.<strong>lookupSetter</strong></td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Object.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Promise.then</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Promise.catch</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Promise.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>RegExp.compile</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>RegExp.exec</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>RegExp.toString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>RegExp.test</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>RegExp.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.forEach</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.add</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.clear</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.delete</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.has</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.entries</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.values</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.keys</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Set.constructor</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.match</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.padStart</td>
+<td>YES</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>String.padEnd</td>
+<td>YES</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>String.repeat</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.replace</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.search</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.split</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.toString</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.valueOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.charAt</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.charCodeAt</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.codePointAt</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.concat</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.indexOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.lastIndexOf</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.slice</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.substr</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.substring</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.toLowerCase</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.toUpperCase</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.localeCompare</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.toLocaleLowerCase</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.toLocaleUpperCase</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.big</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.small</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.blink</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.bold</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.fixed</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.italics</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.strike</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.sub</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.sup</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.fontcolor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.fontsize</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.anchor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.link</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.trim</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.trimLeft</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.trimRight</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.startsWith</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.endsWith</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.includes</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.normalize</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>String.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Symbol.toString</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Symbol.valueOf</td>
+<td>YES</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Symbol.constructor</td>
+<td>YES</td>
+<td>N/A</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>TypeError.toString</td>
+<td>YES</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>TypeError.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Uint16Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Uint32Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Uint8Array.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>Uint8ClampedArray.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>WeakMap.delete</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>WeakMap.get</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>WeakMap.has</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>WeakMap.set</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>WeakMap.constructor</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
+<p><em>N/A 表示这个标准库方法在平台上不支持</em></p>
+<p><strong>Q: 这些数据是怎么来的，靠谱吗？</strong><br />
+A: 这些数据是在真实小程序运行环境下运行，然后把 API 支持情况发送到服务器后台，再写个脚本把数据整理汇总后得来的。</p>
+<p><strong>Q: 其他平台，比如 Android 5.0 的支持情况怎么样？</strong><br />
+A: 由于条件限制，手上没有 Android 5.0 的手机，有愿意配合收集数据的，私信留言。配合的方法很简单，用指定型号的手机打开一个微信小程序，按一个按钮即可。</p>
+<p><strong>Q: 为什么不使用 <a href="https://github.com/lodash/lodash">lodash</a> 之类效率更高的库，而使用的标准库？</strong><br />
+A: 使用 lodash 之类的确实效率更高，兼容性也更好。基于两个原因没有使用，一是 lodash 太大，而微信小程序限制在 1MB 以内。当然，可以用 lodash 模块化的版本来解决，但还有第二个原因，即 lodash 的一些 API 也有兼容性问题，比如我试过 <a href="https://www.npmjs.com/package/lodash.findindex">lodash.findIndex</a> 这个包，结果在 Android 6.0.1 上也无法成功运行 (这一点未做深入验证，感兴趣的同学可以验证一下)。</p>
+<h2 id="_3">总结</h2>
+<p>从后台数据来看，小程序刚发布的前三天，确实带来了非常可观的流量红利，但这部分偿鲜的用户，很快就消失了。三天过后，基本上保持了平衡的访问量。流量红利和广告一样，是催化剂，真正有价值的还是要做用户需要的产品。</p>
+<p>在此顺手安利一下开发的两个小程序 <a href="https://minapp.com/miniapp/90/">360好书推荐</a> 和 <a href="https://minapp.com/miniapp/89/">51经典电影</a>，偶尔想用的时候打开，可能会偶遇一些小惊喜。但坦白讲，这两个小程序都和微信倡导的小程序价值观不符。微信还是希望通过小程序把线下低频的，服务成本高（这里应该主要是时间成本，即便利性）的场景，转化为线上快捷的使用方式。</p>
+	<hr/>
+	<h6>Post by <a href="./author/joey-huang.html">Joey Huang</a> under <a href="./category/weapp.html">weapp</a> on 2017-01-19(Thursday) 22:52. Tags: <a href="./tag/weapp.html">weapp</a>, </h6>
+</article>
+
+<hr/>
+<div class="row">
+	<div class="small-12 columns">
+		<h3>Comments</h3>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'kamidox';
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+						</div>
+						<!-- End Main Content -->
+						<!-- Sidebar -->
+						<aside class="medium-3 hide-for-small-only columns">
+							<div class="panel">
+								<h5>Places</h5>
+								<ul class="side-nav">
+										<li><a href="http://blog.kamidox.com/feeds/rss.xml" rel="alternate">RSS Feed</a></li>
+
+								</ul>
+							</div>
+
+
+							<div class="panel">
+								<h5>Categories</h5>
+								<ul class="side-nav">
+										<li><a href="./category/android.html">android</a></li>
+										<li><a href="./category/essay.html">essay</a></li>
+										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/ml.html">ml</a></li>
+										<li><a href="./category/nlp.html">nlp</a></li>
+										<li><a href="./category/python.html">python</a></li>
+										<li><a href="./category/tools.html">tools</a></li>
+										<li><a href="./category/weapp.html">weapp</a></li>
+										<li><a href="./category/web.html">web</a></li>
+										<li><a href="./category/werkzeug.html">werkzeug</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Tags</h5>
+								<ul class="tag-cloud">
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+								</ul>
+							</div>
+
+							<div class="panel">
+								<h5>Monthly Archives</h5>
+								<ul class="side-nav">
+											<li><a href="/posts/2017/01/index.html">January 2017 (1)</a></li>
+											<li><a href="/posts/2016/12/index.html">December 2016 (2)</a></li>
+											<li><a href="/posts/2016/11/index.html">November 2016 (3)</a></li>
+											<li><a href="/posts/2016/10/index.html">October 2016 (1)</a></li>
+											<li><a href="/posts/2016/09/index.html">September 2016 (1)</a></li>
+											<li><a href="/posts/2016/03/index.html">March 2016 (2)</a></li>
+											<li><a href="/posts/2016/02/index.html">February 2016 (2)</a></li>
+											<li><a href="/posts/2016/01/index.html">January 2016 (2)</a></li>
+											<li><a href="/posts/2015/12/index.html">December 2015 (10)</a></li>
+											<li><a href="/posts/2015/11/index.html">November 2015 (6)</a></li>
+											<li><a href="/posts/2015/10/index.html">October 2015 (2)</a></li>
+											<li><a href="/posts/2015/09/index.html">September 2015 (7)</a></li>
+											<li><a href="/posts/2015/08/index.html">August 2015 (1)</a></li>
+											<li><a href="/posts/2015/07/index.html">July 2015 (1)</a></li>
+											<li><a href="/posts/2015/05/index.html">May 2015 (1)</a></li>
+											<li><a href="/posts/2015/04/index.html">April 2015 (1)</a></li>
+											<li><a href="/posts/2015/03/index.html">March 2015 (3)</a></li>
+											<li><a href="/posts/2015/02/index.html">February 2015 (2)</a></li>
+											<li><a href="/posts/2015/01/index.html">January 2015 (2)</a></li>
+											<li><a href="/posts/2014/12/index.html">December 2014 (3)</a></li>
+											<li><a href="/posts/2014/11/index.html">November 2014 (4)</a></li>
+											<li><a href="/posts/2014/10/index.html">October 2014 (6)</a></li>
+											<li><a href="/posts/2014/09/index.html">September 2014 (1)</a></li>
+											<li><a href="/posts/2014/07/index.html">July 2014 (1)</a></li>
+								</ul>
+							</div>
+
+						</aside>
+						<!-- End Sidebar -->
+					</div>
+
+					<!-- Footer -->
+					<footer class="row">
+						<div class="medium-9 small-12">
+							<hr/>
+							<p class="text-center">Powered by <a href="http://getpelican.com">Pelican</a> and <a href="http://foundation.zurb.com/">Zurb Foundation</a>. Theme by <a href="http://hamaluik.com">Kenton Hamaluik</a>.
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253471695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/z_stat.php%3Fid%3D1253471695%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+							</p>
+						</div>
+					</footer>
+					<!-- End Footer -->
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div><!--off-canvas inner-->
+		</div><!--off-canvas wrap-->
+
+		<script src="./theme/js/jquery.js"></script>
+		<script src="./theme/js/foundation.min.js"></script>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>
