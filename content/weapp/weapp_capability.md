@@ -219,10 +219,10 @@ Object.valueOf                      | YES        | YES        | YES        | YES
 Object.hasOwnProperty               | YES        | YES        | YES        | YES
 Object.propertyIsEnumerable         | YES        | YES        | YES        | YES
 Object.isPrototypeOf                | YES        | YES        | YES        | YES
-Object.__defineGetter__             | YES        | YES        | YES        | YES
-Object.__defineSetter__             | YES        | YES        | YES        | YES
-Object.__lookupGetter__             | YES        | YES        | YES        | YES
-Object.__lookupSetter__             | YES        | YES        | YES        | YES
+Object.\__defineGetter__             | YES        | YES        | YES        | YES
+Object.\__defineSetter__             | YES        | YES        | YES        | YES
+Object.\__lookupGetter__             | YES        | YES        | YES        | YES
+Object.\__lookupSetter__             | YES        | YES        | YES        | YES
 Object.constructor                  | YES        | YES        | YES        | YES
 Promise.then                        | YES        | YES        | YES        | YES
 Promise.catch                       | YES        | YES        | YES        | YES
