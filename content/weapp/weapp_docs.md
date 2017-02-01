@@ -17,6 +17,10 @@ Summary: 边开发微信小程序边打开腾讯的微信小程序开发文档�
 
 Windows 用户可以使用 [velocity](http://velocity.silverlakesoftware.com/)，Linux 用户可以使用 [Zeal](http://zealdocs.org/) 作为 Dash 的替代品。
 
+最后的效果图长这样：
+
+![Dash 效果图](http://upload-images.jianshu.io/upload_images/184896-d08314fbc56d99f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ## 背后的原理
 
 知其然知其所以然。背后的原理其实不复杂。先使用 wget 把整个微信小程序的开发文档全部下载下来，再用一个 Python 脚本生成 Dash 格式的 docset。感兴趣的同学可以看看 [html2Dash](https://github.com/kamidox/html2Dash)，我分享到 Github 上了。
