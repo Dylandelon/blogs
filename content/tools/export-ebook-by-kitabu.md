@@ -6,6 +6,15 @@ Slug: export-ebook-by-kitabu
 Authors: Joey Huang
 Summary: 辛辛苦苦用 markdown 写就了一系列文章，怎么样导出制作成一本高颜值的电子书呢？本文有你需要的答案。
 
+## TODO
+
+如何生成公式的内容？
+
+1. 研究 [Prince](http://www.princexml.com)
+2. 目前 Kitabu 会生成上下标 HTML 标签 <sup\></sup\> ，想办法去掉
+3. 参考[这篇文章](http://www.princexml.com/forum/topic/2971/using-mathjax-with-princexml)进一步研究
+
+
 辛辛苦苦用 markdown 写就了一系列文章，怎么样导出制作成一本高颜值的电子书呢？本文介绍一种在 Mac 下使用 kitabu + princexml 导出高颜值电子书的方法。
 
 ## 安装软件
