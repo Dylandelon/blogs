@@ -155,6 +155,12 @@ https://ruby.taobao.org
 </pre></div>
 
 
+<p>如果发现无法编译 kitabu extension：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ERROR: Failed to build gem native extension.
+</pre></div>
+
+
+<p>可以试试安装命令行的 xcode 工具：<code>xcode-select --install</code>，安装完成后，再用 <code>gem install kitabu</code> 来安装 kitabu。需要注意的事，当升级 ruby 版本时，需要重新安装 kitabu 工具。或者切换到旧版本的 ruby 运行环境中运行。</p>
 <p>接着安装 <a href="http://princexml.com">princexml</a>，可以从官网 princexml.com 下载免费的安装包。princexml 会完成从 html 转为为 pdf 功能。安装完这两个工具后，可以用 <code>kitabu check</code> 命令检查一下是否安装成功：</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">bogon:~ kamidox<span style="color: #B8860B">$ </span>kitabu check
 
@@ -446,29 +452,29 @@ phantomjs ../MathJaxRender.js kitabu-ebook.pdf.html | prince --javascript -o ml-
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
 										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
 										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
 										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
 										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
 										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
 										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
 										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
 								</ul>
 							</div>
 

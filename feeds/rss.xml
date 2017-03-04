@@ -2103,6 +2103,12 @@ https://ruby.taobao.org
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;如果发现无法编译 kitabu extension：&lt;/p&gt;
+&lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;ERROR: Failed to build gem native extension.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以试试安装命令行的 xcode 工具：&lt;code&gt;xcode-select --install&lt;/code&gt;，安装完成后，再用 &lt;code&gt;gem install kitabu&lt;/code&gt; 来安装 kitabu。需要注意的事，当升级 ruby 版本时，需要重新安装 kitabu 工具。或者切换到旧版本的 ruby 运行环境中运行。&lt;/p&gt;
 &lt;p&gt;接着安装 &lt;a href="http://princexml.com"&gt;princexml&lt;/a&gt;，可以从官网 princexml.com 下载免费的安装包。princexml 会完成从 html 转为为 pdf 功能。安装完这两个工具后，可以用 &lt;code&gt;kitabu check&lt;/code&gt; 命令检查一下是否安装成功：&lt;/p&gt;
 &lt;div class="codehilite" style="background: #f8f8f8"&gt;&lt;pre style="line-height: 125%"&gt;bogon:~ kamidox&lt;span style="color: #B8860B"&gt;$ &lt;/span&gt;kitabu check
 
