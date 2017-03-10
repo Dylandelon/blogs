@@ -218,12 +218,12 @@ $$</p>
 <h2 id="_3">随机梯度下降算法</h2>
 <p>批量梯度下降算法对参数进行一次迭代运算，就需要遍历所有的训练数据集。当训练数据集比较大时，这个算法的效率会很低。考虑另外一个算法：</p>
 <p>$$<br />
-\theta_j = \theta_j - \frac{\alpha}{m} \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
+\theta_j = \theta_j - \alpha \left(\left(h(x^{(i)}) - y^{(i)}\right) x_j^{(i)}\right)<br />
 $$</p>
 <p>这就是 <strong>随机梯度下降算法</strong> (stochastic gradient descent)。这个算法的关键点是不去遍历所有的训练数据集，而是改成每次随机地从训练数据集里取一个数据进行参数迭代计算。</p>
 <div class="admonition hint">
 <p class="admonition-title">怎么理解随机</p>
-<p>为什么这么神奇呢？为什么随机从训练数据集里选取一个数据来迭代，不但不影响最终计算结果，还大大地提高了效率。看数学时最怕的就是 <strong>我们考虑 bla bla bla</strong>，作者说出 “我们考虑 bla bla bla” 时背后的过程是怎么样的？坦白讲，怎么样从数学上证明随机梯度下降算法和批量梯度下降算法是等价的，我也不知道。不过我有个直观的可以帮助理解的解释。回到成本函数的定义：$J(\theta) = \frac{1}{2m} \sum_{i=1}^m \left(h(x^{(i)}) - y^{(i)}\right)^2$。我们说过，这里累加后除以 2 是为了计算方便，那么我们除以 m 是什么意思呢？答案是平均值，即所有训练数据集上的点到我们预测函数的距离的<strong>平均值</strong>。因为 m 是正整数，$J(\theta)$ 除以 m 不影响它的最小值的属性。再回到<strong>随机选取训练数据集里的一个数据</strong>这个做法来看，如果计算次数足够多，并且是真正随机，那么随机选取出来的这组数据从概率的角度来看，和<strong>平均值</strong>是相当的。打个比方，有一个储钱罐里有 1 角的硬币 10 枚，5 角的硬币 2 枚，1 元的硬币 1 枚，总计 3 元，13 枚硬币。你随机从里面取 1000 次，每次取出来的硬币把币值记录下来，然后放回储钱罐里。这样最后去算这 1000 次取出来的钱的平均值 (1000 次取出来的币值总和除以 1000) 和储钱罐里每枚硬币的平均值 (3/13 元) 应该是近似相等的。我数学太水，概率论还没复习，哪位概率论高人给证明一下啊。</p>
+<p>为什么这么神奇呢？为什么随机从训练数据集里选取一个数据来迭代，不但不影响最终计算结果，还大大地提高了效率。看数学时最怕的就是 <strong>我们考虑 bla bla bla</strong>，作者说出 “我们考虑 bla bla bla” 时背后的过程是怎么样的？坦白讲，怎么样从数学上证明随机梯度下降算法和批量梯度下降算法是等价的，我也不知道。不过我有个直观的可以帮助理解的解释。回到成本函数的定义：$J(\theta) = \frac{1}{2m} \sum_{i=1}^m \left(h(x^{(i)}) - y^{(i)}\right)^2$。我们说过，这里累加后除以 2 是为了计算方便，那么我们除以 m 是什么意思呢？答案是平均值，即所有训练数据集上的点到我们预测函数的距离的<strong>平均值</strong>。再回到<strong>随机选取训练数据集里的一个数据</strong>这个做法来看，如果计算次数足够多，并且是真正随机，那么随机选取出来的这组数据从概率的角度来看，和<strong>平均值</strong>是相当的。打个比方，有一个储钱罐里有 1 角的硬币 10 枚，5 角的硬币 2 枚，1 元的硬币 1 枚，总计 3 元，13 枚硬币。你随机从里面取 1000 次，每次取出来的硬币把币值记录下来，然后放回储钱罐里。这样最后去算这 1000 次取出来的钱的平均值 (1000 次取出来的币值总和除以 1000) 和储钱罐里每枚硬币的平均值 (3/13 元) 应该是近似相等的。</p>
 </div>
 <p>这样，我们基本上把线性回归算法，最小均方差，随机梯度下降算法的来龙去脉理了一遍。</p>
 	<hr/>
@@ -279,29 +279,29 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
 										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
 										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 								</ul>
 							</div>
 

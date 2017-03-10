@@ -205,18 +205,33 @@ $$</p>
 <p>$$<br />
 J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]<br />
 $$</p>
-<p>把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。使用梯度下降算法进行参数迭代的公式如下：</p>
+<p>把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。</p>
+<h4 id="_6">梯度下降公式</h4>
+<p>我们依然使用梯度下降公式来对模型进行求解。根据梯度下降算法的定义，我们使用下面的公式来进行参数迭代：</p>
+<p>$$<br />
+\theta_j := \theta_j - \alpha \dfrac{\partial}{\partial \theta_j}J(\theta)<br />
+$$</p>
+<p>这里的关键是求解成本函数的偏导数。在这之前，我们先求出 Sigmoid 函数的偏导数，以便后面可以利用上：</p>
 <p>$$<br />
 \begin{align}<br />
-\theta_j &amp; = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\<br />
-&amp; =  \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}<br />
+\sigma(x)&rsquo; &amp;= \left(\frac{1}{1+e^{-x}}\right)&rsquo; = \frac{-(1+e^{-x})&rsquo;}{(1+e^{-x})^2} = \frac{-1&rsquo;-(e^{-x})&rsquo;}{(1+e^{-x})^2} \newline<br />
+&amp;= \frac{0-(-x)&rsquo;(e^{-x})}{(1+e^{-x})^2} = \frac{-(-1)(e^{-x})}{(1+e^{-x})^2} = \frac{e^{-x}}{(1+e^{-x})^2} \newline<br />
+&amp;= \left(\frac{1}{1+e^{-x}}\right)\left(\frac{e^{-x}}{1+e^{-x}}\right) = \sigma(x)\left(\frac{+1-1 + e^{-x}}{1+e^{-x}}\right) \newline<br />
+&amp;= \sigma(x)\left(\frac{1 + e^{-x}}{1+e^{-x}} - \frac{1}{1+e^{-x}}\right) \newline<br />
+&amp;= \sigma(x)(1 - \sigma(x))<br />
 \end{align}<br />
 $$</p>
+<p>推导出来的这个公式将在下面用上，现在我们可以来计算成本函数的偏导数了：</p>
+<p><img alt="成本函数偏导数" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_partial_derivative.png" /></p>
+<p>最终得到梯度下降算法进行参数迭代的公式如下：</p>
+<p>$$<br />
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}<br />
+$$</p>
 <p>这个公式的形式和线性回归算法的参数迭代公式是一样的。当然，由于这里 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$，而线性回归算法里 $h_\theta(x) = \theta^T x$。所以，两者的形式一样，但数值计算完全不同。</p>
-<h4 id="_6">算法优化</h4>
+<h4 id="_7">算法优化</h4>
 <p>梯度下降算法的效率是比较低，优化的梯度下降算法有 Conjugate Gradient, BFGS, L-BFGS 等。这些算法比较复杂，实现这些算法是数值计算专家的工作，一般工程人员只需要大概知道这些算法是怎么优化的以及怎么使用这些算法即可。</p>
 <p>octave 里提供了 <code>fminunc</code> 函数，可以查阅文档来学习函数用法，从而学会使用优化过的梯度下降算法，以提高计算效率。</p>
-<h4 id="_7">多元分类算法</h4>
+<h4 id="_8">多元分类算法</h4>
 <p>除了二元分类算法外，还有多元分类问题，比如需要给邮件打标签，则可能有多个标签需要考虑。这个时候需要使用 one-vs-all (one-vs-rest) 的方法。即把要分类的一种类别和其他所有类别区分开来的，这样就把多元分类问题转化为二元分类问题，这样就可以使用上文总结的所有二元分类问题的算法。</p>
 <p>针对 $y = i$，求解针对 i 的预测函数 $h_\theta^{(i)}(x)$。如果有 n 个类别，则需要求解 n 个预测函数。</p>
 	<hr/>
@@ -272,29 +287,29 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
 										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
 										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
 										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 								</ul>
 							</div>
 
