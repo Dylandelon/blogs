@@ -117,17 +117,39 @@ $$
 J(\theta) = -\frac{1}{m} \left[ \sum_{i=1}^m y^{(i)} log(h_\theta(x^{(i)})) + (1 - y^{(i)}) log(1 - h_\theta(x^{(i)})) \right]
 $$
 
-把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。使用梯度下降算法进行参数迭代的公式如下：
+把 $y = 0, y = 1$ 两种情况代入上式，很容易可以验证成本函数合并的等价性。
+
+#### 梯度下降公式
+
+我们依然使用梯度下降公式来对模型进行求解。根据梯度下降算法的定义，我们使用下面的公式来进行参数迭代：
+
+$$
+\theta_j := \theta_j - \alpha \dfrac{\partial}{\partial \theta_j}J(\theta)
+$$
+
+这里的关键是求解成本函数的偏导数。在这之前，我们先求出 Sigmoid 函数的偏导数，以便后面可以利用上：
 
 $$
 \begin{align}
-\theta_j & = \theta_j - \alpha \frac\partial{\partial{\theta_j}}J(\theta) \\\\
-& =  \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}
+\sigma(x)' &= \left(\frac{1}{1+e^{-x}}\right)' = \frac{-(1+e^{-x})'}{(1+e^{-x})^2} = \frac{-1'-(e^{-x})'}{(1+e^{-x})^2} \newline
+&= \frac{0-(-x)'(e^{-x})}{(1+e^{-x})^2} = \frac{-(-1)(e^{-x})}{(1+e^{-x})^2} = \frac{e^{-x}}{(1+e^{-x})^2} \newline
+&= \left(\frac{1}{1+e^{-x}}\right)\left(\frac{e^{-x}}{1+e^{-x}}\right) = \sigma(x)\left(\frac{+1-1 + e^{-x}}{1+e^{-x}}\right) \newline
+&= \sigma(x)\left(\frac{1 + e^{-x}}{1+e^{-x}} - \frac{1}{1+e^{-x}}\right) \newline
+&= \sigma(x)(1 - \sigma(x))
 \end{align}
 $$
 
-这个公式的形式和线性回归算法的参数迭代公式是一样的。当然，由于这里 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$，而线性回归算法里 $h_\theta(x) = \theta^T x$。所以，两者的形式一样，但数值计算完全不同。
+推导出来的这个公式将在下面用上，现在我们可以来计算成本函数的偏导数了：
 
+![成本函数偏导数](https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_partial_derivative.png)
+
+最终得到梯度下降算法进行参数迭代的公式如下：
+
+$$
+\theta_j = \theta_j - \alpha \frac{1}{m} \sum_{i=1}^m \left( h_\theta(x^{(i)}) - y^{(i)} \right) x_j^{(i)}
+$$
+
+这个公式的形式和线性回归算法的参数迭代公式是一样的。当然，由于这里 $h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}}$，而线性回归算法里 $h_\theta(x) = \theta^T x$。所以，两者的形式一样，但数值计算完全不同。
 
 #### 算法优化
 
