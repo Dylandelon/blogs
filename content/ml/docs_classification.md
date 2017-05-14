@@ -312,7 +312,7 @@ plt.show()
 
 在笔者电脑上的输出如下图所示:
 
-![混淆矩阵](images/ch09.02_confusion_matrix.png)
+![混淆矩阵](https://raw.githubusercontent.com/kamidox/blogs/master/images/ch09.02_confusion_matrix.png)
 
 除对角线外，其他地方颜色越浅，说明此处错误越多。通过这些数据，我们可以详细分析样本数据，找出为什么某种类别会被错误地分类到另外一种类别里，从而进一步优化模型。
 
