@@ -1,12 +1,12 @@
 Title: 基于 Gitlab 的源代码管理及开发模型
 Date: 2017-05-14 20:20
-Date: 2017-05-14 20:20
+Modified: 2017-05-14 20:20
 Tags: tools
 Slug: gitlab
 Authors: Joey Huang
 Summary: 团队准备从 SVN 切换到自建的 Git 开发模型，选择了 Gitlab CE 版本作为源码管理平台。本文描述的开发模型适用于嵌入式开发领域，这与 Web 相关产品开发模型有较大差别。
 
-Gitlab CE 是一个开源的基于 Git 的源代码管理软件，本文介绍基于 Gitlab 的源代码管理规范及典型工作流程。关于 Gitlab 的安装，可参阅[官方文档](https://about.gitlab.com/installation/)。
+[Gitlab CE](https://about.gitlab.com/products/) 是一个开源的基于 Git 的源代码管理软件，本文介绍基于 Gitlab 的源代码管理规范及典型工作流程。关于 Gitlab 的安装，可参阅[官方文档](https://about.gitlab.com/installation/)。Gitlab 是一个非常强大的系统，基本上可以搭建一个类似 Github 这样的私有网站了。本文描述的，只是针对嵌入式开发领域，进行项目管理，权限管理，代码评审，产品分支管理等有限领域的一些实践规则。
 
 ## 1 用户管理
 
