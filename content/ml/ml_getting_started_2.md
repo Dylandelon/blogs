@@ -1,7 +1,7 @@
 Title: 机器学习入门资料推荐
 Date: 2015-09-28 23:20
 Modified: 2015-09-28 23:20
-Slug: computation-rules-for-derivative
+Slug: ml-getting-started-2
 Tags: machine-learning
 Authors: Joey Huang
 Status: draft
