@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li class="active"><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -144,7 +143,7 @@
 	<p>在自然语言处理领域，分词是最基本的任务。不管是传统的基于词典的分词算法还是现代的基于统计语言模型的分词算法，都需要词典作为输入。本文介绍 Trie 算法，用来存储词典，并提供高效的搜索功能。</p>
 <h2 id="_1">词典的格式</h2>
 <p>这里的词典比你书架上的现代汉语词典要简单很多，因为没有释义，只有光溜溜的一个词在那。这也好理解，释义是给人看的，而计算机根本就看不懂释义。计算机顶多只会“算”，但它算的真的很快很快，快到让人感觉它真的有智能。比如下面就是一个分词时用到的词典：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>阿
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">阿
 阿巴丹
 阿爸
 ...
@@ -157,7 +156,7 @@
 
 
 <p>当然，基于现代的统计语言模型的分词算法，还需要存储词的常用程度。所以需要对词典里的词做一些标注，比如：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>反   1205
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">反   1205
 作战股 1
 先人后己    1
 传媒者 1
@@ -195,7 +194,7 @@
 <h2 id="_3">状态转移表</h2>
 <p>我们终于把 Trie 和 DFA 联系起来了。在 DFA 里，状态转移函数一般使用<strong>状态转移表</strong>来描述。这是个二维的表格，行用来表示所有的状态集合，列用来表示输入事件集合。</p>
 <p>我们来看一个最简单的使用 Trie 描述的词典：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>           t        o
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">           t        o
 begin(0) ---&gt; t(1) ---&gt; to(2:F)
                    |
                    | e          a
@@ -340,7 +339,6 @@ begin(0) ---&gt; t(1) ---&gt; to(2:F)
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -354,6 +352,29 @@ begin(0) ---&gt; t(1) ---&gt; to(2:F)
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

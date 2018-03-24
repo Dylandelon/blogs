@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -228,18 +227,18 @@ $$</p>
 <h3 id="_4">参数折叠</h3>
 <p>在线性回归或逻辑回归算法里，我们的参数是向量，我们使用的 <code>fminunc</code> 等函数也只接受向量作为参数。而神经网络算法里，参数是个向量，$\Theta^{(l)} \in R^{s_{l+1} \times s_l + 1}$。所以，在训练神经网络算法时，需要对参数进行折叠，即把矩阵转换为向量，而在使用时，可以再从向量里恢复矩阵数据。</p>
 <p>假设 Theta1 是 10x11 的矩阵，它是第一层的参数； Theta2 是 10x11 的矩阵，它是第二层的参数。可以使用下面的 matlab/octave 来转换：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>ThetaVec = [Theta1(:); Theta2(:)];
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ThetaVec = [Theta1(:); Theta2(:)];
 </pre></div>
 
 
 <p>在成本函数函数里，我们需要转换为矩阵进行计算：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Theta1 = reshape(ThetaVec(1:110), 10, 11);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Theta1 = reshape(ThetaVec(1:110), 10, 11);
 Theta2 = reshape(ThetaVec(111:220), 10, 11);
 </pre></div>
 
 
 <p>同理，针对成本函数的微分项，$D^{(1)} \in R^{10x11}, D^{(2)} \in R^{10x11}$，我们的成本函数返回这个微分项时，也需要把矩阵转换为向量：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>DVec = [D1(:); D2(:)]
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">DVec = [D1(:); D2(:)]
 </pre></div>
 
 
@@ -258,7 +257,7 @@ $$</p>
 <h3 id="_6">用随机数初始化参数</h3>
 <p>在进行线性回归和逻辑回归计算时，我们把参数全部初始化为零。但这个做法在神经网络里是不可行的，如果我们把参数全部初始化为零，那么隐藏层的神经单元的激励 $a_i^{(l)}$ 将是相同的，其误差 $\delta_i^{(l)}$ 也将是相同的，即我们计算的全部是相同的特征，这样神经网络就失去了其特征的覆盖度和丰富性。</p>
 <p>所以，我们需要把神经网络的每个参数 $\Theta_{ij}^{(l)}$ 初始化为 $[-\varepsilon, \varepsilon]$ 之间的一个随机数。例如：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Theta1 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">10</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Theta1 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">10</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
 Theta2 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">10</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
 Theta3 = <span style="color: #AA22FF">rand</span>(<span style="color: #666666">1</span>, <span style="color: #666666">11</span>) <span style="color: #666666">.*</span> (<span style="color: #666666">2</span> <span style="color: #666666">.*</span> INIT_VAREPSILON) <span style="color: #666666">-</span> INIT_VAREPSILON;
 </pre></div>
@@ -334,7 +333,6 @@ $$</p>
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -348,6 +346,29 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

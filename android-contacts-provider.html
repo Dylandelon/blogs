@@ -72,7 +72,6 @@
 							<li class="active"><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -344,7 +343,7 @@
 <p>User Profile就是在设备联系人应用程序里看到的&rdquo;我的个人资料&rdquo;，用来描述本设备所有人信息的一个数据。<code>ContactsContract.Contacts</code>表里有一行数据用来表现user profile。这个数据用来描述设备所有人本身，而不是设备所有人的联系人。</p>
 <p>读写user profile除了读写联系人数据外，还需要额外的权限，他们是&rdquo;android.permission.READ_PROFILE&rdquo;和&rdquo;android.permission.WRITE_PROFILE&rdquo;。这两个都是在API 14的时候才加进去的。</p>
 <p>要获取user profile，可以使用ContentResolver通过<code>ContactsContract.Profile.CONTENT_URI</code>来获取，下面是获取user profile的示例代码：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// Sets the columns to retrieve for the user profile</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// Sets the columns to retrieve for the user profile</span>
 mProjection <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> String<span style="color: #666666">[]</span>
     <span style="color: #666666">{</span>
         Profile<span style="color: #666666">.</span><span style="color: #BB4444">_ID</span><span style="color: #666666">,</span>
@@ -437,7 +436,7 @@ mProfileCursor <span style="color: #666666">=</span> getContentResolver<span sty
 <p>一个entity一般没有包含Contacts表及其子表的所有字段，如果试图访问这些不在entity表里的字段，会有异常抛出。</p>
 </div>
 <p>下面的代码演示了如何从entity里获取记录数据。一个联系人应用程序一般有个列表显示联系人，点击后显示这个记录的详细信息，下面的代码是显示详细信息的一部分代码。即根据联系人的ID去获取所有的联系人信息。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #008800; font-style: italic">/*</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #008800; font-style: italic">/*</span>
 <span style="color: #008800; font-style: italic">     * Appends the entity path to the URI. In the case of the Contacts Provider, the</span>
 <span style="color: #008800; font-style: italic">     * expected URI is content://com.google.contacts/#/entity (# is the ID value).</span>
 <span style="color: #008800; font-style: italic">     */</span>
@@ -588,7 +587,7 @@ mProfileCursor <span style="color: #666666">=</span> getContentResolver<span sty
 66
 67
 68
-69</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">/**</span>
+69</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">/**</span>
 <span style="color: #008800; font-style: italic"> * Creates a contact entry from the current UI values in the account named by mSelectedAccount.</span>
 <span style="color: #008800; font-style: italic"> */</span>
 <span style="color: #AA22FF; font-weight: bold">protected</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">createContactEntry</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
@@ -719,7 +718,7 @@ mProfileCursor <span style="color: #666666">=</span> getContentResolver<span sty
 39
 40
 41
-42</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">/*</span>
+42</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">/*</span>
 <span style="color: #008800; font-style: italic"> * The application uses CursorLoader to query the raw contacts table. The system calls this method</span>
 <span style="color: #008800; font-style: italic"> * when the load is finished.</span>
 <span style="color: #008800; font-style: italic"> */</span>
@@ -806,7 +805,6 @@ mProfileCursor <span style="color: #666666">=</span> getContentResolver<span sty
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -820,6 +818,29 @@ mProfileCursor <span style="color: #666666">=</span> getContentResolver<span sty
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

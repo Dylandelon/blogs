@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -143,7 +142,7 @@
 	<h2>numpy 矩阵运算的陷阱</h2>
 	<h2 id="_1">陷阱一：数据结构混乱</h2>
 <p>array 和 matrix 都可以用来表示多维矩阵</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">98</span>]: a <span style="color: #666666">=</span> np<span style="color: #666666">.</span>array([[<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>], [<span style="color: #666666">4</span>, <span style="color: #666666">5</span>, <span style="color: #666666">6</span>], [<span style="color: #666666">7</span>, <span style="color: #666666">8</span>, <span style="color: #666666">9</span>]])
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">98</span>]: a <span style="color: #666666">=</span> np<span style="color: #666666">.</span>array([[<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>], [<span style="color: #666666">4</span>, <span style="color: #666666">5</span>, <span style="color: #666666">6</span>], [<span style="color: #666666">7</span>, <span style="color: #666666">8</span>, <span style="color: #666666">9</span>]])
 
 In [<span style="color: #666666">99</span>]: a
 Out[<span style="color: #666666">99</span>]:
@@ -168,7 +167,7 @@ Out[<span style="color: #666666">103</span>]: (<span style="color: #666666">3</s
 
 
 <p>看起来效果不错。假设我们要对数据进行筛选，取第 1 列的第 1 行和第 3 行数据构成一个 2 x 1 的列向量。先看对 array 的做法</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">99</span>]: a
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">99</span>]: a
 Out[<span style="color: #666666">99</span>]:
 array([[<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>],
        [<span style="color: #666666">4</span>, <span style="color: #666666">5</span>, <span style="color: #666666">6</span>],
@@ -201,7 +200,7 @@ Out[<span style="color: #666666">111</span>]: array([<span style="color: #666666
 
 <p>从 Out[101] 可以看到一个陷阱，<code>a[:, 0]</code> 过滤完应该是一个 3 x 1 的列向量，可是它变成了行向量。其实也不是真正意义上的行向量，因为行向量 shape 应该是 3 x 1，可是他的 shape 是 (3,) ，这其实已经退化为一个数组了。所以，导致最后 In [110] 出错。只有像 In [111] 那样 reshape 一下才可以。我不知道大家晕了没有，我是已经快晕了。</p>
 <p>相比之下，matrix 可以确保运算结果全部是二维的，结果相对好一点。为什么只是相对好一点呢？呆会儿我们再来吐吐 matrix 的槽点。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">101</span>]: A
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">101</span>]: A
 Out[<span style="color: #666666">101</span>]:
 matrix([[<span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>],
         [<span style="color: #666666">4</span>, <span style="color: #666666">5</span>, <span style="color: #666666">6</span>],
@@ -234,7 +233,7 @@ Out[<span style="color: #666666">114</span>]: (<span style="color: #666666">1</s
 <p>为什么我会在意行向量和列向量？在矩阵运算里，行向量和列向量是不同的。比如一个 m x 3 的矩阵可以和 3 x 1 的列向量叉乘，结果是 m x 1 的列向量。而如果一个 m x 3 的矩阵和 1 x 3 的行向量叉乘是会报错的。</p>
 <h2 id="_2">陷阱二：数据处理能力不足，语言效率低</h2>
 <p>我们再看个例子。假设 X 是 5 x 2 的矩阵，Y 是 5 X 1 的 bool 矩阵，我们想用 Y 来过滤 X ，即取出 Y 值为 True 的项的索引，拿这些索引去 X 里找出对应的行，再组合成一个新矩阵。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">79</span>]: X
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">79</span>]: X
 Out[<span style="color: #666666">79</span>]:
 matrix([[ <span style="color: #666666">34.62365962</span>,  <span style="color: #666666">78.02469282</span>],
         [ <span style="color: #666666">30.28671077</span>,  <span style="color: #666666">43.89499752</span>],
@@ -286,7 +285,7 @@ matrix([[ <span style="color: #666666">34.62365962</span>,  <span style="color: 
 <h2 id="_3">陷阱三：数值运算句法混乱</h2>
 <p>在机器学习算法里，经常要做一些矩阵运算。有时候要做叉乘，有时候要做点乘。我们看一下 numpy 是如何满足这个需求的。</p>
 <p>假设 x, y, theta 的值如下，我们要先让 x 和 y 点乘，再让结果与 theta 叉乘，最后的结果我们期望的是一个 5 x 1 的列向量。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">22</span>]: x
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">22</span>]: x
 Out[<span style="color: #666666">22</span>]:
 matrix([[  <span style="color: #666666">1.</span>        ,  <span style="color: #666666">34.62365962</span>,  <span style="color: #666666">78.02469282</span>],
         [  <span style="color: #666666">1.</span>        ,  <span style="color: #666666">30.28671077</span>,  <span style="color: #666666">43.89499752</span>],
@@ -311,7 +310,7 @@ matrix([[<span style="color: #666666">2</span>],
 
 
 <p>直观地讲，我们应该会想这样做：(x 点乘 y) 叉乘 theta。但很不幸，当你输入 <code>x * y</code> 时妥妥地报错。那好吧，我们这样做总行了吧，<code>x[:, 0] * y</code> 这样两个列向量就可以点乘了吧，不幸的还是不行，因为 numpy 认为这是 matrix，所以执行的是矩阵相乘（叉乘），要做点乘，必须转为 array 。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">37</span>]: x <span style="color: #666666">*</span> y
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">37</span>]: x <span style="color: #666666">*</span> y
 <span style="color: #666666">---------------------------------------------------------------------------</span>
 <span style="color: #D2413A; font-weight: bold">ValueError</span>                                Traceback (most recent call last)
 <span style="color: #666666">&lt;</span>ipython<span style="color: #666666">-</span><span style="color: #AA22FF">input</span><span style="color: #666666">-37-</span>ae1a0a4af750<span style="color: #666666">&gt;</span> <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>()
@@ -362,7 +361,7 @@ array([[   <span style="color: #666666">1.</span>        ,   <span style="color:
 
 
 <p>所以，我们需要象 In [39] 那样一列列转为 array 和 y 执行点乘，然后再组合回 5 x 3 的矩阵。好不容易算出了 x 和 y 的点乘了，终于可以和 theta 叉乘了。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">44</span>]: xy <span style="color: #666666">*</span> theta
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">44</span>]: xy <span style="color: #666666">*</span> theta
 Out[<span style="color: #666666">44</span>]:
 matrix([[ <span style="color: #666666">227.29670488</span>],
         [ <span style="color: #666666">300.72683316</span>],
@@ -373,7 +372,7 @@ matrix([[ <span style="color: #666666">227.29670488</span>],
 
 
 <p>看起来结果还不错，但实际上这里面也是陷阱重重。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">45</span>]: xy <span style="color: #666666">*</span> sp<span style="color: #666666">.</span>array(theta)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">45</span>]: xy <span style="color: #666666">*</span> sp<span style="color: #666666">.</span>array(theta)
 <span style="color: #666666">---------------------------------------------------------------------------</span>
 <span style="color: #D2413A; font-weight: bold">ValueError</span>                                Traceback (most recent call last)
 <span style="color: #666666">&lt;</span>ipython<span style="color: #666666">-</span><span style="color: #AA22FF">input</span><span style="color: #666666">-45-5</span>ea2f7324fbe<span style="color: #666666">&gt;</span> <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>()
@@ -394,7 +393,7 @@ array([[ <span style="color: #666666">227.29670488</span>],
 <p>In [45] 会报错，因为在 array 里 <code>*</code> 运算符是点乘，而在 matrix 里 <code>*</code> 运算符是叉乘。如果要在 array 里算叉乘，需要用 <code>dot</code> 方法。看起来提供了灵活性，实际上增加了使用者的大脑负担。而我们的需求在 matlab/octave 里只需要写成 <code>x .* y * theta</code> ，直观优雅。</p>
 <h2 id="_4">陷阱四：语法复杂，不自然</h2>
 <p>比如，我们要在一个 5 x 2 的矩阵的前面加一列全部是 1 的数据，变成一个 5 x 3 的矩阵，我们必须这样写</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">11</span>]: x
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">11</span>]: x
 Out[<span style="color: #666666">11</span>]:
 matrix([[ <span style="color: #666666">34.62365962</span>,  <span style="color: #666666">78.02469282</span>],
         [ <span style="color: #666666">30.28671077</span>,  <span style="color: #666666">43.89499752</span>],
@@ -455,7 +454,6 @@ matrix([[  <span style="color: #666666">1.</span>        ,  <span style="color: 
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -469,6 +467,29 @@ matrix([[  <span style="color: #666666">1.</span>        ,  <span style="color: 
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

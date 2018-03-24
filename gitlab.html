@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -187,17 +186,17 @@
 <h3 id="31-master">3.1 Master 用户直接在主干上开发</h3>
 <p>这种开发模式一般用在一些<strong>不需要团队协作</strong>的小功能的开发上。这种开发模式和 SVN 开发模式基本相同。</p>
 <p><strong>1. 下载代码</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git clone http://user1@192.168.56.101/user1/demo.git
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git clone http://user1@192.168.56.101/user1/demo.git
 </pre></div>
 
 
 <p><strong>2. 编写代码，验证后提交</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git commit -am <span style="color: #BB4444">&quot;My feature is ready&quot;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git commit -am <span style="color: #BB4444">&quot;My feature is ready&quot;</span>
 </pre></div>
 
 
 <p><strong>3. 推送到主干</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git push
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git push
 </pre></div>
 
 
@@ -207,15 +206,15 @@
 <p>这种工作一般在一个较大的新功能开发时使用，一般需要进行团队协作，即由几个人共同来开发。这是最经典的 Git Flow 开发流程，在 Bug Fix 时也可以使用这个开发模式。典型步骤如下：</p>
 <p><strong>1. 创建功能开发分支</strong></p>
 <p>创建新功能分支，并把分支推送到远程代码仓库。这个动作也可以在 Gitlab 网页上操作。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git clone http://user1@192.168.56.101/user1/demo.git
-<span style="color: #AA22FF">cd</span> demo
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git clone http://user1@192.168.56.101/user1/demo.git
+<span style="color: #AA22FF">cd </span>demo
 git checkout -b feature2
 git push origin feature2
 </pre></div>
 
 
 <p><strong>2. 其他开发人员下载代码，并在分支上开发新功能</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git clone http://user2@192.168.56.101/user1/demo.git
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git clone http://user2@192.168.56.101/user1/demo.git
 git checkout feature2
 git config user.name <span style="color: #BB4444">&quot;user2&quot;</span>
 git config user.email <span style="color: #BB4444">&quot;user2@example.com&quot;</span>
@@ -223,7 +222,7 @@ git config user.email <span style="color: #BB4444">&quot;user2@example.com&quot;
 
 
 <p><strong>3. 测试新功能并提交</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git commit -am <span style="color: #BB4444">&quot;Developer user2 for Feature 2&quot;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git commit -am <span style="color: #BB4444">&quot;Developer user2 for Feature 2&quot;</span>
 git push
 </pre></div>
 
@@ -238,7 +237,7 @@ git push
 <p><img alt="代码评审意见" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/git_code_review_comments.png" /></p>
 <p><strong>6. 更新本地代码副本</strong></p>
 <p>当新功能合并到代码主干后，其他开发人员可以更新服务器上的最新代码到自己本地的工作副本中。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git pull
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git pull
 </pre></div>
 
 
@@ -262,18 +261,18 @@ git push
 <p>这种开发模式一般用在一些<strong>不需要协作</strong>的小功能开发或 Bug 修复上。由于 <strong>Developer 用户没有权限把修改的代码直接提交到主干</strong>上。所以，需要先 Fork 一个本地分支，然后本地修改后，发起一个 Merge Request ，由 Master 用户进行代码评审，合格后由 Master 用户把代码合并到主干。</p>
 <p><strong>1. 开发者 Fork 一份基线</strong></p>
 <p>这一步骤必须在 Gitlab 网页端进行。比如，我们使用 user2 Fork 一个由 user1 创建的 demo 项目，则其 Git 地址为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>http://user2@192.168.56.101/user2/demo.git
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">http://user2@192.168.56.101/user2/demo.git
 </pre></div>
 
 
 <p>注意和原来直接从 user1 的 demo 项目的 Git 地址比较 <code>http://user2@192.168.56.101/user1/demo.git</code> 。</p>
 <p><strong>2. 开发者下载 Fork 的基线代码</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git clone http://user2@192.168.56.101/user2/demo.git
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git clone http://user2@192.168.56.101/user2/demo.git
 </pre></div>
 
 
 <p><strong>3. 开发者修改代码，测试，并提交</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git push origin master
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git push origin master
 </pre></div>
 
 
@@ -284,7 +283,7 @@ git push
 <p>指定的代码评审者可以查看这个合并请求，并选择直接关闭或者合并到主干。如果关闭，则一般会写上评审不通过的理由，然后由开发者重新修改，并重新提交合并请求。如果通过评审，则代码会合并到主干上。</p>
 <p><strong>6. 开发者更新本地代码</strong></p>
 <p>当 Developer 角色的开发者 Fork 了一份代码后，本地 Git 仓库里实际是“追踪”开发者 Fork 出来的这份代码，而不是原始的代码仓库里的代码。如下所示：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ git remote -v
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>git remote -v
 origin  http://user2@192.168.56.101/user2/demo.git <span style="color: #666666">(</span>fetch<span style="color: #666666">)</span>
 origin  http://user2@192.168.56.101/user2/demo.git <span style="color: #666666">(</span>push<span style="color: #666666">)</span>
 </pre></div>
@@ -292,12 +291,12 @@ origin  http://user2@192.168.56.101/user2/demo.git <span style="color: #666666">
 
 <p>此时要怎么样把原始的代码仓库里的代码更新到本地呢？比如，另外一个开发者合并了一个新的功能到原始代码的主干上，怎么样把这个代码更新到本地呢？进而更新到 Fork 出来的代码仓库里呢？可以使用以下的方法：</p>
 <p>首先，把原始的 Git 代码仓库地址添加到本地：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ git remote add upstream http://user2@192.168.56.101/user1/demo.git
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>git remote add upstream http://user2@192.168.56.101/user1/demo.git
 </pre></div>
 
 
 <p>查看添加后的情况：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ git remote -v
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>git remote -v
 origin  http://user2@192.168.56.101/user2/demo.git <span style="color: #666666">(</span>fetch<span style="color: #666666">)</span>
 origin  http://user2@192.168.56.101/user2/demo.git <span style="color: #666666">(</span>push<span style="color: #666666">)</span>
 upstream  http://user2@192.168.56.101/user1/demo.git <span style="color: #666666">(</span>fetch<span style="color: #666666">)</span>
@@ -306,18 +305,18 @@ upstream  http://user2@192.168.56.101/user1/demo.git <span style="color: #666666
 
 
 <p>接着，把原始 Git 代码仓库里的代码下载下来，只是把数据库下载下来而已，并没有合并到本地分支：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git fetch upstream
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git fetch upstream
 </pre></div>
 
 
 <p>下一步，把下载下来的代码合并到本地分支：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git merge upstream/master
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git merge upstream/master
 </pre></div>
 
 
 <p>执行这一步时需要注意，需要确保本地没有未提交的修改，否则到时处理代码冲突会比较麻烦。上面的两条指令也可以由一条完成，即 <code>git pull upstream master</code> 。</p>
 <p>最后，把从原始 Git 代码仓库合并下来的代码，提交到 Fork 出来的远程代码仓库里。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>git commit -am <span style="color: #BB4444">&quot;Merge from upstream&quot;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">git commit -am <span style="color: #BB4444">&quot;Merge from upstream&quot;</span>
 git push origin master
 </pre></div>
 
@@ -408,7 +407,6 @@ git push origin master
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -422,6 +420,29 @@ git push origin master
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li class="active"><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -161,7 +160,7 @@
 <p>流媒体有两大特点，一是数据量大。二是有实时性要求。针对这两个特点，我们必须把应答数据分块传输给客户端来实现流媒体服务器。这里我们用到了两个关键技术来实现流媒体服务器，我们使用生成器函数来把数据分块传送，Flask的<code>Response</code>类本身对生成器函数有良好的支持。接着，我们使用<strong>Multipart</strong>来组装一个HTTP应答。</p>
 <h3 id="_3">生成器函数</h3>
 <p>生成器函数是可被打断和恢复的函数。其关键字是<code>yield</code>，来看一个例子：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">gen</span>():
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">gen</span>():
     <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #666666">1</span>
     <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #666666">2</span>
     <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #666666">3</span>
@@ -169,7 +168,7 @@
 
 
 <p>上面的代码我们就定义了一个生成器函数，当生成器函数被调用时，它返回一个生成器迭代器，或直接叫生成器。通过不断地调用生成器的<code>next()</code>方法来执行生成器函数体的代码，直到遇到异常为止。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #666666">&gt;&gt;&gt;</span> g <span style="color: #666666">=</span> gen()
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">&gt;&gt;&gt;</span> g <span style="color: #666666">=</span> gen()
 <span style="color: #666666">&gt;&gt;&gt;</span> g
 <span style="color: #666666">&lt;</span>generator <span style="color: #AA22FF">object</span> gen at <span style="color: #666666">0xb72330a4&gt;</span>
 <span style="color: #666666">&gt;&gt;&gt;</span> g<span style="color: #666666">.</span>next()
@@ -188,7 +187,7 @@ Traceback (most recent call last):
 <p>从上面的例子可以看到一个生成器函数可以返回多个结果。每当程序执行到<code>yield</code>语句时，函数现场会被保留，同时返回一个值。Flask就是利用这个特性把应答数据通过生成器分块发送给客户端。</p>
 <h3 id="multipart">Multipart应答</h3>
 <p>Multipart应答包含一个<em>multipart</em>媒体类型，后面跟着多块独立的数据，每块数据有自己的<em>Content-Type</em>，每块数据之间通过<em>boundary</em>分隔。下面是一个例子：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>HTTP/1.1 200 OK
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">HTTP/1.1 200 OK
 Content-Type: multipart/x-mixed-replace; boundary=frame
 
 --frame
@@ -229,7 +228,7 @@ Content-Type: image/jpeg
 20
 21
 22
-23</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+23</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">flask</span> <span style="color: #AA22FF; font-weight: bold">import</span> Flask, render_template, Response
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">camera</span> <span style="color: #AA22FF; font-weight: bold">import</span> Camera
 
@@ -256,15 +255,15 @@ app <span style="color: #666666">=</span> Flask(__name__)
 </td></tr></table>
 
 <p>这个Flask应用程序导入了一个<code>Camera</code>类，这个类是为了持续不断地提供视频的帧数据的类。这个程序提供了两个服务路径，<code>/</code>路径由<code>index.html</code>模板提供服务，下面是它的内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>&lt;<span style="color: #008000; font-weight: bold">html</span>&gt;
-  &lt;<span style="color: #008000; font-weight: bold">head</span>&gt;
-    &lt;<span style="color: #008000; font-weight: bold">title</span>&gt;Video Streaming Demonstration&lt;/<span style="color: #008000; font-weight: bold">title</span>&gt;
-  &lt;/<span style="color: #008000; font-weight: bold">head</span>&gt;
-  &lt;<span style="color: #008000; font-weight: bold">body</span>&gt;
-    &lt;<span style="color: #008000; font-weight: bold">h1</span>&gt;Video Streaming Demonstration&lt;/<span style="color: #008000; font-weight: bold">h1</span>&gt;
-    &lt;<span style="color: #008000; font-weight: bold">img</span> <span style="color: #BB4444">src</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;{{ url_for(&#39;video_feed&#39;) }}&quot;</span>&gt;
-  &lt;/<span style="color: #008000; font-weight: bold">body</span>&gt;
-&lt;/<span style="color: #008000; font-weight: bold">html</span>&gt;
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;html&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;head&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;title&gt;</span>Video Streaming Demonstration<span style="color: #008000; font-weight: bold">&lt;/title&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;/head&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;body&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;h1&gt;</span>Video Streaming Demonstration<span style="color: #008000; font-weight: bold">&lt;/h1&gt;</span>
+    <span style="color: #008000; font-weight: bold">&lt;img</span> <span style="color: #BB4444">src=&quot;{{ url_for(&#39;video_feed&#39;) }}&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+  <span style="color: #008000; font-weight: bold">&lt;/body&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;/html&gt;</span>
 </pre></div>
 
 
@@ -279,7 +278,7 @@ app <span style="color: #666666">=</span> Flask(__name__)
 6
 7
 8
-9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">time</span> <span style="color: #AA22FF; font-weight: bold">import</span> time
 
 <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Camera</span>(<span style="color: #AA22FF">object</span>):
@@ -293,7 +292,7 @@ app <span style="color: #666666">=</span> Flask(__name__)
 
 <p>这个代码很简单，它从本地读取三个图片，并根据当前时间，每秒返回不同的图片来模拟提供源源不断的视频帧数据。</p>
 <p>大家可以从原作者的GitHub上下载程序的代码来运行。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ git clone https://github.com/miguelgrinberg/flask-video-streaming.git
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>git clone https://github.com/miguelgrinberg/flask-video-streaming.git
 </pre></div>
 
 
@@ -352,7 +351,6 @@ app <span style="color: #666666">=</span> Flask(__name__)
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -366,6 +364,29 @@ app <span style="color: #666666">=</span> Flask(__name__)
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

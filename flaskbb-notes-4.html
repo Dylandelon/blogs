@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li class="active"><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -158,7 +157,7 @@
 <p>本文是本系列文章的第四篇，通过分析FlaskBB的自动测试代码，进而介绍Python下的自动化测试工具pytest。自动化测试在开发和重构过程中有着非常重要的地位。甚至还流行一种测试优先的编程方法，即针对一个功能模块，先写测试例，再去实现功能模块。</p>
 <h2 id="flaskbb">FlaskBB的测试代码</h2>
 <p>FlaskBB的测试代码在tests目录下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>tests/
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">tests/
 ├── conftest.py
 ├── fixtures
 │   ├── app.py
@@ -181,8 +180,8 @@
 
 
 <p>在FlaskBB项目目录下执行<code>py.test tests</code>输出以下测试结果：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb$ py.test <span style="color: #B8860B">tests</span>
-<span style="color: #666666">=============================</span> <span style="color: #AA22FF">test</span> session <span style="color: #B8860B">starts</span> <span style="color: #666666">==============================</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb<span style="color: #B8860B">$ </span>py.test <span style="color: #B8860B">tests</span>
+<span style="color: #666666">=============================</span> <span style="color: #AA22FF">test </span>session <span style="color: #B8860B">starts</span> <span style="color: #666666">==============================</span>
 platform linux2 -- Python 2.7.6 -- py-1.4.25 -- pytest-2.6.3 -- /home/kamidox/co
 de/flaskbb/.venv/bin/python
 Tests are shuffled using seed number 362536085265.
@@ -245,7 +244,7 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
 4
 5
 6
-7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">test_forum_delete</span>(forum):
+7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">test_forum_delete</span>(forum):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Test the delete forum method.&quot;&quot;&quot;</span>
     forum<span style="color: #666666">.</span>delete()
 
@@ -270,7 +269,7 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
 3
 4
 5
-6</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@pytest.fixture</span>
+6</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@pytest.fixture</span>
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">forum</span>(category, default_settings):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;A single forum in a category.&quot;&quot;&quot;</span>
     forum <span style="color: #666666">=</span> Forum(title<span style="color: #666666">=</span><span style="color: #BB4444">&quot;Test Forum&quot;</span>, category_id<span style="color: #666666">=</span>category<span style="color: #666666">.</span>id)
@@ -297,7 +296,7 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
  8
  9
 10
-11</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@pytest.yield_fixture</span>(autouse<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+11</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@pytest.yield_fixture</span>(autouse<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">application</span>():
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;application with context.&quot;&quot;&quot;</span>
     app <span style="color: #666666">=</span> create_app(Config)
@@ -327,7 +326,7 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
 <p>pytest在执行任何一个单元测试的时候，最靠近执行目录下的那个<code>conftest.py</code>将被自动执行。针对FlaskBB，其内容为：</p>
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
-3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.app</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
+3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.app</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.forum</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">tests.fixtures.user</span> <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #666666">*</span>
 </pre></div>
@@ -336,7 +335,7 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
 <p>从代码来看，它import了我们定义的所有的fixtures。除了自定义的fixtures之外，系统也有一些内置的fixtures，可以运行<code>py.test --fixtures</code>来查阅所有的可用fixtures。</p>
 <h2 id="pytestini">pytest.ini</h2>
 <p>pytest在执行时，会读取命令运行目录下的pytest.ini文件，通过这个文件可以定制py.test命令的一些行为。FlaskBB的里pytest.ini的内容为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">[pytest]</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">[pytest]</span>
 <span style="color: #BB4444">norecursedirs</span> <span style="color: #666666">=</span> <span style="color: #BB4444">docs flaskbb logs migrations whoosh_index</span>
 <span style="color: #BB4444">addopts</span> <span style="color: #666666">=</span> <span style="color: #BB4444">--strict --random -vvl</span>
 </pre></div>
@@ -389,7 +388,6 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -403,6 +401,29 @@ tests/unit/test_forum_models.py::test_forum_update_last_post <span style="color:
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

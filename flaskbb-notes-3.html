@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li class="active"><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -172,7 +171,7 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
+8</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
     __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;users&quot;</span>
     __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;username&#39;</span>, <span style="color: #BB4444">&#39;email&#39;</span>]
 
@@ -204,7 +203,7 @@
 16
 17
 18
-19</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Topic</span>(db<span style="color: #666666">.</span>Model):
+19</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Topic</span>(db<span style="color: #666666">.</span>Model):
     __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;topics&quot;</span>
     __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;title&#39;</span>, <span style="color: #BB4444">&#39;username&#39;</span>]
 
@@ -236,7 +235,7 @@
  7
  8
  9
-10</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
+10</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
     __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;users&quot;</span>
     __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;username&#39;</span>, <span style="color: #BB4444">&#39;email&#39;</span>]
 
@@ -265,7 +264,7 @@
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
 3
-4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>groups_users <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Table(
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">groups_users <span style="color: #666666">=</span> db<span style="color: #666666">.</span>Table(
     <span style="color: #BB4444">&#39;groups_users&#39;</span>,
     db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;user_id&#39;</span>, db<span style="color: #666666">.</span>Integer(), db<span style="color: #666666">.</span>ForeignKey(<span style="color: #BB4444">&#39;users.id&#39;</span>)),
     db<span style="color: #666666">.</span>Column(<span style="color: #BB4444">&#39;group_id&#39;</span>, db<span style="color: #666666">.</span>Integer(), db<span style="color: #666666">.</span>ForeignKey(<span style="color: #BB4444">&#39;groups.id&#39;</span>)))
@@ -287,7 +286,7 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
+15</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">User</span>(db<span style="color: #666666">.</span>Model, UserMixin):
     __tablename__ <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;users&quot;</span>
     __searchable__ <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;username&#39;</span>, <span style="color: #BB4444">&#39;email&#39;</span>]
 
@@ -314,7 +313,7 @@
 4
 5
 6
-7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">save</span>(<span style="color: #AA22FF">self</span>):
+7</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">save</span>(<span style="color: #AA22FF">self</span>):
     user <span style="color: #666666">=</span> User(username<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>username<span style="color: #666666">.</span>data,
                 email<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>email<span style="color: #666666">.</span>data,
                 password<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>password<span style="color: #666666">.</span>data,
@@ -350,7 +349,7 @@
 23
 24
 25
-26</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">save</span>(<span style="color: #AA22FF">self</span>, groups<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>):
+26</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">save</span>(<span style="color: #AA22FF">self</span>, groups<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Saves a user. If a list with groups is provided, it will add those</span>
 <span style="color: #BB4444; font-style: italic">    to the secondary groups from the user.</span>
 
@@ -398,7 +397,7 @@
  9
 10
 11
-12</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">delete</span>(<span style="color: #AA22FF">self</span>):
+12</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">delete</span>(<span style="color: #AA22FF">self</span>):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Deletes the User.&quot;&quot;&quot;</span>
 
     <span style="color: #008800; font-style: italic"># This isn&#39;t done automatically...</span>
@@ -420,7 +419,7 @@
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
 3
-4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@property</span>
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@property</span>
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">topic_count</span>(<span style="color: #AA22FF">self</span>):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Returns the thread count&quot;&quot;&quot;</span>
     <span style="color: #AA22FF; font-weight: bold">return</span> Topic<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter(Topic<span style="color: #666666">.</span>user_id <span style="color: #666666">==</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>count()
@@ -430,7 +429,7 @@
 <p>再如 <code>User.delete()</code> 的代码里删除用户相关的数据的代码：</p>
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
-3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>PrivateMessage<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
+3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">PrivateMessage<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
 ForumsRead<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
 TopicsRead<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(user_id<span style="color: #666666">=</span><span style="color: #AA22FF">self</span><span style="color: #666666">.</span>id)<span style="color: #666666">.</span>delete()
 </pre></div>
@@ -440,7 +439,7 @@ TopicsRead<span style="color: #666666">.</span>query<span style="color: #666666"
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
 3
-4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>secondary_groups <span style="color: #666666">=</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>secondary_groups<span style="color: #666666">.</span>all()
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">secondary_groups <span style="color: #666666">=</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>secondary_groups<span style="color: #666666">.</span>all()
 <span style="color: #AA22FF; font-weight: bold">for</span> group <span style="color: #AA22FF; font-weight: bold">in</span> secondary_groups:
     <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>remove_from_group(group)
 db<span style="color: #666666">.</span>session<span style="color: #666666">.</span>commit()
@@ -456,7 +455,7 @@ db<span style="color: #666666">.</span>session<span style="color: #666666">.</sp
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
 3
-4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@user.route</span>(<span style="color: #BB4444">&quot;/&lt;username&gt;&quot;</span>)
+4</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@user.route</span>(<span style="color: #BB4444">&quot;/&lt;username&gt;&quot;</span>)
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">profile</span>(username):
     user <span style="color: #666666">=</span> User<span style="color: #666666">.</span>query<span style="color: #666666">.</span>filter_by(username<span style="color: #666666">=</span>username)<span style="color: #666666">.</span>first_or_404()
     <span style="color: #AA22FF; font-weight: bold">return</span> render_template(<span style="color: #BB4444">&quot;user/profile.html&quot;</span>, user<span style="color: #666666">=</span>user)
@@ -465,7 +464,7 @@ db<span style="color: #666666">.</span>session<span style="color: #666666">.</sp
 
 <h2 id="mvc">MVC 代码结构</h2>
 <p>介绍完 ORM，我们可以看一下 FlaskBB 项目 <code>flaskbb/flaskbb</code> 目录下的核心代码的 MVC 代码结构。它把每个模块封装成一个独立的 bluepoint，每个模块又分为 model，view，form 三个模块。这样整体代码结构非常清晰。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>flaskbb
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">flaskbb
 ├── __init__.py
 ├── _compat.py
 ├── app.py
@@ -554,7 +553,6 @@ db<span style="color: #666666">.</span>session<span style="color: #666666">.</sp
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -568,6 +566,29 @@ db<span style="color: #666666">.</span>session<span style="color: #666666">.</sp
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

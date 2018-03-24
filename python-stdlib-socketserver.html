@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li class="active"><a href="./category/python.html">python</a></li>
@@ -183,7 +182,7 @@
 <h3 id="_5">多线程并发的注意事项</h3>
 <p>当使用<code>ThreadingMixIn</code>来实现多线程并发处理请求时，需要特别注意，当处理请求的线程意外终止时，网络服务进程需要作何反应。这个类提供了一个属性<code>daemon_threads</code>来定义网络服务进程的行为。当<code>daemon_threads</code>设置为False（默认）时，表示当处理请求的线程意外终止时，网络服务进程不会退出。而当<code>daemon_threads</code>设置为True的时候，如果处理请求的线程意外终止，网络服务进程会退出。</p>
 <p>一个并发的UDP网络服务可以简单地通过下面的代码实现：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">ThreadingUDPServer</span>(ThreadingMixIn, UDPServer): <span style="color: #AA22FF; font-weight: bold">pass</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">ThreadingUDPServer</span>(ThreadingMixIn, UDPServer): <span style="color: #AA22FF; font-weight: bold">pass</span>
 </pre></div>
 
 
@@ -245,7 +244,7 @@
 16
 17
 18
-19</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+19</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
 <span style="color: #008800; font-style: italic"># -*- coding: utf-8 -*-</span>
 
 <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">SocketServer</span>
@@ -288,7 +287,7 @@
 18
 19
 20
-21</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+21</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
 <span style="color: #008800; font-style: italic"># -*- coding: utf-8 -*-</span>
 
 <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">socket</span>
@@ -314,14 +313,14 @@ sock <span style="color: #666666">=</span> socket<span style="color: #666666">.<
 
 <p>先执行服务端<code>python EchoTCPServer.py</code>，再执行客户端<code>python EchoTCPClient.py hello SocketServer</code>。</p>
 <p>服务端输出如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>D:\lab\python&gt;python DemoTCPServer.py
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">D:\lab\python&gt;python DemoTCPServer.py
 Echo TCP server is running ...
 (&#39;127.0.0.1&#39;, 51245) write: hello SocketServer
 </pre></div>
 
 
 <p>客户端输出如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>D:\lab\python&gt;python EchoTCPClient.py hello SocketServer
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">D:\lab\python&gt;python EchoTCPClient.py hello SocketServer
 Send:     hello SocketServer
 received: HELLO SOCKETSERVER
 </pre></div>
@@ -369,7 +368,6 @@ received: HELLO SOCKETSERVER
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -383,6 +381,29 @@ received: HELLO SOCKETSERVER
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

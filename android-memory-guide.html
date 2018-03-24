@@ -72,7 +72,6 @@
 							<li class="active"><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -176,7 +175,7 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 <p><strong>内存抖动</strong></p>
 <p>通过一个非常简单的例子来演示内存抖动。这个例子里，在自定义 View 的 onDraw 方法里大量分配内存来演示内存抖动和性能之间的关系。</p>
 <p>版本一：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #AA22FF">@Override</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #AA22FF">@Override</span>
     <span style="color: #AA22FF; font-weight: bold">protected</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onDraw</span><span style="color: #666666">(</span>Canvas canvas<span style="color: #666666">)</span> <span style="color: #666666">{</span>
         <span style="color: #AA22FF; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #BB4444">onDraw</span><span style="color: #666666">(</span>canvas<span style="color: #666666">);</span>
 
@@ -193,7 +192,7 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 
 
 <p>版本二：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #AA22FF">@Override</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #AA22FF">@Override</span>
     <span style="color: #AA22FF; font-weight: bold">protected</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onDraw</span><span style="color: #666666">(</span>Canvas canvas<span style="color: #666666">)</span> <span style="color: #666666">{</span>
         <span style="color: #AA22FF; font-weight: bold">super</span><span style="color: #666666">.</span><span style="color: #BB4444">onDraw</span><span style="color: #666666">(</span>canvas<span style="color: #666666">);</span>
 
@@ -216,7 +215,7 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 <img alt="memory_tracker" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/memory_tracker.png" /></p>
 <p><strong>内存泄漏</strong></p>
 <p>这个例子里，我们简单地让点击 Settings 菜单，就产生一个 100KB 的内存泄漏。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #AA22FF; font-weight: bold">private</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">addSomeCache</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #AA22FF; font-weight: bold">private</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">addSomeCache</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
         <span style="color: #008800; font-style: italic">// add 100KB cache</span>
         <span style="color: #00BB00; font-weight: bold">int</span> key <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> Random<span style="color: #666666">().</span><span style="color: #BB4444">nextInt</span><span style="color: #666666">(100);</span>
         Log<span style="color: #666666">.</span><span style="color: #BB4444">d</span><span style="color: #666666">(</span><span style="color: #BB4444">&quot;sfox&quot;</span><span style="color: #666666">,</span> <span style="color: #BB4444">&quot;add cache for key &quot;</span> <span style="color: #666666">+</span> key<span style="color: #666666">);</span>
@@ -307,7 +306,6 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -321,6 +319,29 @@ Java 语言的内存泄漏概念和 C/C++ 不太一样，在 Java 里是指不�
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

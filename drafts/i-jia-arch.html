@@ -72,7 +72,6 @@
 							<li ><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
-							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -202,7 +201,7 @@
 <li>数据表全部更新完成后，登录流程完成，进入 App 的主界面</li>
 </ul>
 <p>附录一：系统的数据表</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #008800; font-style: italic">// 设备入网信息表</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #008800; font-style: italic">// 设备入网信息表</span>
     <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">static</span> <span style="color: #AA22FF; font-weight: bold">final</span> <span style="color: #00BB00; font-weight: bold">short</span> TABLE_DEV_JOIN_INFO <span style="color: #666666">=</span> <span style="color: #666666">1;</span>
     <span style="color: #008800; font-style: italic">// 地址映射表</span>
     <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">static</span> <span style="color: #AA22FF; font-weight: bold">final</span> <span style="color: #00BB00; font-weight: bold">short</span> TABLE_ADDR_MAP <span style="color: #666666">=</span> <span style="color: #666666">2;</span>
@@ -285,7 +284,7 @@
 </ul>
 <h2 id="_8">关键数据结构</h2>
 <p>在网关的 App 之间需要频繁地交互多种数据，比如设备信息，设备状态等等。实际上，目前网关和 App 之间交互的数据表有 19 个之多。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">enum</span> {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">enum</span> {
     None <span style="color: #666666">=</span> <span style="color: #666666">0</span>,
     DeviceInfoTable,
     DeviceAddrTable,
@@ -314,7 +313,7 @@
 <h3 id="-3">设备信息表 － 表 3</h3>
 <p>在 App 端，设备信息表是保存在数据库里的。在网关，设备信息表是保存在 Flash 里。他们之间通过表 3 进行传输。</p>
 <p>设备信息在网关的数据结构如下</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">struct</span> DeviceInfoDetailTable_t{
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">struct</span> DeviceInfoDetailTable_t{
     <span style="color: #AA22FF; font-weight: bold">struct</span> DeviceInfoDetailTable_t <span style="color: #666666">*</span>Next;
     u16 Len;                <span style="color: #008800; font-style: italic">// 保存在数据库中的数据长度</span>
     u16 Index;              <span style="color: #008800; font-style: italic">// 在数据库中的索引</span>
@@ -342,7 +341,7 @@
 <li>设备名称：这个是用户可辨识的名称，比如“灯光7”。当新设备入网时默认名称是空字符串，App 如果发现设备名称是空字符串，就显示默认名称。如果用户修改了设备的名称，如改成“厨房吊灯”，那么这个数据 App 会发送给网关，最终在网关那边保存起来。</li>
 <li>设备类别 ID：用来标识设备的类型信息，ZIGBEE HA 协议总共规范了几十种设备，目前 i-jia 系统只实现了部分设备</li>
 </ul>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// Generic Device IDs</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// Generic Device IDs</span>
 <span style="color: #008800">#define ZCL_HA_DEVICEID_ON_OFF_SWITCH                           0x0000  </span><span style="color: #008800; font-style: italic">// 普通开关</span>
 <span style="color: #008800">#define ZCL_HA_DEVICEID_LEVEL_CONTROL_SWITCH                    0x0001  </span><span style="color: #008800; font-style: italic">// 调幅开关</span>
 <span style="color: #008800">#define ZCL_HA_DEVICEID_ON_OFF_OUTPUT                           0x0002  </span><span style="color: #008800; font-style: italic">// 遥控插座</span>
@@ -407,7 +406,7 @@
 </ul>
 <h3 id="-14">数据库版本信息表 － 表 14</h3>
 <p>在上面的流程里我们看到过，登录成功后，会从网关读取数据库的版本表，以便判断 App 本地保存的数据是否需要更新。这里就是版本表的数据结构。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">struct</span> VersionTable_t{
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">struct</span> VersionTable_t{
     <span style="color: #AA22FF; font-weight: bold">struct</span> VersionTable_t <span style="color: #666666">*</span>Next;
     u16 Len;            <span style="color: #008800; font-style: italic">// 保存在数据库中的数据长度</span>
     u16 Index;          <span style="color: #008800; font-style: italic">// 在数据库中的索引</span>
@@ -421,7 +420,7 @@
 <p><em>一个极端的情况</em></p>
 <p>表的版本号是 16bit 的无符号数，其最大的值是 65536 ，所以当版本号增长到最大的时候，会从 0 继续开始计数。所以一个极端的情况，某个人把房子租给别人两年， App 两年没打开。某天回到房子里发现 App 上的设备信息不对。这纯属机缘巧合，虽然概率非常低，但理论上是可能发生的。</p>
 <h3 id="-15">设备状态表 － 表 15</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">struct</span> DeviceStateTable_t{
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">typedef</span> <span style="color: #AA22FF; font-weight: bold">struct</span> DeviceStateTable_t{
     u16 Index;      <span style="color: #008800; font-style: italic">// 在数据库中的索引</span>
     u8  State;      <span style="color: #008800; font-style: italic">// 设备状态</span>
     u8  Saturation; <span style="color: #008800; font-style: italic">// 没有使用</span>
@@ -485,7 +484,6 @@
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
-										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -499,6 +497,29 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-4"><a href="../tag/react.html">react</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/web.html">web</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

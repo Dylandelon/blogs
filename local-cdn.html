@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -154,7 +153,7 @@
 <p>网上一堆教程，搜索一下就可以成功安装，需要注意的是两点。一是需要设置 nginx 开机启动。二是需要修改 nginx 运行权限，因为我们要在 80 端口提供服务，80 端口需要 root 权限才可以。</p>
 <p><strong>设置 nginx 开机启动</strong></p>
 <p>把下面文件内容保存到 <code>/Library/LaunchAgents/com.nginx.plist</code>。然后运行 <code>launchctl load -w /Library/LaunchAgents/com.nginx.plist</code>。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span>
 <span style="color: #008000; font-weight: bold">&lt;plist</span> <span style="color: #BB4444">version=&quot;1.0&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
   <span style="color: #008000; font-weight: bold">&lt;dict&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;key&gt;</span>Label<span style="color: #008000; font-weight: bold">&lt;/key&gt;</span>
@@ -181,7 +180,7 @@
 
 
 <p><strong>修改 nginx 运行权限</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>sudo chown root:admin /usr/local/Cellar/nginx/1.8.0/bin/nginx
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo chown root:admin /usr/local/Cellar/nginx/1.8.0/bin/nginx
 sudo chmod u+s /usr/local/Cellar/nginx/1.8.0/bin/nginx
 </pre></div>
 
@@ -190,20 +189,20 @@ sudo chmod u+s /usr/local/Cellar/nginx/1.8.0/bin/nginx
 <p>配置 nginx 服务器主要分两步。一是生成 ssl 证书，用来提供 https 服务。二是下载 local-cdn 到本地，将配置 nginx 指向这个本地目录以便提供 cdn 服务。</p>
 <p><strong>生成 ssl 证书</strong></p>
 <p>我们本地 cdn 还需要支持 ssl，所以需要做一个自签名的证书。下面命令会在 <code>/usr/local/etc/nginx/ssl/</code> 目录下生成一个自签名的证书。这个证书后面会用到。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>mkdir -p /usr/local/etc/nginx/ssl
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir -p /usr/local/etc/nginx/ssl
 openssl req -x509 -nodes -days <span style="color: #666666">3650</span> -newkey rsa:2048 -keyout /usr/local/etc/nginx/ssl/nginx.key -out /usr/local/etc/nginx/ssl/nginx.crt
 </pre></div>
 
 
 <p><strong>配置 nginx 服务器</strong></p>
 <p>把 local-cdn 下载到本地，比如放在 <code>/Users/kamidox/work/local-cdn</code>。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">cd</span> /Users/kamidox/work/
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">cd</span> /Users/kamidox/work/
 git clone https://github.com/kamidox/local-cdn.git
 </pre></div>
 
 
 <p>然后配置 nginx 添加这个目录当作内容目录。我们把下面内容保存到 <code>/usr/local/etc/nginx/servers/local-cdn.conf</code>。注意配置中用到了我们上面生成的证书。另外，nginx 默认会 include <code>/usr/local/etc/nginx/servers/</code> 下的所有配置文件。如果你修改过 nginx 的默认配置，根据你自己的情况配置即可。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>server {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
     charset utf-8;
@@ -264,7 +263,6 @@ git clone https://github.com/kamidox/local-cdn.git
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -278,6 +276,29 @@ git clone https://github.com/kamidox/local-cdn.git
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

@@ -72,7 +72,6 @@
 							<li ><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
-							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -355,7 +354,7 @@
 <li>给定一个字符串 <code>pelican.Pelican</code>，怎么样用这个字符串所代表的类创建对象？<br />
   使用 <code>__import__</code> 和 <code>getattr()</code> 实现</li>
 </ul>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    cls <span style="color: #666666">=</span> settings[<span style="color: #BB4444">&#39;PELICAN_CLASS&#39;</span>]     <span style="color: #008800; font-style: italic"># default class: &#39;pelican.Pelican&#39;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    cls <span style="color: #666666">=</span> settings[<span style="color: #BB4444">&#39;PELICAN_CLASS&#39;</span>]     <span style="color: #008800; font-style: italic"># default class: &#39;pelican.Pelican&#39;</span>
     <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #AA22FF">isinstance</span>(cls, six<span style="color: #666666">.</span>string_types):
         module, cls_name <span style="color: #666666">=</span> cls<span style="color: #666666">.</span>rsplit(<span style="color: #BB4444">&#39;.&#39;</span>, <span style="color: #666666">1</span>)
         module <span style="color: #666666">=</span> <span style="color: #AA22FF">__import__</span>(module)
@@ -562,7 +561,7 @@
 <li>Uncaught exceptions: 未处理的异常可以通过 <code>process.on('uncaughtException', function(err){}</code> 来捕获到。系统默认是直接退出程序。一般的处理是在这里记录异步 Log ，然后退出程序。针对网络服务而言，退出程序重启总是保证持续服务可用的一个折衷策略。</li>
 </ul>
 <p><a name="an_unpredictable_function"></a><strong>同步或异步不可预测的函数</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> cache <span style="color: #666666">=</span> {};
 <span style="color: #AA22FF; font-weight: bold">function</span> inconsistentRead(filename, callback) {
   <span style="color: #AA22FF; font-weight: bold">if</span>(cache[filename]) {
@@ -580,7 +579,7 @@
 
 
 <p><a name="propagating_errors"></a><strong>异步回调的异常处理</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">function</span> readJSON(filename, callback) {
   fs.readFile(filename, <span style="color: #BB4444">&#39;utf8&#39;</span>, <span style="color: #AA22FF; font-weight: bold">function</span>(err, data) {
     <span style="color: #AA22FF; font-weight: bold">var</span> parsed;
@@ -634,7 +633,7 @@
 <li>Modifying other modules or the global scope: 不是好的实践，但在自动测试领域有其应用场景，我们称之为猴子补丁 (Monkey Patching) 。<a href="#monkey_patching">示例代码</a> 。</li>
 </ul>
 <p><a name="exporting_a_constructor"></a><strong>模块返回构造函数</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">//file logger.js</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">//file logger.js</span>
 <span style="color: #AA22FF; font-weight: bold">function</span> Logger(name) {
  <span style="color: #AA22FF; font-weight: bold">this</span>.name <span style="color: #666666">=</span> name;
 };
@@ -652,7 +651,7 @@ module.exports <span style="color: #666666">=</span> Logger;
 
 
 <p><a name="exporting_an_instance"></a><strong>模块返回一个实例/单例</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// file logger.js</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// file logger.js</span>
 <span style="color: #AA22FF; font-weight: bold">function</span> Logger(name) {
   <span style="color: #AA22FF; font-weight: bold">this</span>.count <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
   <span style="color: #AA22FF; font-weight: bold">this</span>.name <span style="color: #666666">=</span> name;
@@ -667,7 +666,7 @@ module.exports <span style="color: #666666">=</span> <span style="color: #AA22FF
 
 
 <p><a name="monkey_patching"></a><strong>猴子补丁</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// file patcher.js</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// file patcher.js</span>
 <span style="color: #008800; font-style: italic">// ./logger is another module</span>
 require(<span style="color: #BB4444">&#39;./logger&#39;</span>).customMessage <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">function</span>() {
   console.log(<span style="color: #BB4444">&#39;This is a new functionality&#39;</span>);
@@ -736,7 +735,7 @@ SaaS解决的是开箱即用的问题，不用写代码，直接用。PaaS解决
 <li>使用 EventEmitter 可以让多个监听者同时监听到事件。而 callback 是一对一的结果返回。</li>
 <li>Combine callbacks and EventEmitter: 结合两者的优势。</li>
 </ul>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> glob <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;glob&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> glob <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;glob&#39;</span>);
 glob(<span style="color: #BB4444">&#39;data/*.txt&#39;</span>, <span style="color: #AA22FF; font-weight: bold">function</span>(error, files) {
   console.log(<span style="color: #BB4444">&#39;All files found: &#39;</span> <span style="color: #666666">+</span> JSON.stringify(files));
 }).on(<span style="color: #BB4444">&#39;match&#39;</span>, <span style="color: #AA22FF; font-weight: bold">function</span>(match) {
@@ -756,7 +755,7 @@ glob(<span style="color: #BB4444">&#39;data/*.txt&#39;</span>, <span style="colo
 <li>闭包函数会引起少量的内存和性能问题，比如内存泄露</li>
 </ul>
 <p><a name="callback_hell"></a><strong>爬虫程序：callback hell</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> spider(url, callback) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> spider(url, callback) {
     <span style="color: #AA22FF; font-weight: bold">var</span> filename <span style="color: #666666">=</span> utilities.urlToFilename(url);
     fs.exists(filename, <span style="color: #AA22FF; font-weight: bold">function</span>(exists) {                              <span style="color: #008800; font-style: italic">//[1]</span>
         <span style="color: #AA22FF; font-weight: bold">if</span>(<span style="color: #666666">!</span>exists) {
@@ -793,7 +792,7 @@ glob(<span style="color: #BB4444">&#39;data/*.txt&#39;</span>, <span style="colo
 <li>You need to modularize the code. Split the code into smaller, reusable functions whenever it&rsquo;s possible.</li>
 </ul>
 <p>下面是按照编写回调函数的原则执行后的改进版本：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> saveFile(filename, contents, callback) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> saveFile(filename, contents, callback) {
     mkdirp(path.dirname(filename), <span style="color: #AA22FF; font-weight: bold">function</span>(err) {
         <span style="color: #AA22FF; font-weight: bold">if</span>(err) {
             <span style="color: #AA22FF; font-weight: bold">return</span> callback(err);
@@ -837,7 +836,7 @@ glob(<span style="color: #BB4444">&#39;data/*.txt&#39;</span>, <span style="colo
 
 <p><strong>Sequential execution</strong>: 顺序执行</p>
 <p>爬虫程序就是一个典型的顺序执行的程序。文件是否存在 -&gt; 从网络下载 -&gt; 新建文件夹 -&gt; 写文件。对己知的顺序执行的异步任务，可以使用下面的代码模板：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> task1(callback) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> task1(callback) {
     asyncOperation(<span style="color: #AA22FF; font-weight: bold">function</span>() {
         Start Task <span style="color: #666666">1</span> Task <span style="color: #666666">2</span> Task <span style="color: #666666">3</span> End
         task2(callback);
@@ -866,7 +865,7 @@ task1(<span style="color: #AA22FF; font-weight: bold">function</span>() {
 <ul>
 <li><code>task()</code> 函数最好是异步函数，如果是同步函数，可能造成深度递归，从而使栈溢出</li>
 </ul>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> iterate(index) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> iterate(index) {
     <span style="color: #AA22FF; font-weight: bold">if</span>(index <span style="color: #666666">===</span> tasks.length)  {
         <span style="color: #AA22FF; font-weight: bold">return</span> finish();
     }
@@ -893,7 +892,7 @@ iterate(<span style="color: #666666">0</span>);   <span style="color: #008800; f
 <p>Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns</p>
 <h3 id="parallel-execution">Parallel execution</h3>
 <p>如果多个任务没有先后顺序上的依赖，那么可以使用并行执行的模型来实现。当任务全部完成后，通过回调函数通知调用者。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> tasks <span style="color: #666666">=</span> [...];
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> tasks <span style="color: #666666">=</span> [...];
 <span style="color: #AA22FF; font-weight: bold">var</span> completed <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
 
 tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span>(task) {
@@ -913,7 +912,7 @@ tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span>(ta
 <p>Node.js Design Patterns: Chapeter 2 Asynchronous Control Flow Patterns</p>
 <h3 id="limiting-the-concurrency">Limiting the concurrency</h3>
 <p>带上限的并发执行可以有效地控制资源消耗，避免资源过载。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> tasks <span style="color: #666666">=</span> [...];
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> tasks <span style="color: #666666">=</span> [...];
 <span style="color: #AA22FF; font-weight: bold">var</span> concurrency <span style="color: #666666">=</span> <span style="color: #666666">2</span>, running <span style="color: #666666">=</span> <span style="color: #666666">0</span>, completed <span style="color: #666666">=</span> <span style="color: #666666">0</span>, index <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
 
 <span style="color: #AA22FF; font-weight: bold">function</span> next() {              <span style="color: #008800; font-style: italic">//[1]</span>
@@ -941,7 +940,7 @@ next();
 <h3 id="globally-limiting-the-concurrency">Globally limiting the concurrency</h3>
 <p>上面的模式无法实现全局限制，如果一个任务产生两个并发任务，多个任务就会产生多个并发任务。我们需要实现全局并发数量限制，可以用一个队列来实现。</p>
 <p><a name="globally_limiting_the_concurrency"></a><strong>全局限制并发数量</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> TaskQueue (concurrency) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> TaskQueue (concurrency) {
     <span style="color: #AA22FF; font-weight: bold">this</span>.concurrency <span style="color: #666666">=</span> concurrency;
     <span style="color: #AA22FF; font-weight: bold">this</span>.running <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
     <span style="color: #AA22FF; font-weight: bold">this</span>.queue <span style="color: #666666">=</span> [];
@@ -989,13 +988,13 @@ module.exports <span style="color: #666666">=</span> TaskQueue;
 <p>Promises 是一种抽像，它允许异步函数返回一个 Promises 对象，用这个对象来表达异步函数的最终结果。用 Promises 术语来讲，当异步函数未完成时，这个 Promises 对象处于 <strong>未决 (pending)</strong> 状态。当异步函数成功完成时，这个 Promises 对象处于 <strong>达成 (fulfilled)</strong> 状态。当异步任务发生错误时，这个 Promises 对象处于 <strong>驳回 (rejected)</strong> 状态。只要异步函数完成，不管是成功还是失败，我们称这个 Promises 对象为 <strong>确定 (settled)</strong> 状态，这个状态和未决状态相对应。</p>
 <p>In very simple terms, promises are an abstraction that allow an asynchronous function to return an object called a promise, which represents the eventual result of the operation. In the promises jargon, we say that a promise is pending when the asynchronous operation is not yet complete, it&rsquo;s fulfilled when the operation successfully completes, and rejected when the operation terminates with an error. Once a promise is either fulfilled or rejected, it&rsquo;s considered settled.</p>
 <p>Promises 对象有个重要的方法 <code>then()</code> 可以用来处理异步代码。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>promise.then([onFulfilled], [onRejected])
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">promise.then([onFulfilled], [onRejected])
 </pre></div>
 
 
 <p><code>onFulfilled</code> 是一个函数，用来处理达成状态的 Promises。<code>onRejected</code> 用来处理驳回状态的 Promises。</p>
 <p>利用这一特性，可以把 CPS 回调转换为 Promises 异步处理方式：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>asyncOperation(arg, <span style="color: #AA22FF; font-weight: bold">function</span>(err, result) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">asyncOperation(arg, <span style="color: #AA22FF; font-weight: bold">function</span>(err, result) {
     <span style="color: #AA22FF; font-weight: bold">if</span>(err) {
         <span style="color: #008800; font-style: italic">//handle error</span>
     }
@@ -1019,7 +1018,7 @@ asyncOperation(arg)
 </ul>
 <p>这一特性的重要性在于我们可以写出链式的 Promises 表达式。如果我们不指定 <code>onFulfilled</code> 或 <code>onRejected</code> ，那么 Promises 对象会自动把确定的状态 (达成或驳回) 传递给下一个 Promises 对象。这样我们可以非常方便地把错误处理传递下去，直到最后一环的 <code>onRejected</code> 函数中处理即可。</p>
 <p>使用这个编程模型，顺序执行的异步函数可以写得非常简洁：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>asyncOperation(arg)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">asyncOperation(arg)
     .then(<span style="color: #AA22FF; font-weight: bold">function</span>(result1) {
         <span style="color: #008800; font-style: italic">//returns another promise</span>
         <span style="color: #AA22FF; font-weight: bold">return</span> asyncOperation(arg2);
@@ -1074,13 +1073,13 @@ asyncOperation(arg)
 <h3 id="promises_1">Promises</h3>
 <h4 id="promisifying-a-nodejs-style-function">Promisifying a Node.js style function</h4>
 <p>Node.js 库里只有少数几个原生支持 Promises ，我们可以通过转换，把 Node.js 类型的 CPS 回调函数改装成 Promises 样式的函数。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #AA22FF">Promise</span> <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;bluebird&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> Promise <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;bluebird&#39;</span>);
 
 module.exports.promisify <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">function</span> (callbackBasedApi) {
     <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">function</span> promisified() {
         <span style="color: #008800; font-style: italic">// copy array: copy arguments of function promisified()</span>
         <span style="color: #AA22FF; font-weight: bold">var</span> args <span style="color: #666666">=</span> [].slice.call(arguments);
-        <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #AA22FF">Promise</span>(<span style="color: #AA22FF; font-weight: bold">function</span> (resolve, reject) {
+        <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">new</span> Promise(<span style="color: #AA22FF; font-weight: bold">function</span> (resolve, reject) {
             args.push(<span style="color: #AA22FF; font-weight: bold">function</span> (err, result) {
                 <span style="color: #AA22FF; font-weight: bold">if</span> (err) {
                     <span style="color: #AA22FF; font-weight: bold">return</span> reject(err);
@@ -1101,7 +1100,7 @@ module.exports.promisify <span style="color: #666666">=</span> <span style="colo
 <p>大多数 Promises 实现都提供了把传统的 CPS 回调的 API 转换为 Promises 样式的工具函数，比如 Q 的 <code>Q.denodeify()</code>, <code>Q.nbind()</code>，bluebird 的 <code>Promises.promisify()</code> 等。</p>
 <h4 id="sequential-execution">Sequential execution</h4>
 <p>Promises 对己知函数的顺序执行的模式代码如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> promisesFunc() {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> promisesFunc() {
     <span style="color: #AA22FF; font-weight: bold">return</span> func1(params1)
         .then(<span style="color: #666666">=&gt;</span> (result1) {
             <span style="color: #AA22FF; font-weight: bold">return</span> func2(result1[<span style="color: #666666">0</span>]);
@@ -1117,8 +1116,8 @@ module.exports.promisify <span style="color: #666666">=</span> <span style="colo
 
 
 <p>对未知列表进行迭代顺序执行时，其模式代码如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> tasks <span style="color: #666666">=</span> [...];
-<span style="color: #AA22FF; font-weight: bold">var</span> promise <span style="color: #666666">=</span> <span style="color: #AA22FF">Promise</span>.resolve();    <span style="color: #008800; font-style: italic">// create a empty Promise Object which resolved as &#39;undefined&#39;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> tasks <span style="color: #666666">=</span> [...];
+<span style="color: #AA22FF; font-weight: bold">var</span> promise <span style="color: #666666">=</span> Promise.resolve();    <span style="color: #008800; font-style: italic">// create a empty Promise Object which resolved as &#39;undefined&#39;</span>
 tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span> (task) {     <span style="color: #008800; font-style: italic">// chain each task with Promises Object</span>
     promise <span style="color: #666666">=</span> promise.then(<span style="color: #AA22FF; font-weight: bold">function</span> () {
         <span style="color: #AA22FF; font-weight: bold">return</span> task();
@@ -1129,15 +1128,15 @@ tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span> (t
 
 <h4 id="parallel-execution_1">Parallel execution</h4>
 <p>使用 Promises 也可轻松执行并行任务：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> spiderLinks(currentUrl, body, nesting) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> spiderLinks(currentUrl, body, nesting) {
     <span style="color: #AA22FF; font-weight: bold">if</span> (nesting <span style="color: #666666">===</span> <span style="color: #666666">0</span>) {
-        <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">Promise</span>.resolve();
+        <span style="color: #AA22FF; font-weight: bold">return</span> Promise.resolve();
     }
     <span style="color: #AA22FF; font-weight: bold">var</span> links <span style="color: #666666">=</span> utilities.getPageLinks(currentUrl, body);
     <span style="color: #AA22FF; font-weight: bold">var</span> promises <span style="color: #666666">=</span> links.map(<span style="color: #AA22FF; font-weight: bold">function</span> (link) {
         <span style="color: #AA22FF; font-weight: bold">return</span> spider(link, nesting <span style="color: #666666">-</span> <span style="color: #666666">1</span>);
     });
-    <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">Promise</span>.all(promises);
+    <span style="color: #AA22FF; font-weight: bold">return</span> Promise.all(promises);
 }
 </pre></div>
 
@@ -1157,7 +1156,7 @@ tasks.forEach(<span style="color: #AA22FF; font-weight: bold">function</span> (t
 <h3 id="generator">Generator</h3>
 <h4 id="basic">Basic</h4>
 <p>生成器是 ES6 引入的一个新特性，和其他语言的生成器类似：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> <span style="color: #666666">*</span>infiniteNumbers() {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> <span style="color: #666666">*</span>infiniteNumbers() {
     <span style="color: #AA22FF; font-weight: bold">var</span> n <span style="color: #666666">=</span> <span style="color: #666666">1</span>;
     <span style="color: #AA22FF; font-weight: bold">while</span> (<span style="color: #AA22FF; font-weight: bold">true</span>) {
         <span style="color: #AA22FF; font-weight: bold">yield</span> n<span style="color: #666666">++</span>;
@@ -1174,7 +1173,7 @@ numbers.next(); <span style="color: #008800; font-style: italic">// { value: 3, 
 
 <h4 id="generator-as-iterator">Generator as iterator</h4>
 <p>生成器可以作为替代器使用：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> iteratorGenerator(arr) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> iteratorGenerator(arr) {
     <span style="color: #AA22FF; font-weight: bold">for</span>(<span style="color: #AA22FF; font-weight: bold">var</span> i <span style="color: #666666">=</span> <span style="color: #666666">0</span>; i <span style="color: #666666">&lt;</span> arr.length; i<span style="color: #666666">++</span>) {
         <span style="color: #AA22FF; font-weight: bold">yield</span> arr[i];
     };
@@ -1190,7 +1189,7 @@ numbers.next(); <span style="color: #008800; font-style: italic">// { value: 3, 
 
 <h4 id="passing-values-back-to-a-generator">Passing values back to a generator</h4>
 <p>通过生成器的 <code>next()</code> 函数可以向生成器传递参数：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> twoWayGenerator() {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> twoWayGenerator() {
     <span style="color: #AA22FF; font-weight: bold">var</span> what <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> <span style="color: #AA22FF; font-weight: bold">null</span>;
     console.log(<span style="color: #BB4444">&#39;Hello &#39;</span> <span style="color: #666666">+</span> what);
 }
@@ -1201,7 +1200,7 @@ twoWay.next(<span style="color: #BB4444">&#39;world&#39;</span>);
 
 
 <p>甚至可以向生成器传递一个异常：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> twoWay <span style="color: #666666">=</span> twoWayGenerator();
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> twoWay <span style="color: #666666">=</span> twoWayGenerator();
 twoWay.next();
 twoWay.<span style="color: #AA22FF; font-weight: bold">throw</span>(<span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #AA22FF">Error</span>());
 </pre></div>
@@ -1210,7 +1209,7 @@ twoWay.<span style="color: #AA22FF; font-weight: bold">throw</span>(<span style=
 <p>这个代码会使生成器函数在 <code>yield</code> 返回的地方抛出异常。</p>
 <h4 id="asynchronous-control-flow-with-generators">Asynchronous control flow with generators</h4>
 <p>生成器可以用来作为异步流程控制工具。用来解决 callback hell 问题。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> asyncFlow(generatorFunction) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> asyncFlow(generatorFunction) {
 
     <span style="color: #AA22FF; font-weight: bold">function</span> callback(err) {
         <span style="color: #AA22FF; font-weight: bold">if</span>(err) {
@@ -1227,7 +1226,7 @@ twoWay.<span style="color: #AA22FF; font-weight: bold">throw</span>(<span style=
 
 
 <p><code>asyncFlow()</code> 函数接受一个生成器函数作为参数。作为参数的生成器函数有个特点，即接受一个 <code>callback</code> 作为参数。有了 <code>asyncFlow()</code> 我们可以实现一个简单的文件复制的函数：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> path <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;path&#39;</span>);
 
 asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> (callback) {
@@ -1240,7 +1239,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 
 
 <p>这样，通过 <code>asyncFlow()</code> 函数把异步的流程变成类似<strong>同步</strong>函数的流程。注意到函数中的 <code>callback</code> 参数实在有点多余，可以进一步变形如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> readFileThunk(filename, options) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> readFileThunk(filename, options) {
     <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF; font-weight: bold">function</span>(callback) {
         fs.readFile(filename, options, callback);
     }
@@ -1270,7 +1269,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 
 
 <p>经过变形以后，我们使用 Generator 来实现异步流程控制的时候，就不需要看到 <code>callback</code> 函数了，显得更简洁：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>asyncFlowWithThunks(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">asyncFlowWithThunks(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
     <span style="color: #AA22FF; font-weight: bold">var</span> myself <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> readFileThunk(__filename, <span style="color: #BB4444">&#39;utf8&#39;</span>);
     <span style="color: #AA22FF; font-weight: bold">yield</span> writeFileThunk(<span style="color: #BB4444">&quot;clone of clone.js&quot;</span>, myself);
     console.log(<span style="color: #BB4444">&quot;Clone created&quot;</span>);
@@ -1289,7 +1288,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 <p>另外一个值得介绍的是 <a href="https://npmjs.org/package/thunkify"><code>thunkify</code></a>，用来对传统的 CPS 回调函数进行变形处理。</p>
 <h4 id="sequential-execution_1">Sequential execution</h4>
 <p>利用上面介绍的内容，使用 Generator 重新实现网络爬虫的串行版本。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> thunkify <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;thunkify&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> thunkify <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;thunkify&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> co <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;co&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> request <span style="color: #666666">=</span> thunkify(require(<span style="color: #BB4444">&#39;request&#39;</span>));
 <span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
@@ -1301,7 +1300,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 
 
 <p>经过 thunkify 后，使用生成器函数版本的资源下载函数 <code>download</code> 变成跟同步函数一样简洁，线性写下来即可：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> download(url, filename) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> download(url, filename) {
     console.log(<span style="color: #BB4444">&#39;Downloading &#39;</span> <span style="color: #666666">+</span> url);
     <span style="color: #AA22FF; font-weight: bold">var</span> results <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> request(url);
     <span style="color: #AA22FF; font-weight: bold">var</span> body <span style="color: #666666">=</span> results[<span style="color: #666666">1</span>];
@@ -1314,7 +1313,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 
 
 <p>使用相同的方法可以写出 <code>spider()</code> 和 <code>spiderLinks()</code> 函数，最后使用 <code>co</code> 来调用生成器函数：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>co(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">co(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
     <span style="color: #AA22FF; font-weight: bold">try</span> {
         <span style="color: #AA22FF; font-weight: bold">yield</span> spider(process.argv[<span style="color: #666666">2</span>], <span style="color: #666666">1</span>);
         console.log(<span style="color: #BB4444">&#39;Download complete&#39;</span>);
@@ -1327,11 +1326,11 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 
 <h4 id="parallel-execution_2">Parallel execution</h4>
 <p>使用 Generator 并不有直接实现并行执行。但第三方库 <code>co</code> 提供了针对数组进行并发执行的功能。如下示例代码：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>co(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">co(<span style="color: #AA22FF; font-weight: bold">function</span><span style="color: #666666">*</span> () {
     <span style="color: #AA22FF; font-weight: bold">var</span> res <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">yield</span> [
-        <span style="color: #AA22FF">Promise</span>.resolve(<span style="color: #666666">1</span>),
-        <span style="color: #AA22FF">Promise</span>.resolve(<span style="color: #666666">2</span>),
-        <span style="color: #AA22FF">Promise</span>.resolve(<span style="color: #666666">3</span>),
+        Promise.resolve(<span style="color: #666666">1</span>),
+        Promise.resolve(<span style="color: #666666">2</span>),
+        Promise.resolve(<span style="color: #666666">3</span>),
     ];
     console.log(res); <span style="color: #008800; font-style: italic">// =&gt; [1, 2, 3]</span>
 }).<span style="color: #AA22FF; font-weight: bold">catch</span>(onerror);
@@ -1397,7 +1396,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
 <li>可组合性：这个是流模式最显著的优点。可以通过 <code>pipe()</code> 函数把几个流处理程序组合起来。比如，如果需要在传输过程中加密，只需要在客户端加上代码 <code>.pipe(crypto.createCipher('aes192', 'a_shared_secret'))</code>，然后在服务端加上代码 <code>.pipe(crypto.createDecipher('aes192', 'a_shared_secret'))</code> 。这样就加上了加密功能。</li>
 </ul>
 <p><a name="spatial_efficiency"></a><strong>空间效率: 使用 GZip 算法压缩文件</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> zlib <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;zlib&#39;</span>);
 
 <span style="color: #008800; font-style: italic">// 压缩大于 1 GB 的文件时，会报错</span>
@@ -1406,7 +1405,7 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
     fs.readFile(filename, (err, data) <span style="color: #666666">=&gt;</span> {
         zlib.gzip(data, (err, data) <span style="color: #666666">=&gt;</span> {
             fs.writeFile(filename <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.b.gz&#39;</span>, data, () <span style="color: #666666">=&gt;</span> {
-                console.log(<span style="color: #BB4444">`</span><span style="color: #BB6688; font-weight: bold">${</span>filename<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> successful compressed. Elapsed </span><span style="color: #BB6688; font-weight: bold">${</span><span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> ms.`</span>);
+                console.log(<span style="border: 1px solid #FF0000">`</span>${filename} successful compressed. Elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms.<span style="border: 1px solid #FF0000">`</span>);
             })
         })
     })
@@ -1419,28 +1418,28 @@ asyncFlow(<span style="color: #AA22FF; font-weight: bold">function</span><span s
         .pipe(zlib.createGzip())
         .pipe(fs.createWriteStream(filename <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.s.gz&#39;</span>))
         .on(<span style="color: #BB4444">&#39;finish&#39;</span>, () <span style="color: #666666">=&gt;</span> {
-            console.log(<span style="color: #BB4444">`</span><span style="color: #BB6688; font-weight: bold">${</span>filename<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> successful compressed. Elapsed </span><span style="color: #BB6688; font-weight: bold">${</span><span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> ms.`</span>)
+            console.log(<span style="border: 1px solid #FF0000">`</span>${filename} successful compressed. Elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms.<span style="border: 1px solid #FF0000">`</span>)
         })
 }
 </pre></div>
 
 
 <p><a name="time_efficiency"></a><strong>时间效率: 上传经过 gzip 压缩的文件</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// 服务器端代码 gzip-stream-server.js</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// 服务器端代码 gzip-stream-server.js</span>
 <span style="color: #AA22FF; font-weight: bold">var</span> http <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;http&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> fs <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;fs&#39;</span>);
 <span style="color: #AA22FF; font-weight: bold">var</span> zlib <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;zlib&#39;</span>);
 
 <span style="color: #AA22FF; font-weight: bold">var</span> server <span style="color: #666666">=</span> http.createServer((req, res) <span style="color: #666666">=&gt;</span> {
     <span style="color: #AA22FF; font-weight: bold">var</span> filename <span style="color: #666666">=</span> req.headers.filename;
-    console.log(<span style="color: #BB4444">`receiving </span><span style="color: #BB6688; font-weight: bold">${</span>filename<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> ...`</span>);
+    console.log(<span style="border: 1px solid #FF0000">`</span>receiving ${filename} ...<span style="border: 1px solid #FF0000">`</span>);
     <span style="color: #AA22FF; font-weight: bold">var</span> start <span style="color: #666666">=</span> <span style="color: #AA22FF">Date</span>.now();
     req.pipe(zlib.createGunzip())
         .pipe(fs.createWriteStream(filename <span style="color: #666666">+</span> <span style="color: #BB4444">&#39;.received&#39;</span>))
         .on(<span style="color: #BB4444">&#39;finish&#39;</span>, () <span style="color: #666666">=&gt;</span> {
             res.writeHead(<span style="color: #666666">201</span>, {<span style="color: #BB4444">&#39;Content-Type&#39;</span><span style="color: #666666">:</span> <span style="color: #BB4444">&#39;text/plain&#39;</span>});
             res.end(<span style="color: #BB4444">&#39;File uploading successful.&#39;</span>);
-            console.log(<span style="color: #BB4444">`received </span><span style="color: #BB6688; font-weight: bold">${</span>filename<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> - elapsed </span><span style="color: #BB6688; font-weight: bold">${</span><span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> ms`</span>)
+            console.log(<span style="border: 1px solid #FF0000">`</span>received ${filename} <span style="color: #666666">-</span> elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms<span style="border: 1px solid #FF0000">`</span>)
         });
 });
 
@@ -1471,7 +1470,7 @@ file <span style="color: #666666">=</span> file <span style="color: #666666">||<
 };
 
 <span style="color: #AA22FF; font-weight: bold">var</span> req <span style="color: #666666">=</span> http.request(options, (res) <span style="color: #666666">=&gt;</span> {
-    console.log(<span style="color: #BB4444">`Server response: </span><span style="color: #BB6688; font-weight: bold">${</span>res.statusCode<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444">`</span>);
+    console.log(<span style="border: 1px solid #FF0000">`</span>Server response<span style="color: #666666">:</span> ${res.statusCode}<span style="border: 1px solid #FF0000">`</span>);
 });
 
 <span style="color: #AA22FF; font-weight: bold">var</span> start <span style="color: #666666">=</span> <span style="color: #AA22FF">Date</span>.now();
@@ -1479,7 +1478,7 @@ fs.createReadStream(file)
     .pipe(zlib.createGzip())
     .pipe(req)
     .on(<span style="color: #BB4444">&#39;finish&#39;</span>, () <span style="color: #666666">=&gt;</span> {
-        console.log(<span style="color: #BB4444">`</span><span style="color: #BB6688; font-weight: bold">${</span>file<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> successful uploaded.  - elapsed </span><span style="color: #BB6688; font-weight: bold">${</span><span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start<span style="color: #BB6688; font-weight: bold">}</span><span style="color: #BB4444"> ms`</span>)
+        console.log(<span style="border: 1px solid #FF0000">`</span>${file} successful uploaded.  <span style="color: #666666">-</span> elapsed ${<span style="color: #AA22FF">Date</span>.now() <span style="color: #666666">-</span> start} ms<span style="border: 1px solid #FF0000">`</span>)
     });
 </pre></div>
 
@@ -1513,7 +1512,7 @@ fs.createReadStream(file)
 <li>Apps 的 <code>index.html</code> 通过 <code>boot.js</code> 载入应用对应的 <code>compressed.js</code> 或 <code>uncompressed.js</code>。</li>
 </ol>
 <p>这样就构建出了一个完整的应用。其中 <code>uncompressed.js</code> 代码是关键：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">function</span> loadScript() {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">function</span> loadScript() {
     <span style="color: #AA22FF; font-weight: bold">var</span> src <span style="color: #666666">=</span> srcs.shift();
     <span style="color: #AA22FF; font-weight: bold">if</span> (src) {
       <span style="color: #AA22FF; font-weight: bold">var</span> script <span style="color: #666666">=</span> <span style="color: #AA22FF">document</span>.createElement(<span style="color: #BB4444">&#39;script&#39;</span>);
@@ -1809,7 +1808,6 @@ fs.createReadStream(file)
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
-										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -1823,6 +1821,29 @@ fs.createReadStream(file)
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-4"><a href="../tag/react.html">react</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/web.html">web</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

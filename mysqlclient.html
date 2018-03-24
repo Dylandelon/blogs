@@ -72,7 +72,6 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
-							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li class="active"><a href="./category/python.html">python</a></li>
@@ -148,7 +147,7 @@
 <p>看到这里，99% 的读者可以关掉这个页面走人了。</p>
 <h2 id="_2">问题现象</h2>
 <p>系统安装了 mysql ，使用 <code>pip install mysqlclient</code> 时出错，错误信息如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>building &#39;_mysql&#39; extension
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">building &#39;_mysql&#39; extension
 creating build/temp.macosx-10.6-intel-3.5
 /usr/bin/clang -fno-strict-aliasing -Wsign-compare -fno-common -dynamic -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -arch i386 -arch x86_64 -g -Dversion_info=(1,3,9,&#39;final&#39;,1) -D__version__=1.3.9 -I/usr/local/Cellar/mysql/5.7.16/include/mysql -I/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m -c _mysql.c -o build/temp.macosx-10.6-intel-3.5/_mysql.o -fno-omit-frame-pointer
 /usr/bin/clang -bundle -undefined dynamic_lookup -arch i386 -arch x86_64 -g build/temp.macosx-10.6-intel-3.5/_mysql.o -L/usr/local/Cellar/mysql/5.7.16/lib -lmysqlclient -lssl -lcrypto -o build/lib.macosx-10.6-intel-3.5/_mysql.cpython-35m-darwin.so
@@ -163,7 +162,7 @@ error: command &#39;/usr/bin/clang&#39; failed with exit status 1
 <p>系统上明明装了 openssl 库，可是为什么找不到 libssl 呢？找了一堆答案都是教大家用 <code>brew link --force openssl</code> ，可是这个方法对 macOS Sierra 无效。原因是苹果现在不用 openssl 了，而是使用自己维护的加密算法库。为什么要这样做，不得而知，或许是被 openssl 经常爆出的滴血漏洞伤透了心吧。</p>
 <p>所以，要在 mac 上链接 ssl 库，需要指定库的路径，即加上 <code>-L/usr/local/opt/openssl</code>，把这个目录加进库的搜索路径即可。</p>
 <p>细心的人在用 <code>brew install openssl</code> 时会注意到下面的信息：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>This formula is keg-only, which means it was not symlinked into /usr/local.
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">This formula is keg-only, which means it was not symlinked into /usr/local.
 
 Apple has deprecated use of OpenSSL in favor of its own TLS and crypto libraries
 
@@ -226,7 +225,6 @@ PKG_CONFIG_PATH: /usr/local/opt/openssl/lib/pkgconfig
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
-										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -240,6 +238,29 @@ PKG_CONFIG_PATH: /usr/local/opt/openssl/lib/pkgconfig
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="./tag/web.html">web</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 

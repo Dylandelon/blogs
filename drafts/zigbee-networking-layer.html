@@ -72,7 +72,6 @@
 							<li ><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
-							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -249,7 +248,7 @@
 <p>入网的流程就是发现邻近的网络，然后选择一个加入的过程，由入网设备发起。典型地，入网设备发送信标请求 (beacon request) ，相当于大声地叫 “HEY，附近有人吗？” 邻近的协调器或路由器收到信标请求后，会发送应答 “HEY，我在这儿。”</p>
 <p>信标应答由协调器或路由器发送，他们会在收到信标请求的信道上发送信标应答，一个信标请求可能会对应多个信标应答。一个信标应答会包含一些网络的基本信息：PAN ID 和扩展 PAN ID；是否允许其他设备入网；是否有空间来给入网设备加入。信标应答没有包含任何应用层的信息。所以，入网设备需要先加入网络，查找对应的应用，如果找不到，就退网，继续偿试加入其他网络。</p>
 <p>来看一下典型的信标应答报文</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Frame 3 (Length = 24 bytes)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Frame 3 (Length = 24 bytes)
 IEEE 802.15.4
     Frame Control: 0x8000
         .... .... .... .000 = Frame Type: Beacon (0x0000)
@@ -310,7 +309,7 @@ NWK Layer Information: 0x8421
 </ul>
 <p>在 ZigBee Stack Profile 01 里，设备节点都<strong>尽量加入到靠近树根节点</strong> (Device Depth 的值尽量小)，这样在树形结构通信的时候，可以减少数据包中转的次数。</p>
 <p>ZigBee 网络建立后，怎么样阻止或允许其他设备加入呢？一个是用安全中心 (Trust Center) 策略，安全中心可以简单地阻止其他新节点加入网络。另外一个方法是使用“允许加入”时间窗。是否允许加入网络的标志位只影响 ZC 和 ZR 。网络层通过原语 NLME-PERMIT-JOINING.request 设置是否允许设备加入的标志位。ZDP 提供了在网络中发送这个原语的机制，其参数 0xff 表示打开允许设备入网的标志，0x00 表示关闭允许设备入网标志，1 - 254 之间的值表示在指定秒数内允许设备加入。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Seq     Time        SrcPAN      MACSrc      MACDst      Packet Type
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Seq     Time        SrcPAN      MACSrc      MACDst      Packet Type
                     DstPAN      MACDst (if 2 line)
 -------------------------------------------------------------------------
 1                               0xffff                  IEEE 802.15.4 Beacon Request
@@ -352,7 +351,7 @@ NWK Layer Information: 0x8421
 <p>在 Freescale 平台，有个全局属性 gMaxFailureCounter_c 可以设置，默认是 2 。当 ZED 发送数据连续失败的次数到达设置的值时， ZED 就会发起重新入网流程。</p>
 <p>重新入网流程由 ZED 发起信标请求开始，重新入网和潜在的父节点是否允许入网标记无关，只和潜在的父节点的容纳能力有关，即使潜在的父设备关闭了入网许可，只要它有空间容纳子节点，重新入网依然可以成功。当 ZED 收到信标应答后，它选择一个和自己有相同 PAN ID 的网络入网，并获得新的网络短地址。最后 ZED 发布一条通知，告诉网络它已经移动了，这样网络中的其他节点可以更新路由表。同时保留设备绑定信息。</p>
 <p>比如原来网络中有三个设备，一个 ZC，ZC 下有两个子节点，一个 ZR 同时也是个开关，另外一个是 ZED 同时也是灯。ZR 开关和 ZED 灯绑定起来了，即通过 ZR 的开关可以控制 ZED 的灯。某个时间点，ZED 和 ZC 连接中断了，这个时候 ZED 发起重新入网流程，最终变成 ZR 开关的子节点。最后 ZED 发布通知，告诉网络它已经移动了，并且附有新的网络短地址。这样 ZR 和 ZED 之间的绑定信息将会被保留下来，即 ZR 开关依然可以控制 ZED 灯设备。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Seq     Time    SrcPAN      MACSrc      MACDst      Packet Type
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Seq     Time    SrcPAN      MACSrc      MACDst      Packet Type
                 DstPAN      MACDst (if 2 line)
 ------------------------------------------------------------------------
 STEP 4
@@ -398,7 +397,7 @@ STEP 9
 <li>Stochastic ： 用在 stack profile 0x02，即 ZigBee Pro。一个节点入网时由节点选择自己的短地址，然后通过广播发送一个公告。以便检查是否有地址冲突，如果这个地址已经被占用，则入网节点选择另外一个节点，继续广播公告，直到选择到一个不冲突的地址为止。</li>
 </ul>
 <p>在 CSkip 算法里，协调器 ZC 被定义为根节点，其短地址为 0x0000，任何一个入网设备将会收到一个其父节点的关联应答 (Associate Response)，这个应答包里就包含了分配给入网节点的短地址。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>IEEE 802.15.4
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">IEEE 802.15.4
     Frame Control: 0xcc63
     Sequence Number: 53
     Destination PAN Identifier: 0x0bef
@@ -541,7 +540,7 @@ STEP 9
 <p>路由发现协议使用广播。个别 ZDP 命令也使用广播传输，如当设备入网时 ZDP-Device_annce 命令将被广播发送给全网节点。这意味着节点入网时，可以每隔 2 秒重试一次。如果一下子要把 100 个节点加进网络，则可能需要多次重试。因为新设备入网时发送的广播可能会导致网络通信异常。</p>
 <p>如果不断地有路由发现在执行，此时网络中将“充满”广播，路由发现协议数据包将可能被丢弃，最终导致路由发现失败。应用层将知道路由发现失败了，此时要么放弃路由发现，要么延时几秒后重试。</p>
 <p><strong>广播示例</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    Time        MACSrc  MACDst  NWKSrc  NWK Seq     R   NWKDst  Packet Type
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    Time        MACSrc  MACDst  NWKSrc  NWK Seq     R   NWKDst  Packet Type
 ---------------------------------------------------------------------------------------
 31  +00.110     0x143e  0xffff  0x143e  12          5   0xffff  ZDP:EndDeviceAnnce
 32  +00.022     0x0000  0xffff  0x143e  12          4   0xffff  ZDP:EndDeviceAnnce
@@ -606,7 +605,7 @@ STEP 9
 <p>抓出来的数据包的网络拓扑结果如下图</p>
 <p><img alt="zigbee route discovery" src="../../images/zigbee_route_discovery.png" /></p>
 <p>其中 0x0351 是个醒着的 ZED 设备，它是一个开关。0x796f 是协调器下面的一个子设备，它是一个睡眠设备，是一个电灯。每个设备的短地址都标在了其右侧。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Seq     Time            MACSrc  DstPAN  MACDst  MACSeq  NwkSrc  NwkDst  NwkSeq  Packet Type
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Seq     Time            MACSrc  DstPAN  MACDst  MACSeq  NwkSrc  NwkDst  NwkSeq  Packet Type
 ---------------------------------------------------------------------------------------------------------------------
 STEP 1: route discover from 0x0351 to 0x0000
 56      + 00:00:00.315  0x0351  0x0f00  0x0002  151     0x0351  0x0000  181     Zigbee APS Data ZDP:EndDeviceBindReq
@@ -710,7 +709,7 @@ NWK MIC 只出现在启用了 NWK 层安全机制的网络中。APS 也有可选
 <p><img alt="zigbee frame" src="../../images/zigbee_frame.png" /></p>
 <p>这是 MAC 和 NWK 帧头信息。APS 帧和 ZCL 帧不是本节的主要内容，就不详细介绍。</p>
 <p><strong>一个数据帧的例子</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>IEEE 802.15.4
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">IEEE 802.15.4
     Frame Control: 0x8861
         .... .... .... .001 = Frame Type: Data (0x0001)
         .... .... .... 0... = Security Enabled: Disabled
@@ -795,7 +794,7 @@ ZigBee ZCL
 <li>ZigBee ZCL: 最后一帧是 ZCL 帧信息。它包含 ZigBee Cluster Library 信息。APS 和 ZCL 需要另外的文章来介绍 ZigBee 应用层的相关协议。</li>
 </ul>
 <p>再看一个密钥传输的例子。一个设备加入网络，安全中心发送了一份密钥给新设备。这样新设备就可以使用这个密钥在网络中通信。没有密钥的设备由于无法生成相应的加密信息，通信会失败。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Frame 10 (Length = 56 bytes)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Frame 10 (Length = 56 bytes)
 IEEE 802.15.4
 ZigBee NWK
     Frame Control: 0x0008
@@ -837,7 +836,7 @@ ZigBee APS
 </ul>
 <p>两个版本的协议都支持单播，广播，组，端点，簇等协议。实际应用中，最大的差别在于对 ROM 和 RAM 的要求不同，地址分配方案不同，可选的路由不同，以及数据包传输的最大跳数不同。</p>
 <p>Stack Profile 的版本在信标指令里呈现的。如上文介绍，信标指令是用来发现网络的。我们看一个 Stack Profile 02 的信标指令：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>IEEE 802.15.4
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">IEEE 802.15.4
 NWK Layer Information: 0x8422
     .... .... .... 0010 = Stack Profile (0x2)
     .... .... 0010 .... = nwkcProtocolVersion (0x2)
@@ -850,7 +849,7 @@ NWK Layer Information: 0x8422
 
 
 <p>下面是一个 stack profile 01 的信标指令：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>IEEE 802.15.4
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">IEEE 802.15.4
 NWK Layer Information: 0x8421
     .... .... .... 0001 = Stack Profile (0x1)
     .... .... 0010 .... = nwkcProtocolVersion (0x2)
@@ -939,7 +938,6 @@ NWK Layer Information: 0x8421
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
-										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -953,6 +951,29 @@ NWK Layer Information: 0x8421
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
+										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
+										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="../tag/github.html">github</a></li>
+										<li class="tag-4"><a href="../tag/react.html">react</a></li>
+										<li class="tag-2"><a href="../tag/android.html">android</a></li>
+										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
+										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
+										<li class="tag-1"><a href="../tag/python.html">python</a></li>
+										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
+										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
+										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
+										<li class="tag-4"><a href="../tag/web.html">web</a></li>
+										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
+										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
+										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
+										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
+										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
 								</ul>
 							</div>
 
