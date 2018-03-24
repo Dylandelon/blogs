@@ -32,7 +32,7 @@ Summary: 本文介绍机器学习入门的方法论，然后推荐一些优质�
 
 ![machine learning](https://raw.githubusercontent.com/kamidox/blogs/master/images/images/ml_andrew_ng.jpeg)
 
-此外，笔者推荐另外一本书《scikit-learn机器学习：常用算法原理及编程实战》。这本书的最大特点是，较少的涉及艰深的数学知识，对涉及到的数学知识，都有通俗的语言解释以及图片可视化讲解，比较适合数学基础较弱的初学者。此外，这本书以 Python 语言为基础，以 scikit-learn 为机器学习框架，介绍了 Python 数值分析的常用的库 numpy, pandas, matplotlib，还介绍了线性回归，逻辑回归，支持向量机，决策树，朴素贝叶斯等常用算法，是一本较适合初学者的书籍。
+此外，笔者推荐另外一本书《scikit-learn机器学习：常用算法原理及编程实战》。这本书的最大特点是，较少的涉及艰深的数学知识，对涉及到的数学知识，都有通俗的语言解释以及图片可视化讲解，比较适合数学基础较弱的初学者。此外，这本书以 Python 语言为基础，以 scikit-learn 为机器学习框架，介绍了 Python 数据分析及可视化的库，如 numpy, pandas, matplotlib，还介绍了线性回归，逻辑回归，支持向量机，决策树，朴素贝叶斯等常用算法，是一本较适合初学者的书籍。
 
 此外，李航老师的《统计学习方法》是一本不可多得的好书。《The Elements of Statistical Learning》是一本大部头硬书，同时也是好书，推荐感兴趣的读者阅读。
 
