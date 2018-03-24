@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -148,7 +149,7 @@
 <h2 id="_1">股票数据下载</h2>
 <p>搜索 ghancn 可以免费下载 2009 年之前的 5 分钟数据和 1 分钟数据。坦白讲，数据质量不高，里面有不少错误。但不影响我们玩这些数据。数据是以年为单位分不同的文件夹保存的。</p>
 <p>我们先看一下某个股票的数据长什么样：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pandas</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">pd</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pandas</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">pd</span>
 <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
 
 
@@ -166,7 +167,7 @@ raw<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">             time  opening_price  ceiling_price  floor_price  closing_price   volume    amount
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>             time  opening_price  ceiling_price  floor_price  closing_price   volume    amount
 date
 2008-01-02  09:35          22.50          22.63        22.50          22.51   2042.50   4604723
 2008-01-02  09:40          22.51          22.51        22.29          22.37   1545.17   3460503
@@ -178,7 +179,7 @@ date
 
 <p><strong>转化为日交易数据</strong></p>
 <p>我们使用 2007 年和 2008 年的数据来作为示例。因为我们更关心是一些长期的趋势，分钟级别的交易数据太细了，我们转换为日数据。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 股票涨跌幅检查，不能超过 10% ，过滤掉一些不合法的数据</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 股票涨跌幅检查，不能超过 10% ，过滤掉一些不合法的数据</span>
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_valid_price</span>(g):
     <span style="color: #AA22FF; font-weight: bold">return</span> (((g<span style="color: #666666">.</span>max() <span style="color: #666666">-</span> g<span style="color: #666666">.</span>min()) <span style="color: #666666">/</span> g<span style="color: #666666">.</span>min()) <span style="color: #666666">&lt;</span> <span style="color: #666666">0.223</span>)<span style="color: #666666">.</span>all()
 
@@ -194,7 +195,7 @@ days<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price opening_price   ceiling_price   volume      amount      closing_price
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>            floor_price opening_price   ceiling_price   volume      amount      closing_price
 date
 2008-01-02  22.29       22.50           24.50           200809.34   476179680   24.03
 2008-01-03  23.81       24.03           25.20           166037.98   406906304   24.54
@@ -211,12 +212,12 @@ date
 <p>在一定的时间周期内，衡量股票波动的指标定义为 最高价/最低价。以我们表格中的数据，就是 ceiling_price/floor_price。这个比率最大的股票就是好股票。关于时间周期，这个和炒股策略有关。有些人喜欢做短线，可能就持股几天，或一两周。有些人习惯做长线，可能持股几个月甚至几年。也有些人本来打算做短线，做着做着变成长线，再做着做着，变成了股东。</p>
 <p>为了简单起见，我们拿波动周期为 30 个自然日来计算，即如果某个股票停牌，那么他的价格就一直没有变化，则波动为 0。<br />
 这里，我们直接使用 600690 这个股票来作为示例。我们直接读取已经合并过日交易的数据。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">qdhr <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SH600690.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>qdhr <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SH600690.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
 qdhr<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                floor_price     opening_price   ceiling_price   volume      amount      closing_price
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>                floor_price     opening_price   ceiling_price   volume      amount      closing_price
 date
 2007-01-04      9.28            9.30            10.14           259264.75   254734000   9.80
 2007-01-05      9.53            9.70            10.15           171169.97   170154432   9.90
@@ -229,7 +230,7 @@ date
 <p>我们发现数据中间有空洞，即周末和停牌时间里是没有数据的。我们把这些数据填充完整，我们看看 pandas 如何处理 missing data 。</p>
 <h3 id="_3">填充数据</h3>
 <p>我们先生成一段连续的日期数据作为索引：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 填充数据：生成日期索引</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 填充数据：生成日期索引</span>
 l <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(qdhr)
 start <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>iloc[<span style="color: #666666">0</span>:<span style="color: #666666">1</span>]<span style="color: #666666">.</span>index<span style="color: #666666">.</span>tolist()[<span style="color: #666666">0</span>]
 end <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>iloc[l <span style="color: #666666">-</span> <span style="color: #666666">1</span>: l]<span style="color: #666666">.</span>index<span style="color: #666666">.</span>tolist()[<span style="color: #666666">0</span>]
@@ -238,7 +239,7 @@ idx
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">DatetimeIndex([&#39;2007-01-04&#39;, &#39;2007-01-05&#39;, &#39;2007-01-06&#39;, &#39;2007-01-07&#39;,
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>DatetimeIndex([&#39;2007-01-04&#39;, &#39;2007-01-05&#39;, &#39;2007-01-06&#39;, &#39;2007-01-07&#39;,
                &#39;2007-01-08&#39;, &#39;2007-01-09&#39;, &#39;2007-01-10&#39;, &#39;2007-01-11&#39;,
                &#39;2007-01-12&#39;, &#39;2007-01-13&#39;,
                ...
@@ -250,7 +251,7 @@ idx
 
 
 <p>接着使用 <code>reindex</code> 函数缺失的数据被全。填充股票数据时有个要求，我们把缺失的价格数据用前一个交易日的数据来填充，但交易量需要填充为 0。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">data <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>reindex(idx)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>data <span style="color: #666666">=</span> qdhr<span style="color: #666666">.</span>reindex(idx)
 zvalues <span style="color: #666666">=</span> data<span style="color: #666666">.</span>loc[<span style="color: #666666">~</span>(data<span style="color: #666666">.</span>volume <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)]<span style="color: #666666">.</span>loc[:, [<span style="color: #BB4444">&#39;volume&#39;</span>, <span style="color: #BB4444">&#39;amount&#39;</span>]]
 data<span style="color: #666666">.</span>update(zvalues<span style="color: #666666">.</span>fillna(<span style="color: #666666">0</span>))
 data<span style="color: #666666">.</span>fillna(method<span style="color: #666666">=</span><span style="color: #BB4444">&#39;ffill&#39;</span>, inplace<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
@@ -258,7 +259,7 @@ data<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price opening_price   ceiling_price   volume      amount      closing_price
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>            floor_price opening_price   ceiling_price   volume      amount      closing_price
 2007-01-04  9.28        9.30            10.14           259264.75   254734000   9.8
 2007-01-05  9.53        9.70            10.15           171169.97   170154432   9.9
 2007-01-06  9.53        9.70            10.15           0.00        0           9.9
@@ -271,7 +272,7 @@ data<span style="color: #666666">.</span>head()
 <h3 id="_4">分组计算</h3>
 <p>我们需要计算 30 个自然日里的股票平均波动周期。这样，我们必须以 30 天为单位，对所有的历史数据进行分组。然后逐个分组计算其波动率。</p>
 <p><strong>生成分组索引</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 定义产生分组索引的函数，比如我们要计算的周期是 20 天，则按照日期，20 个交易日一组</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 定义产生分组索引的函数，比如我们要计算的周期是 20 天，则按照日期，20 个交易日一组</span>
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">gen_item_group_index</span>(total, group_len):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot; generate an item group index array</span>
 
@@ -287,13 +288,13 @@ data<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">7</span>]: gen_item_group_index(<span style="color: #666666">10</span>, <span style="color: #666666">3</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">7</span>]: gen_item_group_index(<span style="color: #666666">10</span>, <span style="color: #666666">3</span>)
 Out [<span style="color: #666666">7</span>]: [<span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #666666">1</span>, <span style="color: #666666">1</span>, <span style="color: #666666">1</span>, <span style="color: #666666">2</span>, <span style="color: #666666">2</span>, <span style="color: #666666">2</span>, <span style="color: #666666">3</span>]
 </pre></div>
 
 
 <p><strong>根据分组索引来分组</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">period <span style="color: #666666">=</span> <span style="color: #666666">30</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>period <span style="color: #666666">=</span> <span style="color: #666666">30</span>
 
 group_index <span style="color: #666666">=</span> gen_item_group_index(<span style="color: #AA22FF">len</span>(data), period)
 <span style="color: #008800; font-style: italic"># 把分组索引数据添加到股票数据里</span>
@@ -304,7 +305,7 @@ data<span style="color: #666666">.</span>head()<span style="color: #666666">.</s
 
 
 <p>我们看一下添加了分组索引后的数据最前面 5 个和最后 5 个数据，注意 <code>group_index</code> 的值。我们接下来就是根据这个值进行分组。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price opening_price   ceiling_price   volume      amount      closing_price   group_index
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>            floor_price opening_price   ceiling_price   volume      amount      closing_price   group_index
 2007-01-04  9.28        9.30            10.14           259264.75   254734000   9.80            0
 2007-01-05  9.53        9.70            10.15           171169.97   170154432   9.90            0
 2007-01-06  9.53        9.70            10.15           0.00        0           9.90            0
@@ -319,7 +320,7 @@ data<span style="color: #666666">.</span>head()<span style="color: #666666">.</s
 
 
 <p><strong>分组计算最高价和最低价</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 针对下跌的波动，我们把最高价设置为负数。什么是下跌的波动？就是先出现最高价，再出现最低价</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 针对下跌的波动，我们把最高价设置为负数。什么是下跌的波动？就是先出现最高价，再出现最低价</span>
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_ceiling_price</span>(g):
     <span style="color: #AA22FF; font-weight: bold">return</span> g<span style="color: #666666">.</span>idxmin() <span style="color: #666666">&lt;</span> g<span style="color: #666666">.</span>idxmax() <span style="color: #AA22FF; font-weight: bold">and</span> np<span style="color: #666666">.</span>max(g) <span style="color: #AA22FF; font-weight: bold">or</span> (<span style="color: #666666">-</span>np<span style="color: #666666">.</span>max(g))
 
@@ -333,7 +334,7 @@ group<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                volume      ceiling_price   floor_price
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>                volume      ceiling_price   floor_price
 group_index
 0               1271711.00  22.33           16.21
 1               1831018.01  24.75           18.98
@@ -345,7 +346,7 @@ group_index
 
 <p><strong>给每个分组添加起始日期</strong></p>
 <p>有时我们看到某个周期内下跌了很多，或上涨了很多，我们想知道是什么时候发生的，所以需要给每个分组添加起始日期。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 添加每个分组的起始日期</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 添加每个分组的起始日期</span>
 date_col <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>DataFrame({<span style="color: #BB4444">&quot;group_index&quot;</span>: group_index, <span style="color: #BB4444">&quot;date&quot;</span>: idx})
 group[<span style="color: #BB4444">&#39;date&#39;</span>] <span style="color: #666666">=</span> date_col<span style="color: #666666">.</span>groupby(<span style="color: #BB4444">&#39;group_index&#39;</span>)<span style="color: #666666">.</span>agg(<span style="color: #BB4444">&#39;first&#39;</span>)
 group<span style="color: #666666">.</span>head()
@@ -353,7 +354,7 @@ group<span style="color: #666666">.</span>head()
 
 
 <p>idx 是我们在上面代码里生成的连续的日期索引数据。添加日期数据后的样子：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                volume      ceiling_price   floor_price     date
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>                volume      ceiling_price   floor_price     date
 group_index
 0               4634226.68  -12.38          9.02            2007-01-04
 1               3499001.47  11.64           8.80            2007-02-03
@@ -364,13 +365,13 @@ group_index
 
 
 <p><strong>添加波动率</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 添加我们的波动指标 股票波动系数 = 最高价/最低价</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 添加我们的波动指标 股票波动系数 = 最高价/最低价</span>
 group[<span style="color: #BB4444">&#39;ripples_radio&#39;</span>] <span style="color: #666666">=</span> group<span style="color: #666666">.</span>ceiling_price <span style="color: #666666">/</span> group<span style="color: #666666">.</span>floor_price
 group<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">                volume          ceiling_price   floor_price     date            ripples_radio
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>                volume          ceiling_price   floor_price     date            ripples_radio
 group_index
 0               4634226.68      -12.38          9.02            2007-01-04      -1.372506
 1               3499001.47      11.64           8.80            2007-02-03      1.322727
@@ -382,13 +383,13 @@ group_index
 
 <p><strong>排序</strong></p>
 <p>按照波动率排序，可以看到某段时间内波动最大的一些时间段。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 降序排列。我们把分组的起始日期，交易量总和都列出来，也可以观察一下交易量和股票波动比的关系</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 降序排列。我们把分组的起始日期，交易量总和都列出来，也可以观察一下交易量和股票波动比的关系</span>
 ripples <span style="color: #666666">=</span> group<span style="color: #666666">.</span>sort_values(<span style="color: #BB4444">&#39;ripples_radio&#39;</span>, ascending<span style="color: #666666">=</span><span style="color: #AA22FF">False</span>)
 ripples<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            volume          ceiling_price   floor_price     date            ripples_radio
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>            volume          ceiling_price   floor_price     date            ripples_radio
 group_index
 101         4352881.31      14.85           9.18            2008-04-21      1.617647
 90          5703121.25      18.89           11.85           2007-05-27      1.594093
@@ -400,20 +401,20 @@ group_index
 
 <p>从数据可以看出来，波动最大的在 30 个自然日内上涨了 61.76%。发生在 2008-04-21 开始的 30 天内。</p>
 <p>当然，我们也可以计算前 10 大上涨波动的平均值。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ripples<span style="color: #666666">.</span>head(<span style="color: #666666">10</span>)<span style="color: #666666">.</span>ripples_radio<span style="color: #666666">.</span>mean()
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>ripples<span style="color: #666666">.</span>head(<span style="color: #666666">10</span>)<span style="color: #666666">.</span>ripples_radio<span style="color: #666666">.</span>mean()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">1.3657990069195818
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>1.3657990069195818
 </pre></div>
 
 
 <p>也可以计算前 10 大下跌波动的平均值。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">ripples<span style="color: #666666">.</span>tail(<span style="color: #666666">10</span>)<span style="color: #666666">.</span>ripples_radio<span style="color: #666666">.</span>mean()
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>ripples<span style="color: #666666">.</span>tail(<span style="color: #666666">10</span>)<span style="color: #666666">.</span>ripples_radio<span style="color: #666666">.</span>mean()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">-1.4124407127785106
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>-1.4124407127785106
 </pre></div>
 
 
@@ -422,12 +423,12 @@ group_index
 <h2 id="_5">其他玩法</h2>
 <h3 id="_6">计算涨跌幅</h3>
 <p>我们注意到原始数据里没有涨跌幅的数据。涨跌幅定义为今日收盘价减去昨日收盘价。我们换个股票，取出原始数据。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">data <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SZ000565.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>data <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>read_csv(<span style="color: #BB4444">&#39;test-data/SZ000565.csv&#39;</span>, index_col<span style="color: #666666">=</span><span style="color: #BB4444">&#39;date&#39;</span>, parse_dates<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
 data<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price     opening_price   ceiling_price   volume      amount          closing_price
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>            floor_price     opening_price   ceiling_price   volume      amount          closing_price
 date
 2007-01-04  4.16            4.22            4.27            17877.88    7477370.52      4.19
 2007-01-05  4.15            4.16            4.27            10857.66    4588246.02      4.24
@@ -438,13 +439,13 @@ date
 
 
 <p>利用 <code>diff</code> 函数快速计算涨跌幅。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">rise <span style="color: #666666">=</span> data<span style="color: #666666">.</span>closing_price<span style="color: #666666">.</span>diff()
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>rise <span style="color: #666666">=</span> data<span style="color: #666666">.</span>closing_price<span style="color: #666666">.</span>diff()
 data[<span style="color: #BB4444">&#39;rise&#39;</span>] <span style="color: #666666">=</span> rise
 data<span style="color: #666666">.</span>head()
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    floor_price opening_price   ceiling_price   volume  amount  closing_price   rise
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    floor_price opening_price   ceiling_price   volume  amount  closing_price   rise
 date
 2007-01-04  4.16    4.22    4.27    17877.88    7477370.52  4.19    NaN
 2007-01-05  4.15    4.16    4.27    10857.66    4588246.02  4.24    0.05
@@ -460,7 +461,7 @@ date
 <p>我们看一下 000565 这个股票在 2008-12-31 之前 30 个自然日里的波动率。</p>
 <p><strong>选定数据</strong></p>
 <p>这里涉及到用日期对数据进行分片的技术，我们需要选择指定日期及之前一段时间内的数据。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">end_date <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;2008-12-31&#39;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>end_date <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;2008-12-31&#39;</span>
 period <span style="color: #666666">=</span> <span style="color: #666666">30</span>
 
 end_date <span style="color: #666666">=</span> pd<span style="color: #666666">.</span>Timestamp(end_date)
@@ -472,7 +473,7 @@ data
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">            floor_price     opening_price   ceiling_price   volume          amount          closing_price
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>            floor_price     opening_price   ceiling_price   volume          amount          closing_price
 date
 2008-12-01  7.40            7.58            7.90            41747.12        3.214610e+07    7.88
 2008-12-02  7.55            7.56            8.38            74552.15        6.029661e+07    8.32
@@ -500,14 +501,14 @@ date
 
 
 <p>选出数据后，计算波动率就简单了。我们按照老办法，上涨的波动率为正数，下跌的波动率为负数。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># 计算波动值</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 计算波动值</span>
 _ripple_radio <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">lambda</span> data: data<span style="color: #666666">.</span>ceiling_price<span style="color: #666666">.</span>max() <span style="color: #666666">/</span> data<span style="color: #666666">.</span>floor_price<span style="color: #666666">.</span>min()
 ripple_radio <span style="color: #666666">=</span> data<span style="color: #666666">.</span>floor_price<span style="color: #666666">.</span>idxmin() <span style="color: #666666">&lt;</span> data<span style="color: #666666">.</span>ceiling_price<span style="color: #666666">.</span>idxmax() <span style="color: #AA22FF; font-weight: bold">and</span> _ripple_radio(data) <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">-</span>_ripple_radio(data)
 ripple_radio
 </pre></div>
 
 
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">-1.4394812680115274
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>-1.4394812680115274
 </pre></div>
 
 
@@ -555,6 +556,7 @@ ripple_radio
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -568,29 +570,6 @@ ripple_radio
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

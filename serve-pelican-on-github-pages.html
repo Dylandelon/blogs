@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -160,7 +161,7 @@
 <p>关于 Github Pages 定制域名可以参阅<a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/">官方教程</a>。我们使用 Github 强烈推荐的子域名的形式来定制域名。</p>
 <h3 id="cname">创建 CNAME</h3>
 <p>在 <code>gh-pages</code> 分支根目录提交一个 <code>CNAME</code> 文件，而 <code>ghp-import</code> 又会完全覆盖掉 gh-pages 分支。如何解决这个矛盾呢？阳光下没有新鲜事，具体可以参阅 <a href="http://docs.getpelican.com/en/latest/tips.html#extra-tips">Pelican 的 Tips</a>。归纳起来，就是先在 <code>content/extra</code> 目录下新建一个叫 <code>CNAME</code> 的文件，其内容就是自定义域名的内容，如 <code>blog.kamidox.com</code>。然后在 Pelican 的配置文件 <code>publishconf.py</code> 下添加如下内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">STATIC_PATHS <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;extra&#39;</span>]
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>STATIC_PATHS <span style="color: #666666">=</span> [<span style="color: #BB4444">&#39;extra&#39;</span>]
 EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
     <span style="color: #BB4444">&#39;extra/CNAME&#39;</span>: {<span style="color: #BB4444">&#39;path&#39;</span>: <span style="color: #BB4444">&#39;CNAME&#39;</span>},   <span style="color: #008800; font-style: italic"># 这是个路径映射，即会把 `content/extra/CNAME` 文件拷贝到 `output/CNAME`</span>
     }
@@ -215,6 +216,7 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -228,29 +230,6 @@ EXTRA_PATH_METADATA <span style="color: #666666">=</span> {
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

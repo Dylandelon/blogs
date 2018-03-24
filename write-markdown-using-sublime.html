@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -191,21 +192,21 @@
 <h2 id="markdown-preview_1">配置Markdown Preview插件</h2>
 <h3 id="_2">配置快捷键</h3>
 <p>通过 <code>Preferences -&gt; Key Bindings - User</code>打开sublime的快捷键配置文件，把下面内容复制到这个设置文件里保存。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">{ <span style="color: #008000; font-weight: bold">&quot;keys&quot;</span>: [<span style="color: #BB4444">&quot;alt+m&quot;</span>], <span style="color: #008000; font-weight: bold">&quot;command&quot;</span>: <span style="color: #BB4444">&quot;markdown_preview&quot;</span>, <span style="color: #008000; font-weight: bold">&quot;args&quot;</span>: {<span style="color: #008000; font-weight: bold">&quot;target&quot;</span>: <span style="color: #BB4444">&quot;browser&quot;</span>, <span style="color: #008000; font-weight: bold">&quot;parser&quot;</span>:<span style="color: #BB4444">&quot;markdown&quot;</span>} }
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>{ <span style="color: #008000; font-weight: bold">&quot;keys&quot;</span>: [<span style="color: #BB4444">&quot;alt+m&quot;</span>], <span style="color: #008000; font-weight: bold">&quot;command&quot;</span>: <span style="color: #BB4444">&quot;markdown_preview&quot;</span>, <span style="color: #008000; font-weight: bold">&quot;args&quot;</span>: {<span style="color: #008000; font-weight: bold">&quot;target&quot;</span>: <span style="color: #BB4444">&quot;browser&quot;</span>, <span style="color: #008000; font-weight: bold">&quot;parser&quot;</span>:<span style="color: #BB4444">&quot;markdown&quot;</span>} }
 </pre></div>
 
 
 <p>配置完成后，按下<code>alt + m</code>即可直接在浏览器里预览markdown的写作效果。</p>
 <h3 id="_3">代码高亮</h3>
 <p>markdown里嵌入的代码在生成html文档时，支持根据语言高亮显示。通过 <code>Preferences -&gt; Package Settings -&gt; Markdown Preview -&gt; Settings-User</code> 来打开用户设置文件，加入如下内容即可打开代码高亮功能。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">{
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>{
     <span style="color: #008000; font-weight: bold">&quot;enable_highlight&quot;</span>: <span style="color: #AA22FF; font-weight: bold">true</span>
 }
 </pre></div>
 
 
 <p>如果需要更高级的高亮显示，比如指定代码高亮的风格(emacs, vim etc.)，则可以自定义 <code>codehilite</code> 扩展来实现。在Markdown Preview用户设置文件里加入如下内容即可。本文就是使用 <code>emacs</code> 高亮风格来显示代码的。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">{
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>{
     <span style="color: #008000; font-weight: bold">&quot;enabled_extensions&quot;</span>: [
             <span style="color: #BB4444">&quot;extra&quot;</span>,
             <span style="color: #BB4444">&quot;github&quot;</span>,
@@ -229,11 +230,11 @@
 <h3 id="css">配置css文件</h3>
 <p>Markdown Preview生成的HTML文件，在浏览器里查看时其默认的宽度为45em，如果你觉得生成的网页太窄，可以修改一下css文件。<br />
 打开Markdown Preview的安装目录，找到markdown.css和github.css文件，查找下面的内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #008000; font-weight: bold">body</span> {
-      <span style="color: #AA22FF; font-weight: bold">width</span><span style="color: #666666">:</span> <span style="color: #666666">45em</span>;
-      <span style="color: #AA22FF; font-weight: bold">border</span><span style="color: #666666">:</span> <span style="color: #666666">1px</span> <span style="color: #AA22FF; font-weight: bold">solid</span> <span style="color: #666666">#ddd</span>;
-      <span style="color: #AA22FF; font-weight: bold">outline</span><span style="color: #666666">:</span> <span style="color: #666666">1300px</span> <span style="color: #AA22FF; font-weight: bold">solid</span> <span style="color: #666666">#fff</span>;
-      <span style="color: #AA22FF; font-weight: bold">margin</span><span style="color: #666666">:</span> <span style="color: #666666">16px</span> <span style="color: #AA22FF; font-weight: bold">auto</span>;
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #008000; font-weight: bold">body</span> {
+      <span style="color: #AA22FF">width</span><span style="color: #666666">:</span> <span style="color: #666666">45em</span>;
+      <span style="color: #AA22FF">border</span><span style="color: #666666">:</span> <span style="color: #666666">1px</span> <span style="color: #AA22FF">solid</span> <span style="color: #666666">#ddd</span>;
+      <span style="color: #AA22FF">outline</span><span style="color: #666666">:</span> <span style="color: #666666">1300px</span> <span style="color: #AA22FF">solid</span> <span style="color: #666666">#fff</span>;
+      <span style="color: #AA22FF">margin</span><span style="color: #666666">:</span> <span style="color: #666666">16px</span> <span style="color: #AA22FF">auto</span>;
     }
 </pre></div>
 
@@ -250,7 +251,7 @@
 </div>
 <h2 id="markdown_1">几个常用的markdown语法示例</h2>
 <h3 id="_4">标题</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">标题1
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>标题1
 =====
 
 #标题1
@@ -262,7 +263,7 @@
 
 
 <h3 id="_5">列表</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">###无序列表1
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>###无序列表1
 
 * 列表1
 * 列表2
@@ -283,7 +284,7 @@
 
 
 <h3 id="_6">弹出式注释</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">把鼠标停留在**HTML**和**W3C**上看会发生什么。
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>把鼠标停留在**HTML**和**W3C**上看会发生什么。
 
 *[HTML]: Hyper Text Markup Language
 *[W3C]: World Wide Web Consortium
@@ -291,7 +292,7 @@
 
 
 <h3 id="_7">定义列表</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Apple
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Apple
 :   Pomaceous fruit of plants of the genus Malus in
     the family Rosaceae.
 
@@ -302,7 +303,7 @@ Orange
 
 <h3 id="_8">代码片段</h3>
 <p>GitHub格式的代码片段：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">```python
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>```python
 #!python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template
@@ -319,7 +320,7 @@ def home():
 
 
 <p>Markdown官方推荐的代码片段格式是直接缩进4个空格：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    #!python
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    #!python
     # -*- coding: utf-8 -*-
 
     if __name__ == &#39;__main__&#39;:
@@ -328,7 +329,7 @@ def home():
 
 
 <p>如果不显示代码行号，则可使用下面的格式：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    :::python
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    :::python
     # -*- coding: utf-8 -*-
 
     if __name__ == &#39;__main__&#39;:
@@ -338,7 +339,7 @@ def home():
 
 <p>关于代码片段及高亮以及行号显示，可参阅<a href="https://pythonhosted.org/Markdown/extensions/code_hilite.html">codehilite</a>扩展的官方文档。</p>
 <h3 id="_9">角注</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Footnotes[^1] have a label[^@#$%] and the footnote&#39;s content.
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Footnotes[^1] have a label[^@#$%] and the footnote&#39;s content.
 
 [^1]: This is a footnote content.
 [^@#$%]: A footnote on the label: &quot;@#$%&quot;.
@@ -346,7 +347,7 @@ def home():
 
 
 <h3 id="_10">表格</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">First Header  | Second Header
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>First Header  | Second Header
 --------------|--------------
 Content Cell  | Content Cell
 Content Cell  | Content Cell
@@ -354,7 +355,7 @@ Content Cell  | Content Cell
 
 
 <h3 id="_11">警告</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">####hint类型的警告
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>####hint类型的警告
 !!! hint &quot;subject of hint&quot;
     Any number of other indented markdown elements.
 
@@ -366,13 +367,13 @@ Content Cell  | Content Cell
 
 <p>警告有多种类型，类型不同生成的html文档样式也不一样，可用的样式有 <code>hint, attention, caution, danger, question, note</code>。</p>
 <h3 id="_12">强调</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">这是**黑体**写法
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>这是**黑体**写法
 这是*斜体*的写法
 </pre></div>
 
 
 <h3 id="_13">超链接</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">这是一个[链接](https://github.com/kamidox/blogs)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>这是一个[链接](https://github.com/kamidox/blogs)
 这是另外一种[链接][1]的形式
 
 [1]: https://pythonhosted.org/Markdown/extensions/index.html
@@ -380,18 +381,18 @@ Content Cell  | Content Cell
 
 
 <h3 id="_14">引用</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&gt; 引用的文字内容
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>&gt; 引用的文字内容
 &gt; 这是另外的引用内容
 </pre></div>
 
 
 <h3 id="_15">图片</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">![图片描述](https://raw.githubusercontent.com/kamidox/blogs/master/kamidox_icon.png)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>![图片描述](https://raw.githubusercontent.com/kamidox/blogs/master/kamidox_icon.png)
 </pre></div>
 
 
 <h3 id="_16">目录</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">[TOC]
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>[TOC]
 </pre></div>
 
 
@@ -447,6 +448,7 @@ Content Cell  | Content Cell
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -460,29 +462,6 @@ Content Cell  | Content Cell
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

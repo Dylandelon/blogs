@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -199,12 +200,12 @@
 <h2 id="pelican_3">Pelican安装与配置</h2>
 <h3 id="pelican_4">安装Pelican并创建项目</h3>
 <p>详细的信息可以参阅<a href="http://docs.getpelican.com/en/3.4.0/">Pelican官方文档</a>。假设电脑上已经安装Python和pip。首先，通过pip安装pelican和markdown：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">pip install pelican markdown
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>pip install pelican markdown
 </pre></div>
 
 
 <p>然后创建你的博客项目：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/blogs
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>mkdir ~/blogs
 <span style="color: #AA22FF">cd</span> ~/blogs
 pelican-quickstart
 </pre></div>
@@ -239,10 +240,10 @@ pelican-quickstart
 26
 27
 28
-29</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">kamidox@kamidox-laptop:~/lab/blogs<span style="color: #B8860B">$ </span>pelican-quickstart
+29</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>kamidox@kamidox-laptop:~/lab/blogs$ pelican-quickstart
 Welcome to pelican-quickstart v3.4.0.
 
-This script will <span style="color: #AA22FF">help </span>you create a new Pelican-based website.
+This script will <span style="color: #AA22FF">help</span> you create a new Pelican-based website.
 
 Please answer the following questions so this script can generate the files
 needed by Pelican.
@@ -253,7 +254,7 @@ needed by Pelican.
 &gt; What will be the default language of this web site? <span style="color: #666666">[</span>en<span style="color: #666666">]</span>
 &gt; Do you want to specify a URL prefix? e.g., http://example.com   <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span>
 &gt; What is your URL prefix? <span style="color: #666666">(</span>see above example; no trailing slash<span style="color: #666666">)</span> http://kamidox.com
-&gt; Do you want to <span style="color: #AA22FF">enable </span>article pagination? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span> Y
+&gt; Do you want to <span style="color: #AA22FF">enable</span> article pagination? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span> Y
 &gt; How many articles per page <span style="color: #AA22FF; font-weight: bold">do</span> you want? <span style="color: #666666">[</span>10<span style="color: #666666">]</span>
 &gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span> Y
 &gt; Do you want an auto-reload &amp; simpleHTTP script to assist with theme and site development? <span style="color: #666666">(</span>Y/n<span style="color: #666666">)</span>
@@ -272,7 +273,7 @@ Done. Your new project is available at /home/kamidox/lab/blogs
 </td></tr></table>
 
 <p>其中第14行的<code>http://kamidox.com</code>以及第21行的<code>kamidox.com</code>是我的域名，如果你只是在本机试验，可以填localhost。创建完项目后，目录下看起来象这样。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">kamidox@kamidox-laptop:~/lab/blogs<span style="color: #B8860B">$ </span>tree
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>kamidox@kamidox-laptop:~/lab/blogs$ tree
 .
 ├── content     <span style="color: #008800; font-style: italic"># 这个就是放博客内容目录，这个目录及子目录下的所有md和rst文件将会被转成html文件</span>
 ├── develop_server.sh   <span style="color: #008800; font-style: italic">#这个是用来在本地运行一个服务器来实时查看生成的html文档的脚本</span>
@@ -333,7 +334,7 @@ Done. Your new project is available at /home/kamidox/lab/blogs
 43
 44
 45
-46</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
+46</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#!/usr/bin/env python</span>
 <span style="color: #008800; font-style: italic"># -*- coding: utf-8 -*- #</span>
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">__future__</span> <span style="color: #AA22FF; font-weight: bold">import</span> unicode_literals
 
@@ -390,7 +391,7 @@ THEME <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;t
 <li>第46行：我的博客使用了<code>foundation-default-colours</code>这套主题。关于主题，后文详解。</li>
 </ol>
 <p>开发环境和发布环境的配置差不多，除SITEURL不一样外，还多了两个配置：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">SITEURL <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;http://kamidox.com&#39;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>SITEURL <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;http://kamidox.com&#39;</span>
 <span style="color: #008800; font-style: italic"># usful setting for publish</span>
 RELATIVE_URLS <span style="color: #666666">=</span> <span style="color: #AA22FF">False</span>   <span style="color: #008800; font-style: italic"># 禁用相对路径引用</span>
 DELETE_OUTPUT_DIRECTORY <span style="color: #666666">=</span> <span style="color: #AA22FF">True</span>      <span style="color: #008800; font-style: italic"># 编译之前删除output目录，这样保证output下生成的内容是干净的</span>
@@ -408,7 +409,7 @@ DELETE_OUTPUT_DIRECTORY <span style="color: #666666">=</span> <span style="color
 6
 7
 8
-9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#!/makefile</span>
+9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#!/makefile</span>
 <span style="color: #B8860B">SSH_HOST</span><span style="color: #666666">=</span>kamidox.com
 <span style="color: #B8860B">SSH_PORT</span><span style="color: #666666">=</span>22
 <span style="color: #B8860B">SSH_USER</span><span style="color: #666666">=</span>ubuntu
@@ -428,19 +429,19 @@ DELETE_OUTPUT_DIRECTORY <span style="color: #666666">=</span> <span style="color
 </ol>
 <h3 id="_2">配置主题</h3>
 <p>Pelican支持大量的开源主题，GitHub上的<a href="https://github.com/getpelican/pelican-themes">pelican-themes</a>项目有几十套主题，大部分都带了效果预览图。可以从里面挑一个你喜欢的主题样式来使用。还有一个更方便的挑选主题的方式，直接打开<a href="http://www.pelicanthemes.com/">www.pelicanthemes.com</a>挑选吧。一个网页里就列出了几乎所有的主题。我的博客是使用<code>foundation-default-colours</code>主题，并在这套主题的基础上进行了一些定制。选定好喜欢的主题后，从GitHub上下载下来所有的主题：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/pelican
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>mkdir ~/pelican
 <span style="color: #AA22FF">cd</span> ~/pelican
 git clone https://github.com/getpelican/pelican-themes.git
 </pre></div>
 
 
 <p>从里面拷贝一份你选中的主题到项目根目录的<code>themes</code>目录下，在本文的例子中是<code>~/lab/blogs/themes</code>。然后在<code>pelicanconf.py</code>和<code>publishconf.py</code>里通过下面代码指定博客主题：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">THEME <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;themes/foundation-default-colours&quot;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>THEME <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;themes/foundation-default-colours&quot;</span>
 </pre></div>
 
 
 <p>通常的做法是，选中一个自己喜欢的主题后，会进行一些定制。Pelican使用<a href="http://jinja.pocoo.org/">Jinja2</a>来配置主题。一个主题的典型结构如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">├── static
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>├── static
 │   ├── css
 │   └── images
 └── templates
@@ -464,7 +465,7 @@ git clone https://github.com/getpelican/pelican-themes.git
 <p>因为GFW封锁了几乎所有和Google相关的网站，这些主题里又用了Google的字体，所以下载这些字体时会导致无法下载成功而半天不显示网页。解决方案很简单，直接修改css文件，不去下载Google字体即可。比如针对<code>foundation-default-colours</code>主题，打开主题根目录下的<code>static/css/foundation.css</code>和<code>static/css/foundation.min.css</code>文件，删除掉<code>@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");</code>内容即可。当然，如果你和你的读者都是翻墙高手，那就不会遇到这个问题了。</p>
 <p><strong>No module named html_parser</strong></p>
 <p>运行 pelican 命令可能出现下面的错误：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    Traceback (most recent call last):
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    Traceback (most recent call last):
   File <span style="color: #BB4444">&quot;/usr/local/bin/pelican&quot;</span>, line <span style="color: #666666">7</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
     <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pelican</span> <span style="color: #AA22FF; font-weight: bold">import</span> main
   File <span style="color: #BB4444">&quot;/Library/Python/2.7/site-packages/pelican/__init__.py&quot;</span>, line <span style="color: #666666">20</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
@@ -478,7 +479,7 @@ git clone https://github.com/getpelican/pelican-themes.git
 
 
 <p>这种情况是由于 <code>six</code> 模块的 bug 引起的。可以修改 pelican 安装目录下的 <code>/Library/Python/2.7/site-packages/pelican/readers.py</code> 文件。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># from six.moves.html_parser import HTMLParser</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># from six.moves.html_parser import HTMLParser</span>
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">HTMLParser</span> <span style="color: #AA22FF; font-weight: bold">import</span> HTMLParser       <span style="color: #008800; font-style: italic"># 如果你在 Python 2.7 版本下运行，可直接按照这个方式修改</span>
 </pre></div>
 
@@ -493,7 +494,7 @@ git clone https://github.com/getpelican/pelican-themes.git
 5
 6
 7
-8</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Title: 使用Pelican搭建博客系统
+8</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Title: 使用Pelican搭建博客系统
 Date: 2014-10-07 22:20
 Modified: 2014-10-07 23:04
 Tags: python, pelican
@@ -511,7 +512,7 @@ Status: draft
 <p>我们可以在<code>content</code>目录下任意建子目录来组织管理博客文章。由于我们在设置文件里指定这个值<code>USE_FOLDER_AS_CATEGORY = True</code>，这样这些目录名称就自动变成博文分类的目录了。</p>
 <h3 id="_6">预览博客文章</h3>
 <p>撰写文章的过程中，可以随时在浏览器里预览博客文章。方法是先在博客项目的根目录下执行下面命令来启动预览服务器：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">make devserver
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>make devserver
 </pre></div>
 
 
@@ -534,12 +535,12 @@ Status: draft
 </ul>
 <h3 id="nginx">配置Nginx</h3>
 <p>Ubuntu下安装Nginx：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo apt-get install nginx-full
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>sudo apt-get install nginx-full
 </pre></div>
 
 
 <p>安装完成后，编辑配置文件：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo vim /etc/nginx/sites-enabled/default
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>sudo vim /etc/nginx/sites-enabled/default
 </pre></div>
 
 
@@ -552,7 +553,7 @@ Status: draft
 6
 7
 8
-9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">server {
+9</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>server {
   listen 80 default_server;
   server_name localhost;
   root /home/kamidox/lab/blogs/output;
@@ -569,14 +570,14 @@ Status: draft
 <li>第4行：这个设置成博客文章的根目录。这个使用本机作为测试服务器，所以直接填博客项目的<code>output</code>目录。如果是在服务器上，我是直接配置成<code>/home/ubuntu/blogs</code>。</li>
 </ol>
 <p>配置完成后，重启一下Nginx服务：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo service nginx resart
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>sudo service nginx resart
 </pre></div>
 
 
 <p>然后在浏览器里输入<code>localhost</code>就可以看到博客首页。在本机验证成功Nginx配置后，就可以用SSH登录服务器去配置服务器了。</p>
 <h3 id="_8">上传博客到服务器</h3>
 <p>直接在项目根目录下运行下面的命令即可把文章上传到博客服务器:</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">make rsync_upload
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>make rsync_upload
 </pre></div>
 
 
@@ -627,6 +628,7 @@ Status: draft
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -640,29 +642,6 @@ Status: draft
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li class="active"><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -143,9 +144,9 @@
 	<p>在 scikit-learn 里，朴素贝叶斯算法在 <code>sklearn.naive_bayes</code> 包里实现，包含了本章介绍的几种典型的概率分布算法。其中 <code>GaussianNB</code> 实现了高斯分布的朴素贝叶斯算法，<code>MultinomialNB</code> 实现了多项式分布的朴素贝叶斯算法，<code>BernoulliNB</code> 实现了伯努利分布的朴素贝叶斯算法。本文我们用 <code>MultinomialNB</code> 来实现文档自动分类。如果你不熟悉朴素贝叶斯算法，可参阅笔者的另外一篇博客<a href="http://blog.kamidox.com/naive-bayes.html">零基础学习朴素贝叶斯算法</a>。</p>
 <h2 id="1">1 获取数据集</h2>
 <p>本节使用的数据集来自 mlcomp.org 上的 <a href="http://mlcomp.org/datasets/379">20news-18828</a>，免费注册后即可下载。下载完数据集后，可以解压解压到 <code>~/code/datasets/mlcomp/</code> 目录下，解压后会在 <code>~/code/datasets/mlcomp</code> 下生成一个名为 <code>379</code> 的目录，其目录下包含三个子目录和一个名为 <code>metadata</code> 的介绍文件：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span><span style="color: #AA22FF">cd</span> ~/code/datasets/mlcomp
-<span style="color: #B8860B">$ </span>ls 379
-metadata  raw  <span style="color: #AA22FF">test  </span>train
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ <span style="color: #AA22FF">cd</span> ~/code/datasets/mlcomp
+$ ls 379
+metadata  raw  <span style="color: #AA22FF">test</span>  train
 </pre></div>
 
 
@@ -177,7 +178,7 @@ and bureaucracy.  He&rsquo;s quite uninformed.</p>
 <p>计算出每个词的词频和权重指数后，两者相乘，即可得到这个词在文档中的重要程度。词语的重要性随着它在文档中出现的次数成正比增加，但同时会随着它在语料库中出现的频率成反比下降。关于 TF-IDF 在搜索引擎上的应用，可参阅吴军老师的《数学之美》里的《如何确定网页和查询的相关性》一文。</p>
 <p>有了 TF-IDF 这个工具，我们就可以把一篇文档转换为一个向量。首先，可以从我们的数据集（在自然语言处理领域，也称为 corpus ，即语料库）里提取出所有出现的词语，我们称为<strong>词典</strong>。假设词典里总共有 10000 个词语，则每个文档都可转化为一个 10000 维的向量。其次，针对我们要转换的文档里出现的每个词语，都去计算其 TF-IDF 的值，并把这个值填入文档向量里，这个词所对应的元素上。这样就完成了把一篇文档转换为一个向量的过程。一个文档往往只会由词典里的一小部分词语构成，这就意味着这个这个向量里大部分元素都是零。</p>
 <p>所幸，上述过程我们不需要自己写代码完成，scikit-learn 软件包里实现了把文档转换为向量的过程。首先，我们把训练用的语料库读入内存：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">time</span> <span style="color: #AA22FF; font-weight: bold">import</span> time
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">time</span> <span style="color: #AA22FF; font-weight: bold">import</span> time
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.datasets</span> <span style="color: #AA22FF; font-weight: bold">import</span> load_files
 
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;loading train dataset ...&quot;</span>)
@@ -191,14 +192,14 @@ news_train <span style="color: #666666">=</span> load_files(<span style="color: 
 
 <p>我们的代码保存在 <code>~/code/</code> 目录下，其相对路径 <code>datasets/mlcomp/379/train</code> 目录下放的就是我们的语料库，其中包含 20 个子目录，每个子目录的名字表示的是文档的类别，子目录下包含这种类别的所有文档。<a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_files.html">load_files()</a> 函数会从这个目录里把所有的文档都读入内存，并且自动根据所在的子目录名称打上标签。其中，<code>news_train.data</code> 是一个数组，里面包含了所有文档的文本信息。<code>news_train.target</code> 也是一个数组，包含了所有文档所属的类别，而 <code>news_train.target_names</code> 则是的类别的名称，因此，如果我们想知道第一篇文档所属的类别名称，只需要通过代码 <code>news_train.target_names[news_train.target[0]]</code> 即可得到。</p>
 <p>上述代码在笔者电脑上的输出是：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">loading train dataset <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>loading train dataset <span style="color: #666666">...</span>
 summary: <span style="color: #666666">13180</span> documents <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">20</span> categories<span style="color: #666666">.</span>
 done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">0.212177991867</span> seconds
 </pre></div>
 
 
 <p>不难看到，我们的语料库里，总共有 13180 个文档，其中分成 20 个类别。接着，我们需要把这些文档全部转换为由 TF-IDF 表达的权重信息构成的向量：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.feature_extraction.text</span> <span style="color: #AA22FF; font-weight: bold">import</span> TfidfVectorizer
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.feature_extraction.text</span> <span style="color: #AA22FF; font-weight: bold">import</span> TfidfVectorizer
 
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;vectorizing train dataset ...&quot;</span>)
 t <span style="color: #666666">=</span> time()
@@ -212,7 +213,7 @@ X_train <span style="color: #666666">=</span> vectorizer<span style="color: #666
 
 
 <p>其中，<a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">TfidfVectorizer</a> 类是用来把所有的文档转换为矩阵，该矩阵每行都代表一个文档，一行中的每个元素代表一个对应的词语的重要性，词语的重要性由 TF-IDF 来表示。熟悉 scikit-learn API 的读者应该清楚，其 <code>fit_transform()</code> 方法是 <code>fit()</code> 和 <code>transform()</code> 合并起来。其中，<code>fit()</code> 会先完成语料库分析，提取词典等操作，<code>transform()</code> 会把对每篇文档转换为向量，最终构成一个矩阵，保存在 <code>X_train</code> 变量里。这段代码在笔者电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">vectorizing train dataset <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>vectorizing train dataset <span style="color: #666666">...</span>
 n_samples: <span style="color: #666666">13180</span>, n_features: <span style="color: #666666">130274</span>
 number of non<span style="color: #666666">-</span>zero features <span style="color: #AA22FF; font-weight: bold">in</span> sample
   [datasets<span style="color: #666666">/</span>mlcomp<span style="color: #666666">/379/</span>train<span style="color: #666666">/</span>talk<span style="color: #666666">.</span>politics<span style="color: #666666">.</span>misc<span style="color: #666666">/17860-178992</span>]: <span style="color: #666666">108</span>
@@ -223,7 +224,7 @@ done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="colo
 <p>由程序的输出，我们可以知道，我们的词典总共有 130274 个词语，即每篇文档都可转换为一个 130274 维的向量（这是一个巨大的向量）。第一篇文档中，只有 108 个非零元素，即这篇文章由 108 个单词组成，其单词数大于等于 108 个（因为有些词可出现多次）。在这篇文档中出现的这 108 个单词的 TF-IDF 值会被计算出来，并保存在向量中的指定位置上。<code>X_train</code> 是一个维度为 13180 x 130274 的稀疏矩阵（这是一个巨稀疏的矩阵）。</p>
 <h2 id="3">3 模型训练</h2>
 <p>费了好些功夫，终于把文档数据转换为 scikit-learn 里典型的训练数据集矩阵：矩阵的每一行表示一个数据样本，矩阵的每一列表示一个特征。接着，我们可以直接使用 <code>MultinomialNB</code> 来对数据集进行训练：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.naive_bayes</span> <span style="color: #AA22FF; font-weight: bold">import</span> MultinomialNB
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.naive_bayes</span> <span style="color: #AA22FF; font-weight: bold">import</span> MultinomialNB
 
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;traning models ...&quot;</span><span style="color: #666666">.</span>format(time() <span style="color: #666666">-</span> t))
 t <span style="color: #666666">=</span> time()
@@ -237,14 +238,14 @@ train_score <span style="color: #666666">=</span> clf<span style="color: #666666
 
 
 <p>其中 <code>alpha</code> 表示平滑参数，其值越小，越容易造成过拟合，值太大，容易造成欠拟合。这段代码在笔者电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">traning models <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>traning models <span style="color: #666666">...</span>
 train score: <span style="color: #666666">0.997875569044</span>
 done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">0.274363040924</span> seconds
 </pre></div>
 
 
 <p>接着，我们加载测试数据集，并拿一篇文档来预测看看是否准确。测试数据集在 <code>~/code/datasets/mlcomp/379/test</code> 目录下，我们用上文介绍的相同的方法，先加载数据集：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;loading test dataset ...&quot;</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;loading test dataset ...&quot;</span>)
 t <span style="color: #666666">=</span> time()
 news_test <span style="color: #666666">=</span> load_files(<span style="color: #BB4444">&#39;datasets/mlcomp/379/test&#39;</span>)
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;summary: {0} documents in {1} categories.&quot;</span><span style="color: #666666">.</span>format(
@@ -254,14 +255,14 @@ news_test <span style="color: #666666">=</span> load_files(<span style="color: #
 
 
 <p>在笔者的电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">loading test dataset <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>loading test dataset <span style="color: #666666">...</span>
 summary: <span style="color: #666666">5648</span> documents <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">20</span> categories<span style="color: #666666">.</span>
 done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">0.117918014526</span> seconds
 </pre></div>
 
 
 <p>可见，我们的测试数据集总共有 5648 篇文档。接着，我们把文档向量化：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;vectorizing test dataset ...&quot;</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;vectorizing test dataset ...&quot;</span>)
 t <span style="color: #666666">=</span> time()
 X_test <span style="color: #666666">=</span> vectorizer<span style="color: #666666">.</span>transform((d <span style="color: #AA22FF; font-weight: bold">for</span> d <span style="color: #AA22FF; font-weight: bold">in</span> news_test<span style="color: #666666">.</span>data))
 y_test <span style="color: #666666">=</span> news_test<span style="color: #666666">.</span>target
@@ -273,7 +274,7 @@ y_test <span style="color: #666666">=</span> news_test<span style="color: #66666
 
 
 <p>这里需要注意，<code>vectorizer</code> 变量是我们处理训练数据集时用到的广本向量化的类 TfidfVectorizer 的实例，此处我们只需要调用 <code>transform()</code> 进行 TF-IDF 数值计算即可，不需要再调用 <code>fit()</code> 进行语料库分析了。这段代码在笔者电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">vectorizing test dataset <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>vectorizing test dataset <span style="color: #666666">...</span>
 n_samples: <span style="color: #666666">5648</span>, n_features: <span style="color: #666666">130274</span>
 number of non<span style="color: #666666">-</span>zero features <span style="color: #AA22FF; font-weight: bold">in</span> sample
     [datasets<span style="color: #666666">/</span>mlcomp<span style="color: #666666">/379/</span>test<span style="color: #666666">/</span>rec<span style="color: #666666">.</span>autos<span style="color: #666666">/7429-103268</span>]: <span style="color: #666666">61</span>
@@ -282,7 +283,7 @@ done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="colo
 
 
 <p>这样，我们的测试数据集也转换为一个维度为 5648 x 130274 的稀疏矩阵。我们可以取测试数据集里第一篇文档初步验证一下，看看我们训练出来的模型能否正确地预测这个文档所属的类别：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">pred <span style="color: #666666">=</span> clf<span style="color: #666666">.</span>predict(X_test[<span style="color: #666666">0</span>])
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>pred <span style="color: #666666">=</span> clf<span style="color: #666666">.</span>predict(X_test[<span style="color: #666666">0</span>])
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;predict: {0} is in category {1}&quot;</span><span style="color: #666666">.</span>format(
     news_test<span style="color: #666666">.</span>filenames[<span style="color: #666666">0</span>], news_test<span style="color: #666666">.</span>target_names[pred[<span style="color: #666666">0</span>]]))
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;actually: {0} is in category {1}&quot;</span><span style="color: #666666">.</span>format(
@@ -291,7 +292,7 @@ done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="colo
 
 
 <p>这段代码在笔者电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">predict: datasets<span style="color: #666666">/</span>mlcomp<span style="color: #666666">/379/</span>test<span style="color: #666666">/</span>rec<span style="color: #666666">.</span>autos<span style="color: #666666">/7429-103268</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">in</span> category rec<span style="color: #666666">.</span>autos
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>predict: datasets<span style="color: #666666">/</span>mlcomp<span style="color: #666666">/379/</span>test<span style="color: #666666">/</span>rec<span style="color: #666666">.</span>autos<span style="color: #666666">/7429-103268</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">in</span> category rec<span style="color: #666666">.</span>autos
 actually: datasets<span style="color: #666666">/</span>mlcomp<span style="color: #666666">/379/</span>test<span style="color: #666666">/</span>rec<span style="color: #666666">.</span>autos<span style="color: #666666">/7429-103268</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">in</span> category rec<span style="color: #666666">.</span>autos
 </pre></div>
 
@@ -300,7 +301,7 @@ actually: datasets<span style="color: #666666">/</span>mlcomp<span style="color:
 <h2 id="4">4 模型评价</h2>
 <p>显然，我们不能通过一个样本的预测来评价模型的准确性。我们需要对模型有个全方位的评价，所幸 scikit-learn 软件包提供了全方位的模型评价工具。</p>
 <p>首先，我们需要对测试数据集进行预测：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;predicting test dataset ...&quot;</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;predicting test dataset ...&quot;</span>)
 t0 <span style="color: #666666">=</span> time()
 pred <span style="color: #666666">=</span> clf<span style="color: #666666">.</span>predict(X_test)
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;done in </span><span style="color: #BB6688; font-weight: bold">%f</span><span style="color: #BB4444">s&quot;</span> <span style="color: #666666">%</span> (time() <span style="color: #666666">-</span> t0))
@@ -308,13 +309,13 @@ pred <span style="color: #666666">=</span> clf<span style="color: #666666">.</sp
 
 
 <p>在笔者的电脑上输出：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">predicting test dataset <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>predicting test dataset <span style="color: #666666">...</span>
 done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">0.090978</span>s
 </pre></div>
 
 
 <p>接着，我们使用 <code>classification_report()</code> 函数来查看一下针对每个类别的预测准确性：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.metrics</span> <span style="color: #AA22FF; font-weight: bold">import</span> classification_report
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.metrics</span> <span style="color: #AA22FF; font-weight: bold">import</span> classification_report
 
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;classification report on test set for classifier:&quot;</span>)
 <span style="color: #AA22FF; font-weight: bold">print</span>(clf)
@@ -324,7 +325,7 @@ done <span style="color: #AA22FF; font-weight: bold">in</span> <span style="colo
 
 
 <p>在笔者电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">classification report on test <span style="color: #AA22FF">set</span> <span style="color: #AA22FF; font-weight: bold">for</span> classifier:
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>classification report on test <span style="color: #AA22FF">set</span> <span style="color: #AA22FF; font-weight: bold">for</span> classifier:
 MultinomialNB(alpha<span style="color: #666666">=0.0001</span>, class_prior<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>, fit_prior<span style="color: #666666">=</span><span style="color: #AA22FF">True</span>)
                           precision    recall  f1<span style="color: #666666">-</span>score   support
 
@@ -354,7 +355,7 @@ comp<span style="color: #666666">.</span>sys<span style="color: #666666">.</span
 
 
 <p>从输出可以看出来，针对每种类别，都统计了查准率，召回率和 F1-Score。对这些概念不熟悉的读者可参阅笔者的另外一篇博客<a href="http://blog.kamidox.com/evaluating-2.html">机器学习系统的设计与调优</a>。此外，我们还可以通过 <code>confusion_matrix()</code> 函数，来生成混淆矩阵，观察每种类别被错误分类的情况，比如，这些被错误分类的文档是被错误分类到哪些类别里的：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.metrics</span> <span style="color: #AA22FF; font-weight: bold">import</span> confusion_matrix
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">sklearn.metrics</span> <span style="color: #AA22FF; font-weight: bold">import</span> confusion_matrix
 
 cm <span style="color: #666666">=</span> confusion_matrix(y_test, pred)
 <span style="color: #AA22FF; font-weight: bold">print</span>(<span style="color: #BB4444">&quot;confusion matrix:&quot;</span>)
@@ -363,7 +364,7 @@ cm <span style="color: #666666">=</span> confusion_matrix(y_test, pred)
 
 
 <p>在笔者电脑上的输出为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">confusion matrix:
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>confusion matrix:
 [[<span style="color: #666666">224</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">2</span>   <span style="color: #666666">5</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">1</span>  <span style="color: #666666">13</span>]
  [  <span style="color: #666666">1</span> <span style="color: #666666">267</span>   <span style="color: #666666">5</span>   <span style="color: #666666">5</span>   <span style="color: #666666">2</span>   <span style="color: #666666">8</span>   <span style="color: #666666">1</span>   <span style="color: #666666">1</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">2</span>   <span style="color: #666666">3</span>   <span style="color: #666666">2</span>   <span style="color: #666666">1</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>]
  [  <span style="color: #666666">1</span>  <span style="color: #666666">13</span> <span style="color: #666666">230</span>  <span style="color: #666666">24</span>   <span style="color: #666666">4</span>  <span style="color: #666666">10</span>   <span style="color: #666666">5</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">1</span>   <span style="color: #666666">2</span>   <span style="color: #666666">1</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">0</span>   <span style="color: #666666">1</span>   <span style="color: #666666">0</span>]
@@ -388,7 +389,7 @@ cm <span style="color: #666666">=</span> confusion_matrix(y_test, pred)
 
 
 <p>从第一行数据可以看出来，类别 0 (alt.atheism) 的文档，有 13 个文档被错误地分类到类别 19 (talk.religion.misc) 里。当然，我们还可以把混淆矩阵进行数据可视化处理：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic"># Show confusion matrix</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># Show confusion matrix</span>
 <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span>
 
 plt<span style="color: #666666">.</span>figure(figsize<span style="color: #666666">=</span>(<span style="color: #666666">8</span>, <span style="color: #666666">8</span>), dpi<span style="color: #666666">=144</span>)
@@ -454,6 +455,7 @@ plt<span style="color: #666666">.</span>show()
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -467,29 +469,6 @@ plt<span style="color: #666666">.</span>show()
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

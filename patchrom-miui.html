@@ -72,6 +72,7 @@
 							<li class="active"><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -163,14 +164,14 @@
 <p>可以查阅 <a href="http://pan.baidu.com/s/1o6yq4I2">MIUI 移植的文档</a>了解一些背景知识。这里将主体步骤描述如下：</p>
 <h3 id="miui-patchrom">下载 MIUI patchrom</h3>
 <p>下载 repo 工具</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/bin
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>mkdir ~/bin
 curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo
 chmod a+x ~/bin/repo
 </pre></div>
 
 
 <p>下载 MIUI patchrom 代码</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">mkdir ~/work/patchrom
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>mkdir ~/work/patchrom
 <span style="color: #AA22FF">cd</span> ~/work/patchrom
 repo init -u git://github.com/MiCode/patchrom.git -b jellybean42-mtk
 repo sync
@@ -181,10 +182,10 @@ repo sync
 <p>代码下载完成后，我们就可以开始移植工作了。实际的代码目录树结构和内容和文档里描述的会有出入，我们可以忽略文档里的，以实际代码为准。本文使用2014-12-04下载的代码为准。</p>
 <h3 id="_3">准备移植目录</h3>
 <p>在 patchrom 根目录下创建一个产品的工作目录用来移植时使用。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">cd</span> ~/work/patchrom
-<span style="color: #AA22FF">source </span>build/envsetup.sh
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">cd</span> ~/work/patchrom
+<span style="color: #AA22FF">source</span> build/envsetup.sh
 mkdir ~/work/patchrom/mtk6582
-<span style="color: #AA22FF">cd </span>mtk6582
+<span style="color: #AA22FF">cd</span> mtk6582
 </pre></div>
 
 
@@ -208,7 +209,7 @@ mkdir ~/work/patchrom/mtk6582
 </ol>
 <h3 id="makefile">准备一个 makefile</h3>
 <p>下面的 makefile 可以作为模板，里面有详细的注释说明每个字段的含义。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">#</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">#</span>
 <span style="color: #008800; font-style: italic"># Makefile for mtk6582</span>
 <span style="color: #008800; font-style: italic">#</span>
 
@@ -242,8 +243,8 @@ mkdir ~/work/patchrom/mtk6582
 <span style="color: #008800; font-style: italic"># and the local-targets should:</span>
 <span style="color: #008800; font-style: italic"># (1) be defined after including porting.mk if using any global variable(see porting.mk)</span>
 <span style="color: #008800; font-style: italic"># (2) the name should be leaded with local- to prevent any conflict with global targets</span>
-<span style="color: #B8860B">local-pre-zip</span> <span style="color: #666666">:=</span> <span style="color: #AA22FF">local</span>-pre-zip-misc
-<span style="color: #B8860B">local-after-zip</span><span style="color: #666666">:=</span> <span style="color: #AA22FF">local</span>-put-to-phone
+<span style="color: #B8860B">local-pre-zip</span> <span style="color: #666666">:=</span> local-pre-zip-misc
+<span style="color: #B8860B">local-after-zip</span><span style="color: #666666">:=</span> local-put-to-phone
 
 <span style="color: #008800; font-style: italic"># The local targets after the zip file is generated, could include &#39;zip2sd&#39; to</span>
 <span style="color: #008800; font-style: italic"># deliver the zip file to phone, or to customize other actions</span>
@@ -266,14 +267,14 @@ mkdir ~/work/patchrom/mtk6582
 <span style="color: #00A000">%.phone </span><span style="color: #666666">:</span> out/%.jar
     @echo push -- to --- phone
     adb remount
-    adb push <span style="color: #B8860B">$&lt;</span> /system/framework
+    adb push $&lt; /system/framework
     adb shell chmod <span style="color: #666666">644</span> /system/framework/<span style="color: #B8860B">$*</span>.jar
 
 <span style="color: #00A000">%.sign-plat </span><span style="color: #666666">:</span> out/%
-    java -jar <span style="color: #AA22FF; font-weight: bold">$(</span>TOOL_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/signapk.jar <span style="color: #AA22FF; font-weight: bold">$(</span>PORT_ROOT<span style="color: #AA22FF; font-weight: bold">)</span>/build/security/platform.x509.pem <span style="color: #AA22FF; font-weight: bold">$(</span>PORT_ROOT<span style="color: #AA22FF; font-weight: bold">)</span>/build/security/platform.pk8  <span style="color: #B8860B">$&lt;</span> <span style="color: #B8860B">$&lt;</span>.signed
+    java -jar <span style="color: #AA22FF; font-weight: bold">$(</span>TOOL_DIR<span style="color: #AA22FF; font-weight: bold">)</span>/signapk.jar <span style="color: #AA22FF; font-weight: bold">$(</span>PORT_ROOT<span style="color: #AA22FF; font-weight: bold">)</span>/build/security/platform.x509.pem <span style="color: #AA22FF; font-weight: bold">$(</span>PORT_ROOT<span style="color: #AA22FF; font-weight: bold">)</span>/build/security/platform.pk8  $&lt; $&lt;.signed
     @echo push -- to --- phone
     adb remount
-    adb push <span style="color: #B8860B">$&lt;</span>.signed /system/app/<span style="color: #B8860B">$*</span>
+    adb push $&lt;.signed /system/app/<span style="color: #B8860B">$*</span>
     adb shell chmod <span style="color: #666666">644</span> /system/app/<span style="color: #B8860B">$*</span>
 </pre></div>
 
@@ -295,7 +296,7 @@ mkdir ~/work/patchrom/mtk6582
 <h3 id="make-firstpatch">make firstpatch</h3>
 <p>在 patchrom/mtk6582 目录下运行 <code>make firstpatch</code> 命令。这个命令偿试自动合并 smali 文件。如果无法合并，会在 reject 目录下生成有冲突的文件。所以，运行这个命令后，我们只需要合并 reject 目录下的有冲突的文件即可完成 MIUI ROM 的移植工作。</p>
 <p>这个命令在 patchrom/mtk6582/temp 目录下生成的文件树如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">├── dst_smali_orig <span style="color: #008800; font-style: italic"># 这个是底包 stockrom.zip 里反编译出来的系统 smali 文件</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>├── dst_smali_orig <span style="color: #008800; font-style: italic"># 这个是底包 stockrom.zip 里反编译出来的系统 smali 文件</span>
 │   ├── android.policy.jar.out
 │   ├── framework.jar.out
 │   ├── mediatek-framework.jar.out
@@ -388,6 +389,7 @@ mkdir ~/work/patchrom/mtk6582
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -401,29 +403,6 @@ mkdir ~/work/patchrom/mtk6582
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

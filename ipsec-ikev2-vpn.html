@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -157,23 +158,23 @@
 <p>这本来是一个很繁琐的步骤，具体可参阅 <a href="https://hjc.im/shi-yong-strongswanda-jian-ipsecikev2-vpn/">使用 Strongswan 搭建 IPSec/IKEv2 VPN</a>。有心人把文章里描述的步骤写了个 <a href="https://github.com/magic282/One-Key-L2TP-IKEV2-Setup">shell 脚本</a>并放在了 github 上。这样我们执行脚本即可完成软件安装以及配置工作。</p>
 <h3 id="step-1">STEP 1 下载脚本</h3>
 <p>使用 ssh 登录 aws ubuntu 主机，执行下面命令下载脚本：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>wget https://raw.githubusercontent.com/magic282/One-Key-L2TP-IKEV2-Setup/master/l2tp_setup.sh
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ wget https://raw.githubusercontent.com/magic282/One-Key-L2TP-IKEV2-Setup/master/l2tp_setup.sh
 </pre></div>
 
 
 <h3 id="step-2">STEP 2 添加可执行权限</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>chmod a+x l2tp_setup.sh
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ chmod a+x l2tp_setup.sh
 </pre></div>
 
 
 <h3 id="step-3">STEP 3 安装软件</h3>
 <p>运行脚本，需要注意，需要使用 root 用户运行这个脚本。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>sudo ./l2tp_setup.sh
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ sudo ./l2tp_setup.sh
 </pre></div>
 
 
 <p>出现下面的提示时，输入 1</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&quot;#################################&quot;
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>&quot;#################################&quot;
 &quot;What do you want to do:&quot;
 &quot;1) Install l2tp&quot;
 &quot;2) Add an account&quot;
@@ -182,12 +183,12 @@
 
 
 <p>出现下面的提示时，输入 PSK 密码，<strong>这个密码后面客户端登录时要用到</strong>，注意保管好：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Please <span style="color: #AA22FF">set </span>the secretkey<span style="color: #666666">(</span>Pre Shared Key<span style="color: #666666">)</span>:
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Please <span style="color: #AA22FF">set</span> the secretkey<span style="color: #666666">(</span>Pre Shared Key<span style="color: #666666">)</span>:
 </pre></div>
 
 
 <p>出现下面提示时，输入 2</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&quot;##################&quot;
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>&quot;##################&quot;
 &quot;What type is your VPS?&quot;
 &quot;1) OpenVZ&quot;
 &quot;2) others&quot;
@@ -197,8 +198,8 @@
 
 <p><strong>特别注意</strong>：这里需要确认一下你的主机是 OpenVZ 还是其他，如 xen 。然后做出相应的选择。一个简单的方法是运行 <code>ls /proc | grep vz</code> ，如果输出 <code>vz</code> 就选择 1，否则就选择 2。</p>
 <p>接下来，脚本会下载 Strongswan 软件包，并编译安装。过程可能要几分钟时间。如果没有错误的话，脚本接着会输出如下内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">##################</span>
-Please <span style="color: #AA22FF">set </span>a password to <span style="color: #AA22FF">export </span>the key
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">##################</span>
+Please <span style="color: #AA22FF">set</span> a password to <span style="color: #AA22FF">export</span> the key
 <span style="color: #008800; font-style: italic">##################</span>
 Enter Export Password:
 Verifying - Enter Export Password:
@@ -206,7 +207,7 @@ Verifying - Enter Export Password:
 
 
 <p>可以直接按两个回车，即使用空的密钥导出密码。不出意外的话，最终会安装成功，并输出下面的成功信息：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">################################################</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">################################################</span>
 Success!
 Use this to connect your L2TP service.
 IP: xxx.xxx.xxx.xxx <span style="color: #666666">(</span>你的虚拟主机的 IP 地址<span style="color: #666666">)</span>
@@ -219,12 +220,12 @@ Don<span style="border: 1px solid #FF0000">&#39;</span>t forget to add a new use
 
 <h3 id="step-4">STEP 4 添加用户</h3>
 <p>运行脚本</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>sudo ./l2tp_setup.sh
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ sudo ./l2tp_setup.sh
 </pre></div>
 
 
 <p>出现下面的提示时，输入 2</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">&quot;#################################&quot;
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>&quot;#################################&quot;
 &quot;What do you want to do:&quot;
 &quot;1) Install l2tp&quot;
 &quot;2) Add an account&quot;
@@ -233,7 +234,7 @@ Don<span style="border: 1px solid #FF0000">&#39;</span>t forget to add a new use
 
 
 <p>接着在相应的提示下输入用户名和密码：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">Please input an new username:
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>Please input an new username:
 &lt;在这里输入用户名&gt;
 Please input the password:
 &lt;在这里输入密码&gt;
@@ -245,12 +246,12 @@ Please input the password:
 <p>编辑 <code>/etc/sysctl.conf</code>，将 <code>net.ipv4.ip_forward=1</code> 一行前面的 <code>#</code> 号去掉，保存后执行 <code>sysctl -p</code>。</p>
 <h2 id="vpn_1">启动 VPN 服务</h2>
 <p>这一步不注意就会漏掉，如果漏掉这一步，不会有出错信息，但客户端就是连接不上。即，我们需要手动启动 VPN 服务：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">sudo ipsec start
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>sudo ipsec start
 </pre></div>
 
 
 <p>可以使用 <code>ps</code> 命令确认服务是否正常运行起来了</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>ps -ax | grep ipsec
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ ps -ax | grep ipsec
  <span style="color: #666666">1861</span> ?        Ss     0:00 /usr/local/libexec/ipsec/starter --daemon charon
  <span style="color: #666666">1862</span> ?        Ssl    0:00 /usr/local/libexec/ipsec/charon --use-syslog
 </pre></div>
@@ -300,6 +301,7 @@ Please input the password:
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -313,29 +315,6 @@ Please input the password:
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

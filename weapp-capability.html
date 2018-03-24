@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -145,7 +146,7 @@
 <p>微信小程序的兼容性问题除了微信本身的 Bug 外，大部分是目标平台对 JavaScript 标准库支持程度不同造成的。</p>
 <h3 id="bug">微信本身的 Bug 引起的</h3>
 <p>微信本身的 Bug 引发的兼容性问题有个现成的例子，就是 <code>wx.request()</code> 返回的状态码 <code>res.statusCode</code> 的值在 iOS 下是 int 型数据，而在 Android 6.0.1 上却是 String 型数据。如果你判断服务器的返回状态码方法不当，可能就踩到坑里了。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">wx.request({
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>wx.request({
     url<span style="color: #666666">:</span> <span style="color: #BB4444">&#39;http://api.example.com&#39;</span>,
     success<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">function</span> (res) {
         <span style="color: #AA22FF; font-weight: bold">if</span> (res.statusCode <span style="color: #666666">===</span> <span style="color: #666666">200</span>) {
@@ -163,7 +164,7 @@
 <p>比如 <code>Array.find()</code> 方法在 iOS 10.2/Android 7.0 上完美支持，但在 Android 6.0.1 上却不支持。如果代码里用到了这个接口，就会导致在 Android 6.0.1 上无法正常工作。通过对比发现，这类接口不支持的个数还是比较多的。特别是 Android 平台版本众多，兼容性问题就更严重，可能一不小小心就掉到坑里。</p>
 <h2 id="_2">解决方法</h2>
 <p>微信本身 Bug 只能绕过去，但对 JavaScript 引擎的兼容性，可以有更优雅的解决方法。比如，我们可以打补丁，使用 polyfill 来实现这些不支持的标准库方法。比如，修复 Android 6.0.1 平台不支持 <code>String.startsWith()</code> 的问题，可以使用下面的 polyfill 代码：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #666666">!</span><span style="color: #AA22FF">String</span>.prototype.startsWith) {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #666666">!</span><span style="color: #AA22FF">String</span>.prototype.startsWith) {
     console.warn(<span style="color: #BB4444">&#39;define polyfill for Array.prototype.startsWith&#39;</span>);
     <span style="color: #AA22FF">String</span>.prototype.startsWith <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">function</span> (searchString, position) {
       position <span style="color: #666666">=</span> position <span style="color: #666666">||</span> <span style="color: #666666">0</span>;
@@ -175,7 +176,7 @@
 
 <p>推而广之，我们可以把平台不支持的标准库方法，使用 polyfill 实现。这就是 <a href="https://github.com/kamidox/minapp-polyfill">minapp-polyfill</a> 这个项目的目的。</p>
 <p>使用方法很简单，把 <a href="https://github.com/kamidox/minapp-polyfill">minapp-polyfill</a> 项目里的 <code>polyfill.js</code> 拷贝到小程序源码目录下，在需要打补丁的 JavaScript 源文件头部引入如下代码即可：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #BB4444">&#39;path/to/polyfill.js&#39;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #BB4444">&#39;path/to/polyfill.js&#39;</span>
 </pre></div>
 
 
@@ -1883,6 +1884,7 @@ A: 使用 lodash 之类的确实效率更高，兼容性也更好。基于两个
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -1896,29 +1898,6 @@ A: 使用 lodash 之类的确实效率更高，兼容性也更好。基于两个
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

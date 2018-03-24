@@ -72,6 +72,7 @@
 							<li ><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -375,7 +376,7 @@
 </ul>
 <p>以德国为例，自动选择的可选频道为：36, 40, 44, 48, 52, 56, 60, 64 ，其中 52, 56, 60, 64 为 DFS 频道。如果禁用 DFS ，则只剩下 36, 40, 44, 48 四个自动可选频道，以及 149, 153, 157, 161, 165 五个手动选择的频道。</p>
 <p>关于配置 802.11n 工作模式的自动可选频道相关的 <code>hostapd.conf</code> 配置项如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"># ht_capab: HT capabilities (list of flags)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span># ht_capab: HT capabilities (list of flags)
 # LDPC coding capability: [LDPC] = supported
 # Supported channel width set: [HT40-] = both 20 MHz and 40 MHz with secondary
 #   channel below the primary channel; [HT40+] = both 20 MHz and 40 MHz
@@ -420,7 +421,7 @@
 <li>可以通过配置 ACS 算法来优先选择某些频道</li>
 </ul>
 <p>下面是从 <code>hostapd.conf</code> 里摘抄出来涉及到的设置项。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"># Automatic channel selection (ACS) whitelist
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span># Automatic channel selection (ACS) whitelist
 # (default: not set)
 # Allow only these channels in automatic channel selection
 acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
@@ -429,7 +430,7 @@ acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
 
 <h3 id="_5">把需要手动选择的频道加入自动选择频道列表</h3>
 <p>可以通过配置黑白名单的方式把 149 153 157 161 165 频道配置进频道列表白名单，针对欧洲国家，可以按照下面的方式来配置。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"># Automatic channel selection (ACS) whitelist
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span># Automatic channel selection (ACS) whitelist
 # (default: not set)
 # Allow only these channels in automatic channel selection
 acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
@@ -474,6 +475,7 @@ acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -487,29 +489,6 @@ acs_whitelist=1 2 3 4 5 6 7 8 9 10 11 36 40 44 48 149 153 157 161 165
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/react.html">react</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/web.html">web</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

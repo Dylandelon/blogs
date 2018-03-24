@@ -72,6 +72,7 @@
 							<li ><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -196,7 +197,7 @@
 <li>MVC: Controller 可以直接和 Model 和 View 通信。View 可以发送 Action 到 Controller 里的某个 Target，View 可以通过 delegate 在 Controller 里设置代理。Model 不能直接和 Controller 通信，他们之间使用 subscriber 模式进行通信，Model 设置一个通知中心，Controller 通过向通知中心注册事件通知的方式来获取 Model 的变化信息。</li>
 </ul>
 <p><em>关于 Closure，视频教程里最终把一段复杂的代码简化为如下简单的代码</em></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    performOperatoer() { <span style="color: #B8860B">$0</span> <span style="color: #666666">*</span> <span style="color: #B8860B">$1</span> }
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    performOperatoer() { <span style="color: #B8860B">$0</span> <span style="color: #666666">*</span> <span style="color: #B8860B">$1</span> }
 </pre></div>
 
 
@@ -234,7 +235,7 @@
 <p>在 Swift 里的函数参数全部是命名参数。默认情况下，第一个参数调用者可以不用指定名字，而第二个起，需要指定参数名字。</p>
 <h4 id="properties-observer">Properties Observer</h4>
 <p>可以通过 <code>willSet</code>, <code>didSet</code> 来监控参数的改变。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span>: <span style="color: #AA22FF">Int</span> = <span style="color: #666666">4</span> {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span>: <span style="color: #AA22FF">Int</span> = <span style="color: #666666">4</span> {
     <span style="color: #AA22FF; font-weight: bold">willSet</span> {
         <span style="color: #AA22FF">println</span>(<span style="color: #BB4444">&quot;prop will set to </span><span style="color: #BB6688; font-weight: bold">\(</span>newValue<span style="color: #BB6688; font-weight: bold">)</span><span style="color: #BB4444">&quot;</span>)
     }
@@ -256,7 +257,7 @@
 
 <h4 id="lazy-init">Lazy init</h4>
 <p>Lazy init的属性只有在第一次被访问时才会被初始化，对那些开销比较大的属性这是个非常好的机制，可以让类快速创建。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">lazy</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">brain</span> = CalculatorBrain()
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">lazy</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">brain</span> = CalculatorBrain()
 
 <span style="color: #AA22FF; font-weight: bold">lazy</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">prop</span>: <span style="color: #AA22FF; font-weight: bold">Type</span> = {
     <span style="color: #008800; font-style: italic">// execute a closure to init a expensive prop</span>
@@ -272,7 +273,7 @@
 <p>阅读构造函数的几个规则，用代码来演示。</p>
 <h4 id="anyobject">AnyObject</h4>
 <p>AnyObject 可以指向任意的类。使用时可以使用 as 或 as? 来转化，也可以使用 is 关键字来判断是不是属于一个特定的类。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">item</span>: <span style="color: #AA22FF">AnyObject</span> = ...
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">item</span>: <span style="color: #AA22FF">AnyObject</span> = ...
 
 <span style="color: #008800; font-style: italic">// force to convert, will crash if item is not a UIBarButtonItem</span>
 <span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">toolBar</span> = item <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #AA22FF">UIBarButtonItem</span>
@@ -289,7 +290,7 @@
 
 <h4 id="array">Array<T></h4>
 <p>数组提供了一些很有意思的方法。<code>sort</code>，<code>replace</code>, <code>insert</code>等。另外还有一些可以批量处理数组里的元素的方法。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// 过滤一个数组，返回满足条件的一个新数组</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// 过滤一个数组，返回满足条件的一个新数组</span>
 <span style="color: #AA22FF">filter</span>(includeElement: (T) -&gt; <span style="color: #AA22FF">Bool</span>) -&gt; [T]
 
 <span style="color: #008800; font-style: italic">// 把一个数组映射到另外一个数组，比如把一个按钮全部转化为其对应的字符串数组</span>
@@ -307,7 +308,7 @@
 <h4 id="_8">关于教学方式</h4>
 <p>这一节里讲解了大量比较枯燥的语法和基础知识。从这里也可以看到教学的脉络：先用一个合适的 demo 来给学生建立成就感和兴趣。然后再回到基础性的和原理性的内容上。</p>
 <p>使用示例代码来讲解复杂概念，比如针对 Optional 的讲解：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">// Optional 的定义</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">// Optional 的定义</span>
 <span style="color: #AA22FF; font-weight: bold">enum</span> <span style="color: #0000FF">Optional</span>&lt;T&gt; {
     <span style="color: #AA22FF; font-weight: bold">case</span> None
     <span style="color: #AA22FF; font-weight: bold">case</span> Some(T)
@@ -338,7 +339,7 @@ n!
 <h3 id="_10">第六课</h3>
 <h4 id="protocols">Protocols</h4>
 <p>前面主要介绍了 protocol，其概念类似 Java 里面的 interface。其和 Java 的 interface 有一个区别就是，swift 的 protocol 支持 optional metnod。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">@objc</span> <span style="color: #AA22FF; font-weight: bold">protocol</span> <span style="color: #0000FF">Car</span> {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">@objc</span> <span style="color: #AA22FF; font-weight: bold">protocol</span> <span style="color: #0000FF">Car</span> {
     <span style="color: #AA22FF; font-weight: bold">optional</span> <span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">fillGas</span>()
     <span style="color: #AA22FF; font-weight: bold">optional</span> <span style="color: #AA22FF; font-weight: bold">func</span> <span style="color: #00A000">fillWater</span>() -&gt; <span style="color: #AA22FF">Bool</span>
 }
@@ -365,7 +366,7 @@ n!
 <li>Controller 把自己设置成 View 的委托代理属性 (步骤 2 里创建的)</li>
 <li>Controller 实现这个协议</li>
 </ul>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">/**</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">/**</span>
 <span style="color: #008800; font-style: italic"> * </span><span style="color: #008800; font-weight: bold">MARK:</span><span style="color: #008800; font-style: italic"> code in View </span>
 <span style="color: #008800; font-style: italic"> */</span>
 
@@ -417,7 +418,7 @@ HappinessViewController: <span style="color: #AA22FF">UIViewController</span>, H
 <li>给 View 添加动作识别</li>
 <li>提供一个函数来处理这个动作</li>
 </ul>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">@IBOutlet</span> <span style="color: #AA22FF; font-weight: bold">weak</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">pannableView</span>: <span style="color: #AA22FF">UIView</span> {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">@IBOutlet</span> <span style="color: #AA22FF; font-weight: bold">weak</span> <span style="color: #AA22FF; font-weight: bold">var</span> <span style="color: #B8860B">pannableView</span>: <span style="color: #AA22FF">UIView</span> {
     <span style="color: #AA22FF; font-weight: bold">didSet</span> {
         <span style="color: #AA22FF; font-weight: bold">let</span> <span style="color: #B8860B">recognizer</span> = <span style="color: #AA22FF">UIPanGestureRecognizer</span>(target: <span style="color: #AA22FF; font-weight: bold">self</span>, action: <span style="border: 1px solid #FF0000">“</span>pan:<span style="border: 1px solid #FF0000">”</span>)
         pannableView.addGestureRecognizer(recognizer)
@@ -475,6 +476,7 @@ HappinessViewController: <span style="color: #AA22FF">UIViewController</span>, H
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -488,29 +490,6 @@ HappinessViewController: <span style="color: #AA22FF">UIViewController</span>, H
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/react.html">react</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/web.html">web</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

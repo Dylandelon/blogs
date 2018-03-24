@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li class="active"><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -156,7 +157,7 @@
 <h2 id="_1">开篇</h2>
 <p><a href="https://github.com/sh4nks/flaskbb">FlaskBB</a>是用Flask框架实现的一个轻量级的论坛社区软件，代码托管在GitHub上。本系列文章通过阅读FlaskBB的源代码来深入学习Flask框架，以及在一个产品级的Flask应用里的一些最佳实践规则。</p>
 <p>本文是这系列文章的第二遍。本文分析FlaskBB的脚本管理程序<code>manage.py</code>的源码。基本上每个Flask程序都需要一个<code>manage.py</code>，用户可以通过它来创建数据库，运行开发服务器的任务。在FlaskBB的<code>README.md</code>里有下面一段话：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">* Create a virtualenv
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>* Create a virtualenv
 * Install the dependencies
     * `pip install -r requirements.txt`
 * Configuration (_adjust them accordingly to your needs_)
@@ -171,13 +172,13 @@
 
 <p>这些指令是指导用户安装/运行FlaskBB论坛程序的。其中<code>python manage.py createall</code>和<code>python manage.py runserver</code>就是本文要介绍的主角，其中第一条命令用来创建一个测试数据库，第二条命令用来运行开发服务器。</p>
 <p>有了这些神器，从GitHub下载代码：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">cd</span> ~
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">cd</span> ~
 git clone https://github.com/sh4nks/flaskbb.git
 </pre></div>
 
 
 <p>然后创建virtualenv：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">cd</span> ~/flaskbb
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">cd</span> ~/flaskbb
 virtualenv .venv
 <span style="color: #AA22FF">source</span> .venv/bin/activate
 pip install -r requirements.txt
@@ -185,12 +186,12 @@ pip install -r requirements.txt
 
 
 <p>拷贝配置文件：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">cp flaskbb/configs/development.py.example flaskbb/configs/development.py
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>cp flaskbb/configs/development.py.example flaskbb/configs/development.py
 </pre></div>
 
 
 <p>创建数据库，并运行开发服务器：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">python manage.py createall
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>python manage.py createall
 python manage.py runserver
 </pre></div>
 
@@ -216,7 +217,7 @@ python manage.py runserver
 11
 12
 13
-14</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">flask.ext.script</span> <span style="color: #AA22FF; font-weight: bold">import</span> Manager
+14</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">flask.ext.script</span> <span style="color: #AA22FF; font-weight: bold">import</span> Manager
 
 app <span style="color: #666666">=</span> Flask(__name__)
 <span style="color: #008800; font-style: italic"># configure your app</span>
@@ -234,13 +235,13 @@ manager <span style="color: #666666">=</span> Manager(app)
 </td></tr></table>
 
 <p>这样就创建了一个<code>hello</code>的命令，假设上述文件保存为<code>manage.py</code>，则可以运行这个添加的命令：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>python manage.py hello
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ python manage.py hello
 &gt; hello world
 </pre></div>
 
 
 <p>用<code>@option</code>装饰器创建带参数的命令：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-n&#39;</span>, <span style="color: #BB4444">&#39;--name&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;name&#39;</span>, default<span style="color: #666666">=</span><span style="color: #BB4444">&#39;joe&#39;</span>)
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-n&#39;</span>, <span style="color: #BB4444">&#39;--name&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;name&#39;</span>, default<span style="color: #666666">=</span><span style="color: #BB4444">&#39;joe&#39;</span>)
 <span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-u&#39;</span>, <span style="color: #BB4444">&#39;--url&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;url&#39;</span>, default<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>)
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">hello</span>(name, url):
     <span style="color: #AA22FF; font-weight: bold">if</span> url <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF">None</span>:
@@ -251,11 +252,11 @@ manager <span style="color: #666666">=</span> Manager(app)
 
 
 <p>上述命令可以这样调用：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>python manage.py hello -n Joe -u reddit.com
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ python manage.py hello -n Joe -u reddit.com
 &gt; hello Joe from reddit.com
-<span style="color: #B8860B">$ </span>python manage.py hello -n Joe
+$ python manage.py hello -n Joe
 &gt; hello Joe
-<span style="color: #B8860B">$ </span>python manage.py hello --name Joey --url kamidox.com
+$ python manage.py hello --name Joey --url kamidox.com
 &gt; hello Joey from kamidox.com
 </pre></div>
 
@@ -273,7 +274,7 @@ manager <span style="color: #666666">=</span> Manager(app)
  8
  9
 10
-11</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">flask.ext.script</span> <span style="color: #AA22FF; font-weight: bold">import</span> Manager, prompt_bool
+11</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">flask.ext.script</span> <span style="color: #AA22FF; font-weight: bold">import</span> Manager, prompt_bool
 
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">myapp</span> <span style="color: #AA22FF; font-weight: bold">import</span> app
 <span style="color: #AA22FF; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">myapp.models</span> <span style="color: #AA22FF; font-weight: bold">import</span> db
@@ -288,7 +289,7 @@ manager <span style="color: #666666">=</span> Manager(app)
 </td></tr></table>
 
 <p>这个命令可以这样调用：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #B8860B">$ </span>python manage.py dropdb
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>$ python manage.py dropdb
 &gt; Are you sure you want to lose all your data ? <span style="color: #666666">[</span>N<span style="color: #666666">]</span>
 </pre></div>
 
@@ -296,7 +297,7 @@ manager <span style="color: #666666">=</span> Manager(app)
 <p>Flask-Script还提供了<code>prompt_pass()</code>，<code>prompt_choices()</code>等不同形态的函数来获取用户输入信息。</p>
 <h3 id="_4">其它技巧</h3>
 <p>不带任何参数运行<code>python manage.py</code>会输出可用的命令列表：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb<span style="color: #B8860B">$ </span>python manage.py
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb$ python manage.py
 usage: manage.py <span style="color: #666666">[</span>-?<span style="color: #666666">]</span>
                  <span style="color: #666666">{</span>shell,create_admin,db,createall,runserver,initflaskbb,initdb,dropdb<span style="color: #666666">}</span>
                  ...
@@ -315,12 +316,12 @@ positional arguments:
     dropdb              Deletes the database
 
 optional arguments:
-  -?, --help            show this <span style="color: #AA22FF">help </span>message and <span style="color: #AA22FF">exit</span>
+  -?, --help            show this <span style="color: #AA22FF">help</span> message and <span style="color: #AA22FF">exit</span>
 </pre></div>
 
 
 <p>也可以针对特定命令获取其帮助信息：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb<span style="color: #B8860B">$ </span>python manage.py runserver --help
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #666666">(</span>.venv<span style="color: #666666">)</span>kamidox@kamidox-laptop:~/code/flaskbb$ python manage.py runserver --help
 usage: manage.py runserver <span style="color: #666666">[</span>-?<span style="color: #666666">]</span> <span style="color: #666666">[</span>-h HOST<span style="color: #666666">]</span> <span style="color: #666666">[</span>-p PORT<span style="color: #666666">]</span> <span style="color: #666666">[</span>--threaded<span style="color: #666666">]</span>
                            <span style="color: #666666">[</span>--processes PROCESSES<span style="color: #666666">]</span> <span style="color: #666666">[</span>--passthrough-errors<span style="color: #666666">]</span> <span style="color: #666666">[</span>-d<span style="color: #666666">]</span>
                            <span style="color: #666666">[</span>-D<span style="color: #666666">]</span> <span style="color: #666666">[</span>-r<span style="color: #666666">]</span> <span style="color: #666666">[</span>-R<span style="color: #666666">]</span>
@@ -328,13 +329,13 @@ usage: manage.py runserver <span style="color: #666666">[</span>-?<span style="c
 Runs the Flask development server i.e. app.run<span style="color: #666666">()</span>
 
 optional arguments:
-  -?, --help            show this <span style="color: #AA22FF">help </span>message and <span style="color: #AA22FF">exit</span>
+  -?, --help            show this <span style="color: #AA22FF">help</span> message and <span style="color: #AA22FF">exit</span>
   -h HOST, --host HOST
   -p PORT, --port PORT
   --threaded
   --processes PROCESSES
   --passthrough-errors
-  -d, --debug           <span style="color: #AA22FF">enable </span>the Werkzeug debugger <span style="color: #666666">(</span>DO NOT use in production
+  -d, --debug           <span style="color: #AA22FF">enable</span> the Werkzeug debugger <span style="color: #666666">(</span>DO NOT use in production
                         code<span style="color: #666666">)</span>
   -D, --no-debug        disable the Werkzeug debugger
   -r, --reload          monitor Python files <span style="color: #AA22FF; font-weight: bold">for</span> changes <span style="color: #666666">(</span>not 100<span style="color: #666666">{</span><span style="color: #BB4444">&#39;const&#39;</span>:
@@ -351,9 +352,9 @@ optional arguments:
 
 
 <p>更多详细的用法可参阅<a href="http://flask-script.readthedocs.org/">Flask-Script官方文档</a>，如果翻墙不便，也可以从GitHub上下载Flask-Script源码，然后在docs自己编译生成html文档。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">cd</span> ~/code
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">cd</span> ~/code
 git clone https://github.com/smurfix/flask-script.git
-<span style="color: #AA22FF">cd </span>docs
+<span style="color: #AA22FF">cd</span> docs
 make html
 </pre></div>
 
@@ -405,7 +406,7 @@ make html
 38
 39
 40
-41</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-u&#39;</span>, <span style="color: #BB4444">&#39;--username&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;username&#39;</span>)
+41</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-u&#39;</span>, <span style="color: #BB4444">&#39;--username&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;username&#39;</span>)
 <span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-p&#39;</span>, <span style="color: #BB4444">&#39;--password&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;password&#39;</span>)
 <span style="color: #AA22FF">@manager.option</span>(<span style="color: #BB4444">&#39;-e&#39;</span>, <span style="color: #BB4444">&#39;--email&#39;</span>, dest<span style="color: #666666">=</span><span style="color: #BB4444">&#39;email&#39;</span>)
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">initflaskbb</span>(username<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>, password<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>, email<span style="color: #666666">=</span><span style="color: #AA22FF">None</span>):
@@ -459,7 +460,7 @@ make html
 <li>Line 39: 创建默认的论坛板块</li>
 </ul>
 <p>我们可以通过运行下面的命令来初始化论坛数据：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">python manage.py initflaskbb -u admin -p admin -e admin@kamidox.com
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>python manage.py initflaskbb -u admin -p admin -e admin@kamidox.com
 </pre></div>
 
 
@@ -505,6 +506,7 @@ make html
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -518,29 +520,6 @@ make html
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

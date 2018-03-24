@@ -72,6 +72,7 @@
 							<li class="active"><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -162,14 +163,14 @@
 <p>本文记录android源码平台通过theme来定制UI的典型案例，进而梳理出theme的整体结构。</p>
 <h2 id="actionbar">ActionBar外观样式结构</h2>
 <h3 id="1-attrsxmlactionbar">1. <a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/attrs.xml">attrs.xml</a>用ActionBar定义了外观属性</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;declare-styleable</span> <span style="color: #BB4444">name=&quot;ActionBar&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;declare-styleable</span> <span style="color: #BB4444">name=&quot;ActionBar&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     ......
 <span style="color: #008000; font-weight: bold">&lt;/declare-styleable&gt;</span>
 </pre></div>
 
 
 <h3 id="2-themesxmlandroidactionbarstyleactionbar">2. <a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">themes.xml</a>里的android:actionBarStyle定义了不同主题的ActionBar外观</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;actionBarStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.ActionBar<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
 <span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
 
@@ -180,7 +181,7 @@
 
 
 <h3 id="3-stylesxml">3. <a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">styles.xml</a>定义了具体的属性值</h3>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.ActionBar&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.Holo.ActionBar&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.ActionBar&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.Holo.ActionBar&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:titleTextStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/TextAppearance.Holo.Widget.ActionBar.Title<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:subtitleTextStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_transparent_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
@@ -202,7 +203,7 @@
 </ul>
 <h3 id="5-themehololightactionbar">5. 实例: 修改Theme.Holo.Light的ActionBar背景</h3>
 <p>在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">styles.xml</a>里找到Widget.Holo.Light.ActionBar.Solid的定义，并且修改background和backgroundSplit的值即可。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.ActionBar.Solid&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.ActionBar.Solid&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_solid_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:backgroundSplit&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/ab_bottom_solid_light_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
 <span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
@@ -212,7 +213,7 @@
 <h2 id="preference">Preference外观样式</h2>
 <h3 id="1-preferencecategory">1. PreferenceCategory外观定义分析</h3>
 <p>PreferenceCategory由Theme里的PreferenceCategoryStyle决定其外观样式。在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">theme.xml</a>里有如下定义：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span> <span style="color: #BB4444">parent=&quot;Theme.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span> <span style="color: #BB4444">parent=&quot;Theme.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     ...
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;preferenceCategoryStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Preference.Holo.Category<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     ...
@@ -221,7 +222,7 @@
 
 
 <p><code>Preference.Holo.Category</code>在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">style.xml</a>里定义如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Preference.Holo.Category&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Preference.Holo.Category&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:layout&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:layout/preference_category_holo<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008800; font-style: italic">&lt;!-- The title should not dim if the category is disabled, instead only the preference children should dim. --&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:shouldDisableView&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>false<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
@@ -231,7 +232,7 @@
 
 
 <p><code>preference_category_holo</code>定义如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">&lt;!-- Layout used for PreferenceCategory in a PreferenceActivity. --&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">&lt;!-- Layout used for PreferenceCategory in a PreferenceActivity. --&gt;</span>
 <span style="color: #008000; font-weight: bold">&lt;TextView</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span style="color: #BB4444">style=&quot;?android:attr/listSeparatorTextViewStyle&quot;</span>
     <span style="color: #BB4444">android:id=&quot;@+android:id/title&quot;</span>
@@ -241,7 +242,7 @@
 
 
 <p>由此可见PreferenceCategory实际是一个TextView，它使用theme里定义的<code>listSeparatorTextViewStyle</code>的外观来定义自己的外观。<code>listSeparatorTextViewStyle</code>定义在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/themes.xml">theme.xml</a>里：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span> <span style="color: #BB4444">parent=&quot;Theme.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Theme.Holo.Light&quot;</span> <span style="color: #BB4444">parent=&quot;Theme.Light&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     ...
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;listSeparatorTextViewStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:style/Widget.Holo.Light.TextView.ListSeparator<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     ...
@@ -250,7 +251,7 @@
 
 
 <p><code>Widget.Holo.Light.TextView.ListSeparator</code>定义在<a href="https://android.googlesource.com/platform/frameworks/base/+/android-sdk-4.4.2_r1.0.1/core/res/res/values/styles.xml">style.xml</a>里：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.TextView.ListSeparator&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.TextView.ListSeparator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;Widget.Holo.Light.TextView.ListSeparator&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.TextView.ListSeparator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@android:drawable/list_section_divider_holo_light<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textAllCaps&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>true<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
 <span style="color: #008000; font-weight: bold">&lt;/style&gt;</span>
@@ -259,7 +260,7 @@
 
 <h3 id="2-preferencecategory">2. PreferenceCategory外观修改</h3>
 <p>如果想修改<code>PreferenceCategory</code>的背景和文字颜色，由上面的分析，我们只需要修改theme的<code>listSeparatorTextViewStyle</code>即可。定义一个新的背景图片即可实现：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;MyListSeparator&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.Holo.Light.TextView.ListSeparator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;style</span> <span style="color: #BB4444">name=&quot;MyListSeparator&quot;</span> <span style="color: #BB4444">parent=&quot;Widget.Holo.Light.TextView.ListSeparator&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:background&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@drawable/my_list_section_divider_holo_light<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textStyle&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>bold<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
     <span style="color: #008000; font-weight: bold">&lt;item</span> <span style="color: #BB4444">name=&quot;android:textColor&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>@color/my_text_color_list_separator<span style="color: #008000; font-weight: bold">&lt;/item&gt;</span>
@@ -320,6 +321,7 @@
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -333,29 +335,6 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/react.html">react</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/web.html">web</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

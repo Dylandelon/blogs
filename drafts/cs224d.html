@@ -72,6 +72,7 @@
 							<li ><a href="../category/android.html">android</a></li>
 							<li ><a href="../category/essay.html">essay</a></li>
 							<li ><a href="../category/flask.html">flask</a></li>
+							<li ><a href="../category/hide.html">hide</a></li>
 							<li ><a href="../category/ml.html">ml</a></li>
 							<li ><a href="../category/nlp.html">nlp</a></li>
 							<li ><a href="../category/python.html">python</a></li>
@@ -336,7 +337,7 @@
 <p>针对 word-word cooccurence matrix，奇异值分解的思路如下：</p>
 <p><img alt="neural networks" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/nlp_svd.png" /></p>
 <p>分解后矩阵 U 里的行向量就表示一个词。我们可以用 Python 简单实现如下：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #666666">%</span>matplotlib inline
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #666666">%</span>matplotlib inline
 <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
 <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">matplotlib.pyplot</span> <span style="color: #AA22FF; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">plt</span>
 
@@ -369,7 +370,7 @@ plt<span style="color: #666666">.</span>ylim(<span style="color: #666666">-0.8</
 <p><img alt="neural networks" src="https://raw.githubusercontent.com/kamidox/blogs/master/images/nlp_word_relation.png" /></p>
 <p>从图中，我们可以看到一些有意思的现象，在二维空间里，NLP 和 deep 靠得很近，从我们有限的只有三句话的语料库里就能把这个特征捕获出来了。如果语料库足够大，就可以表达出更多的语义和语法信息了。</p>
 <p>我们使用奇异值分解后的矩阵 U 的行向量$u_i$ 来表示一个词。比如，$u_0$ 就表示 I 这个单词，其值为：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">In [<span style="color: #666666">20</span>]: U[<span style="color: #666666">0</span>]
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>In [<span style="color: #666666">20</span>]: U[<span style="color: #666666">0</span>]
 
 Out[<span style="color: #666666">20</span>]:
 array([<span style="color: #666666">-0.52412493</span>, <span style="color: #666666">-0.57285914</span>,  <span style="color: #666666">0.0954463</span> ,  <span style="color: #666666">0.38322849</span>, <span style="color: #666666">-0.17696338</span>,
@@ -479,6 +480,7 @@ $$</p>
 										<li><a href="../category/android.html">android</a></li>
 										<li><a href="../category/essay.html">essay</a></li>
 										<li><a href="../category/flask.html">flask</a></li>
+										<li><a href="../category/hide.html">hide</a></li>
 										<li><a href="../category/ml.html">ml</a></li>
 										<li><a href="../category/nlp.html">nlp</a></li>
 										<li><a href="../category/python.html">python</a></li>
@@ -492,29 +494,6 @@ $$</p>
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="../tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="../tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="../tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="../tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="../tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="../tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="../tag/android.html">android</a></li>
-										<li class="tag-4"><a href="../tag/react.html">react</a></li>
-										<li class="tag-1"><a href="../tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="../tag/web.html">web</a></li>
-										<li class="tag-4"><a href="../tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="../tag/github.html">github</a></li>
-										<li class="tag-2"><a href="../tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="../tag/python.html">python</a></li>
-										<li class="tag-4"><a href="../tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="../tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="../tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="../tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="../tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="../tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="../tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="../tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="../tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

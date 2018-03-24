@@ -72,6 +72,7 @@
 							<li class="active"><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -180,13 +181,13 @@
 <p>GPU呈现模式分析可以从GPU层面上分析我们的刷新效率。使用这个工具可以用来发现有没有刷新帧率过低的问题。</p>
 <p>首先，在开发者模式里打开<strong>GPU呈现模式分析</strong>菜单，在弹出式菜单里选择<strong>在adb shell dumpsys gfxinfo中</strong>选项。打开这个选项后，系统会为每个窗口记录最近128帧的刷新时间。</p>
 <p>接着，手机连接电脑，确保adb可用。然后运行你要调试的应用程序做一些必要的操作之后，运行下面的命令在抓取GPU刷新的LOG：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">adb shell dumpsys gfxinfo com.android.soundrecorder &gt; soundrecorder_gfxinfo_1.log
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>adb shell dumpsys gfxinfo com.android.soundrecorder &gt; soundrecorder_gfxinfo_1.log
 </pre></div>
 
 
 <p>其中<em>com.android.soundrecorder</em>是要分析的应用的包名称；<em>soundrecorder_gfxinfo_1.log</em>是抓取出来的LOG保存位置。</p>
 <p>接着，打开LOG文件<em>soundrecorder_gfxinfo_1.log</em>，找到<strong>Profile data in ms:</strong>那节，可以看到类似下面的数据：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">com.android.soundrecorder/com.android.soundrecorder.SoundRecorder/android.view.ViewRootImpl@41db6d18
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>com.android.soundrecorder/com.android.soundrecorder.SoundRecorder/android.view.ViewRootImpl@41db6d18
 Draw    Process Execute
 4.38    6.49    0.87
 0.65    5.69    0.84
@@ -216,7 +217,7 @@ Draw    Process Execute
 10
 11
 12
-13</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@Override</span>
+13</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@Override</span>
 <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">draw</span><span style="color: #666666">(</span>View view<span style="color: #666666">,</span> View<span style="color: #666666">.</span><span style="color: #BB4444">AttachInfo</span> attachInfo<span style="color: #666666">,</span> HardwareDrawCallbacks callbacks<span style="color: #666666">,</span> Rect dirty<span style="color: #666666">)</span> <span style="color: #666666">{</span>
 
     <span style="color: #666666">...</span>
@@ -359,7 +360,7 @@ Line 10: 这个就是Process的时间，<code>drawDisplayList()</code>会调用<
 69
 70
 71
-72</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;LinearLayout</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+72</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">&lt;LinearLayout</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span style="color: #BB4444">android:layout_width=&quot;match_parent&quot;</span>
     <span style="color: #BB4444">android:layout_height=&quot;match_parent&quot;</span>
     <span style="color: #BB4444">android:orientation=&quot;vertical&quot;</span>
@@ -499,7 +500,7 @@ LINE 48：底部区域也有个背景图片<code>@drawable/op_bar_bg</code>。�
 51
 52
 53
-54</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+54</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 <span style="color: #008000; font-weight: bold">&lt;LinearLayout</span> <span style="color: #BB4444">xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span style="color: #BB4444">android:orientation=&quot;vertical&quot;</span> 
     <span style="color: #BB4444">android:layout_width=&quot;fill_parent&quot;</span>
@@ -706,6 +707,7 @@ LINE 48：底部区域也有个背景图片<code>@drawable/op_bar_bg</code>。�
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -719,29 +721,6 @@ LINE 48：底部区域也有个背景图片<code>@drawable/op_bar_bg</code>。�
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

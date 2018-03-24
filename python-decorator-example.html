@@ -72,6 +72,7 @@
 							<li ><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li class="active"><a href="./category/python.html">python</a></li>
@@ -184,7 +185,7 @@
 12
 13
 14
-15</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">setupmethod</span>(f):
+15</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">setupmethod</span>(f):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;Wraps a method so that it performs a check in debug mode if the</span>
 <span style="color: #BB4444; font-style: italic">    first request was already handled.</span>
 <span style="color: #BB4444; font-style: italic">    &quot;&quot;&quot;</span>
@@ -237,7 +238,7 @@
 21
 22
 23
-24</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">locked_cached_property</span>(<span style="color: #AA22FF">object</span>):
+24</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">locked_cached_property</span>(<span style="color: #AA22FF">object</span>):
     <span style="color: #BB4444; font-style: italic">&quot;&quot;&quot;A decorator that converts a function into a lazy property.  The</span>
 <span style="color: #BB4444; font-style: italic">    function wrapped is called the first time to retrieve the result</span>
 <span style="color: #BB4444; font-style: italic">    and then that calculated result is used the next time you access</span>
@@ -268,7 +269,7 @@
 Line 14: 这里用RLock来实现并发线程访问安全性。<br />
 Line 16: 这里实现了<code>__get__</code>，即<code>locked_cached_property</code>是一个non-data descriptor类。</p>
 <p>我们看一下<a href="https://github.com/mitsuhiko/flask/blob/0.10-maintenance/flask/app.py">app.py</a>里的<code>name</code>方法对这个装饰器是怎么使用的：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF">@locked_cached_property</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF">@locked_cached_property</span>
 <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">name</span>(<span style="color: #AA22FF">self</span>):
     <span style="color: #666666">...</span>
 </pre></div>
@@ -277,7 +278,7 @@ Line 16: 这里实现了<code>__get__</code>，即<code>locked_cached_property</
 <p>根据python decorator原理，上述代码实际上相当于下面的python代码：</p>
 <table class="codehilitetable"><tr><td><div class="linenodiv" style="background-color: #f0f0f0; padding-right: 10px"><pre style="line-height: 125%">1
 2
-3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">name</span>(<span style="color: #AA22FF">self</span>):
+3</pre></div></td><td class="code"><div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">name</span>(<span style="color: #AA22FF">self</span>):
     <span style="color: #666666">...</span>
 name <span style="color: #666666">=</span> locked_cached_property(name)
 </pre></div>
@@ -329,6 +330,7 @@ name <span style="color: #666666">=</span> locked_cached_property(name)
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -342,29 +344,6 @@ name <span style="color: #666666">=</span> locked_cached_property(name)
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 

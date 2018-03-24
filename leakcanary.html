@@ -72,6 +72,7 @@
 							<li class="active"><a href="./category/android.html">android</a></li>
 							<li ><a href="./category/essay.html">essay</a></li>
 							<li ><a href="./category/flask.html">flask</a></li>
+							<li ><a href="./category/hide.html">hide</a></li>
 							<li ><a href="./category/ml.html">ml</a></li>
 							<li ><a href="./category/nlp.html">nlp</a></li>
 							<li ><a href="./category/python.html">python</a></li>
@@ -161,7 +162,7 @@
 <h3 id="_2">用法</h3>
 <h4 id="activity">监控 Activity 泄露</h4>
 <p>我们经常把 Activity 当作为 Context 对象使用，在不同场合由各种对象引用 Activity。所以，Activity 泄漏是一个重要的需要检查的内存泄漏之一。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">ExampleApplication</span> <span style="color: #AA22FF; font-weight: bold">extends</span> Application <span style="color: #666666">{</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">ExampleApplication</span> <span style="color: #AA22FF; font-weight: bold">extends</span> Application <span style="color: #666666">{</span>
 
     <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">static</span> RefWatcher <span style="color: #00A000">getRefWatcher</span><span style="color: #666666">(</span>Context context<span style="color: #666666">)</span> <span style="color: #666666">{</span>
         ExampleApplication application <span style="color: #666666">=</span> <span style="color: #666666">(</span>ExampleApplication<span style="color: #666666">)</span> context<span style="color: #666666">.</span><span style="color: #BB4444">getApplicationContext</span><span style="color: #666666">();</span>
@@ -179,7 +180,7 @@
 
 
 <p><code>LeakCanary.install()</code> 返回一个配置好了的 <code>RefWatcher</code> 实例。它同时安装了 <code>ActivityRefWatcher</code> 来监控 Activity 泄漏。即当 <code>Activity.onDestroy()</code> 被调用之后，如果这个 Activity 没有被销毁，logcat 就会打印出如下信息告诉你内存泄漏发生了。</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    * com.example.leakcanary.MainActivity has leaked:
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    * com.example.leakcanary.MainActivity has leaked:
     * GC ROOT thread java.lang.Thread.&lt;Java Local&gt; <span style="color: #666666">(</span>named <span style="color: #BB4444">&#39;AsyncTask #1&#39;</span><span style="color: #666666">)</span>
     * references com.example.leakcanary.MainActivity<span style="color: #B8860B">$2</span>.this<span style="color: #B8860B">$0</span> <span style="color: #666666">(</span>anonymous class extends android.os.AsyncTask<span style="color: #666666">)</span>
     * leaks com.example.leakcanary.MainActivity instance
@@ -195,7 +196,7 @@
 <p>LeakCanary 自动检测 Activity 泄漏只支持 Android ICS 以上版本。因为 <code>Application.registerActivityLifecycleCallbacks()</code> 是在 API 14 引入的。如果要在 ICS 之前监测 Activity 泄漏，可以重载 <code>Activity.onDestroy()</code> 方法，然后在这个方法里调用 <code>RefWatcher.watch(this)</code> 来实现。</p>
 </div>
 <h4 id="fragment">监控 Fragment 泄漏</h4>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">abstract</span> <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">BaseFragment</span> <span style="color: #AA22FF; font-weight: bold">extends</span> Fragment <span style="color: #666666">{</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #AA22FF; font-weight: bold">abstract</span> <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">BaseFragment</span> <span style="color: #AA22FF; font-weight: bold">extends</span> Fragment <span style="color: #666666">{</span>
 
     <span style="color: #AA22FF">@Override</span> 
     <span style="color: #AA22FF; font-weight: bold">public</span> <span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">onDestroy</span><span style="color: #666666">()</span> <span style="color: #666666">{</span>
@@ -209,7 +210,7 @@
 
 <p>当 <code>Fragment.onDestroy()</code> 被调用之后，如果这个 fragment 实例没有被销毁，那么就会从 logcat 里看到相应的泄漏信息。</p>
 <h4 id="_3">监控其他泄漏</h4>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">    <span style="color: #666666">...</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>    <span style="color: #666666">...</span>
     RefWatcher refWatcher <span style="color: #666666">=</span> ExampleApplication<span style="color: #666666">.</span><span style="color: #BB4444">getRefWatcher</span><span style="color: #666666">(</span>getActivity<span style="color: #666666">());</span>
     refWatcher<span style="color: #666666">.</span><span style="color: #BB4444">watch</span><span style="color: #666666">(</span>someObjNeedGced<span style="color: #666666">);</span>
 </pre></div>
@@ -217,7 +218,7 @@
 
 <p>当 <code>someObjNeedGced</code> 还在内存中时，就会在 logcat 里看到内存泄漏的提示。</p>
 <h4 id="leakcanary">集成 LeakCanary 库</h4>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">dependencies {
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>dependencies {
     debugCompile &#39;com.squareup.leakcanary:leakcanary-android:1.3&#39;
     releaseCompile &#39;com.squareup.leakcanary:leakcanary-android-no-op:1.3&#39;
 }
@@ -240,7 +241,7 @@
 </ol>
 <h4 id="_5">几个有意思的代码</h4>
 <p><strong>如何导出 hprof 文件</strong></p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">File heapDumpFile <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> File<span style="color: #666666">(</span><span style="color: #BB4444">&quot;heapdump.hprof&quot;</span><span style="color: #666666">);</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>File heapDumpFile <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> File<span style="color: #666666">(</span><span style="color: #BB4444">&quot;heapdump.hprof&quot;</span><span style="color: #666666">);</span>
 Debug<span style="color: #666666">.</span><span style="color: #BB4444">dumpHprofData</span><span style="color: #666666">(</span>heapDumpFile<span style="color: #666666">.</span><span style="color: #BB4444">getAbsolutePath</span><span style="color: #666666">());</span>
 </pre></div>
 
@@ -296,6 +297,7 @@ Debug<span style="color: #666666">.</span><span style="color: #BB4444">dumpHprof
 										<li><a href="./category/android.html">android</a></li>
 										<li><a href="./category/essay.html">essay</a></li>
 										<li><a href="./category/flask.html">flask</a></li>
+										<li><a href="./category/hide.html">hide</a></li>
 										<li><a href="./category/ml.html">ml</a></li>
 										<li><a href="./category/nlp.html">nlp</a></li>
 										<li><a href="./category/python.html">python</a></li>
@@ -309,29 +311,6 @@ Debug<span style="color: #666666">.</span><span style="color: #BB4444">dumpHprof
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
-										<li class="tag-4"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
-										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
 								</ul>
 							</div>
 
