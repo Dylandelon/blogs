@@ -30,7 +30,7 @@ Summary: 本文介绍机器学习入门的方法论，然后推荐一些优质�
 
 有了一定的数学基础，就可以切入机器学习了。谈到机器学习入门教程，几乎所有人都会推荐 Coursera 上 Andrew Ng 的《机器学习》这个视频教程。这门课程的封面图片几乎已经成为了机器学习的图腾了。
 
-![machine learning](https://raw.githubusercontent.com/kamidox/blogs/master/images/images/ml_andrew_ng.jpeg)
+![machine learning](https://raw.githubusercontent.com/kamidox/blogs/master/images/ml_andrew_ng.jpeg)
 
 此外，笔者推荐另外一本书《scikit-learn机器学习：常用算法原理及编程实战》。这本书的最大特点是，较少的涉及艰深的数学知识，对涉及到的数学知识，都有通俗的语言解释以及图片可视化讲解，比较适合数学基础较弱的初学者。此外，这本书以 Python 语言为基础，以 scikit-learn 为机器学习框架，介绍了 Python 数据分析及可视化的库，如 numpy, pandas, matplotlib，还介绍了线性回归，逻辑回归，支持向量机，决策树，朴素贝叶斯等常用算法，是一本较适合初学者的书籍。
 
