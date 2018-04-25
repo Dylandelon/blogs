@@ -40,11 +40,11 @@ TensorFlow: 完整的工具链，适合产品经应用；但构造模型不直�
 
 比如 Tatinac dateset 里，pclass 是一个 categories feature，分别用 1，2，3 表示不同等级的座位。如果我们使用 linear model 来拟合模型，座位级别和幸存之间的关系可能不是线性的，此时模型的拟合效果就不好。如下图所示：
 
-![pclass](https://raw.githubusercontent.com/kamidox/blogs/master/kaggler_titanic_pclass.png)
+![pclass](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_titanic_pclass.png)
 
 此时，就需要对特征进行预处理，比如使用 One Hot Encoder 方法，把特征转换为对线性模型友好的新特征，如下图所示：
 
-![one hot encoder](https://raw.githubusercontent.com/kamidox/blogs/master/kaggler_tatinic_pclass_ohe.png)
+![one hot encoder](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_tatinic_pclass_ohe.png)
 
 scikit-learn 里的 `sklearn.preprocessing.OneHotEncoder` 是处理 One Hot Encoder 的常用方法。然而，随机森林等 tree based 模型则不需要做这种预处理，它可以很好地对 categories feature 进行处理。这是因为 tree based 模型是把空间分成一个个盒子，而 linear based 模型是把空间分成两个子空间。
 
@@ -66,7 +66,7 @@ TODO: 针对 Titanic dataset 验证处理前后模型准确性的差异。
 
 non-tree-based 模型往往对数值特征的数量级别比较敏感。比如 kNN 分类时，计算预测点到周围的点的距离，如果某个特征的数值范围很大（100 - 1000），则计算出来的距离就很大；而另外一个数值的距离单位较小（1 - 10），则计算出来的距离小得多，此时就会待预测点预测为距离较短的点。Linear model 也有类似的特性，特征数值的大小，会决定分隔平面的斜率。如下图所示：
 
-![feature scale](https://raw.githubusercontent.com/kamidox/blogs/master/kaggler_numeric_feature_scale.png)
+![feature scale](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_numeric_feature_scale.png)
 
 解决此类问题的关键，是要把数值型特征进行相应的缩放，使其在同一个数量级。常用的算法有：
 * `sklearn.preprocessing.MinMaxScaler`：把特征转换为 [0, 1] 之间
@@ -74,7 +74,7 @@ non-tree-based 模型往往对数值特征的数量级别比较敏感。比如 k
 
 此外，针对 linear model，还需要特别注意异常值（outliers）的处理。因为这些异常值往往会对 linear model 有较大的影响，从而导致模型准确性受损，如下图：
 
-![outliers](https://raw.githubusercontent.com/kamidox/blogs/master/kaggler_outliers.png)
+![outliers](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_outliers.png)
 
 处理异常值的一个方法是，直接去掉这个异常值，比如我们取特征的值分布的 99% 作为有效值，去掉两端的异常值。另外一个方法是使用 rank 的方法来缩减异常值和正常值的距离。常用的是 Pandas 里的 `DataFrame.rank` 或 `Series.rank`，它们按照数值的大小排序，然后取序号来代替真实值。
 
@@ -167,7 +167,7 @@ TODO: 构造一个实例来验证上述说法。
 
 把 categorical feature 映射成数字。这种方法最简单，但只适用于 tree-based model 。Non-tree-based model ，包括 linear mode, kNN, neural networks 不适用这种处理方法，因为模型无法把它当成一个数值来进行计算。想像一下 kNN 是根据距离来分类的，而 LabelEncoder 处理后的数值不能反应真实的“距离”。如下图所示，左图，linear model 无法很好地利用 LabelEncoder 处理后的 categorical feature，而 tree-based model 可以很好地利用处理后的数据。
 
-![LabelEncoder](https://raw.githubusercontent.com/kamidox/blogs/master/kaggler_categorical_feature.png)
+![LabelEncoder](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_categorical_feature.png)
 
 **概率分布处理**
 
@@ -185,7 +185,7 @@ One-hot encoding 方法是给每个类别的值创建一个新特征，等于这
 
 如果多个 categorical feature 的联合体对目标有影响，那么我们可以直接把这些 categorical feature 连接起来，组成一个新的 categorical feature，然后对这个新的 categorical feature 做 one-hot encoding 操作，这样就会生成很多新的特征。Linear model 会拟合出不同的参数，来适配这个新的组合特征，从而达到较好的模型准确率。如下图，把 pclass 和 sex 两个特征合并，生成一个新的 pclass_sex 的特征，然后再针对 pclass_sex 的特征执行 one-hot encoding 操作。
 
-![categorical feature interaction](https://raw.githubusercontent.com/kamidox/blogs/master/kaggle_categorical_interaction.png)
+![categorical feature interaction](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggle_categorical_interaction.png)
 
 需要注意，需要从业务角度判断，只把相关的 categorical feature 合并起来处理，而不是所有的 categorical feature 合并都会产生好的效果。
 
@@ -210,7 +210,7 @@ One-hot encoding 方法是给每个类别的值创建一个新特征，等于这
 
 另外一个处理方式是，可以把时间参数处理成和某个事件锚点的关联关系。如离周末的天数，或离十一长假的天数等等。下面是一个典型的使用 time since 方法创建的新特征，其中 date 是原始的日期特征，sales 是目标值，中间的都是创建出来的新特征。
 
-![time since](https://raw.githubusercontent.com/kamidox/blogs/master/kaggler_time_since.png)
+![time since](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_time_since.png)
 
 **事件间距**
 
