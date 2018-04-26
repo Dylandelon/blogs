@@ -222,7 +222,11 @@ One-hot encoding 方法是给每个类别的值创建一个新特征，等于这
 
 #### 地理特征处理
 
-地理特征处理需要结合地图数据进行处理。
+地理特征处理需要结合地图数据进行处理。比如需要预测房子的价格，除了房子本身的特征（面积，朝向，楼层，结构）外，房子所处的地理位置也很重要。怎么样利用位置信息呢？如果我们有额外的地理信息数据，可以计算房子离最近的医院，学校，公园的距离。如果没有额外的数据，可以从训练样本样本挖掘出新的特征，比如，可以把训练样本的房子分成一些相同的区域，然后然后找出最贵的房子，并计算这个房子到最贵的房子的距离。再如，可以找出一些特征的房子，比如年限最老的房子的区域，然后计算样本到这个区域中心点的距离。
+
+另外一个技巧是，当一条街道把两个区域的房子价格区分开时，我们可以试着增加一个特征，这个特征是这个街道做适当的旋转，使得基于 tree-based 的模型可以在一次分裂即可区分出这两种价格，从而大大提高模型的训练速度和精度。如下图所示：
+
+![coordinate](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_coordinate.png)
 
 #### 总结
 
@@ -234,3 +238,73 @@ One-hot encoding 方法是给每个类别的值创建一个新特征，等于这
     * 距离最近的标志性地点，如公园，医院，学校等
     * 计算训练样本到局域性中心点的距离
     * 对训练样本周边进行聚合统计，如公园数量，医院数量，学校数量等等
+
+### 缺失值的处理
+
+缺失值包括 NaN, 空字符串，奇异点。有时缺失的值也会包含有用的信息，比如为什么会有缺失值？缺失代表什么意思？有时我们可以从这些含义的背后，创建出新的特征来。
+
+#### 缺失值的识别
+
+有时缺失的值并不是 NaN，可能是一些不容易发现的隐藏的值，如 -1。怎么样发现 -1 是缺失值呢？可以通过 EDA 来看数据的分布，从而发现缺失的值。如下图：
+
+![hidden missing values](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_missing_value.png)
+
+再如，有些异常值也可以当成缺失值来处理，如年份在 2050 年上映的电影，或者重量为 100 吨的桃子等。有时，某些 categorical feature 的类别只在测试数据里出现，但没在训练数据里出现。此时模型就会把这些只在测试数据里出现的值作为缺失值处理，进而影响模型的性能。一个处理方法是，使用类别数据出现的频率来进行编码，这样那些只在测试样本里出现的数据也会被正确地编码并处理。
+
+#### 处理缺失值
+
+有三种常用的方法来处理缺失值：
+
+* 替换成常数，如 999， -1，0 等：这种方法对 non-tree-based 模型不友好，可能导致模型准确性下降
+* 替换成平均值，中位数值：对 linear model 比较友好
+* 重新构建出缺失值
+
+缺失值的处理方法和问题背景密切相关。比如，我们统计了一年的温度，但是中间有段时间值是缺失的，如果我们把缺失的值替换成平均值，或替换成 0，可能都不是好的方法。比如我们创建了一个新的特征，这个特征是前后两天的温度差，这样的缺失值处理会误导我们的模型。
+
+![wrong missing values handler](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_temp.png)
+
+#### 总结
+
+* 如何填充缺失值，需要根据具体的问题具体分析
+* 常用的缺失值处理，是替换成常数，平均值，中位数
+* 数据提供者可能已经把缺失值填充成某个特殊的值，如 -999，此时可以通过画出数据的柱状图来检查
+* 添加一个新特征叫 isnull，来表示这一样本是否包含缺失值，往往对模型有帮助
+* 通常情况下，避免在生成新特征前去填充缺失值。因为填充的缺失值可能会影响生成的新特征的准确性。
+* XGBoost 可以自己处理 NaN 值
+
+### 文本特征处理
+
+文本处理的原则是把文本转换为向量，有两种转换方式，一种是 Bag of words，另外一种是 word2vec。
+
+![text to vector](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_text_2_vec.png)
+
+#### Bag of words
+
+Bag of words 的原理就是把每个词语作为一个特征，然后统计这个词在一篇文章里的出现次数。
+
+![CountVectorizer](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_counter_vec.png)
+
+scikit-learn 里的 `CountVectorizer` 可以很好地实现这种转换。
+
+我们前面讨论过，Linear model, kNN, neural networs 等算法对数值的大小比较敏感，需要做等量缩放。Bag of words 里另外一个能实现同等数量级缩放的方法是 TFIDF 方法，它的全称是 Term Frequency - Inverse Document Frequency 。TF 指的是一个词语在一篇文章中的出现次数，IDF 是指这个词语在整个数据集里的出现的频率的 log 值，如果一个词语在所有的文章里都出现，则它的概率是 1，其 log 值则为 0，即它的权重为 0。这个也容易理解，一个单词在每篇文章中都出现，它不带来任何的有效信息。scikit-learn 里的 `TfidfVectorizer` 可以完成这样的任务。
+
+另外一个常用的算法是 N-grams，它不单单统计一个单词，还处理这个单词的上下文信息。当只统计一个单词时，称为 unigrams，统计两个单词时，称为 bigrams，统计三个单词时称为 trigrams。一般情况下，不会超过三阶，因为统计的单词越多，特征数量会成指数增长。
+
+![N-grams](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_ngrams.png)
+
+有时，可以使用字符来代替单词来应用 N-grams 模型，这样做的好处是，可以让模型发现那些我们不认识，但广泛使用的缩写词。可以通过指定 `analyzer='char'` 来启用以字符为单位的分析，可以通过 `ngram_range` 参数来指定 N-grams 阶数。
+
+在进行 Bag of words 处理前，还需要对文本进行预处理，典型地预处理步骤包括：
+
+* 全部转换为小写
+* 词形还原（lemmatization），如把 was -> is，having -> have 等
+* 词干提取（stemming），去掉词尾，提取出词根，如 democracy, democratic, democratization -> democr，
+* 去掉停止词，如把常用的 in, of, at, is 等词语去掉
+
+NLTK 是进行英文文本预处理的理想工具。
+
+#### 总结
+
+* 预处理（写换为小写，词形还原，词干提取，停止词）
+* 使用 N-grams 可以处理文本的上下文信息
+* 后处理，使用 TFIDF
