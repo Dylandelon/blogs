@@ -303,8 +303,31 @@ scikit-learn 里的 `CountVectorizer` 可以很好地实现这种转换。
 
 NLTK 是进行英文文本预处理的理想工具。
 
+#### Word2vec
+
+Bag of words 的方法把文本置换为一个很大的稀疏向量。而 word2vec 使用的是另外一种方法，它把文本转换为一个通常只有几百维的向量。其更大的特点是，word2vec 能精确地表达词语之间的关系，即意思相近的词，其向量也相近。如下图：
+
+![word2vec](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_word2vec.png)
+
+使用 word2vec 处理的单词向量，存在如下关系：king + women - man = queen。
+
+word2vec 算法的其他典型实现包括 Glove, FastText 等。训练 word2vec 不需要我们待处理的文本，而是用一个大而全的语料库，而且需要很长的时间。网络上有一些根据通用语料库训练好的模型。比如 Glove 预训练向量可以从 https://nlp.stanford.edu/projects/glove/ 下载。FastText 预训练向量可以从 https://github.com/facebookresearch/fastText/blob/master/pretrained-vectors.md 下载，它甚至还提供了多种语言的预训练向量，包括中文。
+
 #### 总结
 
 * 预处理（写换为小写，词形还原，词干提取，停止词）
 * 使用 N-grams 可以处理文本的上下文信息
 * 后处理，使用 TFIDF
+* Bag of words 和 word2vec 往往会有不同的结果，可以使用 ensemble 方法结合起来使用
+
+### 图像特征的处理
+
+卷积神经网络是处理图像特征的最有利武器。关于卷积运算，可以搜索“如何通俗易懂地解释卷积”。知乎上有一个非常直观的解释 https://www.zhihu.com/question/22298352 。
+
+使用卷积神经网络处理图像时，一个方法是使用针对问题领域预训练的神经网络模型，如针对病理图像分类的问题，可以使用 VGG, ResNet 等。这种方法往往对数据量比较小的问题，比自己从头训练神经网络模型效果更好。
+
+TODO: 关于神经网络，需要学习完 PyTorch 后再回头重看这个视频。
+
+训练一个神经网络需要大量的数据，数据量越大，模型准确度越好。有时，我们的数据量不够，图片太少，此时可以通过对图像进行旋转，旋转后的图像作为新的训练样本，这样就可以增加训练样本的数量，从而提高模型性能。比如针对房屋朝向的预测，有四种类别，分别是坐北朝南，坐南朝北，平面房顶，其他。我们可以通过旋转图片，从而得到更多的训练样本，可以旋转 180 度，得到一组新数据，旋转 90 度得到另外一组新数据。这样我们的训练样本就增加了 4 倍。
+
+![increase dataset](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_inc_data.png)
