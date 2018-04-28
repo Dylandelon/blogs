@@ -348,5 +348,18 @@ EDA 的全称是 Exploratory data analysis，即数据探索和分析。这个�
 
 TODO: 随书的 w2_002_Building intuition about the data_EDA_video2.ipynb 是个很有趣的 EDA 示例。值得一看。
 
+### 匿名数据分析
+
+有时候，组织者为了隐藏一些敏感信息，会把数据的字段改为匿名字段，如 x1, x2 等。针对这种类型的数据，我们需要尽量去搞清楚这些数据的含义是什么，最少也需要搞清楚这些数据的类型，如 numeric feature, categorical feature 等，这样我们才能做合适的预处理。
+
+w2_003_Exploring anonymized data.ipynb 这个 EDA 里从匿名数据里发现一个特征是出生年份。这个特征被 `StandardScaler` 缩放和平移了。通过一步步发现缩放的系数以及平移的系数，最终发现这是一个年龄。除此之外，这个 EDA 另外一个值得学习的是，使用 `RandomForestClassifier` 构建了一个基准模型，然后训练数据后，通过模型的 `feature_importances_` 去发现这些特征的重要程度。这个方法也有助于我们去分析最重要的特征，而舍弃那些不重要的特征。
+
+匿名数据中，有用的函数：
+
+* df.dtypes: Pandas 猜测的数据类型
+* df.info(): 数据的概要信息
+* df.value_counts(): 数据的分布情况
+* df.isnull(): 数据是否包含空值
+
 
 
