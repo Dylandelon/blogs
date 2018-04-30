@@ -492,6 +492,67 @@ feats_counts.sort_values()[:10]
 
 **总之，我们划分出来的交叉验证数据集，需要尽量的模仿测试数据集的产生机制**。
 
+### 交叉验证常见问题
+
+正常情况下，针对交叉验证数据集的预测结果改善，会带来 public leaderboard 的改善。但有时，却没有这种预期的结果。引起这个问题主要有两个原因：
+
+* 交叉验证原因：这往往是由于数据不一致造成的。比如，我们使用 Handout 划分法来划分交叉验证数据集，这样训练出来的模型对交叉验证数据集过拟合。
+* 提交阶段的原因：交叉验证结果改善了，但 public leaderboard 没改善，这往往是因为我们的交叉验证数据集没有很好的模仿测试数据集。
+
+**交叉验证问题**
+
+* 数据数量太少
+* 数据易变，一致性比较差
+
+解决方案：
+
+* 从多个 KFold 里再平均来获取交叉验证评分，或者增加 KFold 里的 K 参数
+* 从一组 KFold 里来训练模型，得到最优参数，使用另外一组 KFold 来检验模型质量
+
+示例：
+
+需要使用这个解决方案的竞赛有 Liberty Mutual Group Property Inspection Prediction competition 和 Santander Customer Satifaction competition。
+
+**提交阶段的原因**
+
+* public learderboard 数据量太少
+* train dataset 和 test dataset 的分布不一致
+
+针对每一个原因，我们只需要相信我们的交叉验证结果即可，可以忽略 public leaderboard 的评分。针对第二个情况解决方案要复杂一些，我们先来看一个例子，搞清楚什么叫**分布不一致**。
+
+![different distribution](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_diff_distribution.png)
+
+上图中，我们要预测人的身高。训练数据集都是女性，其平均身高是 63 inch，而测试数据集都是男性，其平均身高是 70 inch。这样导致模型针对测试数据集的预测性能很差。我们可以计算训练数据集和测试数据集的平均值，然后直接在提交给 public leaderboard 的模型中加入一个参数，比如直接把预测结果加上 7 inch 。问题是，训练数据集的平均值好计算，测试数据集的平均值怎么计算呢？我们称为 leaderboard probing，即通过 LOG 来探测测试数据集。
+
+但有时，不会这么极端，更常见的情景是，训练数据集里大部分是女性，少部分男性；测试数据集里大部分是男性，少部分是女性。我们可以通过 EDA 来发现数据分布的不均匀。 针对这种情况，我们选择出来的交叉验证数据集需要符合测试数据集的分布情况，这样我们的模型就会包含这种不平衡的分布规则，从而在 public leaderboard 上取得较好的预测结果。
+
+![validation distribution](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_validation_2.png)
+
+在之前 EDA 章节里介绍过 Google 广告成本预测的竞赛题目。通过 EDA 我们发现，训练数据集里只包含那些展示过的广告（未展示过的广告是因为 Google 的广告展示策略导致的），而测试数据集里却包含了所有的广告。针对这种分布的不均衡，我们需要根据测试数据集的生成规则，生成相似分布的交叉验证数据集，即要交叉验证数据集里，包含未展示的广告。
+
+![Google Ads](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_validation_3.png)
+
+详细的 EDA 及分析发现这一分布不均衡的过程，可参阅 w2_002_Building intuition about the data_EDA_video2.ipynb 。
+
+针对音乐推荐的应用，测试数据包含的是所有的推荐音乐，判断用户是否喜欢这个推荐的音乐。而训练数据集包含的是系统推荐的音乐以及用户民自己选择的音乐。我们在构造交叉验证数据集时，需要只从系统推荐的音乐中选择，而不应该把用户自己选择的音乐也包含进去。如果我们没有这样构造交叉验证数据集，而是从训练数据集里随机抽一份作为交叉验证数据集，造成的结果就是我们的模型对交叉验证数据集不断地优化，质量越来越好，但对 public leaderboard 的结果却没有提高。
+
+**结论**：
+
+* public leaderboard 的数据样本太少：如果是这种情况，我们只需要信任交叉验证结果即可
+* train/test 数据分布不一致：针对这种情况，我们需要按照 test dataset 的数据分布，从 train 里构造出相同分布的交叉验证数据集
+
+### 排行版洗牌
+
+即使我们的交叉验证数据集全部做对了，我们使用了正确的交叉验证策略，我们也使用了正确的交叉验证数据集生成策略，我们规避数据分布不均衡问题，让交叉验证数据集和测试数据集具有相同的分布，但是依然会出现排行版洗牌，即在 public leaderboard 上排位很高，但在 private leaderboard 上排位不高。这是为什么呢？主要有以下三个原因：
+
+* 随机因素
+  随机因素有二，一是模型对 public leaderboard 过拟合。二是欠拟合，针对那些非常难预测的金融交易数据，随机因素在这里占用了非常大的比例，这样就导致了排行版被洗牌。
+* 数据量太少
+  特别是针对 private test dataset 的数据量太少
+* public/private test dataset 的分布不一致
+  针对这种问题，我们需要忽略 public leaderboard 的结果。相信交叉验证数据集的结果。比如，针对时间序列数据，一般情况下 public test dataset 包含的是某个时间段的数据，而 private test dataset 包含的是更后面某个时间段的数据。如果我们一味地追求 public leaderboard 上的高分，就会造成过拟合，从而导致 private test dataset 上的分数变低。
+
+
 
 
 
