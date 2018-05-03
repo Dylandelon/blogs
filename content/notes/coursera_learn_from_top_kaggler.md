@@ -755,3 +755,48 @@ ROC 的横坐标是 FPR (False Positive Rate)，即假阳性的概率；纵坐�
 
 当点数很多时，会得到上图所求的典型的 ROC 曲线。AUC ROC 的最大值是 1，最小值是 0，最小常量基准值是 0.5。可以使用 `sklearn.metrics.roc_auc_score` 来计算 AUC ROC 。
 
+### Cohen's Kappa
+
+之前讨论过的例子，如果我们有 10 只猫，90 只狗。我们使用常量来预测，可能达到 90% 的准确率，这个称作 baseline（基准）。Cohen's Kappa 的基本原理是，如果预测的准确率达到 baseline，则为 0，如果准确率达到 100% 则为 1。这样的话，kappa 的计算公式如下：
+
+$$
+kappa = 1 - \frac{1 - p_o}{1 - p_e}
+$$
+
+其中，$p_o$ 表示 Accuracy，即准确率。$p_e$ 是 baseline。其计算公式如下：
+
+$$
+p_e = \frac{1}{N^2} \sum_k n_{k1} n_{k2}
+$$
+
+具体的例子可参阅 https://en.wikipedia.org/wiki/Cohen%27s_kappa 上的一个例子。怎么理解 $p_e$ 呢？实际上，它表达的是一种**随机一致性**。拿 Wikipedia 上的例子，A 和 B 两个教授分别对 50 份奖学金申请提出自己的意见，如下图：
+
+![kappa](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_kappa.png)
+
+这个表格说明，A 对 50 份申请中的 25 份说了 YES，另外 25 份说了 NO。B 对 50 份申请中的 30 份说了 YES，对另外的 20 份说了 NO。那么，$p_e$ 的意思是，针对一个随机申请者，A 和 B 意见一致的概率是多少？针对这个随机的申请者，A 和 B 可能都说了 YES，也可能都说了 NO。意见一致的概率为：
+
+$$
+p_e = p_{yes} + p_{no} = 0.5 * 0.6 + 0.5 * 0.4 = 0.5
+$$
+
+**针对随机样本意见一致的概率就是我们的基线**。故，针对上述例子，先计算 $p_o$，即意见一致的概率，或称为准确率：
+
+$$
+p_o = \frac{20 + 15}{50} = 0.7
+$$
+
+再计算 kappa:
+
+$$
+kappa = 1 - \frac{1 - 0.7}{1 - 0.5} = 0.4
+$$
+
+kappa 的一个延伸的概念是 weighted kappa，即加入权限信息。如下表所示：
+
+假设有三个类别，猫，狗，老虎。把猫预测成猫，或把狗预测成猫的权限为 1，而如果猫和狗错误地预测为老虎，其权重为 10。依照上图中的公式即可计算中 weighed kappa。
+
+weighted kappa 的另外一个延伸是 quadratic weighed kappa，即权重按照平方递增。如 1 预测成 2 的权重是 1，而 1 预测成 3 的权重则是 4，这样按照类别顺序，平方递增，生成的权重表算出来的 kappa 称为 quadratic weighed kappa。可以使用 `sklearn.metrics.cohen_kappa_score` 来计算 kappa 评分。
+
+kappa 的物理含义，是表达模型预测的结果与实际结果的一致性。如，针对疾病检测系统，用来表达模型预测的结果与专业医生的诊断结果的一致性程度。
+
+
