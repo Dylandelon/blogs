@@ -799,4 +799,23 @@ weighted kappa 的另外一个延伸是 quadratic weighed kappa，即权重按�
 
 kappa 的物理含义，是表达模型预测的结果与实际结果的一致性。如，针对疾病检测系统，用来表达模型预测的结果与专业医生的诊断结果的一致性程度。
 
+## 模型优化
+
+有时候，人们经常混淆模型的 metric 和 loss。实际上，这是完全不同的两个概念。loss 是一个函数，模型在训练的过程中会想办法让 loss 函数的返回值达到最小。而 metric 是用来评价模型的准确性的指标，比如前文介绍的 Accuracy, MSE 等等。
+
+下面是一些通用的模型优化方法：
+
+* MSE, LogLoss: 模型指标可以直接优化。只要选择合适的模型即可。
+* MSPE, MAPE, RMSLE: 模型指标不能直接优化。如 XGBoost 无法对 MSPE 进行直接优化，故需要对训练样本进行重新采样，然后转为优化 MSE 。
+* Accuracy, Kappa: 优化其他可优化的 metric，然后再进行 post-process 来处理预测值。
+* 自定义 loss 函数: 我们可以通过模型提供的接口，自定义 loss 函数来优化我们的目标模型。
+* 使用 early stopping 来让模型收敛到一个可接受的阈值
+
+上面的描述很抽象，这里只是做下总览。后续章节提供详细的例子来说明各种优化方法。
+
+### 数值回归
+
+MSE 是支持最广泛的模型 loss 函数。比如，针对 `sklearn.linear_model.SGDRegressor` 模型里的 `loss` 参数，默认情况下即使用 MSE 作为模型 loss 函数。
+
+
 
