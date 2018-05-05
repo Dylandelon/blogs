@@ -8,6 +8,8 @@ Status: draft
 
 ## 机器学习算法总结
 
+[TOC]
+
 ### 机器学习算法的分类
 
 * Linear: scikit-learn(@); vowpal wabbit
@@ -499,7 +501,7 @@ feats_counts.sort_values()[:10]
 * 交叉验证原因：这往往是由于数据不一致造成的。比如，我们使用 Handout 划分法来划分交叉验证数据集，这样训练出来的模型对交叉验证数据集过拟合。
 * 提交阶段的原因：交叉验证结果改善了，但 public leaderboard 没改善，这往往是因为我们的交叉验证数据集没有很好的模仿测试数据集。
 
-**交叉验证问题**
+#### 交叉验证阶段的问题
 
 * 数据数量太少
 * 数据易变，一致性比较差
@@ -513,7 +515,7 @@ feats_counts.sort_values()[:10]
 
 需要使用这个解决方案的竞赛有 Liberty Mutual Group Property Inspection Prediction competition 和 Santander Customer Satifaction competition。
 
-**提交阶段的原因**
+#### 提交阶段的原因
 
 * public learderboard 数据量太少
 * train dataset 和 test dataset 的分布不一致
@@ -536,7 +538,7 @@ feats_counts.sort_values()[:10]
 
 针对音乐推荐的应用，测试数据包含的是所有的推荐音乐，判断用户是否喜欢这个推荐的音乐。而训练数据集包含的是系统推荐的音乐以及用户民自己选择的音乐。我们在构造交叉验证数据集时，需要只从系统推荐的音乐中选择，而不应该把用户自己选择的音乐也包含进去。如果我们没有这样构造交叉验证数据集，而是从训练数据集里随机抽一份作为交叉验证数据集，造成的结果就是我们的模型对交叉验证数据集不断地优化，质量越来越好，但对 public leaderboard 的结果却没有提高。
 
-**结论**：
+#### 结论
 
 * public leaderboard 的数据样本太少：如果是这种情况，我们只需要信任交叉验证结果即可
 * train/test 数据分布不一致：针对这种情况，我们需要按照 test dataset 的数据分布，从 train 里构造出相同分布的交叉验证数据集
@@ -606,7 +608,7 @@ TODO: 合理地利用数据泄漏有时是获得高分的关键。
 
 ### 数值回归模型评估
 
-**MSE**
+#### MSE
 
 MSE 的全称是 Mean Square Error，即均方根法。这是最常用的回归模型评估方法。它的计算公式如下：
 
@@ -620,7 +622,7 @@ $$
 
 我们找到的常量预测值接近 11，实际上就是 y 的平均值。我们可以通过求解微分来直接计算这个最小值。可以使用 `sklearn.metrics.mean_squared_error` 来计算 MSE 。
 
-**RMSE**
+#### RMSE
 
 RMSE 的全称是 Root Mean Square Error，它是 MSE 的一个扩展：
 
@@ -638,7 +640,7 @@ $$
 
 可以使用 `sklearn.metrics.mean_squared_error` 结合 `numpy.sqrt` 来计算 RMSE 。
 
-**R-squared**
+#### R-squared
 
 有时很难从 MSE 和 RMSE 的绝对值里来评估模型性能到底是好还是坏，我们经常是使用相对法，即和某个基准 MSE 值比较。R-squared 评估方法可以实现基于某个基准的比较值。
 
@@ -648,7 +650,7 @@ $$
 
 其中，$\bar{y_i}$ 是指目标的平均值。当 MSE 接近于 0 时，R-squared 的值接近于 1；当 MSE 接近于最小常量预测模型的 MSE 时，R-squared 的值接近于 0。这样模型的评分性能都在 [0, 1] 之间。可以使用 `sklearn.metrics.r2_score` 来计算 R-squared 。
 
-**MAE**
+#### MAE
 
 MAE 的全称是 Mean Absolute Error，它使用绝对值代替平方。
 
@@ -660,7 +662,7 @@ MAE 和 MSE 相比，对异常值的容忍度比较高，同样的误差，使�
 
 是不是 MAE 比 MSE 好呢？不一定。需要根据业务场景来判断，MAE 比 MSE 对异常值的容忍度较高，但要取决于这个异常值是真正的异常值还是只是值比较高，但也需要被关注和预测的目标值？如果是前者，可以用 MAE，但如果是后者，显然 MAE 会减少对异常值的关注，从而导致这类的值的预测准确性受影响。可以使用 `sklearn.metrics.mean_absolute_error` 来计算 MAE 。
 
-**MSPE 和 MSAE**
+#### MSPE 和 MSAE
 
 假设，我们预测商店的电脑销量，商店 1 的实际销量是 10，我们预测成了 9，商店 2 的实际销量是 1000，我们预测成了 999。这两个样本的 MSE 都是 1。但实际上，从误差的角度来讲，针对商店 1 的误差要大得多。MSPE (Mean Square Percentage Error) 可以比较好地衡量这种误差，它增加了权重信息：
 
@@ -678,7 +680,7 @@ MSAE 与此类似，它的最小常量预测值比 MSPE 更小，即更偏向于
 
 ![MAPE](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mape.png)
 
-**RMSLE**
+#### RMSLE
 
 RMSLE 的全称是 Root Mean Square Logarithmic Error。它是 RMSE 的对数版：
 
@@ -705,7 +707,7 @@ RMSLE 也是某种带权重的相对误差计算法。它对小的目标值更�
 
 分类算法的输出值分为两类，一类是 soft predictions，即针对一个类别，预测出概率。如预测是否酒驾时，输出 [0.9, 0.1]，即有 90% 的概率酒驾。我们往往可以取一个门限值，大于门限值，预测为 1 ，小于门限值预测为 0。另外一个类别称为 hard predictions，即直接输出 1 或 0，而不输出概率。
 
-**Accuracy**
+#### Accuracy
 
 $$
 Accuracy = \frac{1}{N}\sum_{i=1}^N[\hat{y_i} = y_i]
@@ -739,9 +741,9 @@ $$
 
 从图中可以看出来，当 $\hat{y_i}$ 接近于 1 时，LogLoss 非常大。这说明，LogLoss 会对完全错误的预测给于非常大的惩罚。此外，针对 LogLoss ，最小常量预测值是一个向量，向量里的元素每个类别的出现概率。如针对 10 只猫，90 只狗的类别预测里，最小常量预测值是 [0.1, 0.9]。可以使用 `sklearn.metrics.log_loss` 来计算 LogLoss 。
 
-### AUC ROC - Area Under Receiver Operating Characteristic Curve
+#### AUC ROC
 
- AUC 通过计算**ROC 曲线**下的面积来评价分类模型。它主要适用于二元分类问题，并且只于 Positive 和 Negative 的顺序。如何构造 ROC 曲线呢？[维基百科](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)的定义是：
+ AUC ROC 的全称是 Area Under Receiver Operating Characteristic Curve。AUC 通过计算**ROC 曲线**下的面积来评价分类模型。它主要适用于二元分类问题，并且只于 Positive 和 Negative 的顺序。如何构造 ROC 曲线呢？[维基百科](https://en.wikipedia.org/wiki/Receiver_operating_characteristic)的定义是：
 
  > The ROC curve is created by plotting the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings.
 
@@ -755,7 +757,7 @@ ROC 的横坐标是 FPR (False Positive Rate)，即假阳性的概率；纵坐�
 
 当点数很多时，会得到上图所求的典型的 ROC 曲线。AUC ROC 的最大值是 1，最小值是 0，最小常量基准值是 0.5。可以使用 `sklearn.metrics.roc_auc_score` 来计算 AUC ROC 。
 
-### Cohen's Kappa
+#### Cohen's Kappa
 
 之前讨论过的例子，如果我们有 10 只猫，90 只狗。我们使用常量来预测，可能达到 90% 的准确率，这个称作 baseline（基准）。Cohen's Kappa 的基本原理是，如果预测的准确率达到 baseline，则为 0，如果准确率达到 100% 则为 1。这样的话，kappa 的计算公式如下：
 
@@ -817,19 +819,19 @@ kappa 的物理含义，是表达模型预测的结果与实际结果的一致�
 
 这里的**优化**，指的是模型依照选定的 loss 函数，通过训练样本不断地让 loss 函数最小的过程。
 
-**MSE/RMSE/R-Squared**
+#### MSE/RMSE/R-Squared
 
 MSE 是支持最广泛的模型 loss 函数。比如，针对 `sklearn.linear_model.SGDRegressor` 模型里的 `loss` 参数，默认情况下即使用 MSE 作为模型 loss 函数。`sklearn.ensemble.RandomForestRegressor` 模型的 `criterion` 参数可以指定模型的 loss 函数，默认也是使用 MSE 作为模型优化目标。
 
 ![MSE Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mse_loss.png)
 
-**MAE**
+#### MAE
 
 支持以 MAE 作为模型 loss 函数的模型会少一点。比如 `sklearn.linear_model.SGDRegressor` 不支持使用 MAE 作为优化目标，但它定义了另外一个称为 `huber` 的 loss 函数，和 MAE 类似，特别是在错误值较大时。而 `sklearn.ensemble.RandomForestRegressor` 模型直接支持 MAE 作为优化目标，可以通过参数 `criterion='mae'` 达成这一目的。
 
 ![MAE Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mae_loss.png)
 
-**MSPE/MAPE**
+#### MSPE/MAPE
 
 很难找到直接支持以 MSPE/MAPE 作为优化目标的模型。我们可以通过自定义 loss 函数来达到这一目的；或者换成其他的 loss 函数，然后通过 earyly stopping 来达成这一目的。这里介绍的是另外一种方法，通过设置样本的权重，重新采样的方法。
 
@@ -848,7 +850,7 @@ df.sample(weights=sample_weights)
 * 测试数据集不需要经过权重重新采样。这是模型已经按照 MSPE 目标优化，测试数据可以直接使用其来预测。
 * 一个技巧可以提高模型的稳定性：通过多次重采样，每次采样都训练一个模型出来。然后最终的预测值取几次模型的平均值。
 
-**RMSLE**
+#### RMSLE
 
 回顾 RMSLE 的计算公式：
 
@@ -872,7 +874,7 @@ $$
 
 ### 分类模型优化
 
-**LogLoss**
+#### LogLoss
 
 LogLoss 在大部分分类模型里都有内置的实现。我们要做的，是选择一个合适的模型，直接训练即可。
 
@@ -890,7 +892,7 @@ LogLoss 在大部分分类模型里都有内置的实现。我们要做的，是
 * Isotonic regression: 以原模型的预测值作为输入，使用 Isotonic Regression 模型进行拟合，这也是一种模型叠加的方法。具体参阅 https://en.wikipedia.org/wiki/Isotonic_regression
 * Stacking：模型叠加。使用 XGBoost 或其他的神经网络叠加在原模型的预测值上。
 
-**Accuracy**
+#### Accuracy
 
 没有模型能够直接针对 Accuracy 进行收敛，但有一些通用的方法。如果是二元分类，使用任何一个分类 loss 函数（如，Logloss）进行训练，然后通过一个 grid search 的循环，调整 threshold 值，以取得最优的 Accuracy 值。如果是多类别分类问题，使用任何一个分类 loss 函数进行训练，然后根据对参数进行微调，以便选择一个 Accuracy 评分最高的模型。
 
@@ -900,7 +902,7 @@ LogLoss 在大部分分类模型里都有内置的实现。我们要做的，是
 
 横坐标是训练样本离决策边界线的距离，纵坐标是模型所受到的惩罚。从上图可以看出来，针对 Accuracy 的是 zero-one-loss，即要么 0，要么 1。跟样本离决策边界的距离无关。这样模型就无法知道，当参数变化时，到底 Accuracy 是变好了还是变坏了，从而导致模型无法以 Accuracy 为目标来直接优化。而针对 Logistic Loss 等，模型通过调整参数，能很容易地计算出 Loss 函数的变化幅度，是变好了还是变坏了。这样模型就可以直接使用这个 Loss 函数来作为目标直接优化。
 
-**AUC**
+#### AUC
 
 少部分模型支持直接以 AUC 作为模型优化目标，但大部分不支持。
 
@@ -912,7 +914,7 @@ LogLoss 在大部分分类模型里都有内置的实现。我们要做的，是
 
 Kappa 无法通过模型优化得到。但是，从 Kappa 计算公式得知，它的公式里分子部分是 MSE ，分母部分和预测值相关。针对多类别的问题，如果我们允许模型输出类似 4.5 这样的中间值，那么可以近似地认为 Kappa 和 MSE 相关。所以，在实践中，通常大家的做法是直接使用 MSE 作为模型优化目标。这个在理论上其实是不严谨的，但在实践中往往起作用。
 
-![AUC Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_kappa_mse_loss.png)
+![kappa Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_kappa_mse_loss.png)
 
 MSE 能给我们一个连续值，我们可以通过调节 threshold 值来获得更好的 kappa 值。调节 threshold 的方法很简单，也是通过 grid search 方法通过循环来找到最好的 threshold 即可。
 
@@ -920,5 +922,51 @@ MSE 能给我们一个连续值，我们可以通过调节 threshold 值来获�
 
 TODO: 参阅  https://arxiv.org/abs/1509.07107 或 w3_008_Classification metrics optimization II_soft_kappa_xgboost.ipynb 。
 
+## Mean Encoding
 
+Mean Encoding 有时也称为 likelihood encoding，有时也叫 target encoding。它是一种添加新特征的方法。
+
+### 基本原理
+
+它的主要原理是：针对 categorical feature，不使用如 label encoding 的技术，而是使用这个特征里每个类别所对应的目标值的平均值来编码，如下图所示：
+
+![Mean Encoding](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_1.png)
+
+### 原理分析
+
+问题是，为什么 mean encoding 会有效呢？我们把 categorical feature 经过 label encoding 和 mean encoding 编码后的值和目标值画成柱状图如下：
+
+![Mean Encoding Hist](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_2.png)
+
+从上图可以看出来，label encoding 后，特征和目标值的关系没有规律，显得比较随机。而 mean encoding 的特征和目标值形成了明显的规律，这样模型就可以很容易地发现这个规律，从而提高模型的准确性。
+
+我们常用的 tree-based 模型，如 XGBoost, LightGBM 等，比较难处理那些连续值的特征。使用 mean encoding 可以使得 tree-based 模型使用较少的树的深度，来达到较低的 loss 值。如下图所示：
+
+![Mean Encoding Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_loss.png)
+
+在实践中，怎么样判断 mean encoding 是否能帮助我们提高模型的准确性呢？下图是一个使用不同的深度的树训练出来的模型，上图是针对训练数据集的 AUC 评分，下图是针对交叉验证数据集的 AUC 评分。
+
+![Mean Encoding Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_diag.png)
+
+从图中可以看出来，随着树的深度越来越大，针对训练数据集的评分越来越高。而这一过程中，我们并没有过拟合，因为针对交叉验证数据集的评分也越来越高，虽然提高得比较少。这一证据，说明针对一些特征，决策树会通过很多次的分裂来处理这个特征，我们可以把决策树 dump 出来，查看这个树的分裂点来证实这个问题。针对这样的问题，我们可以利用 mean encoding 来解决。它可以减少树的深度，减少树的分裂次数，提高模型的性能。
+
+### 计算方法
+
+除了我们上文介绍的均值方法外，还有其他的几种生成方法，如下图所示：
+
+![Mean Encoding](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding.png)
+
+我们来看一个例子。我们使用下面的代码来处理训练数据集和交叉验证数据集，以便生成新的 mean encoding 特征：
+
+```python
+means = x_tr.groupby(col).target.mean()
+x_tr_new = [col + '_mean_target'] = x_tr_new[col].map(means)
+x_cv_new = [col + '_mean_target'] = x_cv_new[col].map(means)
+```
+
+接下来，我们使用 XGBoost 来训练模型，得到如下的学习曲线。我们发现，针对训练数据集的评分很高，而针对交叉验证数据集的评分在 0.5 左右徘徊。从这个特点可以看出来，使用 mean encoding 后模型明显地过拟合了。
+
+![Mean Encoding Overfit](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_overfit.png)
+
+所以，使用 mean encoding 时，必须要引入一些正则项来解决过拟合问题。
 
