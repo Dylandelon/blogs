@@ -801,12 +801,12 @@ kappa 的物理含义，是表达模型预测的结果与实际结果的一致�
 
 ## 模型优化
 
-有时候，人们经常混淆模型的 metric 和 loss。实际上，这是完全不同的两个概念。loss 是一个函数，模型在训练的过程中会想办法让 loss 函数的返回值达到最小。而 metric 是用来评价模型的准确性的指标，比如前文介绍的 Accuracy, MSE 等等。
+有时候，人们经常混淆模型的 metric 和 loss 。实际上，这是完全不同的两个概念。loss 相当于模型的成本函数，模型在训练的过程中会想办法让 loss 函数的值达到最小，比如通过梯度下降算法，不断地逼得 loss 函数的最小值。而 metric 是用来评价模型的准确性的指标，比如前文介绍的 Accuracy, MSE 等等。
 
-下面是一些通用的模型优化方法：
+下面是一些常用的模型 loss 函数：
 
-* MSE, LogLoss: 模型指标可以直接优化。只要选择合适的模型即可。
-* MSPE, MAPE, RMSLE: 模型指标不能直接优化。如 XGBoost 无法对 MSPE 进行直接优化，故需要对训练样本进行重新采样，然后转为优化 MSE 。
+* MSE, LogLoss: 大部分模型支持这个 loss 函数。只要选择合适的模型即可。
+* MSPE, MAPE, RMSLE: 大部分模型不直接支持这些 loss 函数。如 XGBoost 无法对 MSPE 进行直接优化，故需要对训练样本进行重新采样，然后转为优化 MSE 。
 * Accuracy, Kappa: 优化其他可优化的 metric，然后再进行 post-process 来处理预测值。
 * 自定义 loss 函数: 我们可以通过模型提供的接口，自定义 loss 函数来优化我们的目标模型。
 * 使用 early stopping 来让模型收敛到一个可接受的阈值
@@ -815,7 +815,56 @@ kappa 的物理含义，是表达模型预测的结果与实际结果的一致�
 
 ### 数值回归
 
-MSE 是支持最广泛的模型 loss 函数。比如，针对 `sklearn.linear_model.SGDRegressor` 模型里的 `loss` 参数，默认情况下即使用 MSE 作为模型 loss 函数。
+**MSE/RMSE/R-Squared**
 
+MSE 是支持最广泛的模型 loss 函数。比如，针对 `sklearn.linear_model.SGDRegressor` 模型里的 `loss` 参数，默认情况下即使用 MSE 作为模型 loss 函数。`sklearn.ensemble.RandomForestRegressor` 模型的 `criterion` 参数可以指定模型的 loss 函数，默认也是使用 MSE 作为模型优化目标。
 
+![MSE Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mse_loss.png)
+
+**MAE**
+
+支持以 MAE 作为模型 loss 函数的模型会少一点。比如 `sklearn.linear_model.SGDRegressor` 不支持使用 MAE 作为优化目标，但它定义了另外一个称为 `huber` 的 loss 函数，和 MAE 类似，特别是在错误值较大时。而 `sklearn.ensemble.RandomForestRegressor` 模型直接支持 MAE 作为优化目标，可以通过参数 `criterion='mae'` 达成这一目的。
+
+![MAE Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mae_loss.png)
+
+**MSPE/MAPE**
+
+很难找到直接支持以 MSPE/MAPE 作为优化目标的模型。我们可以通过自定义 loss 函数来达到这一目的；或者换成其他的 loss 函数，然后通过 earyly stopping 来达成这一目的。这里介绍的是另外一种方法，通过设置样本的权重，重新采样的方法。
+
+![MAE Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mspe_loss.png)
+
+我们可以使用上图中的右侧的公式计算每个训练样本的权重值 $w_i$。然后通过权重重新对训练样本进行采样：
+
+```python
+df.sample(weights=sample_weights)
+```
+
+最后使用 MSE 作为模型优化目标，这样即可实现 PSPE 作为模型的优化目标。此外，有些模型如 XGBoost, LightGBM 等，直接支持通过 sample weights 作为模型参数。此时，就不需要通过 `df.sample` 进行重新采样了。
+
+采用重采样方法时，有几点需要注意：
+
+* 测试数据集不需要经过权重重新采样。这是模型已经按照 MSPE 目标优化，测试数据可以直接使用其来预测。
+* 一个技巧可以提高模型的稳定性：通过多次重采样，每次采样都训练一个模型出来。然后最终的预测值取几次模型的平均值。
+
+**RMSLE**
+
+回顾 RMSLE 的计算公式：
+
+$$
+RMSLE = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(log(y_i + 1) - log(\hat{y_i} + 1))^2} = RMSE(log(y_i + 1), log(\hat{y_i} + 1))
+$$
+
+故，我们可以通过训练样本进行如下预处理：
+
+$$
+z_i = log(y_i + 1)
+$$
+
+这样把训练样本的目标值从 $y_i$ 转换为 $z_i$，然后使用 MSE 作为模型优化目标。这样训练出来的模型的预测值为 $\hat{z_i}$ ，可以通过下面的公式转换为原来预测值 $\hat{y_i}$：
+
+$$
+\hat{y_i} = \exp(\hat{z_i}) - 1
+$$
+
+总结起来，就是把训练样本数值转换为 log 空间，然后进行 MSE 为目标的模型训练。最后预测值需要从 log 空间转换回原始空间。
 
