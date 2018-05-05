@@ -771,7 +771,7 @@ $$
 
 具体的例子可参阅 https://en.wikipedia.org/wiki/Cohen%27s_kappa 上的一个例子。怎么理解 $p_e$ 呢？实际上，它表达的是一种**随机一致性**。拿 Wikipedia 上的例子，A 和 B 两个教授分别对 50 份奖学金申请提出自己的意见，如下图：
 
-![kappa](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_kappa.png)
+![kappa](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_kappa_1.png)
 
 这个表格说明，A 对 50 份申请中的 25 份说了 YES，另外 25 份说了 NO。B 对 50 份申请中的 30 份说了 YES，对另外的 20 份说了 NO。那么，$p_e$ 的意思是，针对一个随机申请者，A 和 B 意见一致的概率是多少？针对这个随机的申请者，A 和 B 可能都说了 YES，也可能都说了 NO。意见一致的概率为：
 
@@ -811,9 +811,11 @@ kappa 的物理含义，是表达模型预测的结果与实际结果的一致�
 * 自定义 loss 函数: 我们可以通过模型提供的接口，自定义 loss 函数来优化我们的目标模型。
 * 使用 early stopping 来让模型收敛到一个可接受的阈值
 
-上面的描述很抽象，这里只是做下总览。后续章节提供详细的例子来说明各种优化方法。
+上面的描述很抽象，这里只是做下总览。后续章节详细描述各种模型优化方法。
 
-### 数值回归
+### 数值回归模型优化
+
+这里的**优化**，指的是模型依照选定的 loss 函数，通过训练样本不断地让 loss 函数最小的过程。
 
 **MSE/RMSE/R-Squared**
 
@@ -867,4 +869,56 @@ $$
 $$
 
 总结起来，就是把训练样本数值转换为 log 空间，然后进行 MSE 为目标的模型训练。最后预测值需要从 log 空间转换回原始空间。
+
+### 分类模型优化
+
+**LogLoss**
+
+LogLoss 在大部分分类模型里都有内置的实现。我们要做的，是选择一个合适的模型，直接训练即可。
+
+![LogLoss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_logloss_loss.png)
+
+需要注意，`sklearn.ensemble.RandomForestClassifier` 使用 `gini` 或 `entropy` 来作为 loss 函数，它对 LogLoss 的性能很差。但有方法可以解决这个问题。我们可以对预测值进行**校准**，以便它的 LogLoss 性能更好。为什么需要校准呢？因为 `sklearn.ensemble.RandomForestClassifier` 不是以 LogLoss 为模型优化目标，而是使用 gini 或 entropy 作为模型优化目标。所以，当我们以 LogLoss 作为模型评价的 metric 时，就需要对模型进行校准。
+
+![RandomForest](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_logloss_rf.png)
+
+如上图，蓝色线表示随机森林的预测值分布，红色线表示训练数据集的滑动窗口平均值，绿色线表示校准后的预测值。从图中可以看出来，蓝色线需要经过校准，才能获得更好的预测值，从而让 LogLoss 的值更小。
+
+预测概率校准的方法大体有以下几种：
+
+* Platt scaling: 以原模型的预测值作为输入，使用 Logistic Regression 模型进行拟合。类似模型叠加（model stacking）的方法。具体参阅 https://en.wikipedia.org/wiki/Platt_scaling
+* Isotonic regression: 以原模型的预测值作为输入，使用 Isotonic Regression 模型进行拟合，这也是一种模型叠加的方法。具体参阅 https://en.wikipedia.org/wiki/Isotonic_regression
+* Stacking：模型叠加。使用 XGBoost 或其他的神经网络叠加在原模型的预测值上。
+
+**Accuracy**
+
+没有模型能够直接针对 Accuracy 进行收敛，但有一些通用的方法。如果是二元分类，使用任何一个分类 loss 函数（如，Logloss）进行训练，然后通过一个 grid search 的循环，调整 threshold 值，以取得最优的 Accuracy 值。如果是多类别分类问题，使用任何一个分类 loss 函数进行训练，然后根据对参数进行微调，以便选择一个 Accuracy 评分最高的模型。
+
+为什么 Accuracy 不能作为模型的 Loss 函数来直接优化呢？请看下图：
+
+![Accuracy Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_accuracy_loss.png)
+
+横坐标是训练样本离决策边界线的距离，纵坐标是模型所受到的惩罚。从上图可以看出来，针对 Accuracy 的是 zero-one-loss，即要么 0，要么 1。跟样本离决策边界的距离无关。这样模型就无法知道，当参数变化时，到底 Accuracy 是变好了还是变坏了，从而导致模型无法以 Accuracy 为目标来直接优化。而针对 Logistic Loss 等，模型通过调整参数，能很容易地计算出 Loss 函数的变化幅度，是变好了还是变坏了。这样模型就可以直接使用这个 Loss 函数来作为目标直接优化。
+
+**AUC**
+
+少部分模型支持直接以 AUC 作为模型优化目标，但大部分不支持。
+
+![AUC Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_auc_loss.png)
+
+针对 AUC，大部分人直接使用 LogLoss 作为模型优化目标。针对 XGBoost，使用 LogLoss 作为优化目标和使用 pairwise loss 作为优化目标实际效果差不多。
+
+**Quadratic weighted Kappa**
+
+Kappa 无法通过模型优化得到。但是，从 Kappa 计算公式得知，它的公式里分子部分是 MSE ，分母部分和预测值相关。针对多类别的问题，如果我们允许模型输出类似 4.5 这样的中间值，那么可以近似地认为 Kappa 和 MSE 相关。所以，在实践中，通常大家的做法是直接使用 MSE 作为模型优化目标。这个在理论上其实是不严谨的，但在实践中往往起作用。
+
+![AUC Loss](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_kappa_mse_loss.png)
+
+MSE 能给我们一个连续值，我们可以通过调节 threshold 值来获得更好的 kappa 值。调节 threshold 的方法很简单，也是通过 grid search 方法通过循环来找到最好的 threshold 即可。
+
+此外，有个论文讨论如何直接让 kappa 作为模型优化目标。
+
+TODO: 参阅  https://arxiv.org/abs/1509.07107 或 w3_008_Classification metrics optimization II_soft_kappa_xgboost.ipynb 。
+
+
 
