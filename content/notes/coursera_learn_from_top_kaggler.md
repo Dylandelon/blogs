@@ -968,5 +968,162 @@ x_cv_new = [col + '_mean_target'] = x_cv_new[col].map(means)
 
 ![Mean Encoding Overfit](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_overfit.png)
 
-所以，使用 mean encoding 时，必须要引入一些正则项来解决过拟合问题。
+所以，使用 mean encoding 时，必须要引入一些正则项来解决过拟合问题。为什么会造成过拟合呢？根本原因在于，针对每个类别，其在训练数据集和交叉验证数据集里的分布概率不同，导致算出来的 mean encoding 值不一样。
+
+### 正则化
+
+使用 mean encoding 时必须使用正则化来解决模型过拟合问题。总共有四种正则化的方法，下面逐一介绍。
+
+#### CV Loop
+
+CV Loop 的特点如下：
+
+* 直观且稳定
+* 通常把数据集分成 4 到 5 个 Fold 即可，不需要对这个参数进行调整
+* 需要特别小心 Leave-One-Out 的情景，这种情景可能导致交叉验证数据集的数据泄漏，从而导致无效
+
+其计算方法是，使用 `StratifiedKFold` 把数据集分成 5 个 fold，然后每个 fold 的平均值从其他 4 个 fold 里计算得来。这样算出所有的平均值。最后，由于某些类别的数据量比较少，可能导致没有在全部的 fold 里出现，故会出现 NaN，我们把这些 NaN 使用全局平均值替代。其伪代码如下：
+
+```python
+y = df_tr['target'].values
+x = df_tr.drop(labels='target', axis=1, inplace=True)
+x_new = x.copy()
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=23)
+
+for tr_index, cv_index in skf.split(x, y):
+    x_tr, x_cv = x.iloc[tr_index], x.iloc[cv_index]
+    for col in cols:  # interate through the columns we want to encode
+        means = x_cv[col].map(x_tr.groupby(col).target.mean())
+        x_cv[col + '_mean_target'] = means
+    x_new.iloc[cv_index] = x_cv
+
+prior = y.mean()
+x_new.fillna(prior, inplace=True)
+```
+
+#### Smoothing
+
+Smoothing 方法一般需要和其他的正则化方法结合起来使用，比如和上面介绍的 CV Loop 方法结合。它的思想是引入一个 alpha 变量，让这个变量控制正则化的程度。当 alpha 为 0 时，则没有正则化，当 alpha 趁近于无穷大时，则 mean encoding 使用全局平均值。
+
+$$
+mean_target = \frac{mean(target) * nrows + globalmean * alpha}{nrows + alpha}
+$$
+
+#### Noise
+
+Noise 方法的原则是给 mean encoding 后的特征加入一些随机的噪声。因为 mean encoding 对训练数据集提供了近乎完美的特征，但对交叉验证数据集则没那么好。但这个方法不好操作，加入太多噪声会导致特征变成垃圾，太少特征又无法达到合适的正则项。主定方法通常和 CV Loop 结合起来使用。而且需要严格调试噪声的大小。
+
+#### Expending mean
+
+Expending mean 方法最少限度地导致目标泄漏（即把目标值引入到特征里），而且没有类似 alpha 的调试参数。它的思想就是，根据 n - 1 行的数据计算第 n 行的 mean encoding 的值。如下代码片段所示：
+
+```python
+cumsum = df_tr.groupby(col)['target'].cumsum() - df_tr['target']
+cumcnt = df_tr.groupby(col).cumcount()
+tr_new[col + '_mean_target'] = cumsum / cumcnt
+```
+
+在实践中，常用的是 CV Loop 和 Expending Mean 的方法。
+
+### Mean encoding 的泛化和扩展
+
+本节主要内容有：
+
+* 针对数值回归和多类别分类问题的 mean encoding
+* 多对多关系
+* 针对时间序列的应用
+* 怎么样对 numerical feature 进行编码
+
+#### 数值回归和多类别分类
+
+二元分类问题对 target 只有一个解读。而数值回归则有多种解读，比如可以取 categorical feature 对应的每种类别的均值，方差，中位值，甚至分布信息。比如目标值是 1 到 100 之间的分布值，我们可以分成 10 个 bin，然后计算每个 bin 的样本数量，如计算 1 - 10 之间的样本目标值的数量，再算 11 - 20 之间的样本目标值的数量，依此类推。总之，数值回归问题在 feature engineering 方面比二元分类问题更灵活，也有更多的处理方法。具体哪个方法效果更好，需要根据数据的特征和分布情况进行信偿试和调优。
+
+多类别分类问题的 encoding 方法也比较直观，直接针对多个类别对应的值计算平均值进行编码。大部分情况下，多元分类问题采用的是 one-vs-all 的分类方法，即每个类别有自己的模型和参数，彼此之间不知道对方的存在。而 mean encoding 实际上是引入了其他类别的信息。
+
+#### 多对多关系
+
+有时候，categorical feature 是多对多的关系，比如用户和他们手机上安装的 App 这样的一个例子。一个用户会安装多个 App，而一个 App 也会被多个用户安装。这就是多对多关系。如下图所示：
+
+![Many To Many](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_m2m.png)
+
+针对这样的数据，我们如果要对 userid 和 app 进行编码，首先需要根据 app 作展开，针对每个 user 和 app 创建唯一的配对，即进行向量叉乘。如图右侧所示，这个称为 long representation。然后，针对每个 app 计算其 mean encoding。计算出来的 mean encoding 如何再映射到 user 上去呢？可以采用的方法可以是加和，最大值，最小值，平均值，方差等等。总之，根据每个 user 的 app 的 mean encoding 组成的向量，应用一些统计方法算出一个值，当成 user 的 mean encoding 值即可。
+
+#### 时间序列
+
+时间序列是有内在关联关系的数据。针对其他的数据，我们都是针对所有的行来求平均值，而对时间序列，则可以更灵活，比如我们可以求之前 2 天的平均值，也可以求之前 1 周的平均值等等。
+
+比如，针对不同的用户在不同的品类上的消费这样的例子，如下图：
+
+![Time Serial](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_ts.png)
+
+我们有 2 天的数据，总共有 2 个用户，3 个品类。针对这样的数据，可以创建出一些很有用的特征。比如，用户前天花了多少钱；用户在某个品类中平均每天花多少钱等。如上图所示。数据越多，可以创建出越多越复杂的特征。
+
+#### 处理 numerical feature
+
+tree-based 模型对连续的 numerical feature 并不友好。所以，我们可以借助 mean encoding 的思想对 numerical feature 进行处理。在实践中，通常可以对 numerical feature 以及几个 numerical feature 结合起来做 mean encoding 处理。其方法是把 numerical feature 划分成几个等级，然后把它当成 categorical feature 进行处理。
+
+现在，需要回答两个问题。一是，怎么样对 numerica feature 进行等级划分？二是，选择哪些 feature 进行结合？答案是通过分析决策树的结构进行判断，如果一个特征在决策树里有多次分裂，那么可能是这个特征太复杂了，我们可以采用 mean encoding 的方法进行处理。再如，两个特征经常出现在一起，对决策树进行分裂，那么这两个特征可能有关联关系，可以把这两个特征结合起来作为 categorical feature 进行 mean encoding 处理。
+
+![feature interactions](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mean_encoding_interaction.png)
+
+如上图，如果 feature1 和 feature2 在决策树里频繁地出现在相临的位置进行分裂，说明这两个特征联合起来对目标值有复杂的关联关系，模型在试图找出这种规律。这个时候，我们可以把这两个特征合并起来，使用类似 many-to-many 的方法进行 mean encoding，然后拿这个新的特征让模型去训练。实际上，这样做的终极目的是，创建一个新的特征，让模型通过这个特征更容易地找到规律。
+
+那么如何导出决策树特征呢？针对 scikit-learn，我们可以使用 `sklearn.tree.export_graphviz()` 函数把决策树模型参数导出到文件，然后使用 `graphviz` 工具包生成决策树示意图。如下代码所示：
+
+```python
+from sklearn.tree import export_graphviz
+
+with open(\"titanic.dot\", 'w') as f:
+    f = export_graphviz(clf, out_file=f)
+
+# 1. 在电脑上安装 graphviz
+# 2. 运行 `dot -Tpng titanic.dot -o titanic.png`
+# 3. 在当前目录查看生成的决策树 titanic.png
+```
+
+Kaggle 上的 Amazone Employee Access Challenge Competition 只有 9 个类别特征，如果我们不做特征工程，直接把这 9 个特征丢给 XGBoost 处理，那么不管我们怎么调试参数，AUC 评分只能达到大概 0.87 。这样大概在 public learderboard 的 700 位左右。甚至，我们针对每个 categorical feature 进行 mean encoding，也没能提高 AUC 评分。
+
+但是，如果我们使用 [CatBoost](https://github.com/catboost/catboost) 库进行训练，会马上把 AUC 评分提高到 0.91 ，从而让我们的排名大幅提高。这是因为 CatBoost 的实现里，默认会对不同的 categorical feature 进行关联 mean encoding 处理。
+
+但是 CatBoost 也不是万能钥匙，为了进一步提高排名，我们仍然需要分析决策树结构，然后手动添加不同 categorical feature 的关联 mean encoding 创建出来的新特征。
+
+TODO: 使用 Amazone Employee Access Challenge Competition 的数据验证 feature interaction 的效果。
+
+#### 交叉验证注意事项
+
+由于 mean encoding 容易造成过拟合，在交叉验证数据集上，需要特点注意。在本地验证以及在 kaggle 提交时有不同的处理策略。
+
+在本地进行交叉验证时：
+
+* 把数据集分成训练数据集 x_tr 和交叉验证数据集 x_cv
+* 在 x_tr 上计算 mean encoding ，然后 map 到 x_tr 和 x_cv 上
+* 针对 x_tr 采取正则化措施
+* 使用 x_tr 和 x_cv 两个数据集对模型进行交叉验证
+
+千万不要在划分数据之前对数据进行 mean encoding 计算。因为这样会造成目标数据泄漏 (target leackage)，即把目标值引入到交叉验证数据集里，最后造成的结果是训练数据集评分很高，交叉验证数据集评分也很高，而提交到 public learderboard 时评分很低。
+
+TODO: 找一个例子验证，通过正则项解决 mean encoding 过拟合问题。从而把整个流程串起来。
+
+在提交到 kaggle 上运行时：
+
+* 针对整个训练数据集计算 mean encoding
+* 将计算结果 map 到训练数据集和测试数据集
+* 针对训练数据集进行正则化
+* 针对训练数据集进行模型训练
+* 使用模型对测试数据集进行预测
+
+需要注意，使用哪种正则化方法应该在本地交叉验证阶段已经固定下来了，在提交阶段使用相同的方法。
+
+### 总结
+
+优点：
+
+* Mean encoding 是处理 categorical feature 的有效方法
+* Mean encoding 是特征工程的强有力的基础
+
+缺点：
+
+* 因为存在目标值泄漏，需要特点小心地处理交叉验证集。否则非常容易造成过拟合问题。
+* 只对部分数据集有效，不是针对所有的竞赛都管用。但要注意，如果有效，会显著地提高模型质量。
+
 
