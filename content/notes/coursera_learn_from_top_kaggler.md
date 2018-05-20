@@ -1327,3 +1327,25 @@ Scikit-learn 的 SVC/SVM 模型的最大优势是基本不需要对参数进行�
 
 ![ensembling](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_ensembling.png)
 
+## 特征工程
+
+特征工程的主要目的是根据现有的特征生成新的特征，让模型更容易训练，提高模型的准确性。
+
+### 基于统计信息和邻近信息的特征工程
+
+假设有如下的数据集，一个典型的解法是，使用 categorical feature 来处理这些特征，然后使用模型进行训练。但这种解法有个问题是，总是把一个样本当作独立的个体来看待，没法明确地和整体信息关联。
+
+![categorical feature](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_feature_engineer.png)
+
+为了解决这个问题，可以使用特征工程算出一些统计信息，比如算出一个用户和页面的平均，最高，最低价格。这样就可以创建出一些新特征，丰富了训练样本数据的信息量。
+
+![categorical feature](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_feature_engineer_2.png)
+
+![categorical feature](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_feature_engineer_3.png)
+
+实际上，不止于此，还可以创建一些其他的特征，比如用户访问的页面数量，一个 session 的页面访问数量，用户访问最多的页面的数量等等。其核心思想是使用统计学的方法，增加训练样本的信息量。
+
+如果可以分组的特征怎么办呢？一个方法是使用临近的数据来产生新特征。一方面，这种方法，比较难实现，也比较难提取出有价值的信息。从另外一个方面来看，正因为这种方法灵活，需要根据业务场景和背景知识来进行特征工程，有更多的可能性和潜力。比如，需要预测房价，可以计算邻近 500m, 1km, 5km 的的房价均值。或者计算邻近区域的医院数量，学校数量等。
+
+### 基于矩阵因子的特征工程
+
