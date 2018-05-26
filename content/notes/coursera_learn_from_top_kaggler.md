@@ -1349,3 +1349,53 @@ Scikit-learn 的 SVC/SVM 模型的最大优势是基本不需要对参数进行�
 
 ### 基于矩阵因子的特征工程
 
+#### 什么是矩阵因子
+
+矩阵因子 (Matrix Factorization) 是一种数据降维的技术。矩阵因子的数学定义是，一个矩阵 A ，找到另外两个矩阵，P 和 Q ，使得 $A \approxeq P Q$。问题是，我们为什么要这样做呢？其目的有：
+
+* 数据压缩
+  假设一个矩阵是 1000 x 1000 的矩阵，保存这个矩阵需要保存 100 万个数据。如果 A 是一个低[秩](https://baike.baidu.com/item/秩/13388670)矩阵，它的秩是 50，这样我们可以找出矩阵 P 和 Q，使得 $A = PQ$，且 P 这 1000 x 50 的矩阵，Q 为 50 x 1000 的矩阵。这样保存了矩阵 P 和 Q，就可以算出矩阵 A 。而保存 P 和 Q 只需要保存 1000 x 50 + 50 x 1000 ，即 10 万个数据，比原来的 100 万减少了 90%。这种一般应用在图片压缩等领域。
+* 区分模式和噪音
+  假设矩阵 A 的行表示一个用户，列表示一部电影，矩阵元素 $A^{i,j}$ 表示第 i 个用户是否喜欢第 j 个电影。这个数据的收集过程是这样的，用户看过的电影会点喜欢，对没看过或不喜欢的，则没有任何操作。故 0 表示用户没看过或不喜欢这个电影，1 表示用户喜欢这个电影。如果我们要基于这个数据开发一个推荐系统，当用户点击了喜欢某个电影后，我们希望给用户推荐一些他也可能喜欢的电影。怎么样实现这个推荐系统呢？一个方法是，找到这个矩阵 A 的矩阵因子 P 和 Q，使得 $A \approxeq P Q$。通过降低 P 和 Q 的秩，我们可以使得模型尽量描述数据的特征，丢弃数据的噪声。假设我们找到了最优的 P 和 Q，则计算出来的 $\hat{A} = P Q$ 矩阵里，某个元素是 1，而对应的 A 矩阵的元素是 0，则我们可以认为这个用户可能是喜欢这个电影的。就可以推荐给用户。
+
+参考链接：https://www.quora.com/What-is-matrix-factorization
+
+矩阵因子在特征工程上的应用方向之一，是进行特征合并。比如针对文本信息，我们可以使用 Vanilla BOW 技术，使用 TF-IDF 技术，还可以使用 BOW bigrams 来处理文本，从而得到不同的特征矩阵，我们可以合并这些特征矩阵，只取里面最有用的信息，这就是数据降维技术来进行特征合并。
+
+![Dimension reduction](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_mf.png)
+
+#### 矩阵因子的实现
+
+scikit-learn 在 `sklearn.decomposition` 包里有 Matrix Factorization 的各种实现。
+
+* SVD 和 PCA 是矩阵因子的标准工具
+* TruncatedSVD 适用于稀疏矩阵，比如 TF-IDF 处理后的矩阵
+* Non-negative Matrix Factorization (NMF) 处理的矩阵元素必须是非负数，处理后矩阵因子的元素也都是非负数
+
+NMF 处理后的特征数据对 tree-based 模型更做好。针对 Microsoft Mobile Classification Challenge，分别使用 PCA 和 NMF 对特征进行处理后的效果图。从图中可以看出来，NMF 把特征转换为坐标轴对齐，从而使得 tree-based 模型更容易对特征进行处理。
+
+![NMF](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_nmf.png)
+
+我们还可以使用一些变形的 NMF 转换来提高模型的泛化效果。如下图，使用标准的 NMF 和变形的 NMF 转换出来不同的特征，使用模型组合的方法，可以达到更高的模型泛化效果。
+
+![非标准 NMF](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_n_nmf.png)
+
+另外一个需要注意的事是，我们需要对训练数据和测试数据使用统一的转换规则。比如下面是错误的处理方法：
+
+```python
+pca = PCA(n_component=5)
+x_train_pca = pca.fit_transform(x_train)
+x_test_pca = pca.fit_transform(x_test)
+```
+
+下面者正确地处理方法：
+
+```python
+x_all = np.concatenate(x_train, x_test)
+pca.fit(x_all)
+x_train_pca = pca.transform(x_train)
+x_test_pca = pca.transform(x_test)
+```
+
+矩阵因子分解是一种带信息失真的处理技术，不是对所有的模型都有用。但对特定的问题，可以产生良好的效果。它起作用的主要机制是提高模型的泛化效果，通过矩阵因子分解，去除噪声数据。
+
