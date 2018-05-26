@@ -1423,3 +1423,37 @@ x_test_pca = pca.transform(x_test)
 
 ![从决策树构建交互特征](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_fi_dt.png)
 
+### tSNE
+
+#### Manifold learning
+
+在 scikit-learn 里有个专门的包 `sklearn.manifold` 实现 Manifold learning 。scikit-learn 里有篇文章 [Comparison of Manifold Learning methods](http://scikit-learn.org/stable/auto_examples/manifold/plot_compare_methods.html) 对比了不同的 manifold learning 方法的转换效果。
+
+![Manifold learning](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_manifold_learning.png)
+
+tSNE 是一种 manifold learning 技术，即特征转换的技术。
+
+#### 什么是 tSNE
+
+什么是 tSNE？可参阅链接：[how to use t-sne effectively](https://distill.pub/2016/misread-tsne/)
+
+* Those hyperparameters really matter
+* Cluster sizes in a t-SNE plot mean nothing
+* Distances between clusters might not mean anything
+* Random noise doesn’t always look random.
+* You can see some shapes, sometimes
+* For topology, you may need more than one plot
+
+简单地讲，tSNE 是一种数据可视化技术，它可以在一个二维空间里展示高维度的数据，经常用在 EDA 里。通过 tSNE 技术，也可以创建新特征。
+
+#### 使用 tSNE 创建新特征
+
+使用 tSNE 合建新特征的方法是，调整好 tSNE 的参数，然后使用 tSNE 转换后的特征与原特征联合起来即可。但要注意几个事情：
+
+1. tSNE 的参数非常重要，tSNE 的参数决定了创建出来的特征是否会对模型有帮助。
+   解决方法是使用多个 `perplexity` 参数，生成多个数据转换，同时使用这些转换后的数据。
+2. 训练数据集和测试数据集必须合并起来，使用同一个 tSNE 进行转换。
+3. tSNE 所呈现出来的数据类别有时会有误导性，比如随机数据在某些参数下也会呈现结构化特征。
+4. 如果原始特征太多，如超过 500 ，tSNE 需要很长时间来转换。最好用 PCA, TruncatedSVD 等方案进行数据降维后再使用 tSNE 处理。
+5. scikit-learn 库里有 tSNE 的实现，但一个单独的 python 包 `tSNE` 具备更快地性能
+
