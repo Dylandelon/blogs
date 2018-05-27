@@ -1498,3 +1498,47 @@ for n in range(0, bags):
 bagged_predictions /= bags
 ```
 
+### Boosting
+
+Boosting 和 bagging 不同的地方在于，使用 bagging 进行组合的模型之间是相互独立的。而 boosting 则是串行建立模型组合，**每个模型都建立在之前的模型的训练结果之上**。主要的的 boosting 方法有：
+
+* 基于权重的 boosting 方法（weight based）
+* 基于残差的 boosting 方法（residual based）
+
+#### Weight based boosting
+
+Weight based boosting 的原理是：
+
+1. 用模型基于训练数据集对结果进行预测
+2. 计算预测值和真实值的误差绝对值 abs.error
+3. 创建一个新的特征 weight，称为权重特征，其值为 1 + abs.error
+4. 使用包含权重特征的数据集继续训练模型，得出预测值
+5. 重复上述步骤，直到模型达到理想的指标
+
+![weight based boosting](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_weight_boosting.png)
+
+Weight based boosting 有一些可调的参数：
+
+**学习率 Learing rate (shrinkage or eta)**
+
+学习率控制控制每个模型的贡献程度，比较理想的情况是，每个模型贡献一点点。这样可以有效地控制过拟合。针对第 N 个新训练的模型，其预测值为：
+
+PredictionN = pred_0 * eta + pred_1 * eta + ... + pred_N * eta
+
+**模型个数 number of estimator**
+
+这个参数和学习率成反比，即更多个数的模型，我们需要更小的学习率。有时候很难找到一个合适的最优值，往往需要借助交叉验证数据集来找到合适的值。一个典型的方法是，我们先设置一个固定的模型个数，比如 100。然后保持模型个数不变，基于交叉验证数据集的验证结果，找到学习率的最优值是 0.1。然后，我们把模型个数翻倍，把学习率减小为原来的一半，这样我们就可以用较快的速度找到较好的组合。因为模型越多，学习率越小，训练时间就越长。当然，模型个数和学习率不一定是严格的线性的关系，模型个数翻倍后，可能最优的学习率是原来的 0.6 或原来的 0.4 。
+
+**输入模型 input model**
+
+输入的模型即进行 weight based boosting 的模型可以是任意支持设置训练样本权重的模型。
+
+**boosting 子类型**
+
+AdaBoost: scikit-learn 里的 `AdaBoostClassifier` 和 `AdaBoostRegressor` 是性能良好的实现。
+LogitBoost: Weka (Java) 是个不错的实现
+
+#### Residual based boosting
+
+
+
