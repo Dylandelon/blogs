@@ -1457,3 +1457,44 @@ tSNE 是一种 manifold learning 技术，即特征转换的技术。
 4. 如果原始特征太多，如超过 500 ，tSNE 需要很长时间来转换。最好用 PCA, TruncatedSVD 等方案进行数据降维后再使用 tSNE 处理。
 5. scikit-learn 库里有 tSNE 的实现，但一个单独的 python 包 `tSNE` 具备更快地性能
 
+## 模型组合 ensemble
+
+模型组合通过把多个模型通过一定的方式组合起来，达到更高的准确性。几个常用的模型组合：
+
+* Averaging: 对模型求平均值，典型地两个模型权重各占一半
+* Weighted averaging: 可能对模型取特定的权重，比如第一个模型占 70%，第二个模型占 30%
+* Conditional averaging: 条件均值。比如对两个模型，当特征 x < 50 时采用模型 1，当 x>= 50 时，采用模型二
+
+![ensemble - averaging](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_ensemble_average.png)
+
+针对上图的两个模型，纵坐标是实际的年龄，横坐标是预测的年龄。左边的模型，针对 50 岁以下的预测效果好，针对 50 岁以上的误差较大。右边的模型相反。可以使用模型组合来优化这个问题。可以分别使用 averaging, weighted averaging, conditional averaging 来优化这一问题。需要注意，两个模型平均起来，合并后的模型指标 $R^2$ 可能比两个单独的模型都差，比如使用 averaging 方法时。但总体上讲，模型组合会有更好的模型泛化性。
+
+### Bagging
+
+Bagging 是指通过对相同模型的不同版本进行组合以提高模型指标的方法，bagging 组合的各个版本之间是独立的。典型的 bagging 技术是随机森林。bagging 组合可调的参数有：
+
+* seed: 随机数种子
+* row sampling: 每个模型只用部分训练数据集进行训练
+* shuffling: 对训练数据集打乱重排
+* column sampling: 每个模型只用部分特征进行训练
+* 调整模型本身的参数
+* number of models: 进行 bagging 的模型个数。一般情况下，个数越多模型指标越好，但模型越多，训练时间也会越长
+* 并行训练
+
+下面是使用随机森林进行 bagging 的示例代码：
+
+```python
+model = RandomForestClassifier()
+bags = 10
+seed = 1
+
+bagged_predictions = np.zero(test.shape[0])
+for n in range(0, bags):
+    model.set_params(random_state=seed + n)
+    model.fit(train, y)
+    preds = model.predict(test)
+    bagged_predictions += preds
+
+bagged_predictions /= bags
+```
+
