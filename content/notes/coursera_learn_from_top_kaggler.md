@@ -1647,5 +1647,42 @@ stacking 组合技术有几个注意事项：
 * 指标瓶颈：当叠加的模型个数超出一定数量后，模型的指标就没法再提升了。所以，太多的模型无法提升指标，反而需要花费很多时间去训练。
 * 元模型要尽量简单。因为我们期望叠加的模型已经把数据规律都抓出来了，元模型只是做个简单的组合。一般使用线性模型。使用树模型时，树的深度要尽量控制在较小的水平。
 
+### StackNet
 
+StackNet 比 stacking 更进一步，它利用 stacking 的技术，构建一个类似神经网络的多层结构。与神经网络不同的是，神经网络的不同层的神经元之间一般是一个线性模型（逻辑回归），而 StackNet 则不限制模型。
+
+![stacking](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_stacknet.png)
+
+回忆 stacking 的过程，我们需要把数据集分成两半。如果使用 StackNet，则每叠加一层，就要把数据分成两半，这样对数据量较小的情况下就会有问题。一个解决方案是使用 `KFold` ，比如针对 4 fold，每次拿其中 75% 的数据来训练，25% 的数据作为交叉验证数据集做预测，分别针对这些 fold 执行相同的操作，则可以完整地把所有的训练数据集都利用起来。
+
+此外，和神经网络相比，StackNet 除了可以使用上一层的结果作为输入，也可以直接拿第一层的结果作为输入，甚至可以把原始的输入也加上。这样可以更灵活地处理这些特征。
+
+第一层技巧：构建 StackNet 第一层模型时的一些技巧
+
+* 模型多样性
+  * 2-3 个 gradient boost trees，如 LightGBM, XGBoost, H2O, CatBoost 等
+  * 2-3 个神经网络模型，keras, pytorch 等
+  * 1-2 个 ExtraTree/RandomFroest 等（scikit-learn）
+  * 1-2 个线性模型，如 logicstic/ridge regression, linear SVM 等
+  * 1-2 个 KNN 模型
+  * 1 个非线性 SVM，如果性能和内存允许
+* 特征多样性
+  * Categorial feature: one hot encoding, label encoding, target encoding, frequency encoding
+  * Numerical feature: outliers, binning, derivatives, percentiles, scaling
+  * Feature interactions
+
+中间层技巧：
+
+* 简单的模型
+  * gradient boost tree with small depth (2-3)
+  * linear model with high regularzation
+  * extra trees
+  * shallow networks with one hidden layer
+  * knn
+* 特征工程
+  * pairwise differences between meta features
+  * row-wise statistics like average or stds
+  * standard feature selection techniques
+
+StackNet 参考实现：https://github.com/kaz-Anova/StackNet
 
