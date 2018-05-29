@@ -1588,4 +1588,64 @@ Prediction = pred_0 + pred_1 * eta + ... + pred_N * eta
 Fully gradient based: 如上述学习率参数，对后续的模型，使用一个百分比来靠近预测值。
 Dart: 迭代的模型里，不采用前面的全部模型，而随机去掉几个模型。假设，drop out 比例是 20%，当前我们训练了 10 个模型，则第 11 个模型不使用前面 10 个模型的预测结果，相反，它会随机丢掉 2 个模型，只取 8 个模型进行叠加组合。
 
+### Stacking
+
+Stacking 也是一种性能优良的模型组合的技术。在 kaggle 竞赛中，最终总是或多或少会用到 stacking 技术来提升分数。
+
+它的主要步骤如下：
+
+1. 把数据集分成训练数据集和交叉验证数据集
+2. 使用一个模型对训练数据集进行训练，然后同时对交叉验证数据集和测试数据集进行预测
+3. 使用另外一个不同的模型，重复上述步骤，直到把所有你想 stacking 的模型都用上为止
+4. 把所有的模型针对交叉验证数据集预测结果组装成一个数组，组成一个新的训练数据集
+5. 把所有的模型针对测试数据集预测结果组装成一个数组，组成一个新的测试数据集
+6. 使用另外一个新的简单的模型（元模型），对交叉验证数据集的预测结果进行训练
+7. 使用这个元模型，对新的测试数据集进行预测
+
+![stacking](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_stacking.png)
+
+如上图所示，A 是训练数据集，B 是交叉验证数据集，C 是测试数据集。针对数据集 A 分别训练模型 0，1，2，然后使用这三个模型分别对 B 和 C 进行预测，预测结果分别放在 B1 和 C1 数组里，生成新的训练数据集和测试数据集。然后，再拿 B1 训练出模型 3，再拿模型 3 来对 C1 进行预测。最终得到预测结果。
+
+下面是一个用 Python 写的简单的 stacking 的例子。例子中，使用 `RandomForestRegressor` 和 `LinearRegression` 模型进行叠加，最后再使用 `LinearRegression` 作为元模型进行第二轮的训练和预测。
+
+```python
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+tr, cv y_tr, y_cv = train_test_split(train, y, test_size=0.5)
+# 模型 1 和模型 2 进行叠加
+model1 = RandomForestRegressor()
+model2 = LinearRegression()
+
+model1.fit(tr, y_tr)
+model2.fit(tr, y_tr)
+
+pred1 = model1.predict(cv)
+pred2 = model2.predict(cv)
+
+pred1_test = model1.predict(test)
+pred2_test = model2.predict(test)
+# 预测结果进行叠加
+pred_stacked_cv = np.column_stack((pred1, pred2))
+pred_stacked_test = np.column_stack((pred1_test, pred2_test))
+# 元模型进行训练/预测
+meta_model = LinearRegression()
+meta_model.fit(pred_stacked_cv, y_cv)
+pred_test_final = meta_model.predict(pred_stacked_test)
+```
+
+Stacking 可以达到很好的效果。如下图所求，右图是我们在之前章节里提到，使用条件平均的方式组合起来的模型。右图是使用 stacking 训练的效果。从图中可以看出来，两者效果差不多。而使用条件平均方式组合，需要预测知道预测值（大于 50 还是小于 50），这是实际问题中往往不具备可操作性，因为预测值往往是未知的。
+
+![stacking](https://raw.githubusercontent.com/kamidox/blogs/master/images/kaggler_stacking_2.png)
+
+stacking 组合技术有几个注意事项：
+
+* 时间序列：当训练数据集是时间序列时，数据划分需要以时间为维度进行划分
+* 多样性和性能并重：叠加的模型多样机，比如结合 tree base 模型和 linear base 模型。特征多样机，比如针对 categorical feature，分别使用 one hot encoding 和使用 label encoding 来处理特征。
+* 指标瓶颈：当叠加的模型个数超出一定数量后，模型的指标就没法再提升了。所以，太多的模型无法提升指标，反而需要花费很多时间去训练。
+* 元模型要尽量简单。因为我们期望叠加的模型已经把数据规律都抓出来了，元模型只是做个简单的组合。一般使用线性模型。使用树模型时，树的深度要尽量控制在较小的水平。
+
+
 
