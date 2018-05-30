@@ -1660,21 +1660,21 @@ StackNet 比 stacking 更进一步，它利用 stacking 的技术，构建一个
 第一层技巧：构建 StackNet 第一层模型时的一些技巧
 
 * 模型多样性
-  * 2-3 个 gradient boost trees，如 LightGBM, XGBoost, H2O, CatBoost 等
-  * 2-3 个神经网络模型，keras, pytorch 等
+  * 2-3 个 gradient boost trees，如 LightGBM, XGBoost, H2O, CatBoost 等。为了确保多样机，可以选择不同深度的树，然后调整一个合适的参数。
+  * 2-3 个神经网络模型，keras, pytorch 等。为了确保多样性，可以让模型从多层神经网络到三层神经网络，各一个。
   * 1-2 个 ExtraTree/RandomFroest 等（scikit-learn）
   * 1-2 个线性模型，如 logicstic/ridge regression, linear SVM 等
   * 1-2 个 KNN 模型
-  * 1 个非线性 SVM，如果性能和内存允许
+  * 1 个非线性 SVM，如果数据量不大的情况下
 * 特征多样性
-  * Categorial feature: one hot encoding, label encoding, target encoding, frequency encoding
-  * Numerical feature: outliers, binning, derivatives, percentiles, scaling
-  * Feature interactions
+  * Categorial feature: one hot encoding, label encoding, target encoding, frequency encoding 多种编码方式，这样可以抓到特征的多样性
+  * Numerical feature: 去掉/保留 outliers, binning, derivatives, percentiles, scaling
+  * 使用 Feature interactions 创建新特征
 
 中间层技巧：
 
 * 简单的模型
-  * gradient boost tree with small depth (2-3)
+  * gradient boost tree with small depth (2-3 层即可)
   * linear model with high regularzation
   * extra trees
   * shallow networks with one hidden layer
@@ -1684,5 +1684,11 @@ StackNet 比 stacking 更进一步，它利用 stacking 的技术，构建一个
   * row-wise statistics like average or stds
   * standard feature selection techniques
 
-StackNet 参考实现：https://github.com/kaz-Anova/StackNet
+StackNet 的参考实现：
+
+* https://github.com/kaz-Anova/StackNet
+* Stacked ensembles from H2O
+* https://github.com/reiinakano/xcessiv
+
+
 
