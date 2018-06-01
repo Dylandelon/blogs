@@ -1686,9 +1686,13 @@ StackNet 比 stacking 更进一步，它利用 stacking 的技术，构建一个
 
 StackNet 的参考实现：
 
-* https://github.com/kaz-Anova/StackNet
+* https://github.com/kaz-Anova/StackNet StackNet 的实现，不过是用 Java 实现的
 * Stacked ensembles from H2O
-* https://github.com/reiinakano/xcessiv
+* https://github.com/reiinakano/xcessiv 是个完整的工具，提供基于网页的多种模型的组合工具
+* w4_407_Ensembling Tips and Tricks.pdf 文档值得一读，它提供了各种各样的 StackNet 构建方法，包括时间序列数据的处理方法。
+* https://mlwave.com/kaggle-ensembling-guide/ 值得一读的文章，从原理到实践，还有 Github 上的代码可用
+* https://github.com/MLWave/Kaggle-Ensemble-Guide 上文对应的一些工具脚本，包含多种模型组合技术的实现。是个简单的工具，没有正规的产品化。
+* https://github.com/rushter/heamy 提供了几种简单的 stacking 实现，包括 stacking, blend, weighted average，是个完备的可用的库。
 
 
 
