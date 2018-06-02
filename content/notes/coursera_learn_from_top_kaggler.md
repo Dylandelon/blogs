@@ -1696,5 +1696,19 @@ StackNet 的参考实现：
 * https://github.com/MLWave/Kaggle-Ensemble-Guide 上文对应的一些工具脚本，包含多种模型组合技术的实现。是个简单的工具，没有正规的产品化。
 * https://github.com/rushter/heamy 提供了几种简单的 stacking 实现，包括 stacking, blend, weighted average，是个完备的可用的库。
 
+## 实例
+
+### Crowdflower Competition
+
+### Springleaf Competition
+
+### Microsoft Malware Classification Challenge
+
+https://github.com/geffy/kaggle-malware
+https://github.com/xiaozhouwang/kaggle_Microsoft_Malware
+
+### 过往解决方案
+
+Kaggle 过往竞赛的解决方案：http://www.chioka.in/kaggle-competition-solutions/ 。
 
 
