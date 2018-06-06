@@ -439,7 +439,7 @@ feats_counts.sort_values()[:10]
 先对使用 `factorize()` 对数据进行 categorical 编码处理，然后针对所有的特征，两两比较是否相同，并且记录这些具有相同值的特征。最后把这些值相同的特征删除掉。
 
 **决定数据类型**
-决定数据类型有时不止一个方案，比如对 1, 2, 3 这样的数值，可以是 numerical feature ，也可以是 categorical feature。一个常用的方法是使用 `nunique = train.nunique(dropna=False)` 算出每个特征的值的个数，如果个数很大，很有可能是 numerical feature。如果个数很小，则可能是 categorical feature。除此之外，还可以使用 `plt.hist(nunique.astype(float)/train.shape[0], bins=100)` 画出柱状图，以便更形象地观察。
+决定数据类型有时不止一个方案，比如对 1, 2, 3 这样的数值，可以是 numerical feature ，也可以是 categorical feature。一个常用的方法是使用 `nunique = train.nunique(dropna=False)` 算出每个特征的值的个数，如果个数很大，很有可能是 numerical feature。如果个数很小，则可能是 categorical feature。除此之外，还可以使用 `plt.hist(nunique.astype(float)/train.shape[0], bins=100)` 画出条形图 (bar chart)，以便更形象地观察。
 
 **其他**
 有时我们通过 EDA 可以发现一些数据的模式，比如发现某些累加值，如第一个月销售量，前两个月累计销售量，前三个月累计销售量，linear mode 可以很好地处理这种值，但 tree-based 模型就会有问题。对 tree-based 模型更友好的是转换为每个月的销量。
@@ -1713,4 +1713,94 @@ https://github.com/xiaozhouwang/kaggle_Microsoft_Malware
 
 Kaggle 过往竞赛的解决方案：http://www.chioka.in/kaggle-competition-solutions/ 。
 
+
+### Titanic Competition
+
+#### 模型叠加
+
+https://www.kaggle.com/arthurtok/introduction-to-ensembling-stacking-in-python
+
+要点总结如下。
+
+**特征相关性**
+
+去除相关性太高的特征可以提高模型的性能指标。特征的相关性太高意味着有一个是多余的，因为它没有带来额外的信息量。
+
+```python
+colormap = plt.cm.RdBu
+plt.figure(figsize=(14,12))
+plt.title('Pearson Correlation of Features', y=1.05, size=15)
+sns.heatmap(train.astype(float).corr(),linewidths=0.1,vmax=1.0,
+            square=True, cmap=colormap, linecolor='white', annot=True)
+```
+
+需要注意，`train` 是一个 Pandas 的 `DataFrame` 实例，且所有的数据必须都是数值型的。
+
+**特征重要性**
+
+`RandomForestClassifier` 等模型，训练完后，可以通过 `feature_importances_` 获得特征的重要性。当使用多个模型进行叠加时，可以分别查看每个模型的特征重要性信息。甚至把特征权重信息通过条形图 (bar chart) 画出来，直观地观察每个特殊的权重。通过特征权重的信息，可以把对所有的模型都不重要的特征去除。这也是一种特征选择方法。此外，还可以看到每个模型对对特定的特征的重要性不同，这也是模型多样性的一种查看方法。针对模型组合，多样性的模型组合才能得到较好的结果。
+
+**模型相关性**
+
+针对模型组合，需要确保模型的多样性。可以把第一层模型的预测结果保存到一个 `DataFrame` 实例里，然后通过 `sns.heatmap` 函数画出各个模型预测结果的相关性。这样可以直观地观察到每个基础模型预测结果的相关性。
+
+#### EDA 数据分析
+
+https://www.kaggle.com/sinakhorami/titanic-best-working-classifier
+
+**特征与目标相关性**
+
+可以使用如下代码快捷地查看特征和目标值的关联关系：
+
+```python
+print (train[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean())
+
+   Pclass  Survived
+0       1  0.629630
+1       2  0.472826
+2       3  0.242363
+```
+
+上述代码可以简单地看到不同舱位的幸存概率。
+
+**连续值离散化**
+
+有时我们需要把连续值进行离散化。比如年龄，我们希望划分为儿童，少年，青年，中年，老年等。一个简易的方法是直接使用 Pandas 里的 `cut` 函数进行等距离划分。此外，`qcut` 还可以进行分位数划分。
+
+*注：分位数也称为 Quantile ，把一组按照升序排列的数据分割成n个等份区间并产生 n - 1 个等分点后每个等分点所对应的数据。按照升序排列称作第一至第 n - 1 的 n 分位数（如果等分点在其左右两个数据的中间，那么该等分点所对应的数就是其左右两数的平均数）。*
+
+如果需要更复杂的自定义划分，可以画出柱状图，根据数据的分布情况，选取自定义的划分点。然后使用 `Series.apply()` 函数把连续值离散化。
+
+**缺失值处理**
+
+针对 Emarked 特征，因为它的缺失值较少，且大部分类别都是 S 的，故可以直接把缺失值填充成 S 类别。
+
+针对 Age 特征，缺失值较多。可以求出均值和方差，然后在把 Age 填充为均值左右方差的随机值，如下：
+
+```python
+age_avg = dataset['Age'].mean()
+age_std = dataset['Age'].std()
+age_null_count = dataset['Age'].isnull().sum()
+
+age_null_random_list = np.random.randint(age_avg - age_std, age_avg + age_std, size=age_null_count)
+dataset['Age'][np.isnan(dataset['Age'])] = age_null_random_list
+dataset['Age'] = dataset['Age'].astype(int)
+```
+
+**其他技巧**
+
+使用 `Series.map()` 函数可以把类别数据转换为整数。如：
+
+```python
+dataset['Sex'] = dataset['Sex'].map( {'female': 0, 'male': 1} ).astype(int)
+dataset['Embarked'] = dataset['Embarked'].map( {'S': 0, 'C': 1, 'Q': 2} ).astype(int)
+# Mapping Age
+dataset.loc[ dataset['Age'] <= 16, 'Age'] = 0
+dataset.loc[(dataset['Age'] > 16) & (dataset['Age'] <= 32), 'Age'] = 1
+dataset.loc[(dataset['Age'] > 32) & (dataset['Age'] <= 48), 'Age'] = 2
+dataset.loc[(dataset['Age'] > 48) & (dataset['Age'] <= 64), 'Age'] = 3
+dataset.loc[ dataset['Age'] > 64, 'Age'] = 4
+```
+
+TODO: https://www.kaggle.com/ldfreeman3/a-data-science-framework-to-achieve-99-accuracy
 
