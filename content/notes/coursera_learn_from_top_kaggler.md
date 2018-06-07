@@ -1730,7 +1730,7 @@ https://www.kaggle.com/arthurtok/introduction-to-ensembling-stacking-in-python
 colormap = plt.cm.RdBu
 plt.figure(figsize=(14,12))
 plt.title('Pearson Correlation of Features', y=1.05, size=15)
-sns.heatmap(train.astype(float).corr(),linewidths=0.1,vmax=1.0,
+sns.heatmap(train.astype(float).corr(), linewidths=0.1, vmax=1.0,
             square=True, cmap=colormap, linecolor='white', annot=True)
 ```
 
@@ -1738,7 +1738,7 @@ sns.heatmap(train.astype(float).corr(),linewidths=0.1,vmax=1.0,
 
 **特征重要性**
 
-`RandomForestClassifier` 等模型，训练完后，可以通过 `feature_importances_` 获得特征的重要性。当使用多个模型进行叠加时，可以分别查看每个模型的特征重要性信息。甚至把特征权重信息通过条形图 (bar chart) 画出来，直观地观察每个特殊的权重。通过特征权重的信息，可以把对所有的模型都不重要的特征去除。这也是一种特征选择方法。此外，还可以看到每个模型对对特定的特征的重要性不同，这也是模型多样性的一种查看方法。针对模型组合，多样性的模型组合才能得到较好的结果。
+`RandomForestClassifier` 等模型，训练完后，可以通过 `feature_importances_` 获得特征的重要性。当使用多个模型进行叠加时，可以分别查看每个模型的特征重要性信息。甚至把特征权重信息通过条形图 (bar chart) 画出来，直观地观察每个特征的权重。通过特征权重的信息，可以把对所有的模型都不重要的特征去除。这也是一种特征选择方法。此外，还可以看到每个模型对对特定的特征的重要性不同，这也是模型多样性的一种查看方法。针对模型组合，多样性的模型组合才能得到较好的结果。
 
 **模型相关性**
 
@@ -1802,5 +1802,20 @@ dataset.loc[(dataset['Age'] > 48) & (dataset['Age'] <= 64), 'Age'] = 3
 dataset.loc[ dataset['Age'] > 64, 'Age'] = 4
 ```
 
+#### 完整流水线
+
 TODO: https://www.kaggle.com/ldfreeman3/a-data-science-framework-to-achieve-99-accuracy
+
+**数据划分策略**
+
+使用 `model_selection.cross_validate` 时，只拿 90% 的数据进行训练，故意留出 10% 的数据不使用，这样可以有效地减少过拟合。
+
+```python
+cv_split = model_selection.ShuffleSplit(n_splits=10, test_size=.3, train_size=.6, random_state=0 )
+cv_results = model_selection.cross_validate(alg, data1[data1_x_bin], data1[Target], cv=cv_split)
+```
+
+**scikit-learn 里的投票模型**
+
+`sklearn.ensemble.VotingClassifier` 是 scikit-learn 里的投票模型。可以实现“硬”投票，即根据 1 和 0 来投票。也可以实现“软”投票，即根据概率来投票。
 
