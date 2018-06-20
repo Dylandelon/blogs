@@ -20,17 +20,16 @@
 		<!-- Feeds -->
 
 
-		<!-- mathjax config similar to math.stackexchange -->
-		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
 		<script>
 		MathJax.Hub.Config({
 		  config: ["MMLorHTML.js"],
 		  extensions: ["tex2jax.js"],
-		  jax: ["input/TeX"],
+		  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
 		  tex2jax: {
 		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
 		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-		    processEscapes: false
+		    processEscapes: true
 		  },
 		  TeX: {
 		    extensions: ["AMSmath.js", "AMSsymbols.js"],
@@ -44,7 +43,9 @@
 		      fonts: "STIXGeneral,'Arial Unicode MS'"
 		    }
 		  },
-		  showProcessingMessages: false
+		  displayAlign: "center",
+		  showProcessingMessages: false,
+		  messageStyle: 'none'
 		});
 		</script>
 	</head>
@@ -209,29 +210,29 @@
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-3"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
 										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
 										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-3"><a href="./tag/web.html">web</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
 										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
 								</ul>
 							</div>
 

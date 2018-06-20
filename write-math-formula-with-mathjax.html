@@ -20,17 +20,16 @@
 		<!-- Feeds -->
 
 
-		<!-- mathjax config similar to math.stackexchange -->
-		<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
 		<script>
 		MathJax.Hub.Config({
 		  config: ["MMLorHTML.js"],
 		  extensions: ["tex2jax.js"],
-		  jax: ["input/TeX"],
+		  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
 		  tex2jax: {
 		    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
 		    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-		    processEscapes: false
+		    processEscapes: true
 		  },
 		  TeX: {
 		    extensions: ["AMSmath.js", "AMSsymbols.js"],
@@ -44,7 +43,9 @@
 		      fonts: "STIXGeneral,'Arial Unicode MS'"
 		    }
 		  },
-		  showProcessingMessages: false
+		  displayAlign: "center",
+		  showProcessingMessages: false,
+		  messageStyle: 'none'
 		});
 		</script>
 	</head>
@@ -144,28 +145,75 @@
 	<p>在书写数值计算类文章，特别是机器学习相关算法时，难免需要插入复杂的数学公式。一种是用图片在网页上展示，另外一种是使用 <a href="https://www.mathjax.org">MathJax</a> 来展示复杂的数学公式。它直接使用 Javascript 使用矢量字库或 SVG 文件来显示数学公式。优点是效果好，比如在 Retina 屏幕上也不会变得模糊。并且可以直接把公式写在 Markdown 文章里。本文介绍使用 MathJax 在 Markdown 文件里直接插入数学公式。并且附带一个简单的书写数学公式的 LaTex 教程。</p>
 <h2 id="_1">工具</h2>
 <h3 id="markdown-preview-mathjax">配置 Markdown Preview 来支持 MathJax</h3>
-<p>使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -&gt; Markdown Preview -&gt; Setting - User) 里添加如下内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #BB4444">&quot;enable_mathjax&quot;</span><span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>
+<p>使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -&gt; Markdown Preview -&gt; Setting) 里添加如下内容：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #BB4444">&quot;enable_mathjax&quot;</span><span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>,
+<span style="color: #BB4444">&quot;js&quot;</span><span style="color: #666666">:</span> [
+        <span style="color: #BB4444">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js&quot;</span>,
+        <span style="color: #BB4444">&quot;res://MarkdownPreview/js/math_config.js&quot;</span>,
+]
 </pre></div>
 
 
+<p>接着，需要安装 <a href="https://github.com/skuroda/PackageResourceViewer">Package​Resource​Viewer</a>，打开 Markdown Preview 包里的 <code>math_config.js</code> 文件，修改为如下内容：</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%">MathJax.Hub.Config({
+  config<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;MMLorHTML.js&quot;</span>],
+  extensions<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;tex2jax.js&quot;</span>],
+  jax<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;input/TeX&quot;</span>, <span style="color: #BB4444">&quot;output/HTML-CSS&quot;</span>, <span style="color: #BB4444">&quot;output/NativeMML&quot;</span>],
+  tex2jax<span style="color: #666666">:</span> {
+    inlineMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$&#39;</span>,<span style="color: #BB4444">&#39;$&#39;</span>], [<span style="color: #BB4444">&quot;\\(&quot;</span>,<span style="color: #BB4444">&quot;\\)&quot;</span>] ],
+    displayMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$$&#39;</span>,<span style="color: #BB4444">&#39;$$&#39;</span>], [<span style="color: #BB4444">&quot;\\[&quot;</span>,<span style="color: #BB4444">&quot;\\]&quot;</span>] ],
+    processEscapes<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>
+  },
+  TeX<span style="color: #666666">:</span> {
+    extensions<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;AMSmath.js&quot;</span>, <span style="color: #BB4444">&quot;AMSsymbols.js&quot;</span>],
+    TagSide<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;right&quot;</span>,
+    TagIndent<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;.8em&quot;</span>,
+    MultLineWidth<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;85%&quot;</span>,
+    equationNumbers<span style="color: #666666">:</span> {
+      autoNumber<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;AMS&quot;</span>,
+    },
+    unicode<span style="color: #666666">:</span> {
+      fonts<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;STIXGeneral,&#39;Arial Unicode MS&#39;&quot;</span>
+    }
+  },
+  displayAlign<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;center&quot;</span>,
+  showProcessingMessages<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">false</span>,
+  messageStyle<span style="color: #666666">:</span> <span style="color: #BB4444">&#39;none&#39;</span>
+});
+</pre></div>
+
+
+<p>只要打开 <code>Option + P</code> 就可以打开预览。</p>
 <h3 id="pelican-mathjax">配置 Pelican 主题模板来支持 MathJax</h3>
 <p>我使用的主题是 <code>foundation-default-colours</code>，它默认是支持 MathJax 的。我们可以在模板 <code>base.html</code> 找到如下内容：</p>
-<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008800; font-style: italic">&lt;!-- mathjax config similar to math.stackexchange --&gt;</span>
-<span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/x-mathjax-config&quot;</span><span style="color: #008000; font-weight: bold">&gt;</span>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/javascript&quot;</span> <span style="color: #BB4444">src=&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js&quot;</span><span style="color: #008000; font-weight: bold">&gt;&lt;/script&gt;</span>
+<span style="color: #008000; font-weight: bold">&lt;script&gt;</span>
 MathJax.Hub.Config({
-    jax<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;input/TeX&quot;</span>, <span style="color: #BB4444">&quot;output/HTML-CSS&quot;</span>],
-    tex2jax<span style="color: #666666">:</span> {
-        inlineMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$&#39;</span>, <span style="color: #BB4444">&#39;$&#39;</span>] ],
-        displayMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$$&#39;</span>, <span style="color: #BB4444">&#39;$$&#39;</span>]],
-        processEscapes<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>,
-        skipTags<span style="color: #666666">:</span> [<span style="color: #BB4444">&#39;script&#39;</span>, <span style="color: #BB4444">&#39;noscript&#39;</span>, <span style="color: #BB4444">&#39;style&#39;</span>, <span style="color: #BB4444">&#39;textarea&#39;</span>, <span style="color: #BB4444">&#39;pre&#39;</span>, <span style="color: #BB4444">&#39;code&#39;</span>]
+  config<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;MMLorHTML.js&quot;</span>],
+  extensions<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;tex2jax.js&quot;</span>],
+  jax<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;input/TeX&quot;</span>, <span style="color: #BB4444">&quot;output/HTML-CSS&quot;</span>, <span style="color: #BB4444">&quot;output/NativeMML&quot;</span>],
+  tex2jax<span style="color: #666666">:</span> {
+    inlineMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$&#39;</span>,<span style="color: #BB4444">&#39;$&#39;</span>], [<span style="color: #BB4444">&quot;\\(&quot;</span>,<span style="color: #BB4444">&quot;\\)&quot;</span>] ],
+    displayMath<span style="color: #666666">:</span> [ [<span style="color: #BB4444">&#39;$$&#39;</span>,<span style="color: #BB4444">&#39;$$&#39;</span>], [<span style="color: #BB4444">&quot;\\[&quot;</span>,<span style="color: #BB4444">&quot;\\]&quot;</span>] ],
+    processEscapes<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">true</span>
+  },
+  TeX<span style="color: #666666">:</span> {
+    extensions<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;AMSmath.js&quot;</span>, <span style="color: #BB4444">&quot;AMSsymbols.js&quot;</span>],
+    TagSide<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;right&quot;</span>,
+    TagIndent<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;.8em&quot;</span>,
+    MultLineWidth<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;85%&quot;</span>,
+    equationNumbers<span style="color: #666666">:</span> {
+      autoNumber<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;AMS&quot;</span>,
     },
-    messageStyle<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;none&quot;</span>,
-    <span style="color: #BB4444">&quot;HTML-CSS&quot;</span><span style="color: #666666">:</span> { preferredFont<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;TeX&quot;</span>, availableFonts<span style="color: #666666">:</span> [<span style="color: #BB4444">&quot;STIX&quot;</span>,<span style="color: #BB4444">&quot;TeX&quot;</span>] }
+    unicode<span style="color: #666666">:</span> {
+      fonts<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;STIXGeneral,&#39;Arial Unicode MS&#39;&quot;</span>
+    }
+  },
+  displayAlign<span style="color: #666666">:</span> <span style="color: #BB4444">&quot;center&quot;</span>,
+  showProcessingMessages<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">false</span>,
+  messageStyle<span style="color: #666666">:</span> <span style="color: #BB4444">&#39;none&#39;</span>
 });
 <span style="color: #008000; font-weight: bold">&lt;/script&gt;</span>
-<span style="color: #008000; font-weight: bold">&lt;script </span><span style="color: #BB4444">type=&quot;text/javascript&quot;</span> <span style="color: #BB4444">src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span style="color: #008000; font-weight: bold">&gt;&lt;/script&gt;</span>
 </pre></div>
 
 
@@ -304,29 +352,29 @@ $$
 							<div class="panel">
 								<h5>Tags</h5>
 								<ul class="tag-cloud">
-										<li class="tag-3"><a href="./tag/web.html">web</a></li>
-										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
-										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
-										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
-										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
-										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
-										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
-										<li class="tag-4"><a href="./tag/github.html">github</a></li>
-										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/socketserver.html">SocketServer</a></li>
-										<li class="tag-2"><a href="./tag/android.html">android</a></li>
-										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
-										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
-										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
-										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
-										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
 										<li class="tag-2"><a href="./tag/weapp.html">weapp</a></li>
-										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
-										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-2"><a href="./tag/flask.html">flask</a></li>
 										<li class="tag-2"><a href="./tag/markdown.html">markdown</a></li>
-										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-3"><a href="./tag/web.html">web</a></li>
+										<li class="tag-2"><a href="./tag/tools.html">tools</a></li>
+										<li class="tag-3"><a href="./tag/sublime.html">sublime</a></li>
+										<li class="tag-1"><a href="./tag/python.html">python</a></li>
 										<li class="tag-4"><a href="./tag/wekzeug.html">wekzeug</a></li>
+										<li class="tag-4"><a href="./tag/contacts-provider.html">contacts provider</a></li>
+										<li class="tag-2"><a href="./tag/android.html">android</a></li>
+										<li class="tag-4"><a href="./tag/patchrom.html">patchrom</a></li>
+										<li class="tag-1"><a href="./tag/thought.html">thought</a></li>
+										<li class="tag-4"><a href="./tag/nlp.html">nlp</a></li>
+										<li class="tag-4"><a href="./tag/miui.html">miui</a></li>
+										<li class="tag-4"><a href="./tag/decorator.html">decorator</a></li>
+										<li class="tag-1"><a href="./tag/machine-learning.html">machine-learning</a></li>
 										<li class="tag-4"><a href="./tag/uml.html">uml</a></li>
+										<li class="tag-4"><a href="./tag/contacts.html">contacts</a></li>
+										<li class="tag-4"><a href="./tag/ebook.html">ebook</a></li>
+										<li class="tag-4"><a href="./tag/react.html">react</a></li>
+										<li class="tag-3"><a href="./tag/pelican.html">pelican</a></li>
+										<li class="tag-4"><a href="./tag/github.html">github</a></li>
 								</ul>
 							</div>
 
