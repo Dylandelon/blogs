@@ -1,6 +1,6 @@
 Title: 使用 Markdown + MathJax 在博客里插入数学公式
 Date: 2015-09-01 22:52
-Modified: 2015-09-01 22:52
+Modified: 2018-06-20 22:52
 Tags: markdown, machine-learning
 Slug: write-math-formula-with-mathjax
 Authors: Joey Huang
@@ -13,32 +13,81 @@ Summary: 本文介绍如何使用 Markdown + MathJax 书写数学公式
 
 ### 配置 Markdown Preview 来支持 MathJax
 
-使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -> Markdown Preview -> Setting - User) 里添加如下内容：
+使用 Sublime + Markdown Preview 插件来写博客时。需要开启 Markdown Preview 对 MathJax 的支持，这样在预览界面才能正确地显示数学公式。方法是打开在 Markdown Preview 的用户配置文件 (Package Settings -> Markdown Preview -> Setting) 里添加如下内容：
 
 ```javascript
-"enable_mathjax": true
+"enable_mathjax": true,
+"js": [
+        "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js",
+        "res://MarkdownPreview/js/math_config.js",
+]
 ```
+
+接着，需要安装 [Package​Resource​Viewer](https://github.com/skuroda/PackageResourceViewer)，打开 Markdown Preview 包里的 `math_config.js` 文件，修改为如下内容：
+
+```javascript
+MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  displayAlign: "center",
+  showProcessingMessages: false,
+  messageStyle: 'none'
+});
+```
+
+只要打开 `Option + P` 就可以打开预览。
 
 ### 配置 Pelican 主题模板来支持 MathJax
 
 我使用的主题是 `foundation-default-colours`，它默认是支持 MathJax 的。我们可以在模板 `base.html` 找到如下内容：
 
 ```html
-<!-- mathjax config similar to math.stackexchange -->
-<script type="text/x-mathjax-config">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script>
 MathJax.Hub.Config({
-	jax: ["input/TeX", "output/HTML-CSS"],
-	tex2jax: {
-		inlineMath: [ ['$', '$'] ],
-		displayMath: [ ['$$', '$$']],
-		processEscapes: true,
-		skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-	},
-	messageStyle: "none",
-	"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  displayAlign: "center",
+  showProcessingMessages: false,
+  messageStyle: 'none'
 });
 </script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 ```
 
 如果模板不支持，也可以直接添加上面的脚本来支持 MathJax。
