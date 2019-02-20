@@ -8,6 +8,20 @@ Status: draft
 
 # Raspberry Pi 笔记
 
+## 软件源镜像
+
+https://blog.csdn.net/nobmr/article/details/52607666
+
+Raspbian http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/
+
+编辑/etc/apt/sources.list文件。删除原文件所有内容，用以下内容取代：
+
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ wheezy main non-free contrib
+
+deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ wheezy main non-free contrib
+
+编辑此文件后，请使用sudo apt-get update命令，更新软件列表。
+
 ## Transmission
 
 https://www.jianshu.com/p/9dac4772cc72
@@ -41,6 +55,10 @@ sudo service smbd restart
 开启：https://baijiahao.baidu.com/s?id=1606207693709103859&wfr=spider&for=pc
 分辨率：https://softsolder.com/2016/12/23/raspberry-pi-forcing-vnc-display-resolution/
 
+开启 VNC 服务，只需要开启一次即可。远程配置树莓派的指令为 `sudo raspi-config`，在终端/运行中键入以上指令后选择5 Interfacing Options。然后启用 VNC 即可。
+
+然后，每次要访问之前，需要用 ssh 登录 raspberry pi 设备，输入 `vncserver` 启动 VNC 服务。
+
 ## 虚拟键盘
 
 使用 `sudo apt-get install matchbox-keyboard` 安装虚拟键盘。安装完如果 `keyboard` 没有出现在 `Accessories` 菜单里，试试下面的命令：
@@ -54,6 +72,24 @@ sudo service smbd restart
 ```
 sudo vim /etc/rc.local
 sudo chmod +x /etc/rc.local
+```
+
+## WiFi 配置
+
+https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
+https://www.digikey.com/en/maker/blogs/raspberry-pi-3---how-to-connect-wi-fi-and-bluetooth
+
+Open the wpa-supplicant configuration file in nano:
+
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+Go to the bottom of the file and add the following:
+
+```
+network={
+    ssid="testing"
+    psk="testingPassword"
+}
 ```
 
 ## Todo
