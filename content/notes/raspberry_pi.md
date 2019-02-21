@@ -92,6 +92,23 @@ network={
 }
 ```
 
+## 启用 WebGL
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=191087
+
+要在浏览器下运行诸如 Scratch 3.0 这样的程序时，需要启用 WebGL 才行。方法如下：
+
+1. use raspi-config to enable OpenGL (Full KMS)
+2. remove "--disable-gpu-compositing'' from /etc/chromium-browser/customizations/00-rpi-var
+
+这样，打开 Chromium 浏览器，打开 `get.webgl.org` ，如果出现一个转动的正方形，则说明 WebGL 已经正确打开。
+
+打开 WebGL 有几个注意事项：
+
+1. 一定要在外接显示器上操作，不要用 vnc 之类的远程桌面上操作。因为远程桌面上操作时，用的 glx 版本过低，导致 Chromium 无法打开 WebGL。方法是，在远程桌面上打开命令行，输入 `glxinfo` 命令即可看到 glx 的版本。
+2. 打开 WebGL 后，要用 raspi-config 里，推荐给 GPU 分配 256MB 的内存
+3. 可以在 Chromium 浏览器里输入 `chrome://gpu/` 查看 gpu 信息
+
 ## Todo
 
 1. 启用 dotfile ，让 bash 更友好
