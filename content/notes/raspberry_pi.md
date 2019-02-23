@@ -17,7 +17,6 @@ Raspbian http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/
 编辑/etc/apt/sources.list文件。删除原文件所有内容，用以下内容取代：
 
 deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ wheezy main non-free contrib
-
 deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ wheezy main non-free contrib
 
 编辑此文件后，请使用sudo apt-get update命令，更新软件列表。
@@ -108,6 +107,61 @@ https://www.raspberrypi.org/forums/viewtopic.php?t=191087
 1. 一定要在外接显示器上操作，不要用 vnc 之类的远程桌面上操作。因为远程桌面上操作时，用的 glx 版本过低，导致 Chromium 无法打开 WebGL。方法是，在远程桌面上打开命令行，输入 `glxinfo` 命令即可看到 glx 的版本。
 2. 打开 WebGL 后，要用 raspi-config 里，推荐给 GPU 分配 256MB 的内存
 3. 可以在 Chromium 浏览器里输入 `chrome://gpu/` 查看 gpu 信息
+
+## 添加菜单项
+
+http://cagewebdev.com/raspberry-pi-adding-start-menu-items/
+
+* create a 32 x 32 pixels .png icon for the application and save it to `/usr/share/pixmaps/`
+* create a new desktop file: `sudo nano /usr/share/applications/Processing.desktop`
+* enter the following lines of text:
+
+```
+[Desktop Entry]
+Type=Application
+Name=Processing
+Comment=Processing programming language
+Icon=/usr/share/pixmaps/processing.png
+Exec=/home/pi/processing-1.5.1/processing
+Terminal=false
+Categories=Development;
+```
+
+* restart the lxde environment by typing: `lxpanelctl restart`
+
+## 安装 Nginx
+
+https://www.raspberrypi.org/documentation/remote-access/web-server/nginx.md
+
+* 安装：`sudo apt-get install nginx`
+* 启动：`sudo /etc/init.d/nginx start`
+* 开机自启动：添加 `sudo /etc/init.d/nginx start` 到 `/etc/rc.local` 文件里
+
+## Scratch GUI
+
+在 nginx 配置文件 `/etc/` 里添加如下内容：
+
+```
+location /scratch/ {
+    alias /home/pi/scratch/build/;
+}
+```
+
+重启 nginx: `/etc/init.d/nginx restart`。最后确保 Scratch GUI 静态文件在目录 `/home/pi/scratch/build/` 目录下即可。
+
+如果需要更好的体验，可以在本机创建一个 Scratch 的菜单项。这样点击即可自动打开浏览器，并且打开 Scratch：
+
+```
+[Desktop Entry]
+Type=Application
+Name=Scratch
+Comment=Scratch 3.0
+Icon=/usr/share/pixmaps/scratch.png
+Exec=chromium-browser http://localhost/scratch/
+Terminal=false
+Categories=Development;
+```
+
 
 ## Todo
 
