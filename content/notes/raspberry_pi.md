@@ -157,11 +157,12 @@ Type=Application
 Name=Scratch
 Comment=Scratch 3.0
 Icon=/usr/share/pixmaps/scratch.png
-Exec=chromium-browser http://localhost/scratch/
+Exec=chromium-browser http://localhost/scratch/?locale=zh-cn&isScratchDesktop=true
 Terminal=false
 Categories=Development;
 ```
 
+URL 后面跟的参数 `?locale=zh-cn&isScratchDesktop=true` 可以指定语言以及应用程序的样式。
 
 ## Todo
 
